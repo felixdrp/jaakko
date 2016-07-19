@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Script examples
+# https://github.com/Murodese/pynab/blob/master/monitor.sh
+# http://www.leehodgkinson.com/blog/quickly-setup-multiple-pane-and-multiple-window-sessions-in-your-terminal/
+
+SESSION=$USER
+
+# -2: forces 256 colors,
+byobu-tmux -2 new-session -d -s $SESSION
+
+# dev window
+byobu-tmux rename-window -t $SESSION:0 'Dev'
+byobu-tmux splitw -v
+byobu-tmux splitw -v
+byobu-tmux splitw -v
+# byobu-tmux splitw -h
+# Select 1st pane cd and venv
+byobu-tmux select-pane -t 0
+byobu-tmux rename-window -t 0 nodemon
+byobu-tmux send-keys "cd ." C-m
+#byobu-tmux send-keys "nodemon ./build/gms-server.js" C-m
+byobu-tmux send-keys "nodemon ./server.js" C-m
+#byobu-tmux send-keys "clear" C-m
+
+# Same with 2nd pane
+byobu-tmux select-pane -t 1
+byobu-tmux rename-window -t 0 gulp
+byobu-tmux send-keys "cd ." C-m
+byobu-tmux send-keys "gulp watch" C-m
+
+# Same with 3nd pane
+# Call for browserify
+# browserify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js
+
+# Watch for browserify
+# "watchify -t [ babelify --optional es7.asyncFunctions --optional runtime ] -g reactify --debug ./src/main.js -o public/lib/bundle.js"
+
+byobu-tmux select-pane -t 2
+byobu-tmux send-keys "cd ." C-m
+byobu-tmux send-keys "watchify --debug ./build/jaakko-client.js -o public/lib/bundle.js" C-m
+
+# Same with 4nd pane
+byobu-tmux select-pane -t 3
+byobu-tmux send-keys "npm run test:watch" C-m
+
+# Same with 5nd pane
+# byobu-tmux select-pane -t 4
+# byobu-tmux send-keys "node build/proxy.js" C-m
+
+byobu-tmux select-layout even-vertical
+
+# byobu-tmux splitw -h -p 68
+# byobu-tmux splitw -h -p 50
+
+# Same with 6nd pane
+byobu-tmux select-pane -t 5
+byobu-tmux send-keys "cd servDev/backend/" C-m
+byobu-tmux send-keys "sudo ./RUN.sh" C-m
+
+# Same with 6nd pane
+byobu-tmux select-pane -t 6
+byobu-tmux send-keys "cd servDev/database/" C-m
+byobu-tmux send-keys "sudo ./RUN.sh" C-m
+
+
+# Runserver window next
+#byobu-tmux new-window -t $SESSION:1 -n 'Runserver'
+#byobu-tmux send-keys "cd /path/to/workingdir" C-m
+#byobu-tmux send-keys 'source venv/bin/activate' C-m
+
+
+# Set default window as the dev split plane
+byobu-tmux select-window -t $SESSION:0
+
+# Attach to the session you just created
+# (flip between windows with alt -left and right)
+byobu-tmux -2 attach-session -t $SESSION
