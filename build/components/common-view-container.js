@@ -40,6 +40,20 @@ var CommonViewContainer = _react2.default.createClass({
     }
   },
 
+  beforeunload: function beforeunload(ev) {
+    return ev.returnValue = 'My reason';
+  },
+
+
+  // Uncomment to prevent leave message
+  // componentDidMount() {
+  //   window.addEventListener('beforeunload', this.beforeunload)
+  // },
+  //
+  // componentWillUnmount() {
+  //   window.removeEventListener('beforeunload', this.beforeunload)
+  // },
+
   render: function render() {
     var props = this.props;
     var query = _qs2.default.parse(props.location.search);
@@ -55,9 +69,9 @@ var CommonViewContainer = _react2.default.createClass({
         {
           className: 'container',
           style: {
-            paddingTop: 80,
-            paddingBottom: 30,
-            maxWidth: 700
+            // paddingTop: 80,
+            // paddingBottom: 30,
+            // maxWidth: 700,
           }
         },
         props.children

@@ -6,6 +6,7 @@
 export AccountSignIn from './account/signin'
 export AccountSignUp from './account/signup'
 export AppContainer from './app-container'
+export CommonViewContainer from './common-view-container'
 export Example from './example'
 export MathChallenge from './math-challenge'
 export Question from './question'

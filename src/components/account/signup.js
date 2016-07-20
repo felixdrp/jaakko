@@ -6,66 +6,32 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-export default class AccountSignUp extends React.Component {
+// import { registerAccountClient } from '../../../data-handler-http/register-account-client'
+import field from '../../modules/check-field'
+import { fieldsOptions } from '../../config'
+// Check password strength
+import zxcvbn from 'zxcvbn';
+
+import crypto from 'crypto'
+
+export default class LoginSignUp extends React.Component {
 
   constructor() {
     super()
     this.state = {
-      firstNameError: '',
-      surenameError: '',
+      // Input fields
+      firstName: { error: '', name: 'First name' },
+      surename: { error: '', name: 'Surename' },
 
-      userError: '',
-      emailError: '',
-      passwordError: '',
-      reEnterPasswordError: '',
+      // userError: { error: '', name: 'First name' },
+      email: { error: '', name: 'Email' },
+      password: { error: '', name: 'Password' },
+      reEnterPassword: { error: '', name: 'Re-enter Password' },
+
+      passwordStrength: '',
     };
 
-    // Used to store references.
-    this._input = {};
-  }
-
-  async registerUser(e) {
-    e.preventDefault();
-    const input = this._input;
-    const username = input.email.getValue();
-    const password = input.password.getValue();
-
-    // Auth.login(this.state.user, this.state.password)
-    //   .catch(function(err) {
-    //     alert("There's an error logging in");
-    //     console.log("Error logging in", err);
-    //   });
-    const options = {
-      // host: location.hostname,
-      // port: location.port,
-      method: 'POST',
-      path: '/api/auth/local/register',
-      headers: { Authorization: "Basic " + btoa(username + ":" + password)}
-    }
-    var body = JSON.stringify({
-      foo: "bar"
-    })
-
-    await httpClient.getData(options, body);
-
-  }
-
-  ifNotEmptyCleanAskInfo(input, stateError, e) {
-    if (this._input[input].getValue().length > 0 && this.state[stateError].length > 0) {
-      this.setState({ [stateError] : ''});
-    }
-  }
-
-  ifEmptyAskInfo(input, stateError, errorMsg, e) {
-    if (this._input[input].getValue().length === 0) {
-      this.setState({ [stateError] : errorMsg});
-    }
-  }
-
-  render() {
-    const state = this.state;
-    const spaceInterElements = 25;
-    const style = {
+    this.style = {
       input1: {
         hintStyle: {
           color: '#3F51B5',
@@ -76,6 +42,23 @@ export default class AccountSignUp extends React.Component {
         underline: {
           borderColor: 'red',
         },
+        password: {
+          invalid: {
+            color: 'grey',
+          },
+          bad: {
+            color: 'red',
+          },
+          weak: {
+            color: 'orange',
+          },
+          good: {
+            color: 'blue',
+          },
+          strong: {
+            color: 'green',
+          }
+        }
       },
       button1: {
         color: 'white',
@@ -88,6 +71,169 @@ export default class AccountSignUp extends React.Component {
         width: 180,
       },
     };
+
+    // Used to store references.
+    this._input = {};
+  }
+
+  async registerUser(e) {
+    e.preventDefault();
+    const input = this._input;
+    // const username = input.email.getValue(),
+    //       username = input.username.getValue(),
+    //       password = input.password.getValue();
+    const firstName = input.firstName.getValue() || '',
+          surename = input.surename.getValue() || '',
+          email = input.email.getValue() || '',
+          password = input.password.getValue() || '',
+          reEnterPassword = input.reEnterPassword.getValue() || '';
+
+    const fields = {
+      firstName,
+      surename,
+      email,
+      password,
+      reEnterPassword,
+    }
+
+    let result = '',
+        foundEmpty = false,
+        field;
+
+    // Check all fields are not empty
+    for (field in fields) {
+      if ( fields[field] === '') {
+        this.setState({ [field] : { ...this.state[field], error: 'Please fill field' } })
+        foundEmpty = true
+      }
+    }
+
+    if (foundEmpty) {
+      return 'Found some empty value'
+    }
+
+    // Check Password and reEnterPassword are equal
+    if ( fields['password'] !== fields['reEnterPassword']) {
+      return this.setState({ ['reEnterPassword'] : { ...this.state[reEnterPassword], error: 'Password is not equal to Re-enter Password' } })
+    }
+
+    try {
+      // result = JSON.parse( await registerAccountClient({
+      //   firstName,
+      //   surename,
+      //   email,
+      //   password,
+      //   reEnterPassword,
+      // }))
+
+      if (result && 'errors' in result) {
+        // Show failed field
+        for (field in fields) {
+          if (result.errors[0].message.includes(field)) {
+            this.setState({ [field] : { ...this.state[field], error: 'Check field' } })
+          }
+        }
+      } else {
+        //add cookie
+        //redirect to main url
+        document.cookie = result.data.registerAccount.token
+        document.location = '/'
+
+        // console.log('>>>' + token.data.loginAccount.token)
+      }
+    }
+    catch(error) {
+      console.error(error);
+    }
+    // Account already taken ERROR
+    // {"errors":["Username already taken."],"status":200}
+  }
+
+  ifNotEmptyCleanAskInfo(e) {
+    let input = e.target.id
+    if (this._input[input].getValue().length > 0 && this.state[input].error.length > 0) {
+      this.setState({ [input] : { ...this.state[input], error: '' } });
+    }
+  }
+
+  ifEmptyAskInfo(e) {
+    let input = e.target.id
+    // console.log(e.target.id)
+    // console.log(JSON.stringify(this.state))
+    //
+    if (this._input[input].getValue().length === 0) {
+      this.setState({ [input] : { ...this.state[input], error: `${this.state[input].name} is empty` } });
+    }
+  }
+
+  passwordStrengthCheck(e) {
+    this.setState({ passwordStrength : zxcvbn(this._input.password.getValue() || '').score });
+  }
+
+  checkReEnterPassword(e) {
+    let input = e.target.id
+    if (this._input[input].getValue().length === 0) {
+      return this.setState({ [input] : { ...this.state[input], error: `${this.state[input].name} is empty` } });
+    }
+    if ( this._input[input].getValue() !== this._input.password.getValue() ) {
+      return this.setState({ [input] : { ...this.state[input], error: 'Password is not equal to Re-enter Password' } });
+    }
+  }
+
+  onChangeHandle(e) {
+    if (e.target.id == 'password') {
+      this.passwordStrengthCheck(e)
+    }
+    this.ifNotEmptyCleanAskInfo(e)
+  }
+
+  textField(field, options) {
+    let onBlur = field !== 'reEnterPassword'? this.ifEmptyAskInfo.bind(this) : this.checkReEnterPassword.bind(this),
+        type  = options && 'type' in options? options.type : '';
+
+    let [errorText, underlineColor] = (() => {
+      let underlineStyle = this.style.input1.password,
+          ps = 'Password security ';
+
+      switch (this.state.passwordStrength) {
+        case 0:
+          return [ 'minimum 4 characters', underlineStyle.invalid ]
+        case 1:
+          return [ ps + 'poor', underlineStyle.bad ]
+        case 2:
+          return [ ps + 'weak', underlineStyle.weak ]
+        case 3:
+          return [ ps + 'good', underlineStyle.good ]
+        case 4:
+          return [ ps + 'strong', underlineStyle.strong ]
+      }
+      return []
+    })()
+
+    return (
+      <div>
+        <TextField
+          id={field}
+          type={type}
+          hintText={this.state[field].name}
+          floatingLabelText={this.state[field].name}
+          floatingLabelFocusStyle={this.style.input1.floatingLabelFocus}
+          errorText={field == 'password'? this.state[field].error || errorText : this.state[field].error}
+          errorStyle={field == 'password' && this.state[field].error.length  == 0 ? underlineColor : undefined}
+          ref={(c) => this._input[field] = c}
+          onFocus={ field == 'password'? this.passwordStrengthCheck.bind(this) : undefined }
+          onChange={ this.onChangeHandle.bind(this) }
+          onBlur={ onBlur }
+        />
+        <br />
+      </div>
+    )
+  }
+
+  render() {
+    const state = this.state;
+    const spaceInterElements = 25;
+    const style = this.style;
     const input = this._input;
 
     return (
@@ -114,64 +260,22 @@ export default class AccountSignUp extends React.Component {
               marginLeft: 30,
             }}
             // action="http://mirtest.dcs.gla.ac.uk/api/auth/local/register"
-            action="http://marakei.dcs.gla.ac.uk//api/auth/local/register"
+            action="https://marakei.dcs.gla.ac.uk//api/auth/local/register"
             method="POST"
           >
-            <TextField
-              hintText="First name"
-              floatingLabelText="First name"
-              floatingLabelFocusStyle={style.input1.floatingLabelFocus}
-              errorText={this.state.firstNameError}
-              ref={(c) => input.firstName = c}
-              onChange={ this.ifNotEmptyCleanAskInfo.bind(this, 'firstName', 'firstNameError') }
-              onBlur={ this.ifEmptyAskInfo.bind(this, 'firstName', 'firstNameError', 'First name empty') }
-            />
-            <br />
-            <TextField
-              hintText="Surename"
-              floatingLabelText="Surename"
-              floatingLabelFocusStyle={style.input1.floatingLabelFocus}
-              errorText={this.state.surenameError}
-              ref={(c) => input.surename = c}
-              onChange={ this.ifNotEmptyCleanAskInfo.bind(this, 'surename', 'surenameError') }
-              onBlur={ this.ifEmptyAskInfo.bind(this, 'surename', 'surenameError', 'Surename empty') }
-            />
+            {this.textField( 'firstName' )}
+            {this.textField( 'surename' )}
             <br />
             <br />
-            <br />
-            <TextField
-              hintText="Email address"
-              floatingLabelText="Email address"
-              floatingLabelFocusStyle={style.input1.floatingLabelFocus}
-              errorText={this.state.emailError}
-              ref={(c) => input.email = c}
-              onChange={ this.ifNotEmptyCleanAskInfo.bind(this, 'email', 'emailError') }
-              onBlur={ this.ifEmptyAskInfo.bind(this, 'email', 'emailError', 'Email empty') }
-            />
-            <br />
-            <TextField
-              hintText="Password"
-              floatingLabelText="Password"
-              type="password"
-              errorText={this.state.passwordError}
-              ref={(c) => input.password = c}
-              onChange={ this.ifNotEmptyCleanAskInfo.bind(this, 'password', 'passwordError') }
-              onBlur={ this.ifEmptyAskInfo.bind(this, 'password', 'passwordError', 'Password empty') }
-            />
-            <br />
-            <TextField
-              hintText="Re-enter Password"
-              floatingLabelText="Re-enter Password"
-              type="password"
-              errorText={this.state.reEnterPasswordError}
-              ref={(c) => input.reEnterPassword = c}
-              onChange={ this.ifNotEmptyCleanAskInfo.bind(this, 'reEnterPassword', 'reEnterPasswordError') }
-              onBlur={ this.ifEmptyAskInfo.bind(this, 'reEnterPassword', 'reEnterPasswordError', 'Password empty') }
-            />
+            {this.textField( 'email' )}
+            {this.textField( 'password', {type: 'password'} )}
+            {this.textField( 'reEnterPassword', {type: 'password'} )}
+
             <br />
             <br />
             <br />
             <FlatButton
+              id="submitRegisterAccount"
               style={style.button1}
               type="submit"
               onClick={this.registerUser.bind(this)}

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Syncronize = exports.Question = exports.MathChallenge = exports.Example = exports.AppContainer = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Syncronize = exports.Question = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -16,6 +16,10 @@ var _signup2 = _interopRequireDefault(_signup);
 var _appContainer = require('./app-container');
 
 var _appContainer2 = _interopRequireDefault(_appContainer);
+
+var _commonViewContainer = require('./common-view-container');
+
+var _commonViewContainer2 = _interopRequireDefault(_commonViewContainer);
 
 var _example = require('./example');
 
@@ -42,6 +46,7 @@ exports.AccountSignIn = _signin2.default; /**
 
 exports.AccountSignUp = _signup2.default;
 exports.AppContainer = _appContainer2.default;
+exports.CommonViewContainer = _commonViewContainer2.default;
 exports.Example = _example2.default;
 exports.MathChallenge = _mathChallenge2.default;
 exports.Question = _question2.default;

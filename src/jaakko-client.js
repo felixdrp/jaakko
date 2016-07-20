@@ -5,7 +5,7 @@ import { render } from 'react-dom'
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer, routeActions  } from 'react-router-redux'
+import { syncHistoryWithStore, routerReducer, routerMiddleware, push  } from 'react-router-redux'
 import Routes from './routes';
 import { createHistory } from 'history';
 
@@ -20,12 +20,8 @@ const initialState = window.__INITIAL_STATE__ || {}
 // // https://github.com/rackt/history/blob/master/docs/GettingStarted.md
 // const history = createHistory()
 
-// https://github.com/rackt/react-router-redux/blob/master/examples/basic/app.js
-// const middleware = syncHistory(history)
-// const reducer = combineReducers({
-//   // topicListPage,
-//   routing: routeReducer
-// })
+// https://github.com/reactjs/react-router-redux
+const middleware = routerMiddleware(browserHistory)
 
 // // Create Redux store with initial state
 // // const store = createStore(counterApp, initialState)
@@ -39,14 +35,22 @@ const initialState = window.__INITIAL_STATE__ || {}
 const store = createStore(
   combineReducers({
     // topicListPage,
-    routing: routerReducer
+    routing: routerReducer,
   }),
-  initialState
+
+  initialState,
+
+  compose(
+    applyMiddleware(middleware),
+  )
 )
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
 
 console.log(store.getState())
+
+// setTimeout( () => store.dispatch(push('/modules/example')), 3000)
+
 
 render(
   <Provider store={store}>

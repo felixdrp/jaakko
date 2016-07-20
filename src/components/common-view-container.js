@@ -18,6 +18,20 @@ var CommonViewContainer = React.createClass({
     }
   },
 
+  beforeunload(ev) {
+    return ev.returnValue = 'My reason';
+  },
+
+// Uncomment to prevent leave message
+  // componentDidMount() {
+  //   window.addEventListener('beforeunload', this.beforeunload)
+  // },
+  //
+  // componentWillUnmount() {
+  //   window.removeEventListener('beforeunload', this.beforeunload)
+  // },
+
+
   render() {
     let props = this.props;
     let query = qs.parse(props.location.search);
@@ -34,9 +48,9 @@ var CommonViewContainer = React.createClass({
         <div
           className="container"
           style={{
-            paddingTop: 80,
-            paddingBottom: 30,
-            maxWidth: 700,
+            // paddingTop: 80,
+            // paddingBottom: 30,
+            // maxWidth: 700,
           }}
         >
           {props.children}

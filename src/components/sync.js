@@ -3,8 +3,23 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 class Syncronize extends Component {
   static contextTypes = {
-    muiTheme: React.PropTypes.object.isRequired
+    muiTheme: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object.isRequired,
   };
+
+  routerWillLeave (location, callback) {
+    console.log('mlk')
+    // if callback then go fordward
+    callback()
+  }
+
+  componentDidMount() {
+    this.context.router.listenBefore(this.routerWillLeave);
+  }
+
+  componentWillUnmount() {
+      // this.context.router.unregisterTransitionHook(this.routerWillLeave);
+  }
 
   handleSave(text) {
     if (text.length !== 0) {

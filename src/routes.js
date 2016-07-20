@@ -37,12 +37,9 @@ var routes = (history) => (
         <Route path="signup" component={AccountSignUp} />
       </Route>
 
-      <Route path="sync" component={CommonViewContainer} >
-        <IndexRoute component={Syncronize} />
-      </Route>
-
-      <Route path="example" component={CommonViewContainer} >
-        <IndexRoute component={Example} />
+      <Route path="modules" component={CommonViewContainer} >
+        <Route path="sync" component={Syncronize} />
+        <Route path="example" component={Example} />
       </Route>
 
       {/*

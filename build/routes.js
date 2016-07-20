@@ -33,13 +33,9 @@ var routes = function routes(history) {
       ),
       _react2.default.createElement(
         _reactRouter.Route,
-        { path: 'sync', component: _components.CommonViewContainer },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.Syncronize })
-      ),
-      _react2.default.createElement(
-        _reactRouter.Route,
-        { path: 'example', component: _components.CommonViewContainer },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.Example })
+        { path: 'modules', component: _components.CommonViewContainer },
+        _react2.default.createElement(_reactRouter.Route, { path: 'sync', component: _components.Syncronize }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'example', component: _components.Example })
       )
     )
   );

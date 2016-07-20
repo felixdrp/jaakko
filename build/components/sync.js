@@ -41,6 +41,23 @@ var Syncronize = function (_Component) {
   }
 
   (0, _createClass3.default)(Syncronize, [{
+    key: 'routerWillLeave',
+    value: function routerWillLeave(location, callback) {
+      console.log('mlk');
+      // if callback then go fordward
+      callback();
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.context.router.listenBefore(this.routerWillLeave);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      // this.context.router.unregisterTransitionHook(this.routerWillLeave);
+    }
+  }, {
     key: 'handleSave',
     value: function handleSave(text) {
       if (text.length !== 0) {
@@ -84,7 +101,8 @@ var Syncronize = function (_Component) {
 }(_react.Component);
 
 Syncronize.contextTypes = {
-  muiTheme: _react2.default.PropTypes.object.isRequired
+  muiTheme: _react2.default.PropTypes.object.isRequired,
+  router: _react2.default.PropTypes.object.isRequired
 };
 
 

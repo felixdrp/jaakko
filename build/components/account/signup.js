@@ -4,17 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
-var _stringify2 = _interopRequireDefault(_stringify);
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
@@ -56,27 +60,90 @@ var _TextField = require('material-ui/TextField');
 
 var _TextField2 = _interopRequireDefault(_TextField);
 
+var _checkField = require('../../modules/check-field');
+
+var _checkField2 = _interopRequireDefault(_checkField);
+
+var _config = require('../../config');
+
+var _zxcvbn = require('zxcvbn');
+
+var _zxcvbn2 = _interopRequireDefault(_zxcvbn);
+
+var _crypto = require('crypto');
+
+var _crypto2 = _interopRequireDefault(_crypto);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Check password strength
+
+
+// import { registerAccountClient } from '../../../data-handler-http/register-account-client'
 
 // import ReactMixin from 'react-mixin';
 // import Auth from '../services/AuthService'
 
-var AccountSignUp = function (_React$Component) {
-  (0, _inherits3.default)(AccountSignUp, _React$Component);
+var LoginSignUp = function (_React$Component) {
+  (0, _inherits3.default)(LoginSignUp, _React$Component);
 
-  function AccountSignUp() {
-    (0, _classCallCheck3.default)(this, AccountSignUp);
+  function LoginSignUp() {
+    (0, _classCallCheck3.default)(this, LoginSignUp);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(AccountSignUp).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(LoginSignUp).call(this));
 
     _this.state = {
-      firstNameError: '',
-      surenameError: '',
+      // Input fields
+      firstName: { error: '', name: 'First name' },
+      surename: { error: '', name: 'Surename' },
 
-      userError: '',
-      emailError: '',
-      passwordError: '',
-      reEnterPasswordError: ''
+      // userError: { error: '', name: 'First name' },
+      email: { error: '', name: 'Email' },
+      password: { error: '', name: 'Password' },
+      reEnterPassword: { error: '', name: 'Re-enter Password' },
+
+      passwordStrength: ''
+    };
+
+    _this.style = {
+      input1: {
+        hintStyle: {
+          color: '#3F51B5'
+        },
+        floatingLabelFocus: {
+          color: '#3F51B5'
+        },
+        underline: {
+          borderColor: 'red'
+        },
+        password: {
+          invalid: {
+            color: 'grey'
+          },
+          bad: {
+            color: 'red'
+          },
+          weak: {
+            color: 'orange'
+          },
+          good: {
+            color: 'blue'
+          },
+          strong: {
+            color: 'green'
+          }
+        }
+      },
+      button1: {
+        color: 'white',
+        backgroundColor: '#3F51B5',
+        width: 180
+      },
+      button2: {
+        color: 'white',
+        backgroundColor: '#4CAF50',
+        width: 180
+      }
     };
 
     // Used to store references.
@@ -84,40 +151,88 @@ var AccountSignUp = function (_React$Component) {
     return _this;
   }
 
-  (0, _createClass3.default)(AccountSignUp, [{
+  (0, _createClass3.default)(LoginSignUp, [{
     key: 'registerUser',
     value: function () {
       var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(e) {
-        var input, username, password, options, body;
+        var input, firstName, surename, email, password, reEnterPassword, fields, result, foundEmpty, field;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 e.preventDefault();
                 input = this._input;
-                username = input.email.getValue();
-                password = input.password.getValue();
+                // const username = input.email.getValue(),
+                //       username = input.username.getValue(),
+                //       password = input.password.getValue();
 
-                // Auth.login(this.state.user, this.state.password)
-                //   .catch(function(err) {
-                //     alert("There's an error logging in");
-                //     console.log("Error logging in", err);
-                //   });
-
-                options = {
-                  // host: location.hostname,
-                  // port: location.port,
-                  method: 'POST',
-                  path: '/api/auth/local/register',
-                  headers: { Authorization: "Basic " + btoa(username + ":" + password) }
+                firstName = input.firstName.getValue() || '', surename = input.surename.getValue() || '', email = input.email.getValue() || '', password = input.password.getValue() || '', reEnterPassword = input.reEnterPassword.getValue() || '';
+                fields = {
+                  firstName: firstName,
+                  surename: surename,
+                  email: email,
+                  password: password,
+                  reEnterPassword: reEnterPassword
                 };
-                body = (0, _stringify2.default)({
-                  foo: "bar"
-                });
-                _context.next = 8;
-                return httpClient.getData(options, body);
+                result = '', foundEmpty = false, field = void 0;
+
+                // Check all fields are not empty
+
+                for (field in fields) {
+                  if (fields[field] === '') {
+                    this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Please fill field' })));
+                    foundEmpty = true;
+                  }
+                }
+
+                if (!foundEmpty) {
+                  _context.next = 8;
+                  break;
+                }
+
+                return _context.abrupt('return', 'Found some empty value');
 
               case 8:
+                if (!(fields['password'] !== fields['reEnterPassword'])) {
+                  _context.next = 10;
+                  break;
+                }
+
+                return _context.abrupt('return', this.setState((0, _defineProperty3.default)({}, 'reEnterPassword', (0, _extends3.default)({}, this.state[reEnterPassword], { error: 'Password is not equal to Re-enter Password' }))));
+
+              case 10:
+
+                try {
+                  // result = JSON.parse( await registerAccountClient({
+                  //   firstName,
+                  //   surename,
+                  //   email,
+                  //   password,
+                  //   reEnterPassword,
+                  // }))
+
+                  if (result && 'errors' in result) {
+                    // Show failed field
+                    for (field in fields) {
+                      if (result.errors[0].message.includes(field)) {
+                        this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Check field' })));
+                      }
+                    }
+                  } else {
+                    //add cookie
+                    //redirect to main url
+                    document.cookie = result.data.registerAccount.token;
+                    document.location = '/';
+
+                    // console.log('>>>' + token.data.loginAccount.token)
+                  }
+                } catch (error) {
+                  console.error(error);
+                }
+                // Account already taken ERROR
+                // {"errors":["Username already taken."],"status":200}
+
+              case 11:
               case 'end':
                 return _context.stop();
             }
@@ -133,46 +248,107 @@ var AccountSignUp = function (_React$Component) {
     }()
   }, {
     key: 'ifNotEmptyCleanAskInfo',
-    value: function ifNotEmptyCleanAskInfo(input, stateError, e) {
-      if (this._input[input].getValue().length > 0 && this.state[stateError].length > 0) {
-        this.setState((0, _defineProperty3.default)({}, stateError, ''));
+    value: function ifNotEmptyCleanAskInfo(e) {
+      var input = e.target.id;
+      if (this._input[input].getValue().length > 0 && this.state[input].error.length > 0) {
+        this.setState((0, _defineProperty3.default)({}, input, (0, _extends3.default)({}, this.state[input], { error: '' })));
       }
     }
   }, {
     key: 'ifEmptyAskInfo',
-    value: function ifEmptyAskInfo(input, stateError, errorMsg, e) {
+    value: function ifEmptyAskInfo(e) {
+      var input = e.target.id;
+      // console.log(e.target.id)
+      // console.log(JSON.stringify(this.state))
+      //
       if (this._input[input].getValue().length === 0) {
-        this.setState((0, _defineProperty3.default)({}, stateError, errorMsg));
+        this.setState((0, _defineProperty3.default)({}, input, (0, _extends3.default)({}, this.state[input], { error: this.state[input].name + ' is empty' })));
       }
+    }
+  }, {
+    key: 'passwordStrengthCheck',
+    value: function passwordStrengthCheck(e) {
+      this.setState({ passwordStrength: (0, _zxcvbn2.default)(this._input.password.getValue() || '').score });
+    }
+  }, {
+    key: 'checkReEnterPassword',
+    value: function checkReEnterPassword(e) {
+      var input = e.target.id;
+      if (this._input[input].getValue().length === 0) {
+        return this.setState((0, _defineProperty3.default)({}, input, (0, _extends3.default)({}, this.state[input], { error: this.state[input].name + ' is empty' })));
+      }
+      if (this._input[input].getValue() !== this._input.password.getValue()) {
+        return this.setState((0, _defineProperty3.default)({}, input, (0, _extends3.default)({}, this.state[input], { error: 'Password is not equal to Re-enter Password' })));
+      }
+    }
+  }, {
+    key: 'onChangeHandle',
+    value: function onChangeHandle(e) {
+      if (e.target.id == 'password') {
+        this.passwordStrengthCheck(e);
+      }
+      this.ifNotEmptyCleanAskInfo(e);
+    }
+  }, {
+    key: 'textField',
+    value: function textField(field, options) {
+      var _this2 = this;
+
+      var onBlur = field !== 'reEnterPassword' ? this.ifEmptyAskInfo.bind(this) : this.checkReEnterPassword.bind(this),
+          type = options && 'type' in options ? options.type : '';
+
+      var _ref2 = function () {
+        var underlineStyle = _this2.style.input1.password,
+            ps = 'Password security ';
+
+        switch (_this2.state.passwordStrength) {
+          case 0:
+            return ['minimum 4 characters', underlineStyle.invalid];
+          case 1:
+            return [ps + 'poor', underlineStyle.bad];
+          case 2:
+            return [ps + 'weak', underlineStyle.weak];
+          case 3:
+            return [ps + 'good', underlineStyle.good];
+          case 4:
+            return [ps + 'strong', underlineStyle.strong];
+        }
+        return [];
+      }();
+
+      var _ref3 = (0, _slicedToArray3.default)(_ref2, 2);
+
+      var errorText = _ref3[0];
+      var underlineColor = _ref3[1];
+
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_TextField2.default, {
+          id: field,
+          type: type,
+          hintText: this.state[field].name,
+          floatingLabelText: this.state[field].name,
+          floatingLabelFocusStyle: this.style.input1.floatingLabelFocus,
+          errorText: field == 'password' ? this.state[field].error || errorText : this.state[field].error,
+          errorStyle: field == 'password' && this.state[field].error.length == 0 ? underlineColor : undefined,
+          ref: function ref(c) {
+            return _this2._input[field] = c;
+          },
+          onFocus: field == 'password' ? this.passwordStrengthCheck.bind(this) : undefined,
+          onChange: this.onChangeHandle.bind(this),
+          onBlur: onBlur
+        }),
+        _react2.default.createElement('br', null)
+      );
     }
   }, {
     key: 'render',
     value: function render() {
       var state = this.state;
       var spaceInterElements = 25;
-      var style = {
-        input1: {
-          hintStyle: {
-            color: '#3F51B5'
-          },
-          floatingLabelFocus: {
-            color: '#3F51B5'
-          },
-          underline: {
-            borderColor: 'red'
-          }
-        },
-        button1: {
-          color: 'white',
-          backgroundColor: '#3F51B5',
-          width: 180
-        },
-        button2: {
-          color: 'white',
-          backgroundColor: '#4CAF50',
-          width: 180
-        }
-      };
+      var style = this.style;
       var input = this._input;
 
       return _react2.default.createElement(
@@ -204,76 +380,23 @@ var AccountSignUp = function (_React$Component) {
                 marginLeft: 30
               }
               // action="http://mirtest.dcs.gla.ac.uk/api/auth/local/register"
-              , action: 'http://marakei.dcs.gla.ac.uk//api/auth/local/register',
+              , action: 'https://marakei.dcs.gla.ac.uk//api/auth/local/register',
               method: 'POST'
             },
-            _react2.default.createElement(_TextField2.default, {
-              hintText: 'First name',
-              floatingLabelText: 'First name',
-              floatingLabelFocusStyle: style.input1.floatingLabelFocus,
-              errorText: this.state.firstNameError,
-              ref: function ref(c) {
-                return input.firstName = c;
-              },
-              onChange: this.ifNotEmptyCleanAskInfo.bind(this, 'firstName', 'firstNameError'),
-              onBlur: this.ifEmptyAskInfo.bind(this, 'firstName', 'firstNameError', 'First name empty')
-            }),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(_TextField2.default, {
-              hintText: 'Surename',
-              floatingLabelText: 'Surename',
-              floatingLabelFocusStyle: style.input1.floatingLabelFocus,
-              errorText: this.state.surenameError,
-              ref: function ref(c) {
-                return input.surename = c;
-              },
-              onChange: this.ifNotEmptyCleanAskInfo.bind(this, 'surename', 'surenameError'),
-              onBlur: this.ifEmptyAskInfo.bind(this, 'surename', 'surenameError', 'Surename empty')
-            }),
+            this.textField('firstName'),
+            this.textField('surename'),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(_TextField2.default, {
-              hintText: 'Email address',
-              floatingLabelText: 'Email address',
-              floatingLabelFocusStyle: style.input1.floatingLabelFocus,
-              errorText: this.state.emailError,
-              ref: function ref(c) {
-                return input.email = c;
-              },
-              onChange: this.ifNotEmptyCleanAskInfo.bind(this, 'email', 'emailError'),
-              onBlur: this.ifEmptyAskInfo.bind(this, 'email', 'emailError', 'Email empty')
-            }),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(_TextField2.default, {
-              hintText: 'Password',
-              floatingLabelText: 'Password',
-              type: 'password',
-              errorText: this.state.passwordError,
-              ref: function ref(c) {
-                return input.password = c;
-              },
-              onChange: this.ifNotEmptyCleanAskInfo.bind(this, 'password', 'passwordError'),
-              onBlur: this.ifEmptyAskInfo.bind(this, 'password', 'passwordError', 'Password empty')
-            }),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(_TextField2.default, {
-              hintText: 'Re-enter Password',
-              floatingLabelText: 'Re-enter Password',
-              type: 'password',
-              errorText: this.state.reEnterPasswordError,
-              ref: function ref(c) {
-                return input.reEnterPassword = c;
-              },
-              onChange: this.ifNotEmptyCleanAskInfo.bind(this, 'reEnterPassword', 'reEnterPasswordError'),
-              onBlur: this.ifEmptyAskInfo.bind(this, 'reEnterPassword', 'reEnterPasswordError', 'Password empty')
-            }),
+            this.textField('email'),
+            this.textField('password', { type: 'password' }),
+            this.textField('reEnterPassword', { type: 'password' }),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
               _FlatButton2.default,
               {
+                id: 'submitRegisterAccount',
                 style: style.button1,
                 type: 'submit',
                 onClick: this.registerUser.bind(this)
@@ -285,8 +408,8 @@ var AccountSignUp = function (_React$Component) {
       );
     }
   }]);
-  return AccountSignUp;
+  return LoginSignUp;
 }(_react2.default.Component);
 
-exports.default = AccountSignUp;
+exports.default = LoginSignUp;
 //# sourceMappingURL=signup.js.map

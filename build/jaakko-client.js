@@ -34,12 +34,8 @@ var initialState = window.__INITIAL_STATE__ || {};
 // // https://github.com/rackt/history/blob/master/docs/GettingStarted.md
 // const history = createHistory()
 
-// https://github.com/rackt/react-router-redux/blob/master/examples/basic/app.js
-// const middleware = syncHistory(history)
-// const reducer = combineReducers({
-//   // topicListPage,
-//   routing: routeReducer
-// })
+// https://github.com/reactjs/react-router-redux
+var middleware = (0, _reactRouterRedux.routerMiddleware)(_reactRouter.browserHistory);
 
 // // Create Redux store with initial state
 // // const store = createStore(counterApp, initialState)
@@ -53,11 +49,13 @@ var initialState = window.__INITIAL_STATE__ || {};
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   // topicListPage,
   routing: _reactRouterRedux.routerReducer
-}), initialState);
+}), initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(middleware)));
 // Create an enhanced history that syncs navigation events with the store
 var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
 
 console.log(store.getState());
+
+// setTimeout( () => store.dispatch(push('/modules/example')), 3000)
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRedux.Provider,
