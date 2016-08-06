@@ -3,8 +3,5 @@ npm-debug.log
 
 #Ignore database data and log files
 
-servDev/database/data/*
-servDev/database/log/*
-
-#Ignore backend log files
-servDev/backend/lms-server/server/logs.txt
+database/data/*
+database/log/*

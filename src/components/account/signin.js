@@ -28,7 +28,8 @@ export default class AccountSignIn extends React.Component {
   }
 
   static contextTypes = {
-    muiTheme: React.PropTypes.object.isRequired
+    muiTheme: React.PropTypes.object.isRequired,
+    websocket: React.PropTypes.object,
   };
 
   linkState(data) {
@@ -38,26 +39,21 @@ export default class AccountSignIn extends React.Component {
   async login(e) {
     e.preventDefault();
     const input = this._input;
-    const username = input.email.getValue();
+    const email = input.email.getValue();
     const password = input.password.getValue();
-
-    // Auth.login(this.state.user, this.state.password)
-    //   .catch(function(err) {
-    //     alert("There's an error logging in");
-    //     console.log("Error logging in", err);
-    //   });
-    const options = {
-      // host: location.hostname,
-      // port: location.port,
-      method: 'POST',
-      path: '/api/auth/local/login',
-      headers: { Authorization: "Basic " + btoa(username + ":" + password)}
-    }
-    var body = JSON.stringify({
-      foo: "bar"
-    })
-
-    // await httpClient.getData(options, body);
+    // debugger
+    this.context.websocket.send(
+      JSON.stringify(
+        {
+          type: 'MUTATE',
+          action: 'LOGIN_ACCOUNT',
+          payload: {
+            email,
+            password
+          }
+        }
+      )
+    )
 
   }
 

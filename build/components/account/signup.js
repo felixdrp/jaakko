@@ -74,15 +74,9 @@ var _crypto = require('crypto');
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
+var _serverActions = require('../../websock-message/server-actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// Check password strength
-
-
-// import { registerAccountClient } from '../../../data-handler-http/register-account-client'
-
-// import ReactMixin from 'react-mixin';
-// import Auth from '../services/AuthService'
 
 var LoginSignUp = function (_React$Component) {
   (0, _inherits3.default)(LoginSignUp, _React$Component);
@@ -201,43 +195,57 @@ var LoginSignUp = function (_React$Component) {
                 return _context.abrupt('return', this.setState((0, _defineProperty3.default)({}, 'reEnterPassword', (0, _extends3.default)({}, this.state[reEnterPassword], { error: 'Password is not equal to Re-enter Password' }))));
 
               case 10:
+                _context.prev = 10;
+                _context.next = 13;
+                return this.context.websocket.send((0, _serverActions.registerAccount)({
+                  firstName: firstName,
+                  surename: surename,
+                  email: email,
+                  password: password,
+                  reEnterPassword: reEnterPassword
+                }));
 
-                try {
-                  // result = JSON.parse( await registerAccountClient({
-                  //   firstName,
-                  //   surename,
-                  //   email,
-                  //   password,
-                  //   reEnterPassword,
-                  // }))
+              case 13:
+                result = _context.sent;
 
-                  if (result && 'errors' in result) {
-                    // Show failed field
-                    for (field in fields) {
-                      if (result.errors[0].message.includes(field)) {
-                        this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Check field' })));
-                      }
+                // result = JSON.parse( await registerAccountClient({
+                //   firstName,
+                //   surename,
+                //   email,
+                //   password,
+                //   reEnterPassword,
+                // }))
+
+                if (result && 'errors' in result) {
+                  // Show failed field
+                  for (field in fields) {
+                    if (result.errors[0].message.includes(field)) {
+                      this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Check field' })));
                     }
-                  } else {
-                    //add cookie
-                    //redirect to main url
-                    document.cookie = result.data.registerAccount.token;
-                    document.location = '/';
-
-                    // console.log('>>>' + token.data.loginAccount.token)
                   }
-                } catch (error) {
-                  console.error(error);
-                }
-                // Account already taken ERROR
-                // {"errors":["Username already taken."],"status":200}
+                } else {
+                  //add cookie
+                  //redirect to main url
+                  document.cookie = result.data.registerAccount.token;
+                  document.location = '/';
 
-              case 11:
+                  console.log('>>>' + token.data.loginAccount.token);
+                }
+                _context.next = 20;
+                break;
+
+              case 17:
+                _context.prev = 17;
+                _context.t0 = _context['catch'](10);
+
+                console.error(_context.t0);
+
+              case 20:
               case 'end':
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[10, 17]]);
       }));
 
       function registerUser(_x) {
@@ -410,6 +418,17 @@ var LoginSignUp = function (_React$Component) {
   }]);
   return LoginSignUp;
 }(_react2.default.Component);
+// Check password strength
 
+
+// import { registerAccountClient } from '../../../data-handler-http/register-account-client'
+
+// import ReactMixin from 'react-mixin';
+// import Auth from '../services/AuthService'
+
+
+LoginSignUp.contextTypes = {
+  websocket: _react2.default.PropTypes.object
+};
 exports.default = LoginSignUp;
 //# sourceMappingURL=signup.js.map

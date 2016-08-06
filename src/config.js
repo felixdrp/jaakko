@@ -3,7 +3,7 @@ export const port = (typeof window === 'undefined')? 8000 : window.document.loca
 
 // DataBase, Mongodb configuration
 export const mongodbConf = {
-  url: 'mongodb://localhost:27017/lifelog',
+  url: 'mongodb://localhost:27017/jaakko',
 }
 
 // GraphQL server connection options
@@ -29,9 +29,9 @@ const passwordOptions = {
   min: 4,
   max: 50,
   mustHave: true,
-  numbers: 1,
-  capitals: 1,
-  symbols: 1,
+  // numbers: 1,
+  // capitals: 1,
+  // symbols: 1,
 }
 
 export let fieldsOptions = {

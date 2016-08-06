@@ -11,7 +11,7 @@ var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 exports.default = todos;
 exports.account = account;
 
-var _server = require('../actions/server');
+var _actions = require('../actions/actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,7 +26,7 @@ function todos() {
   var action = arguments[1];
 
   switch (action.type) {
-    case _server.REGISTER_ACCOUNT:
+    case _actions.REGISTER_ACCOUNT:
       return [{
         id: state.reduce(function (maxId, todo) {
           return Math.max(todo.id, maxId);
@@ -49,7 +49,7 @@ function account() {
   var action = arguments[1];
 
   switch (action.type) {
-    case _server.REGISTER_ACCOUNT:
+    case _actions.REGISTER_ACCOUNT:
       return action.register;
     case LOGIN_ACCOUNT:
       return action.filter;

@@ -14,6 +14,10 @@ import zxcvbn from 'zxcvbn';
 
 import crypto from 'crypto'
 
+import {
+  registerAccount,
+} from '../../websock-message/server-actions'
+
 export default class LoginSignUp extends React.Component {
 
   constructor() {
@@ -76,6 +80,10 @@ export default class LoginSignUp extends React.Component {
     this._input = {};
   }
 
+  static contextTypes = {
+    websocket: React.PropTypes.object,
+  };
+
   async registerUser(e) {
     e.preventDefault();
     const input = this._input;
@@ -118,6 +126,16 @@ export default class LoginSignUp extends React.Component {
     }
 
     try {
+      // debugger
+      result = await this.context.websocket.send(
+        registerAccount({
+          firstName,
+          surename,
+          email,
+          password,
+          reEnterPassword,
+        })
+      )
       // result = JSON.parse( await registerAccountClient({
       //   firstName,
       //   surename,
@@ -139,7 +157,7 @@ export default class LoginSignUp extends React.Component {
         document.cookie = result.data.registerAccount.token
         document.location = '/'
 
-        // console.log('>>>' + token.data.loginAccount.token)
+        console.log('>>>' + token.data.loginAccount.token)
       }
     }
     catch(error) {

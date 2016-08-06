@@ -1,4 +1,4 @@
-import { WAIT, CONTINUE } from '../actions/server'
+import { WAIT, CONTINUE } from '../actions/actions'
 
 
 export default function synchronize(state = { wait: true }, action) {

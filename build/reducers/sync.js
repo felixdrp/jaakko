@@ -5,16 +5,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = synchronize;
 
-var _server = require('../actions/server');
+var _actions = require('../actions/actions');
 
 function synchronize() {
   var state = arguments.length <= 0 || arguments[0] === undefined ? { wait: true } : arguments[0];
   var action = arguments[1];
 
   switch (action.type) {
-    case _server.WAIT:
+    case _actions.WAIT:
       return { wait: true };
-    case _server.CONTINUE:
+    case _actions.CONTINUE:
       return { wait: false };
     default:
       return state;

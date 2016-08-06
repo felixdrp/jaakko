@@ -14,13 +14,12 @@ byobu-tmux rename-window -t $SESSION:0 'Dev'
 byobu-tmux splitw -v
 byobu-tmux splitw -v
 byobu-tmux splitw -v
-# byobu-tmux splitw -h
+byobu-tmux splitw -h
 # Select 1st pane cd and venv
 byobu-tmux select-pane -t 0
 byobu-tmux rename-window -t 0 nodemon
 byobu-tmux send-keys "cd ." C-m
-#byobu-tmux send-keys "nodemon ./build/gms-server.js" C-m
-byobu-tmux send-keys "nodemon ./server.js" C-m
+byobu-tmux send-keys "nodemon ./build/server.js" C-m
 #byobu-tmux send-keys "clear" C-m
 
 # Same with 2nd pane
@@ -54,13 +53,13 @@ byobu-tmux select-layout even-vertical
 # byobu-tmux splitw -h -p 50
 
 # Same with 6nd pane
-byobu-tmux select-pane -t 5
-byobu-tmux send-keys "cd servDev/backend/" C-m
-byobu-tmux send-keys "sudo ./RUN.sh" C-m
+# byobu-tmux select-pane -t 5
+# byobu-tmux send-keys "cd servDev/backend/" C-m
+# byobu-tmux send-keys "sudo ./RUN.sh" C-m
 
 # Same with 6nd pane
-byobu-tmux select-pane -t 6
-byobu-tmux send-keys "cd servDev/database/" C-m
+byobu-tmux select-pane -t 4
+byobu-tmux send-keys "cd database/" C-m
 byobu-tmux send-keys "sudo ./RUN.sh" C-m
 
 

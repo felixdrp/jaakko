@@ -103,36 +103,27 @@ var AccountSignIn = function (_React$Component) {
     key: 'login',
     value: function () {
       var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(e) {
-        var input, username, password, options, body;
+        var input, email, password;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 e.preventDefault();
                 input = this._input;
-                username = input.email.getValue();
+                email = input.email.getValue();
                 password = input.password.getValue();
+                // debugger
 
-                // Auth.login(this.state.user, this.state.password)
-                //   .catch(function(err) {
-                //     alert("There's an error logging in");
-                //     console.log("Error logging in", err);
-                //   });
+                this.context.websocket.send((0, _stringify2.default)({
+                  type: 'MUTATE',
+                  action: 'LOGIN_ACCOUNT',
+                  payload: {
+                    email: email,
+                    password: password
+                  }
+                }));
 
-                options = {
-                  // host: location.hostname,
-                  // port: location.port,
-                  method: 'POST',
-                  path: '/api/auth/local/login',
-                  headers: { Authorization: "Basic " + btoa(username + ":" + password) }
-                };
-                body = (0, _stringify2.default)({
-                  foo: "bar"
-                });
-
-                // await httpClient.getData(options, body);
-
-              case 6:
+              case 5:
               case 'end':
                 return _context.stop();
             }
@@ -286,7 +277,8 @@ var AccountSignIn = function (_React$Component) {
 }(_react2.default.Component);
 
 AccountSignIn.contextTypes = {
-  muiTheme: _react2.default.PropTypes.object.isRequired
+  muiTheme: _react2.default.PropTypes.object.isRequired,
+  websocket: _react2.default.PropTypes.object
 };
 exports.default = AccountSignIn;
 //# sourceMappingURL=signin.js.map

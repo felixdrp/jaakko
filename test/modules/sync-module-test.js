@@ -1,6 +1,6 @@
 import expect from 'expect'
 import synchronize from '../../src/reducers/sync'
-import * as actions from '../../src/actions/server'
+import * as actions from '../../src/actions/actions'
 
 describe('synchronize reducer', () => {
   it('should return the initial state', () => {

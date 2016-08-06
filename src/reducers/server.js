@@ -1,4 +1,4 @@
-import { REGISTER_ACCOUNT } from '../actions/server'
+import { REGISTER_ACCOUNT } from '../actions/actions'
 
 const initialState = [
   {

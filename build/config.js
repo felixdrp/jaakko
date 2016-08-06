@@ -16,7 +16,7 @@ var port = exports.port = typeof window === 'undefined' ? 8000 : window.document
 
 // DataBase, Mongodb configuration
 var mongodbConf = exports.mongodbConf = {
-  url: 'mongodb://localhost:27017/lifelog'
+  url: 'mongodb://localhost:27017/jaakko'
 };
 
 // GraphQL server connection options
@@ -40,10 +40,7 @@ var passwordOptions = {
   type: 'password',
   min: 4,
   max: 50,
-  mustHave: true,
-  numbers: 1,
-  capitals: 1,
-  symbols: 1
+  mustHave: true
 };
 
 var fieldsOptions = exports.fieldsOptions = {
