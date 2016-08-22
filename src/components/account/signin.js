@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+
 import { Link } from 'react-router'
 // import ReactMixin from 'react-mixin';
 // import Auth from '../services/AuthService'
@@ -9,31 +11,47 @@ import ButtonLoginWithTwitter from './buttonLoginWithTwitter';
 import ButtonLoginWithFacebook from './buttonLoginWithFacebook';
 import ButtonLoginWithLinkedin from './buttonLoginWithLinkedin';
 
-// import HttpClient from '../../../httpClient/http-client';
-
-// var httpClient = new HttpClient();
+import {
+  loginAccount,
+} from '../../websocket-message/server-actions'
 
 export default class AccountSignIn extends React.Component {
-
-  constructor() {
-    super()
-    this.state = {
-      userError: '',
-      emailError: '',
-      passwordError: '',
-    };
-
-    // Used to store references.
-    this._input = {};
-  }
+  static propTypes = {
+    loginStatus: React.PropTypes.object,
+  };
 
   static contextTypes = {
     muiTheme: React.PropTypes.object.isRequired,
     websocket: React.PropTypes.object,
   };
 
-  linkState(data) {
+  constructor() {
+    super()
+    this.state = {
+      email: { error: '', name: 'Email' },
+      password: { error: '', name: 'Password' },
+      // userError: '',
+      // emailError: '',
+      // passwordError: '',
+    };
 
+    // Used to store references.
+    this._input = {};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // Check if it was an error.
+    // Then pass the error from props to state.
+    if (nextProps.loginStatus) {
+      for (let field in nextProps.loginStatus) {
+        this.setState({
+          [field]: {
+            ...this.state[field],
+            error: nextProps.loginStatus[field]
+          }
+        })
+      }
+    }
   }
 
   async login(e) {
@@ -43,18 +61,11 @@ export default class AccountSignIn extends React.Component {
     const password = input.password.getValue();
     // debugger
     this.context.websocket.send(
-      JSON.stringify(
-        {
-          type: 'MUTATE',
-          action: 'LOGIN_ACCOUNT',
-          payload: {
-            email,
-            password
-          }
-        }
-      )
+      loginAccount({
+        email,
+        password,
+      })
     )
-
   }
 
   render() {
@@ -117,25 +128,28 @@ export default class AccountSignIn extends React.Component {
           >
             <TextField
               {...{spellCheck:"false"}}
+              id="email"
               hintText="Email"
               floatingLabelText="Email"
               floatingLabelFocusStyle={style.input1.floatingLabelFocus}
-              errorText={this.state.emailError}
+              errorText={this.state.email.error}
               ref={(c) => input.email = c}
-              onBlur={ () => this.setState({emailError: !input.email.getValue()? 'Email empty': ''}) }
+              onBlur={ () => this.setState({ email: { error: !input.email.getValue()? 'Email empty': ''} }) }
             />
             <br />
             <TextField
+              id="password"
               hintText="Password"
               floatingLabelText="Password"
               type="password"
-              errorText={this.state.passwordError}
+              errorText={this.state.password.error}
               ref={(c) => input.password = c}
-              onBlur={ () => this.setState({passwordError: !input.password.getValue()? 'Password empty': ''}) }
+              onBlur={ () => this.setState({ password: { error: !input.password.getValue()? 'Password empty': ''} }) }
             />
             <br />
             <br />
             <FlatButton
+              id="submitLoginAccount"
               style={style.button1}
               type="submit"
               onClick={this.login.bind(this)}
@@ -169,3 +183,10 @@ export default class AccountSignIn extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    loginStatus: state.account.loginStatus
+  }
+}
+
+export default connect(mapStateToProps)(AccountSignIn)

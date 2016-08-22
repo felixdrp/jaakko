@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux'
+
 // import ReactMixin from 'react-mixin';
 // import Auth from '../services/AuthService'
 import { Link } from 'react-router'
@@ -16,9 +18,30 @@ import crypto from 'crypto'
 
 import {
   registerAccount,
-} from '../../websock-message/server-actions'
+} from '../../websocket-message/server-actions'
 
-export default class LoginSignUp extends React.Component {
+class LoginSignUp extends React.Component {
+  static propTypes = {
+    registerStatus: React.PropTypes.object,
+
+    // Code of example...
+    // price: React.PropTypes.number.isRequired,
+    // initialQty: React.PropTypes.number
+    // todos: PropTypes.arrayOf(PropTypes.shape({
+    //   id: PropTypes.number.isRequired,
+    //   completed: PropTypes.bool.isRequired,
+    //   text: PropTypes.string.isRequired
+    // }).isRequired).isRequired,
+    // onTodoClick: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+  };
+
+  // To Speak with the server
+  static contextTypes = {
+    websocket: React.PropTypes.object,
+  };
 
   constructor() {
     super()
@@ -76,15 +99,26 @@ export default class LoginSignUp extends React.Component {
       },
     };
 
-    // Used to store references.
+    // Used to store inputs references.
     this._input = {};
   }
 
-  static contextTypes = {
-    websocket: React.PropTypes.object,
-  };
+  componentWillReceiveProps(nextProps) {
+    // Check if it was an error.
+    // Then pass the error from props to state.
+    if (nextProps.registerStatus) {
+      for (let field in nextProps.registerStatus) {
+        this.setState({
+          [field]: {
+            ...this.state[field],
+            error: nextProps.registerStatus[field]
+          }
+        })
+      }
+    }
+  }
 
-  async registerUser(e) {
+  registerUser(e) {
     e.preventDefault();
     const input = this._input;
     // const username = input.email.getValue(),
@@ -127,7 +161,8 @@ export default class LoginSignUp extends React.Component {
 
     try {
       // debugger
-      result = await this.context.websocket.send(
+      console.log(this.context.websocket)
+      result = this.context.websocket.send(
         registerAccount({
           firstName,
           surename,
@@ -136,35 +171,15 @@ export default class LoginSignUp extends React.Component {
           reEnterPassword,
         })
       )
-      // result = JSON.parse( await registerAccountClient({
-      //   firstName,
-      //   surename,
-      //   email,
-      //   password,
-      //   reEnterPassword,
-      // }))
-
-      if (result && 'errors' in result) {
-        // Show failed field
-        for (field in fields) {
-          if (result.errors[0].message.includes(field)) {
-            this.setState({ [field] : { ...this.state[field], error: 'Check field' } })
-          }
-        }
-      } else {
-        //add cookie
-        //redirect to main url
-        document.cookie = result.data.registerAccount.token
-        document.location = '/'
-
-        console.log('>>>' + token.data.loginAccount.token)
-      }
-    }
-    catch(error) {
+      // The response will come from websocket
+      // with a redux action.
+      // Even if it is an error.
+      // actions:
+      // Ok: setToken + setAccount info
+      // ERROR: setError
+    } catch(error) {
       console.error(error);
     }
-    // Account already taken ERROR
-    // {"errors":["Username already taken."],"status":200}
   }
 
   ifNotEmptyCleanAskInfo(e) {
@@ -207,9 +222,12 @@ export default class LoginSignUp extends React.Component {
 
   textField(field, options) {
     let onBlur = field !== 'reEnterPassword'? this.ifEmptyAskInfo.bind(this) : this.checkReEnterPassword.bind(this),
-        type  = options && 'type' in options? options.type : '';
+        type = options && 'type' in options? options.type : '',
+        element = this.state[field],
+        name = element.name,
+        errorText = element.error;
 
-    let [errorText, underlineColor] = (() => {
+    let [errorStrengthText, underlineColor] = (() => {
       let underlineStyle = this.style.input1.password,
           ps = 'Password security ';
 
@@ -233,11 +251,11 @@ export default class LoginSignUp extends React.Component {
         <TextField
           id={field}
           type={type}
-          hintText={this.state[field].name}
-          floatingLabelText={this.state[field].name}
+          hintText={name}
+          floatingLabelText={name}
           floatingLabelFocusStyle={this.style.input1.floatingLabelFocus}
-          errorText={field == 'password'? this.state[field].error || errorText : this.state[field].error}
-          errorStyle={field == 'password' && this.state[field].error.length  == 0 ? underlineColor : undefined}
+          errorText={field == 'password'? errorText || errorStrengthText : errorText}
+          errorStyle={field == 'password' && errorText.length == 0 ? underlineColor : undefined}
           ref={(c) => this._input[field] = c}
           onFocus={ field == 'password'? this.passwordStrengthCheck.bind(this) : undefined }
           onChange={ this.onChangeHandle.bind(this) }
@@ -307,3 +325,10 @@ export default class LoginSignUp extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    registerStatus: state.account.registerStatus
+  }
+}
+
+export default connect(mapStateToProps)(LoginSignUp)

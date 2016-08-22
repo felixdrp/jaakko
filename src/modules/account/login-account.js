@@ -91,11 +91,21 @@ export async function loginAccount(input, options) {
     }
 
     db.close();
-    return user.token
+    return {
+      email: user.email,
+      firstName: user.firstName,
+      surename: user.surename,
+      token: user.token,
+    }
 
   } catch (error) {
     if (db) {
       db.close()
+    }
+
+    if ('constructor' in error && error.constructor.name == 'TypeError') {
+      console.log(error)
+      return
     }
 
     if (db === null || error.constains('connect ECONNREFUSED') ) {

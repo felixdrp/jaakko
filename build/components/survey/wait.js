@@ -28,19 +28,21 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
 var _Card = require('material-ui/Card');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Syncronize = function (_Component) {
-  (0, _inherits3.default)(Syncronize, _Component);
+var Wait = function (_Component) {
+  (0, _inherits3.default)(Wait, _Component);
 
-  function Syncronize() {
-    (0, _classCallCheck3.default)(this, Syncronize);
-    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Syncronize).apply(this, arguments));
+  function Wait() {
+    (0, _classCallCheck3.default)(this, Wait);
+    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Wait).apply(this, arguments));
   }
 
-  (0, _createClass3.default)(Syncronize, [{
+  (0, _createClass3.default)(Wait, [{
     key: 'routerWillLeave',
     value: function routerWillLeave(location, callback) {
       console.log('mlk');
@@ -67,7 +69,7 @@ var Syncronize = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var message = this.props.message ? this.props.message : 'Please wait a moment...';
+      var message = this.props.message ? this.props.message : 'Please, wait a moment...';
       var textColor = this.context.muiTheme.palette.textColor;
 
 
@@ -97,18 +99,16 @@ var Syncronize = function (_Component) {
       );
     }
   }]);
-  return Syncronize;
+  return Wait;
 }(_react.Component);
 
-Syncronize.contextTypes = {
+Wait.propTypes = {
+  // loginStatus: React.PropTypes.object,
+};
+Wait.contextTypes = {
   muiTheme: _react2.default.PropTypes.object.isRequired,
-  router: _react2.default.PropTypes.object.isRequired
+  router: _react2.default.PropTypes.object.isRequired,
+  websocket: _react2.default.PropTypes.object
 };
-
-
-Syncronize.propTypes = {
-  // addTodo: PropTypes.func.isRequired
-};
-
-exports.default = Syncronize;
-//# sourceMappingURL=sync.js.map
+exports.default = Wait;
+//# sourceMappingURL=wait.js.map

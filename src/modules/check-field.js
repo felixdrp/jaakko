@@ -144,10 +144,10 @@ function check(fieldName, input, options) {
       }
       if (
         new RegExp(
-          `^(?=.*\\d{${options.numbers >= 0 ? options.numbers : 1},})` +
-          `(?=.*[a-z]{1,})` +
-          `(?=.*[A-Z]{${options.capitals >= 0 ? options.capitals : 1},})` +
-          `(?=.*\\W{${options.symbols >= 0 ? options.symbols : 1},})` +
+          `^(?=.*\\d{${options.numbers >= 0 ? options.numbers : 0},})` +
+          `(?=.*[a-zA-Z0-9]{1,})` +
+          `(?=.*[A-Z]{${options.capitals >= 0 ? options.capitals : 0},})` +
+          `(?=.*\\W{${options.symbols >= 0 ? options.symbols : 0},})` +
           `.{${options.min >= 0 ? options.min : 4},}$`
         ).test(input) === false
       ) {

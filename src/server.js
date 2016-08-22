@@ -12,6 +12,8 @@ var https = require('https');
 var credentials = {key: privateKey, cert: certificate};
 
 var WebSocketServer = require('ws').Server;
+import WebSocketSimple from './websocket-message/websocket-simple'
+
 var express = require('express')
 var compression = require('compression')
 var app = express()
@@ -19,16 +21,22 @@ var app = express()
 app.use(compression())
 
 // function that process the messages of type mutate.
-import mutate from './websock-message/server-mutate'
+import mutate from './websocket-message/server-mutate'
 
 // Redux
-import { createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import account from './reducers/server';
+import {
+  accounts,
+  groups,
+} from './reducers/server';
 
 // Note: this API requires redux@>=3.1.0
 const store = createStore(
-  account,
+  combineReducers({
+    accounts,
+    groups,
+  }),
   applyMiddleware(thunk)
 );
 
@@ -51,17 +59,25 @@ app.use('/', function (req, res) {
 
 webServer.listen( portWeb, () => console.log('server running at https://localhost:' + portWeb) );
 
-// wss.broadcast = function broadcast(data) {
-//   debugger
-//
-//   wss.clients.forEach(function each(client) {
-//     console.log('wss.clients length: ' + wss.clients.length)
-//     console.log('message sent to: ' + client.nombre)
-//     client.send(data + client.nombre);
-//   });
-// };
+wss.broadcast = function broadcast(data) {
+  // debugger
+  wss.clients.forEach(function each(client) {
+    console.log('wss.clients length: ' + wss.clients.length)
+    console.log('message sent to: ' + client.nombre)
+    client.send(data);
+  });
+};
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
+// setTimeout( () => {
+// setInterval( () => {
+// console.log('broadcast')
+// wss.broadcast(
+//   JSON.stringify(
+//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+//   )
+// )
+// }, 3000)
 
 function* nameMe() {
   yield* [
@@ -121,7 +137,7 @@ wss.on('connection', function (ws) {
           await mutate({
             action: message.action || '',
             payload: message.payload || '',
-            ws,
+            ws: new WebSocketSimple(ws),
             store
           })
           break;

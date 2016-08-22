@@ -4,21 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = require('babel-runtime/helpers/extends');
-
-var _extends3 = _interopRequireDefault(_extends2);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -44,6 +44,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
 var _reactRouter = require('react-router');
 
 var _Card = require('material-ui/Card');
@@ -68,14 +70,9 @@ var _buttonLoginWithLinkedin = require('./buttonLoginWithLinkedin');
 
 var _buttonLoginWithLinkedin2 = _interopRequireDefault(_buttonLoginWithLinkedin);
 
+var _serverActions = require('../../websocket-message/server-actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import HttpClient from '../../../httpClient/http-client';
-
-// var httpClient = new HttpClient();
-
-// import ReactMixin from 'react-mixin';
-// import Auth from '../services/AuthService'
 
 var AccountSignIn = function (_React$Component) {
   (0, _inherits3.default)(AccountSignIn, _React$Component);
@@ -86,9 +83,8 @@ var AccountSignIn = function (_React$Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(AccountSignIn).call(this));
 
     _this.state = {
-      userError: '',
-      emailError: '',
-      passwordError: ''
+      email: { error: '', name: 'Email' },
+      password: { error: '', name: 'Password' }
     };
 
     // Used to store references.
@@ -97,8 +93,18 @@ var AccountSignIn = function (_React$Component) {
   }
 
   (0, _createClass3.default)(AccountSignIn, [{
-    key: 'linkState',
-    value: function linkState(data) {}
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      // Check if it was an error.
+      // Then pass the error from props to state.
+      if (nextProps.loginStatus) {
+        for (var field in nextProps.loginStatus) {
+          this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], {
+            error: nextProps.loginStatus[field]
+          })));
+        }
+      }
+    }
   }, {
     key: 'login',
     value: function () {
@@ -114,13 +120,9 @@ var AccountSignIn = function (_React$Component) {
                 password = input.password.getValue();
                 // debugger
 
-                this.context.websocket.send((0, _stringify2.default)({
-                  type: 'MUTATE',
-                  action: 'LOGIN_ACCOUNT',
-                  payload: {
-                    email: email,
-                    password: password
-                  }
+                this.context.websocket.send((0, _serverActions.loginAccount)({
+                  email: email,
+                  password: password
                 }));
 
               case 5:
@@ -206,28 +208,30 @@ var AccountSignIn = function (_React$Component) {
               , method: 'POST'
             },
             _react2.default.createElement(_TextField2.default, (0, _extends3.default)({ spellCheck: "false" }, {
+              id: 'email',
               hintText: 'Email',
               floatingLabelText: 'Email',
               floatingLabelFocusStyle: style.input1.floatingLabelFocus,
-              errorText: this.state.emailError,
+              errorText: this.state.email.error,
               ref: function ref(c) {
                 return input.email = c;
               },
               onBlur: function onBlur() {
-                return _this2.setState({ emailError: !input.email.getValue() ? 'Email empty' : '' });
+                return _this2.setState({ email: { error: !input.email.getValue() ? 'Email empty' : '' } });
               }
             })),
             _react2.default.createElement('br', null),
             _react2.default.createElement(_TextField2.default, {
+              id: 'password',
               hintText: 'Password',
               floatingLabelText: 'Password',
               type: 'password',
-              errorText: this.state.passwordError,
+              errorText: this.state.password.error,
               ref: function ref(c) {
                 return input.password = c;
               },
               onBlur: function onBlur() {
-                return _this2.setState({ passwordError: !input.password.getValue() ? 'Password empty' : '' });
+                return _this2.setState({ password: { error: !input.password.getValue() ? 'Password empty' : '' } });
               }
             }),
             _react2.default.createElement('br', null),
@@ -235,6 +239,7 @@ var AccountSignIn = function (_React$Component) {
             _react2.default.createElement(
               _FlatButton2.default,
               {
+                id: 'submitLoginAccount',
                 style: style.button1,
                 type: 'submit',
                 onClick: this.login.bind(this)
@@ -275,10 +280,24 @@ var AccountSignIn = function (_React$Component) {
   }]);
   return AccountSignIn;
 }(_react2.default.Component);
+// import ReactMixin from 'react-mixin';
+// import Auth from '../services/AuthService'
 
+
+AccountSignIn.propTypes = {
+  loginStatus: _react2.default.PropTypes.object
+};
 AccountSignIn.contextTypes = {
   muiTheme: _react2.default.PropTypes.object.isRequired,
   websocket: _react2.default.PropTypes.object
 };
 exports.default = AccountSignIn;
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loginStatus: state.account.loginStatus
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(AccountSignIn);
 //# sourceMappingURL=signin.js.map

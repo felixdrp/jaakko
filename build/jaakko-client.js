@@ -4,6 +4,14 @@ var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
 var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
 
 var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
@@ -15,18 +23,6 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
-
-var _typeof2 = require('babel-runtime/helpers/typeof');
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _react = require('react');
 
@@ -48,11 +44,13 @@ var _routes2 = _interopRequireDefault(_routes);
 
 var _history = require('history');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _websocketSimple = require('./websocket-message/websocket-simple');
 
-// console.log(Object.keys(reactRR))
-// *** Load store reducers ***
-// import topicListPage from './reducers/topic-list-reducer'
+var _websocketSimple2 = _interopRequireDefault(_websocketSimple);
+
+var _clientReducers = require('./reducers/client-reducers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // The initial state from server-generated HTML
 // have a look to server code.
@@ -63,66 +61,29 @@ var initialState = window.__INITIAL_STATE__ || {};
 // const history = createHistory()
 
 // https://github.com/reactjs/react-router-redux
+
+
+// console.log(Object.keys(reactRR))
+// *** Load store reducers ***
 var middleware = (0, _reactRouterRedux.routerMiddleware)(_reactRouter.browserHistory);
 
 // // Create Redux store with initial state
-// // const store = createStore(counterApp, initialState)
-
-// const finalCreateStore = compose(
-//   applyMiddleware(middleware)
-//   // DevTools.instrument()
-//   //
-// )(createStore)
-// const store = finalCreateStore(reducer, window.__INITIAL_STATE__)
-
-function loginReducer() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { loginStatus: null } : arguments[0];
-  var action = arguments[1];
-
-  switch (action.type) {
-    case 'LOGIN_ERROR_BAD_EMAIL':
-      return { loginStatus: 'EMAIL_NO_VALID' };
-    case 'LOGIN_ERROR_PASSWORD_EMAIL':
-      return { loginStatus: 'PASSWORD_NO_VALID' };
-    default:
-      return state;
-  }
-}
-
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
-  loginReducer: loginReducer,
+  account: _clientReducers.account,
   routing: _reactRouterRedux.routerReducer
-}), initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(middleware)));
+}), initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(middleware),
+// Redux devToolsExtension
+window.devToolsExtension ? window.devToolsExtension() : function (f) {
+  return f;
+}));
 // Create an enhanced history that syncs navigation events with the store
 var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
 
 console.log(store.getState());
 // Connection example: "wss://localhost:8008"
 var ws = new WebSocket('wss://' + location.host);
-// Facade object to use websocket
-
-var WebSocketSimple = function () {
-  function WebSocketSimple(initialWebsocket) {
-    (0, _classCallCheck3.default)(this, WebSocketSimple);
-
-    this.ws = initialWebsocket;
-    // console.log('Initiated ')
-  }
-
-  (0, _createClass3.default)(WebSocketSimple, [{
-    key: 'send',
-    value: function send(data) {
-      var message = void 0;
-      if ((typeof data === 'undefined' ? 'undefined' : (0, _typeof3.default)(data)) === 'object') {
-        message = (0, _stringify2.default)(event.data);
-      }
-      this.ws.send(message);
-    }
-  }]);
-  return WebSocketSimple;
-}();
-
-var websocket = new WebSocketSimple(ws);
+// var websocket used to send data.
+var websocket = new _websocketSimple2.default(ws);
 
 // Llegan mensajes del servidor:
 ws.onmessage = function (event) {
@@ -144,7 +105,7 @@ ws.onmessage = function (event) {
       mutate({
         action: message.action,
         payload: message.payload,
-        ws: ws,
+        websocket: websocket,
         store: store
       });
       break;
@@ -160,11 +121,16 @@ ws.onmessage = function (event) {
   }
 };
 
+// Simulate a login...
+// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'me@me.me', password: 'algo'} } ), 2000)
 setTimeout(function () {
-  return websocket.send((0, _stringify2.default)({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: 'me@me.me', password: 'algo' } }));
-}, 2000);
+  return websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: 'felixdrp@gmail.com', password: '1234' } });
+}, 1000);
 
+// Move the client to a web page...
 // setTimeout( () => store.dispatch(push('/modules/example')), 3000)
+
+// Class to pass the websocket with context to the rest of components.
 
 var HiperApp = function (_React$Component) {
   (0, _inherits3.default)(HiperApp, _React$Component);

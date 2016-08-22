@@ -95,7 +95,7 @@ function check(fieldName, input, options) {
       if (typeof input !== 'string') {
         return (0, _error.reportError)('The input field ' + fieldName + ' not valid', 'The field ' + fieldName + ' is not a string', 'PASSWORD_NOT_VALID', '7102e599-c3f5-4e36-ba49-e057828ea931');
       }
-      if (new RegExp('^(?=.*\\d{' + (options.numbers >= 0 ? options.numbers : 1) + ',})' + '(?=.*[a-z]{1,})' + ('(?=.*[A-Z]{' + (options.capitals >= 0 ? options.capitals : 1) + ',})') + ('(?=.*\\W{' + (options.symbols >= 0 ? options.symbols : 1) + ',})') + ('.{' + (options.min >= 0 ? options.min : 4) + ',}$')).test(input) === false) {
+      if (new RegExp('^(?=.*\\d{' + (options.numbers >= 0 ? options.numbers : 0) + ',})' + '(?=.*[a-zA-Z0-9]{1,})' + ('(?=.*[A-Z]{' + (options.capitals >= 0 ? options.capitals : 0) + ',})') + ('(?=.*\\W{' + (options.symbols >= 0 ? options.symbols : 0) + ',})') + ('.{' + (options.min >= 0 ? options.min : 4) + ',}$')).test(input) === false) {
         return (0, _error.reportError)('The input field ' + fieldName + ' not valid', 'The field ' + fieldName + ' not valid', 'PASSWORD_NOT_VALID', '5d4c774e-cfc7-4e73-b240-07def5f224cd');
       }
       break;

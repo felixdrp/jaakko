@@ -8,10 +8,11 @@ import { browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer, routerMiddleware, push  } from 'react-router-redux'
 import Routes from './routes';
 import { createHistory } from 'history';
+import WebSocketSimple from './websocket-message/websocket-simple'
 
 // console.log(Object.keys(reactRR))
 // *** Load store reducers ***
-// import topicListPage from './reducers/topic-list-reducer'
+import { account } from './reducers/client-reducers'
 
 // The initial state from server-generated HTML
 // have a look to server code.
@@ -24,34 +25,16 @@ const initialState = window.__INITIAL_STATE__ || {}
 const middleware = routerMiddleware(browserHistory)
 
 // // Create Redux store with initial state
-// // const store = createStore(counterApp, initialState)
-
-// const finalCreateStore = compose(
-//   applyMiddleware(middleware)
-//   // DevTools.instrument()
-//   //
-// )(createStore)
-// const store = finalCreateStore(reducer, window.__INITIAL_STATE__)
-
-function loginReducer(state = { loginStatus: null }, action) {
-  switch (action.type) {
-  case 'LOGIN_ERROR_BAD_EMAIL':
-    return { loginStatus: 'EMAIL_NO_VALID' }
-  case 'LOGIN_ERROR_PASSWORD_EMAIL':
-    return { loginStatus: 'PASSWORD_NO_VALID' }
-  default:
-    return state
-  }
-}
-
 const store = createStore(
   combineReducers({
-    loginReducer,
+    account,
     routing: routerReducer,
   }),
   initialState,
   compose(
     applyMiddleware(middleware),
+    // Redux devToolsExtension
+    window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 )
 // Create an enhanced history that syncs navigation events with the store
@@ -60,22 +43,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 console.log(store.getState())
 // Connection example: "wss://localhost:8008"
 var ws = new WebSocket( 'wss://' + location.host )
-// Facade object to use websocket
-class WebSocketSimple {
-  constructor(initialWebsocket) {
-    this.ws = initialWebsocket
-    // console.log('Initiated ')
-  }
-
-  send(data) {
-    let message
-    if ( typeof data === 'object' ) {
-      message = JSON.stringify(event.data)
-    }
-    this.ws.send(message)
-  }
-}
-
+// var websocket used to send data.
 var websocket = new WebSocketSimple(ws)
 
 // Llegan mensajes del servidor:
@@ -98,7 +66,7 @@ ws.onmessage = (event) => {
       mutate({
         action: message.action,
         payload: message.payload,
-        ws,
+        websocket,
         store
       })
       break
@@ -114,9 +82,14 @@ ws.onmessage = (event) => {
   }
 }
 
-setTimeout( () => websocket.send( JSON.stringify({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'me@me.me', password: 'algo'} }) ), 2000)
+// Simulate a login...
+// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'me@me.me', password: 'algo'} } ), 2000)
+setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'felixdrp@gmail.com', password: '1234'} } ), 1000)
 
+// Move the client to a web page...
 // setTimeout( () => store.dispatch(push('/modules/example')), 3000)
+
+// Class to pass the websocket with context to the rest of components.
 class HiperApp extends React.Component {
   getChildContext() {
     return {websocket: websocket};

@@ -21,7 +21,7 @@ import {
   Example,
   MathChallenge,
   Question,
-  Syncronize,
+  Wait,
 } from './components/'
 
 // Assign the history:
@@ -37,8 +37,8 @@ var routes = (history) => (
         <Route path="signup" component={AccountSignUp} />
       </Route>
 
-      <Route path="modules" component={CommonViewContainer} >
-        <Route path="sync" component={Syncronize} />
+      <Route path="survey" component={CommonViewContainer} >
+        <Route path="waitSync" component={Wait} />
         <Route path="example" component={Example} />
       </Route>
 

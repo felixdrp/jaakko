@@ -1,10 +1,17 @@
 import React, { PropTypes, Component } from 'react'
+import { connect } from 'react-redux'
+
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
-class Syncronize extends Component {
+class Wait extends Component {
+  static propTypes = {
+    // loginStatus: React.PropTypes.object,
+  };
+
   static contextTypes = {
     muiTheme: React.PropTypes.object.isRequired,
     router: React.PropTypes.object.isRequired,
+    websocket: React.PropTypes.object,
   };
 
   routerWillLeave (location, callback) {
@@ -28,7 +35,7 @@ class Syncronize extends Component {
   }
 
   render() {
-    let message = this.props.message? this.props.message : 'Please wait a moment...'
+    let message = this.props.message? this.props.message : 'Please, wait a moment...'
     const { textColor } = this.context.muiTheme.palette;
 
     return (
@@ -57,8 +64,4 @@ class Syncronize extends Component {
   }
 }
 
-Syncronize.propTypes = {
-  // addTodo: PropTypes.func.isRequired
-}
-
-export default Syncronize
+export default Wait

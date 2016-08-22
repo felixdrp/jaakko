@@ -136,7 +136,12 @@ var loginAccount = exports.loginAccount = function () {
           case 38:
 
             db.close();
-            return _context.abrupt('return', user.token);
+            return _context.abrupt('return', {
+              email: user.email,
+              firstName: user.firstName,
+              surename: user.surename,
+              token: user.token
+            });
 
           case 42:
             _context.prev = 42;
@@ -146,14 +151,23 @@ var loginAccount = exports.loginAccount = function () {
               db.close();
             }
 
+            if (!('constructor' in _context.t3 && _context.t3.constructor.name == 'TypeError')) {
+              _context.next = 48;
+              break;
+            }
+
+            console.log(_context.t3);
+            return _context.abrupt('return');
+
+          case 48:
             if (!(db === null || _context.t3.constains('connect ECONNREFUSED'))) {
-              _context.next = 47;
+              _context.next = 50;
               break;
             }
 
             return _context.abrupt('return', (0, _error.reportError)('Database connection error.', 'It was an error in the connection with the database.', 'DATA_BASE_CONNECTION_ERROR', 'a7c5bbb7-ee5c-45fe-af13-29e3c2cda683'));
 
-          case 47:
+          case 50:
           case 'end':
             return _context.stop();
         }

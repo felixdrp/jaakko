@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Syncronize = exports.Question = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Wait = exports.Question = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -21,21 +21,21 @@ var _commonViewContainer = require('./common-view-container');
 
 var _commonViewContainer2 = _interopRequireDefault(_commonViewContainer);
 
-var _example = require('./example');
+var _example = require('./survey/example');
 
 var _example2 = _interopRequireDefault(_example);
 
-var _mathChallenge = require('./math-challenge');
+var _mathChallenge = require('./survey/math-challenge');
 
 var _mathChallenge2 = _interopRequireDefault(_mathChallenge);
 
-var _question = require('./question');
+var _question = require('./survey/question');
 
 var _question2 = _interopRequireDefault(_question);
 
-var _sync = require('./sync');
+var _wait = require('./survey/wait');
 
-var _sync2 = _interopRequireDefault(_sync);
+var _wait2 = _interopRequireDefault(_wait);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,11 +44,19 @@ exports.AccountSignIn = _signin2.default; /**
                                            *
                                            */
 
+// Account
+
 exports.AccountSignUp = _signup2.default;
+
+// Generic
+
 exports.AppContainer = _appContainer2.default;
 exports.CommonViewContainer = _commonViewContainer2.default;
+
+// Survey
+
 exports.Example = _example2.default;
 exports.MathChallenge = _mathChallenge2.default;
 exports.Question = _question2.default;
-exports.Syncronize = _sync2.default;
+exports.Wait = _wait2.default;
 //# sourceMappingURL=index.js.map

@@ -113,6 +113,7 @@ describe('Account:', () => {
       // return cookie
     });
   });
+
   describe('Login:', () => {
     it('Login Check all fields give empty message.', async function() {
       let loginAccount = {
@@ -217,5 +218,5 @@ describe('Account:', () => {
     });
   });
 
-  after(() => driver.quit())
+  // after(() => driver.quit())
 });

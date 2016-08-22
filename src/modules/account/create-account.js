@@ -18,8 +18,8 @@ export async function createAccount(input, options) {
       '30db4b60-fe9e-4c97-87fd-3149c26fe560',
     )
   }
-  // console.log(Object.keys(fieldsOptions))
-  // console.log(JSON.stringify(fieldsOptions))
+  console.log(Object.keys(input))
+  console.log(JSON.stringify(input))
 
   let error = {};
 
@@ -81,6 +81,8 @@ export async function createAccount(input, options) {
     // Create an mondoDB ObjectID for the new user
     newUserID = new ObjectID()
     // Pass the token provided or create a new token
+    // debugger
+
     token = fields.token || await createToken()
 
     // Add user to collection db.User
@@ -89,10 +91,10 @@ export async function createAccount(input, options) {
       firstName: fields.firstName,
       surename: fields.surename,
       email: fields.email,
-      uploadAsPrivate: true,
+      // uploadAsPrivate: true,
       token,
-      tokenupdate: new Date(),
-      question: ''
+      // tokenupdate: new Date(),
+      // question: ''
     })
 
     // Add user to collection db.Passport

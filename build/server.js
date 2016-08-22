@@ -12,7 +12,11 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
-var _serverMutate = require('./websock-message/server-mutate');
+var _websocketSimple = require('./websocket-message/websocket-simple');
+
+var _websocketSimple2 = _interopRequireDefault(_websocketSimple);
+
+var _serverMutate = require('./websocket-message/server-mutate');
 
 var _serverMutate2 = _interopRequireDefault(_serverMutate);
 
@@ -23,8 +27,6 @@ var _reduxThunk = require('redux-thunk');
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 var _server = require('./reducers/server');
-
-var _server2 = _interopRequireDefault(_server);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44,6 +46,8 @@ var https = require('https');
 var credentials = { key: privateKey, cert: certificate };
 
 var WebSocketServer = require('ws').Server;
+
+
 var express = require('express');
 var compression = require('compression');
 var app = express();
@@ -57,7 +61,10 @@ app.use(compression());
 
 
 // Note: this API requires redux@>=3.1.0
-var store = (0, _redux.createStore)(_server2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+var store = (0, _redux.createStore)((0, _redux.combineReducers)({
+  accounts: _server.accounts,
+  groups: _server.groups
+}), (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 var webTemplate = require('../web-template');
 
@@ -80,17 +87,25 @@ webServer.listen(portWeb, function () {
   return console.log('server running at https://localhost:' + portWeb);
 });
 
-// wss.broadcast = function broadcast(data) {
-//   debugger
-//
-//   wss.clients.forEach(function each(client) {
-//     console.log('wss.clients length: ' + wss.clients.length)
-//     console.log('message sent to: ' + client.nombre)
-//     client.send(data + client.nombre);
-//   });
-// };
+wss.broadcast = function broadcast(data) {
+  // debugger
+  wss.clients.forEach(function each(client) {
+    console.log('wss.clients length: ' + wss.clients.length);
+    console.log('message sent to: ' + client.nombre);
+    client.send(data);
+  });
+};
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
+// setTimeout( () => {
+// setInterval( () => {
+// console.log('broadcast')
+// wss.broadcast(
+//   JSON.stringify(
+//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+//   )
+// )
+// }, 3000)
 
 function nameMe() {
   return _regenerator2.default.wrap(function nameMe$(_context) {
@@ -180,7 +195,7 @@ wss.on('connection', function (ws) {
               return (0, _serverMutate2.default)({
                 action: message.action || '',
                 payload: message.payload || '',
-                ws: ws,
+                ws: new _websocketSimple2.default(ws),
                 store: store
               });
 

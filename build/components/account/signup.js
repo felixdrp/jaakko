@@ -8,10 +8,6 @@ var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
 
 var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
 
-var _regenerator = require('babel-runtime/regenerator');
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
 var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
@@ -19,10 +15,6 @@ var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
-
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -47,6 +39,8 @@ var _inherits3 = _interopRequireDefault(_inherits2);
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = require('react-redux');
 
 var _reactRouter = require('react-router');
 
@@ -74,7 +68,7 @@ var _crypto = require('crypto');
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
-var _serverActions = require('../../websock-message/server-actions');
+var _serverActions = require('../../websocket-message/server-actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -140,120 +134,90 @@ var LoginSignUp = function (_React$Component) {
       }
     };
 
-    // Used to store references.
+    // Used to store inputs references.
     _this._input = {};
     return _this;
   }
 
+  // To Speak with the server
+
+
   (0, _createClass3.default)(LoginSignUp, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      // Check if it was an error.
+      // Then pass the error from props to state.
+      if (nextProps.registerStatus) {
+        for (var _field in nextProps.registerStatus) {
+          this.setState((0, _defineProperty3.default)({}, _field, (0, _extends3.default)({}, this.state[_field], {
+            error: nextProps.registerStatus[_field]
+          })));
+        }
+      }
+    }
+  }, {
     key: 'registerUser',
-    value: function () {
-      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(e) {
-        var input, firstName, surename, email, password, reEnterPassword, fields, result, foundEmpty, field;
-        return _regenerator2.default.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                e.preventDefault();
-                input = this._input;
-                // const username = input.email.getValue(),
-                //       username = input.username.getValue(),
-                //       password = input.password.getValue();
+    value: function registerUser(e) {
+      e.preventDefault();
+      var input = this._input;
+      // const username = input.email.getValue(),
+      //       username = input.username.getValue(),
+      //       password = input.password.getValue();
+      var firstName = input.firstName.getValue() || '',
+          surename = input.surename.getValue() || '',
+          email = input.email.getValue() || '',
+          password = input.password.getValue() || '',
+          reEnterPassword = input.reEnterPassword.getValue() || '';
 
-                firstName = input.firstName.getValue() || '', surename = input.surename.getValue() || '', email = input.email.getValue() || '', password = input.password.getValue() || '', reEnterPassword = input.reEnterPassword.getValue() || '';
-                fields = {
-                  firstName: firstName,
-                  surename: surename,
-                  email: email,
-                  password: password,
-                  reEnterPassword: reEnterPassword
-                };
-                result = '', foundEmpty = false, field = void 0;
+      var fields = {
+        firstName: firstName,
+        surename: surename,
+        email: email,
+        password: password,
+        reEnterPassword: reEnterPassword
+      };
 
-                // Check all fields are not empty
+      var result = '',
+          foundEmpty = false,
+          field = void 0;
 
-                for (field in fields) {
-                  if (fields[field] === '') {
-                    this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Please fill field' })));
-                    foundEmpty = true;
-                  }
-                }
-
-                if (!foundEmpty) {
-                  _context.next = 8;
-                  break;
-                }
-
-                return _context.abrupt('return', 'Found some empty value');
-
-              case 8:
-                if (!(fields['password'] !== fields['reEnterPassword'])) {
-                  _context.next = 10;
-                  break;
-                }
-
-                return _context.abrupt('return', this.setState((0, _defineProperty3.default)({}, 'reEnterPassword', (0, _extends3.default)({}, this.state[reEnterPassword], { error: 'Password is not equal to Re-enter Password' }))));
-
-              case 10:
-                _context.prev = 10;
-                _context.next = 13;
-                return this.context.websocket.send((0, _serverActions.registerAccount)({
-                  firstName: firstName,
-                  surename: surename,
-                  email: email,
-                  password: password,
-                  reEnterPassword: reEnterPassword
-                }));
-
-              case 13:
-                result = _context.sent;
-
-                // result = JSON.parse( await registerAccountClient({
-                //   firstName,
-                //   surename,
-                //   email,
-                //   password,
-                //   reEnterPassword,
-                // }))
-
-                if (result && 'errors' in result) {
-                  // Show failed field
-                  for (field in fields) {
-                    if (result.errors[0].message.includes(field)) {
-                      this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Check field' })));
-                    }
-                  }
-                } else {
-                  //add cookie
-                  //redirect to main url
-                  document.cookie = result.data.registerAccount.token;
-                  document.location = '/';
-
-                  console.log('>>>' + token.data.loginAccount.token);
-                }
-                _context.next = 20;
-                break;
-
-              case 17:
-                _context.prev = 17;
-                _context.t0 = _context['catch'](10);
-
-                console.error(_context.t0);
-
-              case 20:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[10, 17]]);
-      }));
-
-      function registerUser(_x) {
-        return _ref.apply(this, arguments);
+      // Check all fields are not empty
+      for (field in fields) {
+        if (fields[field] === '') {
+          this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Please fill field' })));
+          foundEmpty = true;
+        }
       }
 
-      return registerUser;
-    }()
+      if (foundEmpty) {
+        return 'Found some empty value';
+      }
+
+      // Check Password and reEnterPassword are equal
+      if (fields['password'] !== fields['reEnterPassword']) {
+        return this.setState((0, _defineProperty3.default)({}, 'reEnterPassword', (0, _extends3.default)({}, this.state[reEnterPassword], { error: 'Password is not equal to Re-enter Password' })));
+      }
+
+      try {
+        // debugger
+        console.log(this.context.websocket);
+        result = this.context.websocket.send((0, _serverActions.registerAccount)({
+          firstName: firstName,
+          surename: surename,
+          email: email,
+          password: password,
+          reEnterPassword: reEnterPassword
+        }));
+        // The response will come from websocket
+        // with a redux action.
+        // Even if it is an error.
+        // actions:
+        // Ok: setToken + setAccount info
+        // ERROR: setError
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }, {
     key: 'ifNotEmptyCleanAskInfo',
     value: function ifNotEmptyCleanAskInfo(e) {
@@ -303,9 +267,12 @@ var LoginSignUp = function (_React$Component) {
       var _this2 = this;
 
       var onBlur = field !== 'reEnterPassword' ? this.ifEmptyAskInfo.bind(this) : this.checkReEnterPassword.bind(this),
-          type = options && 'type' in options ? options.type : '';
+          type = options && 'type' in options ? options.type : '',
+          element = this.state[field],
+          name = element.name,
+          errorText = element.error;
 
-      var _ref2 = function () {
+      var _ref = function () {
         var underlineStyle = _this2.style.input1.password,
             ps = 'Password security ';
 
@@ -324,10 +291,10 @@ var LoginSignUp = function (_React$Component) {
         return [];
       }();
 
-      var _ref3 = (0, _slicedToArray3.default)(_ref2, 2);
+      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
 
-      var errorText = _ref3[0];
-      var underlineColor = _ref3[1];
+      var errorStrengthText = _ref2[0];
+      var underlineColor = _ref2[1];
 
 
       return _react2.default.createElement(
@@ -336,11 +303,11 @@ var LoginSignUp = function (_React$Component) {
         _react2.default.createElement(_TextField2.default, {
           id: field,
           type: type,
-          hintText: this.state[field].name,
-          floatingLabelText: this.state[field].name,
+          hintText: name,
+          floatingLabelText: name,
           floatingLabelFocusStyle: this.style.input1.floatingLabelFocus,
-          errorText: field == 'password' ? this.state[field].error || errorText : this.state[field].error,
-          errorStyle: field == 'password' && this.state[field].error.length == 0 ? underlineColor : undefined,
+          errorText: field == 'password' ? errorText || errorStrengthText : errorText,
+          errorStyle: field == 'password' && errorText.length == 0 ? underlineColor : undefined,
           ref: function ref(c) {
             return _this2._input[field] = c;
           },
@@ -423,12 +390,25 @@ var LoginSignUp = function (_React$Component) {
 
 // import { registerAccountClient } from '../../../data-handler-http/register-account-client'
 
+
 // import ReactMixin from 'react-mixin';
 // import Auth from '../services/AuthService'
 
 
+LoginSignUp.propTypes = {
+  registerStatus: _react2.default.PropTypes.object
+
+};
+LoginSignUp.defaultProps = {};
 LoginSignUp.contextTypes = {
   websocket: _react2.default.PropTypes.object
 };
-exports.default = LoginSignUp;
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    registerStatus: state.account.registerStatus
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(LoginSignUp);
 //# sourceMappingURL=signup.js.map
