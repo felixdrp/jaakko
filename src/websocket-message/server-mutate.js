@@ -48,7 +48,28 @@ import { loginAccount } from '../modules/account/login-account'
 
 export default async function mutate({ action, payload, ws, store }) {
   let payloadResponse,
-      result
+      result,
+      account
+
+  function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
+    let tempAccount
+    // Register the user in the server store.
+    store.dispatch( accountsAdd({...account, group: 'unassigned'}) )
+    console.log('>>>>>state')
+
+    // Log the account in the Client
+    tempAccount = {...account, ws: undefined}
+    delete tempAccount.ws
+    ws.send(  wsLogAccount(account) )
+    console.log('>>>>>state')
+
+    // Go to WaitSync to start session
+    ws.send(
+      wsGotoPage({ url: '/survey/waitSync', options: {} })
+    )
+    console.log('>>>>>state')
+
+  }
 
   switch (action) {
     case REGISTER_ACCOUNT:
@@ -98,17 +119,14 @@ export default async function mutate({ action, payload, ws, store }) {
       // So we can identify the ws with the account email.
       ws.accountCode = payload.email
 
-      // Register the user in the server store.
-
-      // Log the account in the Client
-      ws.send(
-        wsLogAccount({
-          email: payload.email,
-          firstName: payload.firstName,
-          surename: payload.surename,
-          token: result,
-        })
-      )
+      account = {
+        email: payload.email,
+        firstName: payload.firstName,
+        surename: payload.surename,
+        token: result,
+        ws,
+      }
+      reduxStoreServerAndClientRegisterAccountAndGoToWait(account)
       // Ready to asign to a group
       return true
       break;
@@ -153,21 +171,18 @@ export default async function mutate({ action, payload, ws, store }) {
       // So we can identify the ws with the account email.
       ws.accountCode = payload.email
 
-      // Log the account in the Client
-      ws.send(
-        wsLogAccount({
-          email: payload.email,
-          firstName: result.firstName,
-          surename: result.surename,
-          token: result.token,
-        })
-      )
+      account = {
+        email: payload.email,
+        firstName: result.firstName,
+        surename: result.surename,
+        token: result.token,
+        ws: ws,
+      }
 
-      ws.send(
-        wsGotoPage({ url: '/survey/waitSync', options: {} })
-      )
-
-
+      console.log('>>>>>state')
+      reduxStoreServerAndClientRegisterAccountAndGoToWait(account)
+      console.log('>>>>>state')
+      console.log(store.getState())
       // console.log('send error login')
       // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
       return true
