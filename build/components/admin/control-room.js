@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -44,6 +48,40 @@ var _MenuItem = require('material-ui/MenuItem');
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
+var _Card = require('material-ui/Card');
+
+var _FlatButton = require('material-ui/FlatButton');
+
+var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _Avatar = require('material-ui/Avatar');
+
+var _Avatar2 = _interopRequireDefault(_Avatar);
+
+var _Chip = require('material-ui/Chip');
+
+var _Chip2 = _interopRequireDefault(_Chip);
+
+var _group = require('material-ui/svg-icons/social/group');
+
+var _group2 = _interopRequireDefault(_group);
+
+var _groupAdd = require('material-ui/svg-icons/social/group-add');
+
+var _groupAdd2 = _interopRequireDefault(_groupAdd);
+
+var _personOutline = require('material-ui/svg-icons/social/person-outline');
+
+var _personOutline2 = _interopRequireDefault(_personOutline);
+
+var _developerBoard = require('material-ui/svg-icons/hardware/developer-board');
+
+var _developerBoard2 = _interopRequireDefault(_developerBoard);
+
 var _memory = require('material-ui/svg-icons/hardware/memory');
 
 var _memory2 = _interopRequireDefault(_memory);
@@ -64,17 +102,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Icons
 
-var AccountSignIn = function (_React$Component) {
-  (0, _inherits3.default)(AccountSignIn, _React$Component);
+var ControlRoom = function (_React$Component) {
+  (0, _inherits3.default)(ControlRoom, _React$Component);
 
-  function AccountSignIn() {
-    (0, _classCallCheck3.default)(this, AccountSignIn);
-    return (0, _possibleConstructorReturn3.default)(this, (AccountSignIn.__proto__ || (0, _getPrototypeOf2.default)(AccountSignIn)).apply(this, arguments));
+  function ControlRoom() {
+    (0, _classCallCheck3.default)(this, ControlRoom);
+    return (0, _possibleConstructorReturn3.default)(this, (ControlRoom.__proto__ || (0, _getPrototypeOf2.default)(ControlRoom)).apply(this, arguments));
   }
 
-  (0, _createClass3.default)(AccountSignIn, [{
+  (0, _createClass3.default)(ControlRoom, [{
     key: 'render',
     value: function render() {
+      var style = {
+        gray: {
+          color: '#565555'
+        }
+      };
       return _react2.default.createElement(
         'div',
         null,
@@ -100,12 +143,228 @@ var AccountSignIn = function (_React$Component) {
             _react2.default.createElement(_MenuItem2.default, { primaryText: 'Help' }),
             _react2.default.createElement(_MenuItem2.default, { primaryText: 'Sign out' })
           )
-        })
+        }),
+        _react2.default.createElement(
+          _Card.Card,
+          {
+            style: {
+              paddingBottom: 20
+            }
+          },
+          _react2.default.createElement(_Card.CardHeader, {
+            title: _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement(
+                _IconButton2.default,
+                null,
+                _react2.default.createElement(_group2.default, null)
+              ),
+              ' Groups manager '
+            ),
+            subtitle: 'Groups manager'
+            // avatar="images/jsa-128.jpg"
+          }),
+          _react2.default.createElement(_Card.CardTitle, {
+            title: _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement(_group2.default, { style: style.gray }),
+              _react2.default.createElement(_developerBoard2.default, { style: (0, _extends3.default)({}, style.gray, { marginRight: 10 }) }),
+              'Groups automated'
+            ),
+            subtitle: 'Groups creation with AI help'
+          }),
+          _react2.default.createElement(
+            _Card.CardText,
+            null,
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi. Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque. Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.'
+          ),
+          _react2.default.createElement(_Card.CardTitle, {
+            title: _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement(_group2.default, { style: style.gray }),
+              _react2.default.createElement(_modeEdit2.default, { style: (0, _extends3.default)({}, style.gray, { marginRight: 10 }) }),
+              'Groups customization'
+            ),
+            subtitle: 'Groups manual fine customization'
+          }),
+          _react2.default.createElement(_RaisedButton2.default
+          // Unassigned Accounts
+          , { label: _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement(_personOutline2.default, { style: {
+                  color: '#6c6c6c',
+                  position: 'relative',
+                  top: 6,
+                  marginRight: 7
+                } }),
+              '10',
+              _react2.default.createElement(
+                'span',
+                {
+                  style: {
+                    color: '#6c6c6c',
+                    marginLeft: 15
+                  }
+                },
+                'Unassigned Accounts'
+              )
+            ),
+            onClick: function onClick() {
+              return console.log('onclik!!!!');
+            },
+            backgroundColor: '#efefef',
+            style: {
+              minWidth: '95%',
+              margin: '2.5%'
+            }
+          }),
+          _react2.default.createElement(
+            'div',
+            {
+              // Unassigned Chips
+              style: {
+                minWidth: '95%',
+                margin: '2.5%',
+                marginTop: 0
+              }
+            },
+            _react2.default.createElement(
+              _Chip2.default,
+              {
+                backgroundColor: '#d6d6d6'
+                // onRequestDelete={ () => console.log('onclik!!!!') }
+                , onTouchTap: function onTouchTap() {
+                  return console.log('onclik!!!!');
+                },
+                style: {
+                  margin: 3
+                }
+              },
+              'Colored Chip'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            {
+              // Assign Groups
+              // Groups Chips
+              style: {
+                minWidth: '95%',
+                margin: '2.5%',
+                marginTop: 65
+              }
+            },
+            _react2.default.createElement(_RaisedButton2.default, {
+              label: _react2.default.createElement(
+                'span',
+                null,
+                _react2.default.createElement(_groupAdd2.default, { style: {
+                    position: 'relative',
+                    top: 6,
+                    marginRight: 7
+                  } }),
+                'Add group'
+              ),
+              onClick: function onClick() {
+                return console.log('onclik!!!!');
+              },
+              backgroundColor: '#ddffb1',
+              style: {
+                // minWidth: '95%',
+                marginBottom: 20
+              }
+            }),
+            _react2.default.createElement(
+              _Card.Card,
+              {
+                style: {
+                  width: 460,
+                  paddingBottom: 15
+                }
+              },
+              _react2.default.createElement(_RaisedButton2.default, {
+                label: _react2.default.createElement(
+                  'span',
+                  null,
+                  _react2.default.createElement(_group2.default, {
+                    style: {
+                      color: '#6c6c6c',
+                      position: 'relative',
+                      top: 6,
+                      marginRight: 7
+                    }
+                  }),
+                  'Group 1',
+                  _react2.default.createElement(_personOutline2.default, {
+                    style: {
+                      color: '#6c6c6c',
+                      position: 'relative',
+                      top: 6,
+                      marginLeft: 7,
+                      marginRight: 7
+                    }
+                  }),
+                  '10',
+                  _react2.default.createElement(
+                    'span',
+                    {
+                      style: {
+                        color: '#6c6c6c',
+                        marginLeft: 15
+                      }
+                    },
+                    'Assigned Accounts'
+                  )
+                ),
+                onClick: function onClick() {
+                  return console.log('onclik!!!!');
+                },
+                backgroundColor: '#f59999',
+                style: {
+                  minWidth: '95%',
+                  margin: '2.5%'
+                }
+              }),
+              _react2.default.createElement(
+                'div',
+                {
+                  // Group 1 Chips
+                  style: {
+                    minWidth: '95%',
+                    margin: '2.5%'
+                  }
+                },
+                _react2.default.createElement(
+                  _Chip2.default,
+                  {
+                    backgroundColor: '#efefef',
+                    onRequestDelete: function onRequestDelete() {
+                      return console.log('onclik!!!!');
+                    },
+                    onTouchTap: function onTouchTap() {
+                      return console.log('onclik!!!!');
+                    },
+                    style: {
+                      margin: 4
+                    }
+                  },
+                  'Colored Chip'
+                )
+              )
+            )
+          )
+        )
       );
     }
   }]);
-  return AccountSignIn;
+  return ControlRoom;
 }(_react2.default.Component);
 
-exports.default = AppBarExampleIconMenu;
+// groups
+
+exports.default = ControlRoom;
 //# sourceMappingURL=control-room.js.map
