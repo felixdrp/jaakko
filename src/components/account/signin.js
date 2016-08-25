@@ -15,7 +15,7 @@ import {
   loginAccount,
 } from '../../websocket-message/server-actions'
 
-export default class AccountSignIn extends React.Component {
+class AccountSignIn extends React.Component {
   static propTypes = {
     loginStatus: React.PropTypes.object,
   };

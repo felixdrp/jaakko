@@ -291,7 +291,6 @@ AccountSignIn.contextTypes = {
   muiTheme: _react2.default.PropTypes.object.isRequired,
   websocket: _react2.default.PropTypes.object
 };
-exports.default = AccountSignIn;
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
