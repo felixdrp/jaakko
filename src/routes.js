@@ -17,6 +17,7 @@ import {
   AccountSignIn,
   AccountSignUp,
   AppContainer,
+  ControlRoom,
   CommonViewContainer,
   Example,
   MathChallenge,
@@ -35,6 +36,10 @@ var routes = (history) => (
         <IndexRoute component={AccountSignIn} />
         <Route path="signin" component={AccountSignIn} />
         <Route path="signup" component={AccountSignUp} />
+      </Route>
+
+      <Route path="controlRoom" component={CommonViewContainer} >
+        <IndexRoute component={ControlRoom} />
       </Route>
 
       <Route path="survey" component={CommonViewContainer} >

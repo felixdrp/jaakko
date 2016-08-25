@@ -33,6 +33,11 @@ var routes = function routes(history) {
       ),
       _react2.default.createElement(
         _reactRouter.Route,
+        { path: 'controlRoom', component: _components.CommonViewContainer },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.ControlRoom })
+      ),
+      _react2.default.createElement(
+        _reactRouter.Route,
         { path: 'survey', component: _components.CommonViewContainer },
         _react2.default.createElement(_reactRouter.Route, { path: 'waitSync', component: _components.Wait }),
         _react2.default.createElement(_reactRouter.Route, { path: 'example', component: _components.Example })

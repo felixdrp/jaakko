@@ -8,6 +8,10 @@
 export AccountSignIn from './account/signin'
 export AccountSignUp from './account/signup'
 
+// Admin Page
+
+export ControlRoom from './admin/control-room'
+
 // Generic
 
 export AppContainer from './app-container'
