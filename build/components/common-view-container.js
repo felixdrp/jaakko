@@ -54,6 +54,7 @@ var CommonViewContainer = _react2.default.createClass({
   //   window.removeEventListener('beforeunload', this.beforeunload)
   // },
 
+
   render: function render() {
     var props = this.props;
     var query = _qs2.default.parse(props.location.search);

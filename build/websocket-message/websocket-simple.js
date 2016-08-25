@@ -24,7 +24,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Facade object to use websocket
 // Check that we will send a string every time
-
 var WebSocketSimple = function () {
   function WebSocketSimple(initialWebsocket) {
     (0, _classCallCheck3.default)(this, WebSocketSimple);
