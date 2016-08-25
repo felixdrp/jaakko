@@ -24,7 +24,8 @@ export function accounts(state = { list: [] }, action) {
       }
       // Add to the list
       state.list.push(payload.email)
-      state[payload.email] = JSON.parse(JSON.stringify( payload ))
+      // state[payload.email] = JSON.parse(JSON.stringify( payload ))
+      state[payload.email] = payload
       return state
     case ACCOUNTS_UPDATE:
       // Check if account is already in list
@@ -74,8 +75,8 @@ export function groups(state = { list: [] }, action) {
       return state
     case GROUPS_ADD_ACCOUNT:
       // Check if account is already in list
-      console.log(payload)
-      console.log(state[payload.groupId].indexOf(payload.account))
+      // console.log(payload)
+      // console.log(state[payload.groupId].indexOf(payload.account))
       if ( state[payload.groupId].indexOf(payload.account) !== -1 ) {
         return state
       }
