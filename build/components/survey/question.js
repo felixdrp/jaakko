@@ -28,7 +28,15 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
+var _wait = require('./wait');
+
+var _wait2 = _interopRequireDefault(_wait);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var v = "MELACO";
 
 var Question = function (_Component) {
   (0, _inherits3.default)(Question, _Component);
@@ -39,6 +47,11 @@ var Question = function (_Component) {
   }
 
   (0, _createClass3.default)(Question, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      console.log(" LO ICE ANNTESS CON H DE PUTA");
+    }
+  }, {
     key: 'handleSave',
     value: function handleSave(text) {
       if (text.length !== 0) {
@@ -46,9 +59,15 @@ var Question = function (_Component) {
       }
     }
   }, {
+    key: 'mlk',
+    value: function mlk() {
+      return 'm l come';
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var message = this.props.message ? this.props.message : 'Question';
+      // let message = this.props.message? this.props.message : 'Question'
+      var message = 'Question';
 
       return _react2.default.createElement(
         'div',
@@ -57,6 +76,17 @@ var Question = function (_Component) {
           'h1',
           null,
           message
+        ),
+        _react2.default.createElement(_wait2.default, { melacome: 10 }),
+        _react2.default.createElement(
+          'div',
+          null,
+          ' ',
+          this.props.firstName,
+          ' ',
+          v,
+          ' ',
+          this.mlk()
         )
       );
     }
@@ -64,9 +94,17 @@ var Question = function (_Component) {
   return Question;
 }(_react.Component);
 
-Question.propTypes = {
-  // addTodo: PropTypes.func.isRequired
+Question.propTypes = {}
+// addTodo: PropTypes.func.isRequired
+
+
+//export default Question
+
+;var mapStateToProps = function mapStateToProps(state) {
+  return {
+    firstName: state.account.firstName
+  };
 };
 
-exports.default = Question;
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Question);
 //# sourceMappingURL=question.js.map

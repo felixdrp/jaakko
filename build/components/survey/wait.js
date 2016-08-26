@@ -94,7 +94,14 @@ var Wait = function (_Component) {
             style: {
               paddingTop: 0
             }
-          })
+          }),
+          _react2.default.createElement(
+            'div',
+            null,
+            'puta puta puta ',
+            this.props.melacome,
+            ' '
+          )
         )
       );
     }
