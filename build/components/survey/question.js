@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -33,6 +37,18 @@ var _TextField = require('material-ui/TextField');
 var _TextField2 = _interopRequireDefault(_TextField);
 
 var _Card = require('material-ui/Card');
+
+var _FlatButton = require('material-ui/FlatButton');
+
+var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+var _SelectField = require('material-ui/SelectField');
+
+var _SelectField2 = _interopRequireDefault(_SelectField);
+
+var _MenuItem = require('material-ui/MenuItem');
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
 var _reactRedux = require('react-redux');
 
@@ -73,16 +89,20 @@ var entryQuestionnarie = {
     name: 'gender',
     text: 'Gender',
     type: LIST_FIELD_TYPE,
-    typeVars: {}
+    typeVars: { opts: ['male', 'female'] }
   }]
 };
 
 var Question = function (_Component) {
   (0, _inherits3.default)(Question, _Component);
 
-  function Question() {
+  function Question(props) {
     (0, _classCallCheck3.default)(this, Question);
-    return (0, _possibleConstructorReturn3.default)(this, (Question.__proto__ || (0, _getPrototypeOf2.default)(Question)).apply(this, arguments));
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (Question.__proto__ || (0, _getPrototypeOf2.default)(Question)).call(this, props));
+
+    _this.state = {};
+    return _this;
   }
 
   (0, _createClass3.default)(Question, [{
@@ -96,16 +116,64 @@ var Question = function (_Component) {
       }
     }
   }, {
+    key: 'handleChange',
+    value: function handleChange(event, index, value, name) {
+      //  debugger;
+      this.setState((0, _defineProperty3.default)({}, name, value));
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       // let message = this.props.message? this.props.message : 'Question'
       var message = 'Question';
 
       var textColor = this.context.muiTheme.palette.textColor;
-      // let e = entryQuestionnarie.questions.map
+
 
       var title = entryQuestionnarie.introTitle;
       var text = entryQuestionnarie.introText;
+
+      var qs = entryQuestionnarie.questions.map(function (q, i) {
+        switch (q.type) {
+          case TEXT_FIELD_TYPE:
+            return _react2.default.createElement(
+              'div',
+              { key: i },
+              q.text,
+              _react2.default.createElement(_TextField2.default, { id: q.name, style: {
+                  paddingLeft: 10
+                } }),
+              _react2.default.createElement('br', null)
+            );
+
+          case LIST_FIELD_TYPE:
+            return _react2.default.createElement(
+              'div',
+              { key: i },
+              q.text,
+              _react2.default.createElement(
+                _SelectField2.default,
+                {
+                  style: { paddingLeft: 10 },
+                  id: q.name,
+                  value: _this2.state[q.name],
+                  onChange: function onChange(event, index, value) {
+                    return _this2.handleChange(event, index, value, q.name);
+                  }
+                },
+                q.typeVars.opts.map(function (q, i) {
+                  return _react2.default.createElement(_MenuItem2.default, { key: i, value: q, primaryText: q });
+                })
+              ),
+              _react2.default.createElement('br', null)
+            );
+
+          default:
+
+        }
+      });
 
       return _react2.default.createElement(
         'div',
@@ -131,7 +199,18 @@ var Question = function (_Component) {
                 paddingTop: 0
               }
             },
-            text
+            text,
+            _react2.default.createElement('br', null),
+            qs,
+            _react2.default.createElement(
+              _FlatButton2.default,
+              {
+                id: 'submitAnswers',
+                style: { color: 'white' },
+                type: 'submit'
+              },
+              'Submit'
+            )
           )
         )
       );

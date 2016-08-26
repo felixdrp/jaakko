@@ -2,7 +2,10 @@ import React, { PropTypes, Component } from 'react'
 
 import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import { connect } from 'react-redux'
 
@@ -50,12 +53,17 @@ var entryQuestionnarie = {
       name : 'gender',
       text : 'Gender',
       type : LIST_FIELD_TYPE,
-      typeVars : {}
+      typeVars : {opts:['male','female']}
     },
   ],
 };
 
 class Question extends Component {
+
+  constructor(props) {
+    super(props);
+     this.state = {};
+  }
 
   static contextTypes = {
     muiTheme: React.PropTypes.object.isRequired,
@@ -72,14 +80,50 @@ class Question extends Component {
     }
   }
 
+  handleChange(event, index, value, name) {
+  //  debugger;
+    this.setState({[name] : value})
+  };
+
   render() {
     // let message = this.props.message? this.props.message : 'Question'
     let message =  'Question'
 
     const { textColor } = this.context.muiTheme.palette;
-    // let e = entryQuestionnarie.questions.map
+
     let title = entryQuestionnarie.introTitle;
     let text = entryQuestionnarie.introText;
+
+    let qs = entryQuestionnarie.questions.map(
+      (q,i)=>{
+        switch (q.type) {
+          case TEXT_FIELD_TYPE:
+            return <div key={i} >{q.text}<TextField id={q.name} style={{
+                    paddingLeft: 10,
+                  }} /><br /></div>
+
+          case LIST_FIELD_TYPE:
+            return <div key={i} >{q.text}
+                    <SelectField
+                      style={{paddingLeft: 10,}}
+                      id={q.name}
+                      value={this.state[q.name]}
+                      onChange={ (event, index, value)=>this.handleChange(event, index, value, q.name)}
+                    >
+                      {
+                        q.typeVars.opts.map(
+                          (q,i) => <MenuItem key={i} value={q} primaryText={q} />
+                        )
+                      }
+                    </SelectField>
+                  <br />
+                  </div>
+
+          default:
+
+        }
+      }
+    )
 
     return (
       <div>
@@ -109,7 +153,18 @@ class Question extends Component {
               >
 
               {text}
+              <br />
 
+
+              {qs}
+
+              <FlatButton
+                id="submitAnswers"
+                style={{color: 'white',}}
+                type="submit"
+              >
+                Submit
+              </FlatButton>
 
             </CardText>
 
