@@ -28,15 +28,54 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _TextField = require('material-ui/TextField');
+
+var _TextField2 = _interopRequireDefault(_TextField);
+
+var _Card = require('material-ui/Card');
+
 var _reactRedux = require('react-redux');
 
 var _wait = require('./wait');
 
 var _wait2 = _interopRequireDefault(_wait);
 
+var _svgIcons = require('material-ui/svg-icons');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var v = "MELACO";
+//
+// var entryQuestionnarie = {
+//   introText : "",
+//
+//   questions : [
+//     {
+//       name : "",
+//       text : "",
+//       type : "",
+//       typeVars : {}
+//     },
+//   ],
+// };
+var TEXT_FIELD_TYPE = 'textField';
+var LIST_FIELD_TYPE = 'listField';
+
+var entryQuestionnarie = {
+  introTitle: 'Entry Survey',
+  introText: 'The following questionnaire will take approximately 10 minutes, all questions are optional and can be skipped if they are seen to be intrusive, however it would be appreciated if all questions were answered as it will allow the results to be analysed with more accuracy. The participation in this experiment and questionnaire is optional and the subject can withdraw at any point, no questions asked. All information will be kept confidential and is strictly for research purposes. ',
+
+  questions: [{
+    name: 'age',
+    text: 'Age',
+    type: TEXT_FIELD_TYPE,
+    typeVars: {}
+  }, {
+    name: 'gender',
+    text: 'Gender',
+    type: LIST_FIELD_TYPE,
+    typeVars: {}
+  }]
+};
 
 var Question = function (_Component) {
   (0, _inherits3.default)(Question, _Component);
@@ -48,9 +87,7 @@ var Question = function (_Component) {
 
   (0, _createClass3.default)(Question, [{
     key: 'componentWillMount',
-    value: function componentWillMount() {
-      console.log(" LO ICE ANNTESS CON H DE PUTA");
-    }
+    value: function componentWillMount() {}
   }, {
     key: 'handleSave',
     value: function handleSave(text) {
@@ -59,40 +96,56 @@ var Question = function (_Component) {
       }
     }
   }, {
-    key: 'mlk',
-    value: function mlk() {
-      return 'm l come';
-    }
-  }, {
     key: 'render',
     value: function render() {
       // let message = this.props.message? this.props.message : 'Question'
       var message = 'Question';
 
+      var textColor = this.context.muiTheme.palette.textColor;
+      // let e = entryQuestionnarie.questions.map
+
+      var title = entryQuestionnarie.introTitle;
+      var text = entryQuestionnarie.introText;
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
-          'h1',
-          null,
-          message
-        ),
-        _react2.default.createElement(_wait2.default, { melacome: 10 }),
-        _react2.default.createElement(
-          'div',
-          null,
-          ' ',
-          this.props.firstName,
-          ' ',
-          v,
-          ' ',
-          this.mlk()
+          _Card.Card,
+          {
+            style: {
+              padding: 30
+            }
+          },
+          _react2.default.createElement(_Card.CardHeader, {
+            title: title,
+            titleStyle: {
+              fontSize: 24,
+              color: textColor
+            }
+          }),
+          _react2.default.createElement(
+            _Card.CardText,
+            {
+              style: {
+                paddingTop: 0
+              }
+            },
+            text
+          )
         )
       );
     }
   }]);
   return Question;
 }(_react.Component);
+
+Question.contextTypes = {
+  muiTheme: _react2.default.PropTypes.object.isRequired,
+  router: _react2.default.PropTypes.object.isRequired,
+  websocket: _react2.default.PropTypes.object
+};
+
 
 Question.propTypes = {}
 // addTodo: PropTypes.func.isRequired
