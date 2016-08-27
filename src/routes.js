@@ -45,6 +45,7 @@ var routes = (history) => (
       <Route path="survey" component={CommonViewContainer} >
         <Route path="waitSync" component={Wait} />
         <Route path="example" component={Example} />
+        <Route path="question" component={Question} />
       </Route>
 
       {/*

@@ -40,7 +40,8 @@ var routes = function routes(history) {
         _reactRouter.Route,
         { path: 'survey', component: _components.CommonViewContainer },
         _react2.default.createElement(_reactRouter.Route, { path: 'waitSync', component: _components.Wait }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'example', component: _components.Example })
+        _react2.default.createElement(_reactRouter.Route, { path: 'example', component: _components.Example }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'question', component: _components.Question })
       )
     )
   );
