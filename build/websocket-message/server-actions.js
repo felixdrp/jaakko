@@ -8,10 +8,16 @@ exports.registerAccount = registerAccount;
 exports.loginAccount = loginAccount;
 exports.wsLogAccount = wsLogAccount;
 exports.wsGotoPage = wsGotoPage;
+exports.wsGroupAdd = wsGroupAdd;
+exports.swUpdateControlRoom = swUpdateControlRoom;
 
 var _reactRouterRedux = require('react-router-redux');
 
 var _clientActions = require('../actions/client-actions');
+
+var _actions = require('../actions/actions');
+
+var _queryActions = require('./query-actions');
 
 // Server socket actions
 // Socket action types:
@@ -20,6 +26,7 @@ var _clientActions = require('../actions/client-actions');
 var MUTATE = exports.MUTATE = 'MUTATE';
 
 // Redux client actions
+
 var QUERY = exports.QUERY = 'QUERY';
 var ACTION = exports.ACTION = 'ACTION';
 
@@ -93,6 +100,27 @@ function wsGotoPage(_ref4) {
     type: ACTION,
     action: routerAction.type,
     payload: routerAction.payload
+  };
+}
+
+// Register a group socket action creator
+function wsGroupAdd(obj) {
+  var name = obj && 'name' in obj ? obj.name : '';
+  return {
+    type: MUTATE,
+    action: _actions.GROUPS_ADD,
+    payload: {
+      name: name
+    }
+  };
+}
+
+// update state in components ControlRoom socket action creator
+function swUpdateControlRoom(state) {
+  return {
+    type: ACTION,
+    action: _queryActions.SESSION_STATE_GET,
+    payload: state
   };
 }
 //# sourceMappingURL=server-actions.js.map

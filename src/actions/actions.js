@@ -83,6 +83,28 @@ export const SEND_ALL_MESSAGE = 'SEND_GROUP_MESSAGE'
 export const SEND_GROUP_MESSAGE = 'SEND_GROUP_MESSAGE'
 export const SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE'
 
+export function storeStateWithoutWebSocket(state) {
+  let copyWithoutWS = {}
+  console.log('XXXXXXXresult')
+  console.log(state)
+  console.time('time1')
+  for(let key in state) {
+    if (key == 'accounts') {
+      copyWithoutWS[key] = {}
+      copyWithoutWS[key].list = state[key].list
+      state.accounts.list.forEach( (id) => { copyWithoutWS.accounts[id] = {...state.accounts[id], ws: null} } )
+      // remove ws from accounts before send
+      copyWithoutWS.accounts.list.forEach( (id) => { delete copyWithoutWS.accounts[id].ws } )
+    } else {
+      copyWithoutWS[key] = state[key]
+    }
+  }
+  console.timeEnd('time1')
+  console.log(copyWithoutWS)
+  console.log(state)
+
+  return copyWithoutWS
+}
 
 /*
  * action creators

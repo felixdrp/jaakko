@@ -17,6 +17,11 @@ import {
   accountsUpdate,
   accountsRemove,
 
+  GROUPS_ADD,
+  GROUPS_REMOVE,
+  GROUPS_ADD_ACCOUNT,
+  GROUPS_REMOVE_ACCOUNT,
+
   groupsAdd,
   groupsRemove,
   groupsAddAccount,
@@ -129,7 +134,6 @@ export default async function mutate({ action, payload, ws, store }) {
       reduxStoreServerAndClientRegisterAccountAndGoToWait(account)
       // Ready to asign to a group
       return true
-      break;
 
     case LOGIN_ACCOUNT:
       // Login an Account
@@ -186,6 +190,21 @@ export default async function mutate({ action, payload, ws, store }) {
       // console.log('send error login')
       // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
       return true
-      break;
+
+    case GROUPS_ADD:
+      console.log('>>>>> ' + GROUPS_ADD)
+      console.log(store.getState())
+      store.dispatch( groupsAdd( payload.name || Date.now() ) )
+      console.log(store.getState())
+
+      return true
+    case GROUPS_REMOVE:
+      return true
+    case GROUPS_ADD_ACCOUNT:
+      return true
+    case GROUPS_REMOVE_ACCOUNT:
+      return true
+    case 'null':
+      return true
   }
 }

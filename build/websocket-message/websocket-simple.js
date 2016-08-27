@@ -24,6 +24,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Facade object to use websocket
 // Check that we will send a string every time
+
 var WebSocketSimple = function () {
   function WebSocketSimple(initialWebsocket) {
     (0, _classCallCheck3.default)(this, WebSocketSimple);
@@ -36,8 +37,16 @@ var WebSocketSimple = function () {
     key: 'send',
     value: function send(data) {
       var message = void 0;
+
+      if (this.ws.readyState != 1) {
+        console.log('socket not ready to send.');
+        return;
+      }
+
       if ((typeof data === 'undefined' ? 'undefined' : (0, _typeof3.default)(data)) === 'object') {
         message = (0, _stringify2.default)(data);
+      } else {
+        message = data;
       }
       this.ws.send(message);
     }

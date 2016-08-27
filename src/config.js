@@ -1,5 +1,5 @@
 // Server graphql port (Proxy)
-export const port = (typeof window === 'undefined')? 8000 : window.document.location.port
+export const port = (typeof window === 'undefined')? 8008 : window.document.location.port
 
 // DataBase, Mongodb configuration
 export const mongodbConf = {

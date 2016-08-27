@@ -22,6 +22,7 @@ app.use(compression())
 
 // function that process the messages of type mutate.
 import mutate from './websocket-message/server-mutate'
+import query from './websocket-message/server-query'
 
 // Redux
 import { combineReducers, createStore, applyMiddleware } from 'redux';
@@ -31,26 +32,42 @@ import {
   groups,
 } from './reducers/server';
 
-// Note: this API requires redux@>=3.1.0
-const store = createStore(
-  combineReducers({
-    accounts,
-    groups,
-  }),
-  applyMiddleware(thunk)
-);
+import {
+  // Remove the WS from a store state
+  storeStateWithoutWebSocket,
+} from './actions/actions'
+
+import {
+  swUpdateControlRoom,
+} from './websocket-message/server-actions'
+
+import { port } from './config'
 
 var webTemplate = require('../web-template');
 
-var portWeb = parseInt(process.env.PORT_WEB) || '8008';
+var portWeb = parseInt(process.env.PORT_WEB) || port;
 var portSocket = parseInt(process.env.PORT_SOCKET) || '3000';
 
 // Create the web server linked with the express app
 var webServer = https.createServer(credentials, app);
 
+// Web server for websocket Admin connections
+var appWSAdmin = https.createServer(
+  {
+    // providing server with  SSL key/cert
+    key: privateKey,
+    cert: certificate
+  },
+  ( req, res ) => {
+    res.writeHead(200);
+    res.end("All glory to WebSockets!\n");
+  }
+).listen( portWeb + 1 );
+
 // Link the web server port to the socket server port
 var wss = new WebSocketServer({ server: webServer });
-
+var wssAdmin = new WebSocketServer({ server: appWSAdmin });
+// debugger
 app.use(express.static('public'));
 
 app.use('/', function (req, res) {
@@ -59,9 +76,60 @@ app.use('/', function (req, res) {
 
 webServer.listen( portWeb, () => console.log('server running at https://localhost:' + portWeb) );
 
+
+// middleware to send store updates to the admins
+const updateControlRooms = store => next => action => {
+  console.log('dispatching', action)
+  let result = next(action)
+  let payload = storeStateWithoutWebSocket( store.getState() )
+  // console.log('UPDATE ControlRoom state' + payload )
+  console.log('MEMORY USAGE state' + JSON.stringify(process.memoryUsage()) )
+  // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+
+  // transfer asynchronously
+  new Promise((resolve, reject) => {
+    wssAdmin.clients.forEach( (wsControlRoom) => {
+      // console.log('UPDATE ControlRoom state (promise) >' + payload)
+      // console.log('Stado del socket>> >' + wsControlRoom.readyState + ' < ID < ' + wsControlRoom.accountCode)
+      if (wsControlRoom.readyState != 1) {
+        return
+      }
+      try {
+        wsControlRoom.send(
+          JSON.stringify( swUpdateControlRoom( payload ) )
+        );
+        // console.log('Stado del socket>> >' + wsControlRoom.readyState + ' < ID < ' + wsControlRoom.accountCode)
+
+        resolve('transfer OK')
+      } catch(err) {
+        reject(err)
+      }
+    });
+  })
+
+  return result
+}
+
+// Note: this API requires redux@>=3.1.0
+// Create Redux store
+const store = createStore(
+  combineReducers({
+    accounts,
+    groups,
+  }),
+  applyMiddleware(
+    thunk,
+    updateControlRooms
+  )
+);
+
 wss.broadcast = function broadcast(data) {
   // debugger
   wss.clients.forEach(function each(client) {
+    if (client.readyState != 1) {
+      console.log('socket on state: ' + client.readyState + ' prevented send')
+      return
+    }
     console.log('wss.clients length: ' + wss.clients.length)
     console.log('message sent to: ' + client.nombre)
     client.send(data);
@@ -90,12 +158,12 @@ function* nameMe() {
 }
 var nameMeIterator = nameMe()
 
-wss.on('connection', function (ws) {
+var websocketManager = function (ws, parent) {
     let name = nameMeIterator.next().value
     console.log('started websocket client' + name);
     // When user login will be the email
     ws.name = name
-    ws.accountCode = null
+    ws.accountCode = Date.now()
 
     // Add the Websocket to the list
     // queryWebSocketList.push(ws);
@@ -105,7 +173,9 @@ wss.on('connection', function (ws) {
     ws.send('Welcome!');
 
     ws.on('close', () => {
-	     console.log('stopping websocket client ' + ws.accountCode);
+     console.log('stopping websocket client ' + ws.accountCode);
+     console.log('yo soy tu padre!!!!>>>  ' + parent.clients);
+
        // Remove from
 	// console.log(queryWebSocketList.indexOf(ws));
 	// // Remove Websocket from queryWebSocketList
@@ -143,6 +213,13 @@ wss.on('connection', function (ws) {
           break;
         // Process message of type QUERY
         case 'QUERY':
+          await query({
+            action: message.action || '',
+            payload: message.payload || '',
+            ws: new WebSocketSimple(ws),
+            store
+          })
+          console.log('Query to the server')
           console.log(message.type + ' ' + message.payload.email)
           break;
         // Process message of type ACTIONS
@@ -150,7 +227,11 @@ wss.on('connection', function (ws) {
           // dispatch 'ACTIONS'
           store.dispatch(message.payload)
       }
-      console.log( 'ws.readyState>>>' + ws.readyState )
+      console.log( 'ws.readyState>>>' + ws.readyState + ' < ID < ' + ws.accountCode )
 
     }
-});
+}
+
+// wss.on('connection', (ws) => websocketManager(ws));
+wss.on('connection', (ws) => websocketManager(ws, wss) );
+wssAdmin.on('connection', (ws) => websocketManager(ws, wssAdmin));

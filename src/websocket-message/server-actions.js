@@ -8,6 +8,17 @@ import {
   ACCOUNT_LOG_USER
 } from '../actions/client-actions'
 
+import {
+  GROUPS_ADD,
+  GROUPS_REMOVE,
+  GROUPS_ADD_ACCOUNT,
+  GROUPS_REMOVE_ACCOUNT,
+} from '../actions/actions'
+
+import {
+  SESSION_STATE_GET
+} from './query-actions'
+
 // Server socket actions
 // Socket action types:
 
@@ -74,5 +85,27 @@ export function wsGotoPage({ url, options = {} }) {
     type: ACTION,
     action: routerAction.type,
     payload: routerAction.payload
+  }
+}
+
+
+// Register a group socket action creator
+export function wsGroupAdd(obj) {
+  let name = (obj && 'name' in obj)? obj.name : '';
+  return {
+    type: MUTATE,
+    action: GROUPS_ADD,
+    payload: {
+      name,
+    }
+  }
+}
+
+// update state in components ControlRoom socket action creator
+export function swUpdateControlRoom(state) {
+  return {
+    type: ACTION,
+    action: SESSION_STATE_GET,
+    payload: state,
   }
 }

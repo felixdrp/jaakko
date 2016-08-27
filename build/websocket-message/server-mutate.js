@@ -43,6 +43,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Redux client actions
 // WebSocket communications types
 // look doc/server-websocket-message-system.md
+
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
     var action = _ref2.action;
@@ -73,7 +74,7 @@ exports.default = function () {
 
             payloadResponse = void 0, result = void 0, account = void 0;
             _context.t0 = action;
-            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 18 : 35;
+            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 38 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 39 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 40 : _context.t0 === 'null' ? 41 : 42;
             break;
 
           case 5:
@@ -131,20 +132,20 @@ exports.default = function () {
             // Ready to asign to a group
             return _context.abrupt('return', true);
 
-          case 18:
-            _context.next = 20;
+          case 17:
+            _context.next = 19;
             return (0, _loginAccount.loginAccount)({
               email: payload.email,
               password: payload.password
             });
 
-          case 20:
+          case 19:
             result = _context.sent;
 
             console.log(result);
 
             if (!('message' in result)) {
-              _context.next = 27;
+              _context.next = 26;
               break;
             }
 
@@ -166,7 +167,7 @@ exports.default = function () {
             });
             return _context.abrupt('return');
 
-          case 27:
+          case 26:
             // Register the websocket 'ws.accountCode' with the email.
             // So we can identify the ws with the account email.
             ws.accountCode = payload.email;
@@ -187,7 +188,27 @@ exports.default = function () {
             // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
             return _context.abrupt('return', true);
 
-          case 35:
+          case 33:
+            console.log('>>>>> ' + _actions.GROUPS_ADD);
+            console.log(store.getState());
+            store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
+            console.log(store.getState());
+
+            return _context.abrupt('return', true);
+
+          case 38:
+            return _context.abrupt('return', true);
+
+          case 39:
+            return _context.abrupt('return', true);
+
+          case 40:
+            return _context.abrupt('return', true);
+
+          case 41:
+            return _context.abrupt('return', true);
+
+          case 42:
           case 'end':
             return _context.stop();
         }

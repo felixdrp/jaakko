@@ -24,5 +24,7 @@ export default {
     // disabledColor: fade(fullWhite, 0.3),
     // pickerHeaderColor: fade(fullWhite, 0.12),
     // clockCircleColor: fade(fullWhite, 0.12),
+    selectionColor: '#303030',
+    selectionBackground: '#f0f030',
   },
 };

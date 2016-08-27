@@ -8,8 +8,16 @@ export default class WebSocketSimple {
 
   send(data) {
     let message
+
+    if (this.ws.readyState != 1) {
+      console.log('socket not ready to send.')
+      return
+    }
+
     if ( typeof data === 'object' ) {
       message = JSON.stringify(data)
+    } else {
+      message = data
     }
     this.ws.send(message)
   }

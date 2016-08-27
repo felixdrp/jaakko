@@ -39,7 +39,7 @@ var Wait = function (_Component) {
 
   function Wait() {
     (0, _classCallCheck3.default)(this, Wait);
-    return (0, _possibleConstructorReturn3.default)(this, (Wait.__proto__ || (0, _getPrototypeOf2.default)(Wait)).apply(this, arguments));
+    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Wait).apply(this, arguments));
   }
 
   (0, _createClass3.default)(Wait, [{

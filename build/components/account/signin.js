@@ -80,7 +80,7 @@ var AccountSignIn = function (_React$Component) {
   function AccountSignIn() {
     (0, _classCallCheck3.default)(this, AccountSignIn);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (AccountSignIn.__proto__ || (0, _getPrototypeOf2.default)(AccountSignIn)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(AccountSignIn).call(this));
 
     _this.state = {
       email: { error: '', name: 'Email' },
