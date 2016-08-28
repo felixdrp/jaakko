@@ -74,7 +74,7 @@ exports.default = function () {
 
             payloadResponse = void 0, result = void 0, account = void 0;
             _context.t0 = action;
-            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 38 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 39 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 40 : _context.t0 === 'null' ? 41 : 42;
+            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 35 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 41 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 42 : _context.t0 === 'null' ? 43 : 44;
             break;
 
           case 5:
@@ -189,26 +189,29 @@ exports.default = function () {
             return _context.abrupt('return', true);
 
           case 33:
-            console.log('>>>>> ' + _actions.GROUPS_ADD);
-            console.log(store.getState());
             store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
+
+            return _context.abrupt('return', true);
+
+          case 35:
+            console.log('>>>>> ' + _actions.GROUPS_REMOVE);
+            console.log(payload);
+            console.log(store.getState());
+            store.dispatch((0, _actions.groupsRemove)(payload.groupId));
             console.log(store.getState());
 
-            return _context.abrupt('return', true);
-
-          case 38:
-            return _context.abrupt('return', true);
-
-          case 39:
-            return _context.abrupt('return', true);
-
-          case 40:
             return _context.abrupt('return', true);
 
           case 41:
             return _context.abrupt('return', true);
 
           case 42:
+            return _context.abrupt('return', true);
+
+          case 43:
+            return _context.abrupt('return', true);
+
+          case 44:
           case 'end':
             return _context.stop();
         }

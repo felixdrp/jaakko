@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes, Component } from 'react'
 
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
@@ -14,98 +14,106 @@ import {
   NavigationCancel,
 } from 'material-ui/svg-icons'
 
-const GroupView = (props, context) => {
-  let style = {
-    centerIcon: {
-        color: '#6c6c6c',
-        position: 'relative',
-        top: 6,
-        marginLeft: 7,
-        marginRight: 7,
-    },
-    position1: {
+class GroupView extends Component {
+  static contextTypes = {
+    muiTheme: PropTypes.object.isRequired,
+  };
 
+  render() {
+    let props = this.props
+    let context = this.context
+    let style = {
+      centerIcon: {
+          color: '#6c6c6c',
+          position: 'relative',
+          top: 6,
+          marginLeft: 7,
+          marginRight: 7,
+      },
     }
-  }
-  // console.log(context)
-  return (
-  <Card
-    style={{
-      width: 460,
-      paddingBottom: 15,
-    }}
-  >
-    <RaisedButton
-      // Group main button
-      label={
-        <span>
-          <span
-            style={{
-              float: 'left',
-              paddingLeft: 15,
-            }}
-          >
-            <Group
-              style={{
-                ...style.centerIcon,
-                marginLeft: 0,
-              }}
-            />
-            Group 1
-
-            <PersonOutline
-              style={{
-                ...style.centerIcon
-              }}
-            />
-            10
-            <span
-              style={{
-                color: '#6c6c6c',
-                marginLeft: 10,
-              }}
-            >
-              Accounts
-            </span>
-          </span>
-
-          <NavigationCancel
-            onClick={ props.removeGroup }
+    let buttonLabel = (
+      <span>
+        <span
+          style={{
+            float: 'left',
+            paddingLeft: 15,
+          }}
+        >
+          <Group
             style={{
               ...style.centerIcon,
-              float: 'right',
+              marginLeft: 0,
             }}
           />
+          Group {props.groupId}
+
+          <PersonOutline
+            style={{
+              ...style.centerIcon
+            }}
+          />
+        {props.accountsNumber}
+          <span
+            style={{
+              color: '#6c6c6c',
+              marginLeft: 10,
+            }}
+          >
+            Accounts
+          </span>
         </span>
-      }
-      onClick={ props.assignToGroup }
-      backgroundColor={'#f59999'}
+
+        <NavigationCancel
+          onClick={ props.removeGroup }
+          style={{
+            ...style.centerIcon,
+            float: 'right',
+          }}
+        />
+      </span>
+    )
+    // console.log(context)
+    return (
+    <Card
       style={{
-        minWidth: '95%',
-        margin: '2.5%',
-      }}
-    />
-    <div
-      // Group 1 Chips
-      style={{
-        minWidth: '95%',
-        margin: '2.5%',
+        width: 460,
+        paddingBottom: 15,
+        margin: 10,
       }}
     >
-      <Chip
-        backgroundColor={context.muiTheme.palette.selectionBackground}
-        onRequestDelete={ () => console.log('onclik!!!!') }
-        onTouchTap={ () => console.log('onclik!!!!') }
+      <RaisedButton
+        // Group main button
+        onClick={ props.assignToGroup }
+        backgroundColor={'#f59999'}
         style={{
-          margin: 4,
+          height: 36,
+          minWidth: '95%',
+          margin: '2.5%',
         }}
       >
-        Colored Chip
-      </Chip>
-    </div>
-  </Card>
-)};
-
-GroupView.contextTypes = {muiTheme: React.PropTypes.object};
+        {buttonLabel}
+      </ RaisedButton>
+      Group {props.groupId}
+      <div
+        // Group 1 Chips
+        style={{
+          minWidth: '95%',
+          margin: '2.5%',
+        }}
+      >
+        <Chip
+          backgroundColor={context.muiTheme.palette.selectionBackground}
+          onRequestDelete={ () => console.log('onclik!!!!') }
+          onTouchTap={ () => console.log('onclik!!!!') }
+          style={{
+            margin: 4,
+          }}
+        >
+          Colored Chip
+        </Chip>
+      </div>
+    </Card>
+  )};
+}
 
 export default GroupView

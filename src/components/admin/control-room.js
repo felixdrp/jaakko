@@ -25,6 +25,9 @@ import {
   storeStateWithoutWebSocket,
 } from '../../actions/actions'
 
+import Perf from 'react-addons-perf'
+window.Perf = Perf
+
 class ControlRoom extends React.Component {
   // static childContextTypes = {
   //   wsSession: React.PropTypes.object
@@ -127,7 +130,11 @@ class ControlRoom extends React.Component {
           }
         />
 
-      <GroupManager wsSession={ this.state.wsSession } groups={this.state.storeSession.groups}/>
+      <GroupManager
+        wsSession={ this.state.wsSession }
+        accounts={this.state.storeSession.accounts}
+        groups={this.state.storeSession.groups}
+      />
       </div>
     );
   }

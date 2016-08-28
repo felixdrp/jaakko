@@ -101,6 +101,17 @@ export function wsGroupAdd(obj) {
   }
 }
 
+// Register a group socket action creator
+export function wsGroupRemove(groupId) {
+  return {
+    type: MUTATE,
+    action: GROUPS_REMOVE,
+    payload: {
+      groupId,
+    }
+  }
+}
+
 // update state in components ControlRoom socket action creator
 export function swUpdateControlRoom(state) {
   return {

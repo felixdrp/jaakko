@@ -192,13 +192,16 @@ export default async function mutate({ action, payload, ws, store }) {
       return true
 
     case GROUPS_ADD:
-      console.log('>>>>> ' + GROUPS_ADD)
-      console.log(store.getState())
       store.dispatch( groupsAdd( payload.name || Date.now() ) )
-      console.log(store.getState())
 
       return true
     case GROUPS_REMOVE:
+    console.log('>>>>> ' + GROUPS_REMOVE)
+    console.log(payload)
+    console.log(store.getState())
+    store.dispatch( groupsRemove( payload.groupId ) )
+    console.log(store.getState())
+
       return true
     case GROUPS_ADD_ACCOUNT:
       return true

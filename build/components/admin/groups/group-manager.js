@@ -92,17 +92,47 @@ var GroupManager = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupManager).call(this));
 
+    _this.selectAccount = function (accountId, maintainPrevSelection) {
+      var prevSelected = _this.state.selectedAccounts;
+      var selected = [];
+      if (maintainPrevSelection.ctrlKey) {
+        // Alredy in the list? then remove
+        if (prevSelected.includes(accountId)) {
+          selected = prevSelected;
+          selected.splice(selected.indexOf(accountId), 1);
+        } else {
+          selected = _this.state.selectedAccounts.concat(accountId);
+        }
+      } else {
+        // If not selected select
+        if (!prevSelected.includes(accountId)) {
+          selected = [accountId];
+        }
+      }
+
+      _this.setState({ selectedAccounts: selected });
+      debugger;
+      console.log('select an account!!! > ' + accountId);
+    };
+
     _this.addGroup = function (name) {
       // send WsAddGroup
       _this.props.wsSession.send((0, _serverActions.wsGroupAdd)());
       console.log('addgroup!!!');
-      console.log(_this.props);
+      // console.log(this.props)
+    };
+
+    _this.removeGroup = function (groupId) {
+      // send WsAddGroup
+      _this.props.wsSession.send((0, _serverActions.wsGroupRemove)(groupId));
+      console.log('addgroup!!!');
+      // console.log(this.props)
     };
 
     _this.state = {
       accounts: {},
       groups: {},
-      selection: []
+      selectedAccounts: []
     };
 
     // Used to store references.
@@ -115,15 +145,10 @@ var GroupManager = function (_Component) {
 
 
   (0, _createClass3.default)(GroupManager, [{
-    key: 'selectAccount',
-    value: function selectAccount(accountId, maintainPrevSelection) {
-      console.log('select an account!!! > ' + accountId);
-    }
+    key: 'unassignAccount',
+
 
     // Free an account from group
-
-  }, {
-    key: 'unassignAccount',
     value: function unassignAccount(accountId) {
       console.log('unassign an account!!! > ' + accountId);
       console.log(this.props);
@@ -143,12 +168,6 @@ var GroupManager = function (_Component) {
     key: 'assignSelectedAccountsToGroup',
     value: function assignSelectedAccountsToGroup(groupId) {
       console.log('assign to group !!! > ' + groupId);
-    }
-  }, {
-    key: 'removeGroup',
-    value: function removeGroup(groupId) {
-      console.log('addgroup!!!');
-      console.log(this.props);
     }
   }, {
     key: 'render',
@@ -201,7 +220,12 @@ var GroupManager = function (_Component) {
           ),
           subtitle: 'Groups manual fine customization'
         }),
-        _react2.default.createElement(_.UnassignedContainer, { accounts: this.props.accounts, unassingButton: this.unassignSelectedAccounts, selectionHandler: this.selectAccount }),
+        _react2.default.createElement(_.UnassignedContainer, {
+          accounts: this.props.accounts,
+          selectedAccounts: this.state.selectedAccounts,
+          unassingButton: this.unassignSelectedAccounts,
+          selectionHandler: this.selectAccount
+        }),
         _react2.default.createElement(
           'div',
           {
@@ -213,26 +237,43 @@ var GroupManager = function (_Component) {
               marginTop: 65
             }
           },
-          _react2.default.createElement(_RaisedButton2.default
-          // Add group button
-          , { label: _react2.default.createElement(
+          _react2.default.createElement(
+            _RaisedButton2.default
+            // Add group button
+            ,
+            { onClick: this.addGroup,
+              backgroundColor: '#ddffb1',
+              style: {
+                height: 36,
+                // minWidth: '95%',
+                marginBottom: 20
+              }
+            },
+            _react2.default.createElement(
               'span',
-              null,
+              {
+                style: {
+                  paddingLeft: 10,
+                  paddingRight: 10
+                }
+              },
               _react2.default.createElement(_groupAdd2.default, { style: {
                   position: 'relative',
                   top: 6,
                   marginRight: 7
                 } }),
               'Add group'
-            ),
-            onClick: this.addGroup,
-            backgroundColor: '#ddffb1',
-            style: {
-              // minWidth: '95%',
-              marginBottom: 20
-            }
-          }),
-          _react2.default.createElement(_.GroupContainer, { groups: this.props.groups })
+            )
+          ),
+          _react2.default.createElement(_.GroupContainer, {
+            accounts: this.props.accounts,
+            groups: this.props.groups,
+            selectedAccounts: this.state.selectedAccounts,
+            removeGroup: this.removeGroup,
+            unassignAccount: this.unassignAccount,
+            assignSelectedAccountsToGroup: this.assignSelectedAccountsToGroup,
+            selectAccount: this.selectAccount
+          })
         )
       );
     }

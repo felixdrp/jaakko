@@ -2,6 +2,9 @@ import React, { PropTypes, Component } from 'react'
 
 import { UnassignedView } from './';
 
+import Immutable from 'immutable'
+
+
 class UnassignedContainer extends Component {
   static propTypes = {
     groups: PropTypes.object,
@@ -34,10 +37,35 @@ class UnassignedContainer extends Component {
       }
     }
     let props = this.props
+    let unassignedAccounts = {
+      list: [],
+    }
+
+    if (props.accounts) {
+      // Filter the accounts with groups
+      unassignedAccounts.list = props.accounts.list.filter(
+        (accountId) => props.accounts[accountId].group == 'unassigned'? true: false
+      )
+      // Add accounts unassigned
+      unassignedAccounts.list.map(
+        (accountId) => {
+          unassignedAccounts[accountId] = Immutable.fromJS({
+            firstName: props.accounts[accountId].firstName,
+            email: props.accounts[accountId].email,
+            selected: props.selectedAccounts.includes(accountId),
+          }).toJS()
+        }
+      )
+    }
 
     return (
       <div>
-        <UnassignedView assignToGroup={ ()=> {} } removeGroup={ () => {} } />
+        <UnassignedView
+          accounts={ unassignedAccounts }
+          assignToGroup={ ()=> {} }
+          selectionHandler={props.selectionHandler}
+          // removeGroup={ () => {} }
+        />
       </div>
     )
   }

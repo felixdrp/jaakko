@@ -26,9 +26,23 @@ var UnassignedView = function UnassignedView(props) {
   return _react2.default.createElement(
     'div',
     null,
-    _react2.default.createElement(_RaisedButton2.default
-    // Unassigned Accounts
-    , { label: _react2.default.createElement(
+    _react2.default.createElement(
+      _RaisedButton2.default
+      // Unassigned Accounts
+      ,
+      { onClick: function onClick() {
+          return console.log('onclik!!!!');
+        },
+        backgroundColor: '#efefef',
+        style: {
+          height: 36,
+          minWidth: '95%',
+          margin: '2.5%',
+          marginTop: 15,
+          marginBottom: 15
+        }
+      },
+      _react2.default.createElement(
         'span',
         null,
         _react2.default.createElement(_personOutline2.default, { style: {
@@ -37,7 +51,7 @@ var UnassignedView = function UnassignedView(props) {
             top: 6,
             marginRight: 7
           } }),
-        '10',
+        props.accounts ? props.accounts.list.length : 0,
         _react2.default.createElement(
           'span',
           {
@@ -48,16 +62,8 @@ var UnassignedView = function UnassignedView(props) {
           },
           'Unassigned Accounts'
         )
-      ),
-      onClick: function onClick() {
-        return console.log('onclik!!!!');
-      },
-      backgroundColor: '#efefef',
-      style: {
-        minWidth: '95%',
-        margin: '2.5%'
-      }
-    }),
+      )
+    ),
     _react2.default.createElement(
       'div',
       {
@@ -65,23 +71,37 @@ var UnassignedView = function UnassignedView(props) {
         style: {
           minWidth: '95%',
           margin: '2.5%',
-          marginTop: 0
+          marginTop: 0,
+          marginBottom: 15
         }
       },
-      _react2.default.createElement(
-        _Chip2.default,
-        {
-          backgroundColor: '#d6d6d6'
-          // onRequestDelete={ () => console.log('onclik!!!!') }
-          , onTouchTap: function onTouchTap() {
-            return console.log('onclik!!!!');
+      props.accounts.list.map(function (accountId) {
+        return _react2.default.createElement(
+          _Chip2.default,
+          {
+            key: accountId,
+            backgroundColor: props.accounts[accountId].selected ? '#ff5f5f' : '#efefef',
+            onTouchTap: function onTouchTap(e) {
+              return props.selectionHandler(accountId, e.nativeEvent);
+            },
+            style: {
+              margin: 3
+            }
           },
-          style: {
-            margin: 3
-          }
-        },
-        'Colored Chip'
-      )
+          _react2.default.createElement(
+            'span',
+            {
+              style: {
+                fontWeight: 500,
+                marginRight: 8,
+                fontFamily: 'monospace'
+              }
+            },
+            props.accounts[accountId].firstName
+          ),
+          props.accounts[accountId].email
+        );
+      })
     )
   );
 };

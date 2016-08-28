@@ -30,6 +30,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _ = require('./');
 
+var _immutable = require('immutable');
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var UnassignedContainer = function (_Component) {
@@ -61,11 +65,34 @@ var UnassignedContainer = function (_Component) {
         }
       };
       var props = this.props;
+      var unassignedAccounts = {
+        list: []
+      };
+
+      if (props.accounts) {
+        // Filter the accounts with groups
+        unassignedAccounts.list = props.accounts.list.filter(function (accountId) {
+          return props.accounts[accountId].group == 'unassigned' ? true : false;
+        });
+        // Add accounts unassigned
+        unassignedAccounts.list.map(function (accountId) {
+          unassignedAccounts[accountId] = _immutable2.default.fromJS({
+            firstName: props.accounts[accountId].firstName,
+            email: props.accounts[accountId].email,
+            selected: props.selectedAccounts.includes(accountId)
+          }).toJS();
+        });
+      }
 
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_.UnassignedView, { assignToGroup: function assignToGroup() {}, removeGroup: function removeGroup() {} })
+        _react2.default.createElement(_.UnassignedView, {
+          accounts: unassignedAccounts,
+          assignToGroup: function assignToGroup() {},
+          selectionHandler: props.selectionHandler
+          // removeGroup={ () => {} }
+        })
       );
     }
   }]);

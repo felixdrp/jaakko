@@ -5,7 +5,7 @@ import { GroupView } from './';
 class GroupContainer extends Component {
   static propTypes = {
     groups: PropTypes.object,
-    unassignedAccounts: PropTypes.object,
+    accounts: PropTypes.object,
   };
 
   static contextTypes = {
@@ -36,11 +36,26 @@ class GroupContainer extends Component {
     let props = this.props
     let groupList = ''
     if  (props.groups) {
-      groupList = this.props.groups.list.map( (group, index) => <GroupView key={index} assignToGroup={ ()=> {} } removeGroup={ () => {} } /> )
+      groupList = props.groups.list.map(
+        (groupId, index) => (
+          <GroupView
+            key={index}
+            groupId={groupId}
+            accountsNumber={props.groups[groupId].length}
+            assignToGroup={ ()=> {} }
+            removeGroup={ () => {props.removeGroup(groupId)} }
+          />
+        )
+      )
     }
 
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+        }}
+      >
         {groupList}
       </div>
     )

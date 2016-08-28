@@ -63,14 +63,27 @@ var GroupContainer = function (_Component) {
       var props = this.props;
       var groupList = '';
       if (props.groups) {
-        groupList = this.props.groups.list.map(function (group, index) {
-          return _react2.default.createElement(_.GroupView, { key: index, assignToGroup: function assignToGroup() {}, removeGroup: function removeGroup() {} });
+        groupList = props.groups.list.map(function (groupId, index) {
+          return _react2.default.createElement(_.GroupView, {
+            key: index,
+            groupId: groupId,
+            accountsNumber: props.groups[groupId].length,
+            assignToGroup: function assignToGroup() {},
+            removeGroup: function removeGroup() {
+              props.removeGroup(groupId);
+            }
+          });
         });
       }
 
       return _react2.default.createElement(
         'div',
-        null,
+        {
+          style: {
+            display: 'flex',
+            flexWrap: 'wrap'
+          }
+        },
         groupList
       );
     }
@@ -80,7 +93,7 @@ var GroupContainer = function (_Component) {
 
 GroupContainer.propTypes = {
   groups: _react.PropTypes.object,
-  unassignedAccounts: _react.PropTypes.object
+  accounts: _react.PropTypes.object
 };
 GroupContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired

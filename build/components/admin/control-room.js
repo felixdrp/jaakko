@@ -74,8 +74,13 @@ var _queryActions = require('../../websocket-message/query-actions');
 
 var _actions = require('../../actions/actions');
 
+var _reactAddonsPerf = require('react-addons-perf');
+
+var _reactAddonsPerf2 = _interopRequireDefault(_reactAddonsPerf);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+window.Perf = _reactAddonsPerf2.default;
 // import GroupManager from './groups/group-manager';
 
 var ControlRoom = function (_React$Component) {
@@ -217,7 +222,11 @@ var ControlRoom = function (_React$Component) {
             _react2.default.createElement(_MenuItem2.default, { primaryText: 'Sign out' })
           )
         }),
-        _react2.default.createElement(_groups.GroupManager, { wsSession: this.state.wsSession, groups: this.state.storeSession.groups })
+        _react2.default.createElement(_groups.GroupManager, {
+          wsSession: this.state.wsSession,
+          accounts: this.state.storeSession.accounts,
+          groups: this.state.storeSession.groups
+        })
       );
     }
   }]);

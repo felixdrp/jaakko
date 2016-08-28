@@ -8,6 +8,26 @@ var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
 
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -46,29 +66,29 @@ var _svgIcons = require('material-ui/svg-icons');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var GroupView = function GroupView(props, context) {
-  var style = {
-    centerIcon: {
-      color: '#6c6c6c',
-      position: 'relative',
-      top: 6,
-      marginLeft: 7,
-      marginRight: 7
-    },
-    position1: {}
-  };
-  // console.log(context)
-  return _react2.default.createElement(
-    _Card.Card,
-    {
-      style: {
-        width: 460,
-        paddingBottom: 15
-      }
-    },
-    _react2.default.createElement(_RaisedButton2.default
-    // Group main button
-    , { label: _react2.default.createElement(
+var GroupView = function (_Component) {
+  (0, _inherits3.default)(GroupView, _Component);
+
+  function GroupView() {
+    (0, _classCallCheck3.default)(this, GroupView);
+    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupView).apply(this, arguments));
+  }
+
+  (0, _createClass3.default)(GroupView, [{
+    key: 'render',
+    value: function render() {
+      var props = this.props;
+      var context = this.context;
+      var style = {
+        centerIcon: {
+          color: '#6c6c6c',
+          position: 'relative',
+          top: 6,
+          marginLeft: 7,
+          marginRight: 7
+        }
+      };
+      var buttonLabel = _react2.default.createElement(
         'span',
         null,
         _react2.default.createElement(
@@ -84,11 +104,12 @@ var GroupView = function GroupView(props, context) {
               marginLeft: 0
             })
           }),
-          'Group 1',
+          'Group ',
+          props.groupId,
           _react2.default.createElement(_personOutline2.default, {
             style: (0, _extends3.default)({}, style.centerIcon)
           }),
-          '10',
+          props.accountsNumber,
           _react2.default.createElement(
             'span',
             {
@@ -106,44 +127,67 @@ var GroupView = function GroupView(props, context) {
             float: 'right'
           })
         })
-      ),
-      onClick: props.assignToGroup,
-      backgroundColor: '#f59999',
-      style: {
-        minWidth: '95%',
-        margin: '2.5%'
-      }
-    }),
-    _react2.default.createElement(
-      'div',
-      {
-        // Group 1 Chips
-        style: {
-          minWidth: '95%',
-          margin: '2.5%'
-        }
-      },
-      _react2.default.createElement(
-        _Chip2.default,
+      );
+      // console.log(context)
+      return _react2.default.createElement(
+        _Card.Card,
         {
-          backgroundColor: context.muiTheme.palette.selectionBackground,
-          onRequestDelete: function onRequestDelete() {
-            return console.log('onclik!!!!');
-          },
-          onTouchTap: function onTouchTap() {
-            return console.log('onclik!!!!');
-          },
           style: {
-            margin: 4
+            width: 460,
+            paddingBottom: 15,
+            margin: 10
           }
         },
-        'Colored Chip'
-      )
-    )
-  );
+        _react2.default.createElement(
+          _RaisedButton2.default
+          // Group main button
+          ,
+          { onClick: props.assignToGroup,
+            backgroundColor: '#f59999',
+            style: {
+              height: 36,
+              minWidth: '95%',
+              margin: '2.5%'
+            }
+          },
+          buttonLabel
+        ),
+        'Group ',
+        props.groupId,
+        _react2.default.createElement(
+          'div',
+          {
+            // Group 1 Chips
+            style: {
+              minWidth: '95%',
+              margin: '2.5%'
+            }
+          },
+          _react2.default.createElement(
+            _Chip2.default,
+            {
+              backgroundColor: context.muiTheme.palette.selectionBackground,
+              onRequestDelete: function onRequestDelete() {
+                return console.log('onclik!!!!');
+              },
+              onTouchTap: function onTouchTap() {
+                return console.log('onclik!!!!');
+              },
+              style: {
+                margin: 4
+              }
+            },
+            'Colored Chip'
+          )
+        )
+      );
+    }
+  }]);
+  return GroupView;
+}(_react.Component);
+
+GroupView.contextTypes = {
+  muiTheme: _react.PropTypes.object.isRequired
 };
-
-GroupView.contextTypes = { muiTheme: _react2.default.PropTypes.object };
-
 exports.default = GroupView;
 //# sourceMappingURL=group-view.js.map

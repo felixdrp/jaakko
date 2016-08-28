@@ -9,50 +9,70 @@ const UnassignedView = (props) => (
   <div>
     <RaisedButton
       // Unassigned Accounts
-      label={
-        <span>
-          <PersonOutline style={{
-            color: '#6c6c6c',
-            position: 'relative',
-            top: 6,
-            marginRight: 7,
-          }} />
-          10
-          <span
-            style={{
-              color: '#6c6c6c',
-              marginLeft: 15,
-            }}
-          >
-            Unassigned Accounts
-          </span>
-        </span>
-      }
       onClick={ () => console.log('onclik!!!!') }
       backgroundColor={'#efefef'}
       style={{
+        height: 36,
         minWidth: '95%',
         margin: '2.5%',
+        marginTop: 15,
+        marginBottom: 15,
       }}
-    />
+    >
+      <span>
+        <PersonOutline style={{
+          color: '#6c6c6c',
+          position: 'relative',
+          top: 6,
+          marginRight: 7,
+        }} />
+        { props.accounts? props.accounts.list.length : 0 }
+        <span
+          style={{
+            color: '#6c6c6c',
+            marginLeft: 15,
+          }}
+        >
+          Unassigned Accounts
+        </span>
+      </span>
+    </RaisedButton>
+
     <div
       // Unassigned Chips
       style={{
         minWidth: '95%',
         margin: '2.5%',
         marginTop: 0,
+        marginBottom: 15,
       }}
     >
-      <Chip
-        backgroundColor={'#d6d6d6'}
-        // onRequestDelete={ () => console.log('onclik!!!!') }
-        onTouchTap={ () => console.log('onclik!!!!') }
-        style={{
-          margin: 3,
-        }}
-      >
-        Colored Chip
-      </Chip>
+    {
+      props.accounts.list.map(
+        (accountId) => (
+          <Chip
+            key={accountId}
+            backgroundColor={props.accounts[accountId].selected? '#ff5f5f': '#efefef'}
+            onTouchTap={ (e) => props.selectionHandler(accountId, e.nativeEvent) }
+            style={{
+              margin: 3,
+            }}
+          >
+            <span
+              style={{
+                fontWeight: 500,
+                marginRight: 8,
+                fontFamily: 'monospace',
+              }}
+            >
+              { props.accounts[accountId].firstName }
+            </span>
+            { props.accounts[accountId].email }
+          </Chip>
+        )
+      )
+    }
+
     </div>
   </div>
 );

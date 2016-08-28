@@ -22,6 +22,7 @@ import { GroupContainer, UnassignedContainer } from './';
 
 import {
   wsGroupAdd,
+  wsGroupRemove,
 } from '../../../websocket-message/server-actions'
 
 class GroupManager extends Component {
@@ -41,7 +42,7 @@ class GroupManager extends Component {
     this.state = {
       accounts: { },
       groups: { },
-      selection: [],
+      selectedAccounts: [],
     };
 
     // Used to store references.
@@ -50,7 +51,26 @@ class GroupManager extends Component {
 
   // Add or remove a selection
   // if maintainPrevSelection == true it will maintain the previus selection
-  selectAccount( accountId, maintainPrevSelection ) {
+  selectAccount = ( accountId, maintainPrevSelection ) => {
+    let prevSelected = this.state.selectedAccounts
+    let selected = []
+    if (maintainPrevSelection.ctrlKey) {
+      // Alredy in the list? then remove
+      if (prevSelected.includes(accountId)) {
+        selected = prevSelected
+        selected.splice( selected.indexOf(accountId), 1 )
+      } else {
+        selected = this.state.selectedAccounts.concat(accountId)
+      }
+    } else {
+      // If not selected select
+      if (!prevSelected.includes(accountId)) {
+        selected = [ accountId ]
+      }
+    }
+
+    this.setState({ selectedAccounts: selected })
+    debugger
     console.log('select an account!!! > ' + accountId)
 
   }
@@ -78,13 +98,17 @@ class GroupManager extends Component {
       wsGroupAdd()
     )
     console.log('addgroup!!!')
-    console.log(this.props)
+    // console.log(this.props)
 
   }
 
-  removeGroup(groupId) {
+  removeGroup = (groupId) => {
+    // send WsAddGroup
+    this.props.wsSession.send(
+      wsGroupRemove(groupId)
+    )
     console.log('addgroup!!!')
-    console.log(this.props)
+    // console.log(this.props)
   }
 
   render() {
@@ -132,7 +156,12 @@ class GroupManager extends Component {
           subtitle="Groups manual fine customization"
         />
 
-        <UnassignedContainer accounts={this.props.accounts} unassingButton={ this.unassignSelectedAccounts } selectionHandler={ this.selectAccount } />
+        <UnassignedContainer
+          accounts={this.props.accounts}
+          selectedAccounts={this.state.selectedAccounts}
+          unassingButton={ this.unassignSelectedAccounts }
+          selectionHandler={ this.selectAccount }
+        />
 
         <div
           // Assign Groups
@@ -145,25 +174,38 @@ class GroupManager extends Component {
         >
           <RaisedButton
             // Add group button
-            label={
-              <span>
-                <GroupAdd style={{
-                  position: 'relative',
-                  top: 6,
-                  marginRight: 7,
-                }}/>
-                Add group
-              </span>
-            }
             onClick={ this.addGroup }
             backgroundColor={'#ddffb1'}
             style={{
+              height: 36,
               // minWidth: '95%',
               marginBottom: 20,
             }}
-          />
+          >
+            <span
+              style={{
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}
+            >
+              <GroupAdd style={{
+                position: 'relative',
+                top: 6,
+                marginRight: 7,
+              }}/>
+              Add group
+            </span>
+          </RaisedButton>
 
-        <GroupContainer groups={this.props.groups}/>
+          <GroupContainer
+            accounts={this.props.accounts}
+            groups={this.props.groups}
+            selectedAccounts={this.state.selectedAccounts}
+            removeGroup={this.removeGroup}
+            unassignAccount={this.unassignAccount}
+            assignSelectedAccountsToGroup={this.assignSelectedAccountsToGroup}
+            selectAccount={this.selectAccount}
+          />
         </div>
       </Card>
     )

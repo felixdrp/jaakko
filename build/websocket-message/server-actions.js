@@ -9,6 +9,7 @@ exports.loginAccount = loginAccount;
 exports.wsLogAccount = wsLogAccount;
 exports.wsGotoPage = wsGotoPage;
 exports.wsGroupAdd = wsGroupAdd;
+exports.wsGroupRemove = wsGroupRemove;
 exports.swUpdateControlRoom = swUpdateControlRoom;
 
 var _reactRouterRedux = require('react-router-redux');
@@ -111,6 +112,17 @@ function wsGroupAdd(obj) {
     action: _actions.GROUPS_ADD,
     payload: {
       name: name
+    }
+  };
+}
+
+// Register a group socket action creator
+function wsGroupRemove(groupId) {
+  return {
+    type: MUTATE,
+    action: _actions.GROUPS_REMOVE,
+    payload: {
+      groupId: groupId
     }
   };
 }
