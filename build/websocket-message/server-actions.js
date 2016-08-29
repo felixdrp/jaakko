@@ -30,6 +30,7 @@ var _queryActions = require('./query-actions');
 var MUTATE = exports.MUTATE = 'MUTATE';
 
 // Redux client actions
+
 var QUERY = exports.QUERY = 'QUERY';
 var ACTION = exports.ACTION = 'ACTION';
 

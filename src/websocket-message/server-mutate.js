@@ -235,13 +235,21 @@ export default async function mutate({ action, payload, ws, store }) {
     case GROUPS_SELECTED_ACCOUNTS_UNASSIGN:
       result = store.getState()
       payload.selected.map(
-        (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+        (accountId) => {
+          // remove account from group
+          store.dispatch( groupsRemoveAccount(result.accounts[accountId].group, accountId) )
+          // account to 'unassigned'
+          store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+        }
       )
       return true
 
     case GROUPS_ACCOUNTS_UNASSIGN:
       result = store.getState()
       if (result.accounts[payload.accountId]) {
+        // remove account from group
+        store.dispatch( groupsRemoveAccount(result.accounts[payload.accountId].group, payload.accountId) )
+        // account to 'unassigned'
         store.dispatch( accountsUpdate({ ...result.accounts[payload.accountId], group: 'unassigned' }) )
       }
       return true

@@ -83,13 +83,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Icons
 
 // import FlatButton from 'material-ui/FlatButton';
+
 var GroupManager = function (_Component) {
   (0, _inherits3.default)(GroupManager, _Component);
 
   function GroupManager() {
     (0, _classCallCheck3.default)(this, GroupManager);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (GroupManager.__proto__ || (0, _getPrototypeOf2.default)(GroupManager)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupManager).call(this));
 
     _this.selectAccount = function (accountId, maintainPrevSelection) {
       var prevSelected = _this.state.selectedAccounts;

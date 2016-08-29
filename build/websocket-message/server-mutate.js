@@ -43,6 +43,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Redux client actions
 // WebSocket communications types
 // look doc/server-websocket-message-system.md
+
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
     var action = _ref2.action;
@@ -226,13 +227,19 @@ exports.default = function () {
           case 48:
             result = store.getState();
             payload.selected.map(function (accountId) {
-              return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+              // remove account from group
+              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[accountId].group, accountId));
+              // account to 'unassigned'
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
             });
             return _context.abrupt('return', true);
 
           case 51:
             result = store.getState();
             if (result.accounts[payload.accountId]) {
+              // remove account from group
+              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[payload.accountId].group, payload.accountId));
+              // account to 'unassigned'
               store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[payload.accountId], { group: 'unassigned' })));
             }
             return _context.abrupt('return', true);

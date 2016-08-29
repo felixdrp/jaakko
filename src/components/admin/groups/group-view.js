@@ -98,6 +98,8 @@ class GroupView extends Component {
       <div
         // Group 1 Chips
         style={{
+          display: 'flex',
+          flexWrap: 'wrap',
           minWidth: '95%',
           margin: '2.5%',
         }}

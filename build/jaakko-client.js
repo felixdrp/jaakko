@@ -126,7 +126,10 @@ ws.onmessage = function (event) {
 setTimeout(function () {
   return websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: 'felixdrp@gmail.com', password: '1234' } });
 }, 1000);
-
+setTimeout(function () {
+  return websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: 'rpsoft@gmail.com', password: '1234' } });
+}, 1000);
+// {"firstName":"Jesus","surename":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
 // Move the client to a web page...
 // setTimeout( () => store.dispatch(push('/modules/example')), 3000)
 
@@ -137,7 +140,7 @@ var HiperApp = function (_React$Component) {
 
   function HiperApp() {
     (0, _classCallCheck3.default)(this, HiperApp);
-    return (0, _possibleConstructorReturn3.default)(this, (HiperApp.__proto__ || (0, _getPrototypeOf2.default)(HiperApp)).apply(this, arguments));
+    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(HiperApp).apply(this, arguments));
   }
 
   (0, _createClass3.default)(HiperApp, [{

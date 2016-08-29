@@ -71,7 +71,7 @@ var GroupView = function (_Component) {
 
   function GroupView() {
     (0, _classCallCheck3.default)(this, GroupView);
-    return (0, _possibleConstructorReturn3.default)(this, (GroupView.__proto__ || (0, _getPrototypeOf2.default)(GroupView)).apply(this, arguments));
+    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupView).apply(this, arguments));
   }
 
   (0, _createClass3.default)(GroupView, [{
@@ -162,6 +162,8 @@ var GroupView = function (_Component) {
           {
             // Group 1 Chips
             style: {
+              display: 'flex',
+              flexWrap: 'wrap',
               minWidth: '95%',
               margin: '2.5%'
             }

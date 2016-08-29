@@ -42,7 +42,7 @@ var GroupContainer = function (_Component) {
   function GroupContainer() {
     (0, _classCallCheck3.default)(this, GroupContainer);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (GroupContainer.__proto__ || (0, _getPrototypeOf2.default)(GroupContainer)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupContainer).call(this));
 
     _this.state = {
       accounts: {},

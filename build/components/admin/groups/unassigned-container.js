@@ -42,7 +42,7 @@ var UnassignedContainer = function (_Component) {
   function UnassignedContainer() {
     (0, _classCallCheck3.default)(this, UnassignedContainer);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (UnassignedContainer.__proto__ || (0, _getPrototypeOf2.default)(UnassignedContainer)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(UnassignedContainer).call(this));
 
     _this.state = {
       accounts: {},

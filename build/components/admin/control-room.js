@@ -95,7 +95,7 @@ var ControlRoom = function (_React$Component) {
   function ControlRoom() {
     (0, _classCallCheck3.default)(this, ControlRoom);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (ControlRoom.__proto__ || (0, _getPrototypeOf2.default)(ControlRoom)).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ControlRoom).call(this));
 
     _this.state = {
       // WebSocket Session, used to create an admin connection.

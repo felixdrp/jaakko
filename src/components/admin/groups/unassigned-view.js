@@ -41,6 +41,8 @@ const UnassignedView = (props, context) => (
     <div
       // Unassigned Chips
       style={{
+        display: 'flex',
+        flexWrap: 'wrap',
         minWidth: '95%',
         margin: '2.5%',
         marginTop: 0,
