@@ -214,9 +214,11 @@ var GroupManager = function (_Component) {
           subtitle: 'Groups creation with AI help'
         }),
         _react2.default.createElement(
-          _Card.CardText,
+          'div',
           null,
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi. Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque. Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.'
+          _react2.default.createElement(_.GroupAutomatic, {
+            accounts: this.props.accounts
+          })
         ),
         _react2.default.createElement(_Card.CardTitle, {
           title: _react2.default.createElement(

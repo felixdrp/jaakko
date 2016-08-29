@@ -9,3 +9,6 @@ export GroupView from './group-view'
 
 export UnassignedContainer from './unassigned-container'
 export UnassignedView from './unassigned-view'
+
+// AI group assign
+export GroupAutomatic from './group-automatic'

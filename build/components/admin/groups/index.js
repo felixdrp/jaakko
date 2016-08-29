@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.UnassignedView = exports.UnassignedContainer = exports.GroupView = exports.GroupContainer = exports.GroupManager = undefined;
+exports.GroupAutomatic = exports.UnassignedView = exports.UnassignedContainer = exports.GroupView = exports.GroupContainer = exports.GroupManager = undefined;
 
 var _groupManager = require('./group-manager');
 
@@ -25,6 +25,10 @@ var _unassignedView = require('./unassigned-view');
 
 var _unassignedView2 = _interopRequireDefault(_unassignedView);
 
+var _groupAutomatic = require('./group-automatic');
+
+var _groupAutomatic2 = _interopRequireDefault(_groupAutomatic);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.GroupManager = _groupManager2.default;
@@ -37,4 +41,8 @@ exports.GroupView = _groupView2.default;
 
 exports.UnassignedContainer = _unassignedContainer2.default;
 exports.UnassignedView = _unassignedView2.default;
+
+// AI group assign
+
+exports.GroupAutomatic = _groupAutomatic2.default;
 //# sourceMappingURL=index.js.map

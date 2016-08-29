@@ -18,7 +18,7 @@ import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
-import { GroupContainer, UnassignedContainer } from './';
+import { GroupContainer, UnassignedContainer, GroupAutomatic } from './';
 
 import {
   wsGroupAdd,
@@ -158,12 +158,12 @@ class GroupManager extends Component {
           }
           subtitle="Groups creation with AI help"
         />
-        <CardText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
+        <div>
+          <GroupAutomatic
+            accounts={this.props.accounts}
+          />
+        </div>
+
         <CardTitle
           title={
             <span>
