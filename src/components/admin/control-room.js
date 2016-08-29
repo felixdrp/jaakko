@@ -25,8 +25,8 @@ import {
   storeStateWithoutWebSocket,
 } from '../../actions/actions'
 
-import Perf from 'react-addons-perf'
-window.Perf = Perf
+// import Perf from 'react-addons-perf'
+// window.Perf = Perf
 
 class ControlRoom extends React.Component {
   // static childContextTypes = {

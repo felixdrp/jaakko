@@ -21,6 +21,9 @@ import {
   GROUPS_REMOVE,
   GROUPS_ADD_ACCOUNT,
   GROUPS_REMOVE_ACCOUNT,
+  GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
+  GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
+  GROUPS_ACCOUNTS_UNASSIGN,
 
   groupsAdd,
   groupsRemove,
@@ -193,21 +196,55 @@ export default async function mutate({ action, payload, ws, store }) {
 
     case GROUPS_ADD:
       store.dispatch( groupsAdd( payload.name || Date.now() ) )
-
       return true
+
     case GROUPS_REMOVE:
-    console.log('>>>>> ' + GROUPS_REMOVE)
-    console.log(payload)
-    console.log(store.getState())
-    store.dispatch( groupsRemove( payload.groupId ) )
-    console.log(store.getState())
-
+      result = store.getState()
+      console.log('>>>>> ' + GROUPS_REMOVE)
+      console.log(payload)
+      console.log(store.getState())
+      console.log('result.accounts[accountId]> ')
+      // console.log(result.accounts[accountId])
+      // Free all the accounts from group
+      result.groups[payload.groupId].map(
+        (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+      )
+      store.dispatch( groupsRemove( payload.groupId ) )
       return true
+
     case GROUPS_ADD_ACCOUNT:
       return true
+
     case GROUPS_REMOVE_ACCOUNT:
       return true
-    case 'null':
+
+    case GROUPS_SELECTED_ACCOUNTS_TO_GROUP:
+      result = store.getState()
+      payload.selected.map(
+        (accountId) => {
+          if ( result.accounts[accountId].group == 'unassigned' ) {
+            store.dispatch( groupsAddAccount( payload.groupId, accountId ) )
+            store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: payload.groupId }) )
+          } else {
+            store.dispatch( moveAccounFromGroup( accountId, payload.groupId ) )
+          }
+        }
+      )
       return true
+
+    case GROUPS_SELECTED_ACCOUNTS_UNASSIGN:
+      result = store.getState()
+      payload.selected.map(
+        (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+      )
+      return true
+
+    case GROUPS_ACCOUNTS_UNASSIGN:
+      result = store.getState()
+      if (result.accounts[payload.accountId]) {
+        store.dispatch( accountsUpdate({ ...result.accounts[payload.accountId], group: 'unassigned' }) )
+      }
+      return true
+
   }
 }

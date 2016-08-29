@@ -43,7 +43,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Redux client actions
 // WebSocket communications types
 // look doc/server-websocket-message-system.md
-
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
     var action = _ref2.action;
@@ -74,7 +73,7 @@ exports.default = function () {
 
             payloadResponse = void 0, result = void 0, account = void 0;
             _context.t0 = action;
-            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 35 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 41 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 42 : _context.t0 === 'null' ? 43 : 44;
+            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 35 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 43 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 44 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 45 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 48 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 51 : 54;
             break;
 
           case 5:
@@ -190,28 +189,55 @@ exports.default = function () {
 
           case 33:
             store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
-
             return _context.abrupt('return', true);
 
           case 35:
+            result = store.getState();
             console.log('>>>>> ' + _actions.GROUPS_REMOVE);
             console.log(payload);
             console.log(store.getState());
+            console.log('result.accounts[accountId]> ');
+            // console.log(result.accounts[accountId])
+            // Free all the accounts from group
+            result.groups[payload.groupId].map(function (accountId) {
+              return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+            });
             store.dispatch((0, _actions.groupsRemove)(payload.groupId));
-            console.log(store.getState());
-
-            return _context.abrupt('return', true);
-
-          case 41:
-            return _context.abrupt('return', true);
-
-          case 42:
             return _context.abrupt('return', true);
 
           case 43:
             return _context.abrupt('return', true);
 
           case 44:
+            return _context.abrupt('return', true);
+
+          case 45:
+            result = store.getState();
+            payload.selected.map(function (accountId) {
+              if (result.accounts[accountId].group == 'unassigned') {
+                store.dispatch((0, _actions.groupsAddAccount)(payload.groupId, accountId));
+                store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: payload.groupId })));
+              } else {
+                store.dispatch((0, _actions.moveAccounFromGroup)(accountId, payload.groupId));
+              }
+            });
+            return _context.abrupt('return', true);
+
+          case 48:
+            result = store.getState();
+            payload.selected.map(function (accountId) {
+              return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+            });
+            return _context.abrupt('return', true);
+
+          case 51:
+            result = store.getState();
+            if (result.accounts[payload.accountId]) {
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[payload.accountId], { group: 'unassigned' })));
+            }
+            return _context.abrupt('return', true);
+
+          case 54:
           case 'end':
             return _context.stop();
         }

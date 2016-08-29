@@ -83,14 +83,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Icons
 
 // import FlatButton from 'material-ui/FlatButton';
-
 var GroupManager = function (_Component) {
   (0, _inherits3.default)(GroupManager, _Component);
 
   function GroupManager() {
     (0, _classCallCheck3.default)(this, GroupManager);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupManager).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (GroupManager.__proto__ || (0, _getPrototypeOf2.default)(GroupManager)).call(this));
 
     _this.selectAccount = function (accountId, maintainPrevSelection) {
       var prevSelected = _this.state.selectedAccounts;
@@ -111,8 +110,34 @@ var GroupManager = function (_Component) {
       }
 
       _this.setState({ selectedAccounts: selected });
-      debugger;
+      // debugger
       console.log('select an account!!! > ' + accountId);
+    };
+
+    _this.unassignAccount = function (accountId) {
+      console.log('unassign an account!!! > ' + accountId);
+      console.log(_this.props);
+      _this.props.wsSession.send((0, _serverActions.wsUnassignAccount)(accountId));
+    };
+
+    _this.unassignSelectedAccounts = function () {
+      console.log('unassign!!!');
+      _this.props.wsSession.send((0, _serverActions.wsUnassignSelectedAccounts)(_this.state.selectedAccounts));
+      _this.setState({ selectedAccounts: [] });
+    };
+
+    _this.assignSelectedAccountsToGroup = function (event, groupId) {
+      if (event.nativeEvent.defaultPrevented) {
+        return;
+      }
+
+      var selected = _this.state.selectedAccounts;
+
+      // send selection and groupid to server
+      _this.props.wsSession.send((0, _serverActions.wsAssignSelectedAccountsToGroup)(groupId, selected));
+
+      _this.setState({ selectedAccounts: [] });
+      console.log('assign to group !!! > ' + groupId);
     };
 
     _this.addGroup = function (name) {
@@ -125,8 +150,6 @@ var GroupManager = function (_Component) {
     _this.removeGroup = function (groupId) {
       // send WsAddGroup
       _this.props.wsSession.send((0, _serverActions.wsGroupRemove)(groupId));
-      console.log('addgroup!!!');
-      // console.log(this.props)
     };
 
     _this.state = {
@@ -144,32 +167,16 @@ var GroupManager = function (_Component) {
   // if maintainPrevSelection == true it will maintain the previus selection
 
 
+  // Free an account from group
+
+
+  // Free the selected accounts from groups
+
+
+  // Free the selected accounts from groups
+
+
   (0, _createClass3.default)(GroupManager, [{
-    key: 'unassignAccount',
-
-
-    // Free an account from group
-    value: function unassignAccount(accountId) {
-      console.log('unassign an account!!! > ' + accountId);
-      console.log(this.props);
-    }
-
-    // Free the selected accounts from groups
-
-  }, {
-    key: 'unassignSelectedAccounts',
-    value: function unassignSelectedAccounts() {
-      console.log('unassign!!!');
-    }
-
-    // Free the selected accounts from groups
-
-  }, {
-    key: 'assignSelectedAccountsToGroup',
-    value: function assignSelectedAccountsToGroup(groupId) {
-      console.log('assign to group !!! > ' + groupId);
-    }
-  }, {
     key: 'render',
     value: function render() {
       console.log(this.context);
@@ -223,7 +230,7 @@ var GroupManager = function (_Component) {
         _react2.default.createElement(_.UnassignedContainer, {
           accounts: this.props.accounts,
           selectedAccounts: this.state.selectedAccounts,
-          unassingButton: this.unassignSelectedAccounts,
+          unassignSelectedAccounts: this.unassignSelectedAccounts,
           selectionHandler: this.selectAccount
         }),
         _react2.default.createElement(
@@ -272,7 +279,7 @@ var GroupManager = function (_Component) {
             removeGroup: this.removeGroup,
             unassignAccount: this.unassignAccount,
             assignSelectedAccountsToGroup: this.assignSelectedAccountsToGroup,
-            selectAccount: this.selectAccount
+            selectionHandler: this.selectAccount
           })
         )
       );

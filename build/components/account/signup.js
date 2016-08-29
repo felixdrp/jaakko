@@ -78,7 +78,7 @@ var LoginSignUp = function (_React$Component) {
   function LoginSignUp() {
     (0, _classCallCheck3.default)(this, LoginSignUp);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(LoginSignUp).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (LoginSignUp.__proto__ || (0, _getPrototypeOf2.default)(LoginSignUp)).call(this));
 
     _this.state = {
       // Input fields

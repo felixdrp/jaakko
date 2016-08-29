@@ -30,7 +30,7 @@ export function accounts(state = { list: [] }, action) {
     case ACCOUNTS_UPDATE:
       // Check if account is already in list
       if (state[payload.email]) {
-        state[payload.email] = JSON.parse(JSON.stringify( payload ))
+        state[payload.email] = payload
         return state
       }
       return state
@@ -84,7 +84,7 @@ export function groups(state = { list: [] }, action) {
       return state
     case GROUPS_REMOVE_ACCOUNT:
       // Check if account is already in list
-      if (state[payload.groupId].indexOf(payload.account)) {
+      if ( state[payload.groupId].includes(payload.account) ) {
         // Remove from list
         state[payload.groupId].splice( state[payload.groupId].indexOf(payload.account), 1 )
       }

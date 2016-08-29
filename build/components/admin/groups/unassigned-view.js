@@ -22,7 +22,7 @@ var _personOutline2 = _interopRequireDefault(_personOutline);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var UnassignedView = function UnassignedView(props) {
+var UnassignedView = function UnassignedView(props, context) {
   return _react2.default.createElement(
     'div',
     null,
@@ -30,9 +30,7 @@ var UnassignedView = function UnassignedView(props) {
       _RaisedButton2.default
       // Unassigned Accounts
       ,
-      { onClick: function onClick() {
-          return console.log('onclik!!!!');
-        },
+      { onClick: props.unassignSelectedAccounts,
         backgroundColor: '#efefef',
         style: {
           height: 36,
@@ -80,7 +78,7 @@ var UnassignedView = function UnassignedView(props) {
           _Chip2.default,
           {
             key: accountId,
-            backgroundColor: props.accounts[accountId].selected ? '#ff5f5f' : '#efefef',
+            backgroundColor: props.accounts[accountId].selected ? context.muiTheme.palette.chipSelected : context.muiTheme.palette.chip,
             onTouchTap: function onTouchTap(e) {
               return props.selectionHandler(accountId, e.nativeEvent);
             },
@@ -105,6 +103,7 @@ var UnassignedView = function UnassignedView(props) {
     )
   );
 };
+UnassignedView.contextTypes = { muiTheme: _react2.default.PropTypes.object };
 
 exports.default = UnassignedView;
 //# sourceMappingURL=unassigned-view.js.map

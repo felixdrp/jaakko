@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CONTINUE = exports.WAIT = exports.SEND_ACCOUNT_MESSAGE = exports.SEND_GROUP_MESSAGE = exports.SEND_ALL_MESSAGE = exports.GROUPS_REMOVE_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = exports.GROUPS_REMOVE = exports.GROUPS_ADD = exports.ACCOUNTS_REMOVE = exports.ACCOUNTS_UPDATE = exports.ACCOUNTS_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = undefined;
+exports.CONTINUE = exports.WAIT = exports.SEND_ACCOUNT_MESSAGE = exports.SEND_GROUP_MESSAGE = exports.SEND_ALL_MESSAGE = exports.GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_TO_GROUP = exports.GROUPS_REMOVE_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = exports.GROUPS_REMOVE = exports.GROUPS_ADD = exports.ACCOUNTS_REMOVE = exports.ACCOUNTS_UPDATE = exports.ACCOUNTS_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = undefined;
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -61,6 +61,9 @@ var GROUPS_REMOVE = exports.GROUPS_REMOVE = 'GROUPS_REMOVE';
 
 var GROUPS_ADD_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = 'GROUPS_ADD_ACCOUNT';
 var GROUPS_REMOVE_ACCOUNT = exports.GROUPS_REMOVE_ACCOUNT = 'GROUPS_REMOVE_ACCOUNT';
+var GROUPS_SELECTED_ACCOUNTS_TO_GROUP = exports.GROUPS_SELECTED_ACCOUNTS_TO_GROUP = 'GROUPS_SELECTED_ACCOUNTS_TO_GROUP';
+var GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIGN = 'GROUPS_SELECTED_ACCOUNTS_UNASSIGN';
+var GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_ACCOUNTS_UNASSIGN = 'GROUPS_ACCOUNTS_UNASSIGN';
 
 function groupsAdd(groupId) {
   var list = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
@@ -108,6 +111,7 @@ var SEND_ALL_MESSAGE = exports.SEND_ALL_MESSAGE = 'SEND_GROUP_MESSAGE';
 var SEND_GROUP_MESSAGE = exports.SEND_GROUP_MESSAGE = 'SEND_GROUP_MESSAGE';
 var SEND_ACCOUNT_MESSAGE = exports.SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE';
 
+// Remove the WS from the store to send to admin page.
 function storeStateWithoutWebSocket(state) {
   var copyWithoutWS = {};
   console.log('XXXXXXXresult');

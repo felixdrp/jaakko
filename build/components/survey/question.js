@@ -99,7 +99,7 @@ var Question = function (_Component) {
   function Question(props) {
     (0, _classCallCheck3.default)(this, Question);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(Question).call(this, props));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (Question.__proto__ || (0, _getPrototypeOf2.default)(Question)).call(this, props));
 
     _this.state = {};
     return _this;

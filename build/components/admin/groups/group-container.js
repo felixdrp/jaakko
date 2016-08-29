@@ -30,6 +30,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _ = require('./');
 
+var _filterAccountsByGroup = require('./filter-accounts-by-group');
+
+var _filterAccountsByGroup2 = _interopRequireDefault(_filterAccountsByGroup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var GroupContainer = function (_Component) {
@@ -38,7 +42,7 @@ var GroupContainer = function (_Component) {
   function GroupContainer() {
     (0, _classCallCheck3.default)(this, GroupContainer);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupContainer).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (GroupContainer.__proto__ || (0, _getPrototypeOf2.default)(GroupContainer)).call(this));
 
     _this.state = {
       accounts: {},
@@ -54,24 +58,25 @@ var GroupContainer = function (_Component) {
   (0, _createClass3.default)(GroupContainer, [{
     key: 'render',
     value: function render() {
-      console.log(this.context);
-      var style = {
-        gray: {
-          color: '#565555'
-        }
-      };
       var props = this.props;
       var groupList = '';
       if (props.groups) {
         groupList = props.groups.list.map(function (groupId, index) {
+          var accounts = (0, _filterAccountsByGroup2.default)(groupId, props.accounts, props.selectedAccounts);
+
           return _react2.default.createElement(_.GroupView, {
             key: index,
             groupId: groupId,
+            accounts: accounts,
             accountsNumber: props.groups[groupId].length,
-            assignToGroup: function assignToGroup() {},
+            assignToGroup: function assignToGroup(event) {
+              return props.assignSelectedAccountsToGroup(event, groupId);
+            },
             removeGroup: function removeGroup() {
               props.removeGroup(groupId);
-            }
+            },
+            selectionHandler: props.selectionHandler,
+            unassignAccount: props.unassignAccount
           });
         });
       }

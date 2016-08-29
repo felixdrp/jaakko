@@ -2,6 +2,9 @@ import React, { PropTypes, Component } from 'react'
 
 import { GroupView } from './';
 
+import filterAccountsByGroup from './filter-accounts-by-group'
+
+
 class GroupContainer extends Component {
   static propTypes = {
     groups: PropTypes.object,
@@ -27,25 +30,26 @@ class GroupContainer extends Component {
   }
 
   render() {
-    console.log(this.context)
-    const style = {
-      gray: {
-        color: '#565555'
-      }
-    }
     let props = this.props
     let groupList = ''
     if  (props.groups) {
       groupList = props.groups.list.map(
-        (groupId, index) => (
-          <GroupView
-            key={index}
-            groupId={groupId}
-            accountsNumber={props.groups[groupId].length}
-            assignToGroup={ ()=> {} }
-            removeGroup={ () => {props.removeGroup(groupId)} }
-          />
-        )
+        (groupId, index) => {
+          let accounts = filterAccountsByGroup(groupId, props.accounts, props.selectedAccounts)
+
+          return (
+            <GroupView
+              key={index}
+              groupId={groupId}
+              accounts={accounts}
+              accountsNumber={props.groups[groupId].length}
+              assignToGroup={ (event) => props.assignSelectedAccountsToGroup( event, groupId ) }
+              removeGroup={ () => {props.removeGroup(groupId)} }
+              selectionHandler={props.selectionHandler}
+              unassignAccount={props.unassignAccount}
+            />
+          )
+        }
       )
     }
 

@@ -5,11 +5,11 @@ import Chip from 'material-ui/Chip';
 
 import PersonOutline from 'material-ui/svg-icons/social/person-outline';
 
-const UnassignedView = (props) => (
+const UnassignedView = (props, context) => (
   <div>
     <RaisedButton
       // Unassigned Accounts
-      onClick={ () => console.log('onclik!!!!') }
+      onClick={ props.unassignSelectedAccounts }
       backgroundColor={'#efefef'}
       style={{
         height: 36,
@@ -52,7 +52,7 @@ const UnassignedView = (props) => (
         (accountId) => (
           <Chip
             key={accountId}
-            backgroundColor={props.accounts[accountId].selected? '#ff5f5f': '#efefef'}
+            backgroundColor={props.accounts[accountId].selected? context.muiTheme.palette.chipSelected : context.muiTheme.palette.chip}
             onTouchTap={ (e) => props.selectionHandler(accountId, e.nativeEvent) }
             style={{
               margin: 3,
@@ -72,9 +72,9 @@ const UnassignedView = (props) => (
         )
       )
     }
-
     </div>
   </div>
 );
+UnassignedView.contextTypes = {muiTheme: React.PropTypes.object};
 
 export default UnassignedView

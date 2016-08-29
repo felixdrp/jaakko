@@ -36,6 +36,10 @@ export const GROUPS_REMOVE = 'GROUPS_REMOVE'
 
 export const GROUPS_ADD_ACCOUNT = 'GROUPS_ADD_ACCOUNT'
 export const GROUPS_REMOVE_ACCOUNT = 'GROUPS_REMOVE_ACCOUNT'
+export const GROUPS_SELECTED_ACCOUNTS_TO_GROUP = 'GROUPS_SELECTED_ACCOUNTS_TO_GROUP'
+export const GROUPS_SELECTED_ACCOUNTS_UNASSIGN = 'GROUPS_SELECTED_ACCOUNTS_UNASSIGN'
+export const GROUPS_ACCOUNTS_UNASSIGN = 'GROUPS_ACCOUNTS_UNASSIGN'
+
 
 export function groupsAdd(groupId, list=[]) {
   return { type: GROUPS_ADD, payload: { groupId, list } }
@@ -83,6 +87,8 @@ export const SEND_ALL_MESSAGE = 'SEND_GROUP_MESSAGE'
 export const SEND_GROUP_MESSAGE = 'SEND_GROUP_MESSAGE'
 export const SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE'
 
+
+// Remove the WS from the store to send to admin page.
 export function storeStateWithoutWebSocket(state) {
   let copyWithoutWS = {}
   console.log('XXXXXXXresult')

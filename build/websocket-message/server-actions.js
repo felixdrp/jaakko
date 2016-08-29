@@ -10,6 +10,9 @@ exports.wsLogAccount = wsLogAccount;
 exports.wsGotoPage = wsGotoPage;
 exports.wsGroupAdd = wsGroupAdd;
 exports.wsGroupRemove = wsGroupRemove;
+exports.wsAssignSelectedAccountsToGroup = wsAssignSelectedAccountsToGroup;
+exports.wsUnassignSelectedAccounts = wsUnassignSelectedAccounts;
+exports.wsUnassignAccount = wsUnassignAccount;
 exports.swUpdateControlRoom = swUpdateControlRoom;
 
 var _reactRouterRedux = require('react-router-redux');
@@ -27,7 +30,6 @@ var _queryActions = require('./query-actions');
 var MUTATE = exports.MUTATE = 'MUTATE';
 
 // Redux client actions
-
 var QUERY = exports.QUERY = 'QUERY';
 var ACTION = exports.ACTION = 'ACTION';
 
@@ -116,13 +118,49 @@ function wsGroupAdd(obj) {
   };
 }
 
-// Register a group socket action creator
+// Remove a group socket action creator
 function wsGroupRemove(groupId) {
   return {
     type: MUTATE,
     action: _actions.GROUPS_REMOVE,
     payload: {
       groupId: groupId
+    }
+  };
+}
+
+// Register selected accounts to a group socket action creator
+function wsAssignSelectedAccountsToGroup(groupId) {
+  var selected = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+
+  return {
+    type: MUTATE,
+    action: _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
+    payload: {
+      groupId: groupId,
+      selected: selected
+    }
+  };
+}
+
+function wsUnassignSelectedAccounts() {
+  var selected = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+  return {
+    type: MUTATE,
+    action: _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
+    payload: {
+      selected: selected
+    }
+  };
+}
+
+function wsUnassignAccount(accountId) {
+  return {
+    type: MUTATE,
+    action: _actions.GROUPS_ACCOUNTS_UNASSIGN,
+    payload: {
+      accountId: accountId
     }
   };
 }

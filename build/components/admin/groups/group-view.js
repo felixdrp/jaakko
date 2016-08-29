@@ -71,7 +71,7 @@ var GroupView = function (_Component) {
 
   function GroupView() {
     (0, _classCallCheck3.default)(this, GroupView);
-    return (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(GroupView).apply(this, arguments));
+    return (0, _possibleConstructorReturn3.default)(this, (GroupView.__proto__ || (0, _getPrototypeOf2.default)(GroupView)).apply(this, arguments));
   }
 
   (0, _createClass3.default)(GroupView, [{
@@ -79,6 +79,7 @@ var GroupView = function (_Component) {
     value: function render() {
       var props = this.props;
       var context = this.context;
+      var palette = context.muiTheme.palette;
       var style = {
         centerIcon: {
           color: '#6c6c6c',
@@ -122,7 +123,9 @@ var GroupView = function (_Component) {
           )
         ),
         _react2.default.createElement(_svgIcons.NavigationCancel, {
-          onClick: props.removeGroup,
+          onClick: function onClick(e) {
+            e.nativeEvent.preventDefault();props.removeGroup(props.groupId);
+          },
           style: (0, _extends3.default)({}, style.centerIcon, {
             float: 'right'
           })
@@ -163,22 +166,36 @@ var GroupView = function (_Component) {
               margin: '2.5%'
             }
           },
-          _react2.default.createElement(
-            _Chip2.default,
-            {
-              backgroundColor: context.muiTheme.palette.selectionBackground,
-              onRequestDelete: function onRequestDelete() {
-                return console.log('onclik!!!!');
+          props.accounts.list.map(function (accountId) {
+            return _react2.default.createElement(
+              _Chip2.default,
+              {
+                key: accountId,
+                backgroundColor: props.accounts[accountId].selected ? palette.chipSelected : palette.chip,
+                onTouchTap: function onTouchTap(e) {
+                  return props.selectionHandler(accountId, e.nativeEvent);
+                },
+                onRequestDelete: function onRequestDelete(e) {
+                  return props.unassignAccount(accountId);
+                },
+                style: {
+                  margin: 3
+                }
               },
-              onTouchTap: function onTouchTap() {
-                return console.log('onclik!!!!');
-              },
-              style: {
-                margin: 4
-              }
-            },
-            'Colored Chip'
-          )
+              _react2.default.createElement(
+                'span',
+                {
+                  style: {
+                    fontWeight: 500,
+                    marginRight: 8,
+                    fontFamily: 'monospace'
+                  }
+                },
+                props.accounts[accountId].firstName
+              ),
+              props.accounts[accountId].email
+            );
+          })
         )
       );
     }

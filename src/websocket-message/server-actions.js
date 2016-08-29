@@ -13,6 +13,9 @@ import {
   GROUPS_REMOVE,
   GROUPS_ADD_ACCOUNT,
   GROUPS_REMOVE_ACCOUNT,
+  GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
+  GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
+  GROUPS_ACCOUNTS_UNASSIGN,
 } from '../actions/actions'
 
 import {
@@ -25,6 +28,7 @@ import {
 export const MUTATE = 'MUTATE'
 export const QUERY = 'QUERY'
 export const ACTION = 'ACTION'
+
 
 
 // Register a new account in the db and add to the account list
@@ -101,13 +105,45 @@ export function wsGroupAdd(obj) {
   }
 }
 
-// Register a group socket action creator
+// Remove a group socket action creator
 export function wsGroupRemove(groupId) {
   return {
     type: MUTATE,
     action: GROUPS_REMOVE,
     payload: {
       groupId,
+    }
+  }
+}
+
+// Register selected accounts to a group socket action creator
+export function wsAssignSelectedAccountsToGroup( groupId, selected = [] ) {
+  return {
+    type: MUTATE,
+    action: GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
+    payload: {
+      groupId,
+      selected,
+    }
+  }
+}
+
+export function wsUnassignSelectedAccounts(selected = [] ) {
+  return {
+    type: MUTATE,
+    action: GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
+    payload: {
+      selected,
+    }
+  }
+}
+
+export function wsUnassignAccount(accountId) {
+  return {
+    type: MUTATE,
+    action: GROUPS_ACCOUNTS_UNASSIGN,
+    payload: {
+      accountId,
     }
   }
 }

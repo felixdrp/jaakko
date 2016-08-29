@@ -30,9 +30,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _ = require('./');
 
-var _immutable = require('immutable');
+var _filterAccountsByGroup = require('./filter-accounts-by-group');
 
-var _immutable2 = _interopRequireDefault(_immutable);
+var _filterAccountsByGroup2 = _interopRequireDefault(_filterAccountsByGroup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42,7 +42,7 @@ var UnassignedContainer = function (_Component) {
   function UnassignedContainer() {
     (0, _classCallCheck3.default)(this, UnassignedContainer);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(UnassignedContainer).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (UnassignedContainer.__proto__ || (0, _getPrototypeOf2.default)(UnassignedContainer)).call(this));
 
     _this.state = {
       accounts: {},
@@ -58,7 +58,6 @@ var UnassignedContainer = function (_Component) {
   (0, _createClass3.default)(UnassignedContainer, [{
     key: 'render',
     value: function render() {
-      console.log(this.context);
       var style = {
         gray: {
           color: '#565555'
@@ -70,18 +69,7 @@ var UnassignedContainer = function (_Component) {
       };
 
       if (props.accounts) {
-        // Filter the accounts with groups
-        unassignedAccounts.list = props.accounts.list.filter(function (accountId) {
-          return props.accounts[accountId].group == 'unassigned' ? true : false;
-        });
-        // Add accounts unassigned
-        unassignedAccounts.list.map(function (accountId) {
-          unassignedAccounts[accountId] = _immutable2.default.fromJS({
-            firstName: props.accounts[accountId].firstName,
-            email: props.accounts[accountId].email,
-            selected: props.selectedAccounts.includes(accountId)
-          }).toJS();
-        });
+        unassignedAccounts = (0, _filterAccountsByGroup2.default)('unassigned', props.accounts, props.selectedAccounts);
       }
 
       return _react2.default.createElement(
@@ -89,9 +77,8 @@ var UnassignedContainer = function (_Component) {
         null,
         _react2.default.createElement(_.UnassignedView, {
           accounts: unassignedAccounts,
-          assignToGroup: function assignToGroup() {},
+          unassignSelectedAccounts: props.unassignSelectedAccounts,
           selectionHandler: props.selectionHandler
-          // removeGroup={ () => {} }
         })
       );
     }

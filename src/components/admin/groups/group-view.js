@@ -22,6 +22,7 @@ class GroupView extends Component {
   render() {
     let props = this.props
     let context = this.context
+    let palette = context.muiTheme.palette
     let style = {
       centerIcon: {
           color: '#6c6c6c',
@@ -64,7 +65,7 @@ class GroupView extends Component {
         </span>
 
         <NavigationCancel
-          onClick={ props.removeGroup }
+          onClick={ (e) => { e.nativeEvent.preventDefault(); props.removeGroup(props.groupId); } }
           style={{
             ...style.centerIcon,
             float: 'right',
@@ -101,16 +102,32 @@ class GroupView extends Component {
           margin: '2.5%',
         }}
       >
-        <Chip
-          backgroundColor={context.muiTheme.palette.selectionBackground}
-          onRequestDelete={ () => console.log('onclik!!!!') }
-          onTouchTap={ () => console.log('onclik!!!!') }
-          style={{
-            margin: 4,
-          }}
-        >
-          Colored Chip
-        </Chip>
+      {
+        props.accounts.list.map(
+          (accountId) => (
+            <Chip
+              key={accountId}
+              backgroundColor={props.accounts[accountId].selected? palette.chipSelected : palette.chip}
+              onTouchTap={ (e) => props.selectionHandler(accountId, e.nativeEvent) }
+              onRequestDelete={ (e) => props.unassignAccount(accountId) }
+              style={{
+                margin: 3,
+              }}
+            >
+              <span
+                style={{
+                  fontWeight: 500,
+                  marginRight: 8,
+                  fontFamily: 'monospace',
+                }}
+              >
+                { props.accounts[accountId].firstName }
+              </span>
+              { props.accounts[accountId].email }
+            </Chip>
+          )
+        )
+      }
       </div>
     </Card>
   )};

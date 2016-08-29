@@ -30,7 +30,11 @@ exports.default = {
     // pickerHeaderColor: fade(fullWhite, 0.12),
     // clockCircleColor: fade(fullWhite, 0.12),
     selectionColor: '#303030',
-    selectionBackground: '#f0f030'
+    selectionBackground: '#f0f030',
+    chip: '#efefef',
+    chipSelected: '#ff5f5f'
   }
 };
+// event.nativeEvent.stopPropagation();
+// event.nativeEvent.stopImmediatePropagation();
 //# sourceMappingURL=muiLMSTheme.js.map

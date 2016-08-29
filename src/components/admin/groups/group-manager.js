@@ -23,6 +23,9 @@ import { GroupContainer, UnassignedContainer } from './';
 import {
   wsGroupAdd,
   wsGroupRemove,
+  wsAssignSelectedAccountsToGroup,
+  wsUnassignSelectedAccounts,
+  wsUnassignAccount,
 } from '../../../websocket-message/server-actions'
 
 class GroupManager extends Component {
@@ -70,26 +73,44 @@ class GroupManager extends Component {
     }
 
     this.setState({ selectedAccounts: selected })
-    debugger
+    // debugger
     console.log('select an account!!! > ' + accountId)
 
   }
 
   // Free an account from group
-  unassignAccount(accountId) {
+  unassignAccount = (accountId) => {
     console.log('unassign an account!!! > ' + accountId)
     console.log(this.props)
+    this.props.wsSession.send(
+      wsUnassignAccount( accountId )
+    )
   }
 
   // Free the selected accounts from groups
-  unassignSelectedAccounts() {
+  unassignSelectedAccounts = () => {
     console.log('unassign!!!')
+    this.props.wsSession.send(
+      wsUnassignSelectedAccounts( this.state.selectedAccounts )
+    )
+    this.setState({ selectedAccounts: [] })
   }
 
   // Free the selected accounts from groups
-  assignSelectedAccountsToGroup(groupId) {
-    console.log('assign to group !!! > ' + groupId)
+  assignSelectedAccountsToGroup = (event, groupId) => {
+    if (event.nativeEvent.defaultPrevented) {
+      return
+    }
 
+    let selected = this.state.selectedAccounts
+
+    // send selection and groupid to server
+    this.props.wsSession.send(
+      wsAssignSelectedAccountsToGroup( groupId, selected )
+    )
+
+    this.setState({ selectedAccounts: [] })
+    console.log('assign to group !!! > ' + groupId)
   }
 
   addGroup = (name) => {
@@ -107,8 +128,6 @@ class GroupManager extends Component {
     this.props.wsSession.send(
       wsGroupRemove(groupId)
     )
-    console.log('addgroup!!!')
-    // console.log(this.props)
   }
 
   render() {
@@ -159,7 +178,7 @@ class GroupManager extends Component {
         <UnassignedContainer
           accounts={this.props.accounts}
           selectedAccounts={this.state.selectedAccounts}
-          unassingButton={ this.unassignSelectedAccounts }
+          unassignSelectedAccounts={ this.unassignSelectedAccounts }
           selectionHandler={ this.selectAccount }
         />
 
@@ -204,7 +223,7 @@ class GroupManager extends Component {
             removeGroup={this.removeGroup}
             unassignAccount={this.unassignAccount}
             assignSelectedAccountsToGroup={this.assignSelectedAccountsToGroup}
-            selectAccount={this.selectAccount}
+            selectionHandler={this.selectAccount}
           />
         </div>
       </Card>

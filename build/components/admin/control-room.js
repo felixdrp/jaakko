@@ -74,13 +74,11 @@ var _queryActions = require('../../websocket-message/query-actions');
 
 var _actions = require('../../actions/actions');
 
-var _reactAddonsPerf = require('react-addons-perf');
-
-var _reactAddonsPerf2 = _interopRequireDefault(_reactAddonsPerf);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-window.Perf = _reactAddonsPerf2.default;
+// import Perf from 'react-addons-perf'
+// window.Perf = Perf
+
 // import GroupManager from './groups/group-manager';
 
 var ControlRoom = function (_React$Component) {
@@ -97,7 +95,7 @@ var ControlRoom = function (_React$Component) {
   function ControlRoom() {
     (0, _classCallCheck3.default)(this, ControlRoom);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (0, _getPrototypeOf2.default)(ControlRoom).call(this));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (ControlRoom.__proto__ || (0, _getPrototypeOf2.default)(ControlRoom)).call(this));
 
     _this.state = {
       // WebSocket Session, used to create an admin connection.
