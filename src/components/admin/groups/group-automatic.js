@@ -35,8 +35,15 @@ class GroupAutomatic extends Component {
 
   render() {
     const style = {
-      gray: {
-        color: '#565555'
+      iconGroup: {
+        // color: '#565555',
+        height: 33,
+        width: 35,
+        marginRight: 10,
+      },
+      iconAccount: {
+        height: 33,
+        width: 31,
       }
     }
     let props = this.props
@@ -62,7 +69,16 @@ class GroupAutomatic extends Component {
           <FloatingActionButton mini={true} style={{}}>
             <ContentRemove />
           </FloatingActionButton>
-          1
+          <span
+            style={{
+              margin: 25,
+              fontSize: '-webkit-xxx-large',
+              fontWeight: 400,
+              fontFamily: 'monospace',
+            }}
+          >
+            1
+          </span>
           <FloatingActionButton mini={true} style={{}}>
             <ContentAdd />
           </FloatingActionButton>
@@ -73,12 +89,15 @@ class GroupAutomatic extends Component {
             backgroundColor={'#efefef'}
             style={{
               height: 36,
+              marginLeft: 45,
+              position: 'relative',
+              bottom: 10,
             }}
           >
             Create
           </ RaisedButton>
         </div>
-        <Group /> <PersonOutline /> <PersonOutline />
+        <Group style={style.iconGroup} /> <PersonOutline style={style.iconAccount} /> <PersonOutline style={style.iconAccount} />
       </div>
     )
   }

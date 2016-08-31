@@ -77,8 +77,15 @@ var GroupAutomatic = function (_Component) {
     key: 'render',
     value: function render() {
       var style = {
-        gray: {
-          color: '#565555'
+        iconGroup: {
+          // color: '#565555',
+          height: 33,
+          width: 35,
+          marginRight: 10
+        },
+        iconAccount: {
+          height: 33,
+          width: 31
         }
       };
       var props = this.props;
@@ -109,7 +116,18 @@ var GroupAutomatic = function (_Component) {
             { mini: true, style: {} },
             _react2.default.createElement(_remove2.default, null)
           ),
-          '1',
+          _react2.default.createElement(
+            'span',
+            {
+              style: {
+                margin: 25,
+                fontSize: '-webkit-xxx-large',
+                fontWeight: 400,
+                fontFamily: 'monospace'
+              }
+            },
+            '1'
+          ),
           _react2.default.createElement(
             _FloatingActionButton2.default,
             { mini: true, style: {} },
@@ -122,17 +140,20 @@ var GroupAutomatic = function (_Component) {
             ,
             { backgroundColor: '#efefef',
               style: {
-                height: 36
+                height: 36,
+                marginLeft: 45,
+                position: 'relative',
+                bottom: 10
               }
             },
             'Create'
           )
         ),
-        _react2.default.createElement(_group2.default, null),
+        _react2.default.createElement(_group2.default, { style: style.iconGroup }),
         ' ',
-        _react2.default.createElement(_personOutline2.default, null),
+        _react2.default.createElement(_personOutline2.default, { style: style.iconAccount }),
         ' ',
-        _react2.default.createElement(_personOutline2.default, null)
+        _react2.default.createElement(_personOutline2.default, { style: style.iconAccount })
       );
     }
   }]);
