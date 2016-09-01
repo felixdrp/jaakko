@@ -97,6 +97,25 @@ class GroupAutomatic extends Component {
             Create
           </ RaisedButton>
         </div>
+        <div
+          style={{
+            height: 100,
+            border: 10,
+            boxSizing: 'border-box',
+            boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
+            overflowY: 'scroll',
+          }}
+          onScroll={ (e) => console.log(e.nativeEvent.target.scrollTop) }
+        >
+          <div
+            style={{
+              height: 500,
+            }}
+          >
+
+          </div>
+        </div>
+
         <Group style={style.iconGroup} /> <PersonOutline style={style.iconAccount} /> <PersonOutline style={style.iconAccount} />
       </div>
     )

@@ -149,6 +149,26 @@ var GroupAutomatic = function (_Component) {
             'Create'
           )
         ),
+        _react2.default.createElement(
+          'div',
+          {
+            style: {
+              height: 100,
+              border: 10,
+              boxSizing: 'border-box',
+              boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
+              overflowY: 'scroll'
+            },
+            onScroll: function onScroll(e) {
+              return console.log(e.nativeEvent.target.scrollTop);
+            }
+          },
+          _react2.default.createElement('div', {
+            style: {
+              height: 500
+            }
+          })
+        ),
         _react2.default.createElement(_group2.default, { style: style.iconGroup }),
         ' ',
         _react2.default.createElement(_personOutline2.default, { style: style.iconAccount }),
