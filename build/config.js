@@ -12,7 +12,7 @@ var _extends3 = _interopRequireDefault(_extends2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Server graphql port (Proxy)
-var port = exports.port = typeof window === 'undefined' ? 8000 : window.document.location.port;
+var port = exports.port = typeof window === 'undefined' ? 8008 : window.document.location.port;
 
 // DataBase, Mongodb configuration
 var mongodbConf = exports.mongodbConf = {

@@ -73,7 +73,7 @@ exports.default = function () {
 
             payloadResponse = void 0, result = void 0, account = void 0;
             _context.t0 = action;
-            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 18 : 35;
+            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 35 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 43 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 44 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 45 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 48 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 51 : 54;
             break;
 
           case 5:
@@ -131,20 +131,20 @@ exports.default = function () {
             // Ready to asign to a group
             return _context.abrupt('return', true);
 
-          case 18:
-            _context.next = 20;
+          case 17:
+            _context.next = 19;
             return (0, _loginAccount.loginAccount)({
               email: payload.email,
               password: payload.password
             });
 
-          case 20:
+          case 19:
             result = _context.sent;
 
             console.log(result);
 
             if (!('message' in result)) {
-              _context.next = 27;
+              _context.next = 26;
               break;
             }
 
@@ -166,7 +166,7 @@ exports.default = function () {
             });
             return _context.abrupt('return');
 
-          case 27:
+          case 26:
             // Register the websocket 'ws.accountCode' with the email.
             // So we can identify the ws with the account email.
             ws.accountCode = payload.email;
@@ -187,7 +187,63 @@ exports.default = function () {
             // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
             return _context.abrupt('return', true);
 
+          case 33:
+            store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
+            return _context.abrupt('return', true);
+
           case 35:
+            result = store.getState();
+            console.log('>>>>> ' + _actions.GROUPS_REMOVE);
+            console.log(payload);
+            console.log(store.getState());
+            console.log('result.accounts[accountId]> ');
+            // console.log(result.accounts[accountId])
+            // Free all the accounts from group
+            result.groups[payload.groupId].map(function (accountId) {
+              return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+            });
+            store.dispatch((0, _actions.groupsRemove)(payload.groupId));
+            return _context.abrupt('return', true);
+
+          case 43:
+            return _context.abrupt('return', true);
+
+          case 44:
+            return _context.abrupt('return', true);
+
+          case 45:
+            result = store.getState();
+            payload.selected.map(function (accountId) {
+              if (result.accounts[accountId].group == 'unassigned') {
+                store.dispatch((0, _actions.groupsAddAccount)(payload.groupId, accountId));
+                store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: payload.groupId })));
+              } else {
+                store.dispatch((0, _actions.moveAccounFromGroup)(accountId, payload.groupId));
+              }
+            });
+            return _context.abrupt('return', true);
+
+          case 48:
+            result = store.getState();
+            payload.selected.map(function (accountId) {
+              // remove account from group
+              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[accountId].group, accountId));
+              // account to 'unassigned'
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+            });
+            return _context.abrupt('return', true);
+
+          case 51:
+            result = store.getState();
+            if (result.accounts[payload.accountId]) {
+              // remove account from group
+              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[payload.accountId].group, payload.accountId));
+              // account to 'unassigned'
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[payload.accountId], { group: 'unassigned' })));
+            }
+            return _context.abrupt('return', true);
+
+          case 54:
           case 'end':
             return _context.stop();
         }

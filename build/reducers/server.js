@@ -3,17 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 exports.accounts = accounts;
 exports.groups = groups;
 
 var _actions = require('../actions/actions');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
  * reducers
@@ -38,7 +31,7 @@ function accounts() {
     case _actions.ACCOUNTS_UPDATE:
       // Check if account is already in list
       if (state[payload.email]) {
-        state[payload.email] = JSON.parse((0, _stringify2.default)(payload));
+        state[payload.email] = payload;
         return state;
       }
       return state;
@@ -95,7 +88,7 @@ function groups() {
       return state;
     case _actions.GROUPS_REMOVE_ACCOUNT:
       // Check if account is already in list
-      if (state[payload.groupId].indexOf(payload.account)) {
+      if (state[payload.groupId].includes(payload.account)) {
         // Remove from list
         state[payload.groupId].splice(state[payload.groupId].indexOf(payload.account), 1);
       }

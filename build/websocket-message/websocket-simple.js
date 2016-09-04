@@ -36,8 +36,16 @@ var WebSocketSimple = function () {
     key: 'send',
     value: function send(data) {
       var message = void 0;
+
+      if (this.ws.readyState != 1) {
+        console.log('socket not ready to send.');
+        return;
+      }
+
       if ((typeof data === 'undefined' ? 'undefined' : (0, _typeof3.default)(data)) === 'object') {
         message = (0, _stringify2.default)(data);
+      } else {
+        message = data;
       }
       this.ws.send(message);
     }

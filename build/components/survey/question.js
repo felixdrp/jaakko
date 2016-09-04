@@ -97,8 +97,8 @@ function likertScaleIntro(text) {
   return _react2.default.createElement(
     'div',
     { style: {
-        minWidth: 100,
-        width: '70%',
+        minWidth: 800,
+        width: '85%',
         marginTop: 40,
         borderLeftWidth: 15,
         borderLeftStyle: 'solid',
@@ -106,6 +106,7 @@ function likertScaleIntro(text) {
         paddingLeft: 5
       }
     },
+    text,
     'Please use the following scale to answer the given questions.',
     _react2.default.createElement(
       'div',
@@ -162,8 +163,8 @@ function fillGapIntro(text) {
   return _react2.default.createElement(
     'div',
     { style: {
-        minWidth: 100,
-        width: '70%',
+        minWidth: 800,
+        width: '85%',
         marginTop: 40,
         borderLeftWidth: 15,
         borderLeftStyle: 'solid',
@@ -174,6 +175,7 @@ function fillGapIntro(text) {
     _react2.default.createElement(
       'span',
       null,
+      text,
       'Please read each statement. Where there is a blank _____, decide what your normal or usual attitude, feeling, or behaviour would be: '
     ),
     _react2.default.createElement(
@@ -214,32 +216,32 @@ var entryQuestionnarie = {
 
   questions: [{
     name: 'age',
-    text: 'Age',
+    text: '1. Age',
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
     name: 'gender',
-    text: 'Gender Identification',
+    text: '2. Gender Identification',
     type: LIST_FIELD_TYPE,
     typeVars: { opts: ['male', 'female', 'other'] }
   }, {
     name: 'degree',
-    text: 'Degree',
+    text: '3. Degree',
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
     name: 'degree_year',
-    text: 'Year of Degree (As a number Please)',
+    text: '4. Year of Degree (As a number Please)',
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
     name: 'hobbies',
-    text: 'What are your hobbies (For example a club or clubs you belong to)?',
+    text: '5. What are your hobbies (For example a club or clubs you belong to)?',
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
     name: '',
-    text: likertScaleIntro(),
+    text: likertScaleIntro('6. '),
     type: COMMENT_TYPE,
     typeVars: {}
   }, {
@@ -249,7 +251,7 @@ var entryQuestionnarie = {
     typeVars: {}
   }, {
     name: '',
-    text: likertScaleIntro(),
+    text: likertScaleIntro('7. '),
     type: COMMENT_TYPE,
     typeVars: {}
   }, {
@@ -259,7 +261,7 @@ var entryQuestionnarie = {
     typeVars: {}
   }, {
     name: '',
-    text: fillGapIntro(),
+    text: fillGapIntro('8. '),
     type: COMMENT_TYPE,
     typeVars: {}
   }, {
@@ -337,7 +339,7 @@ var exitQuestionnaire = {
   }]
 };
 
-questionnaire = exitQuestionnaire;
+questionnaire = entryQuestionnarie;
 // '0	10	20	30	40	50	60	70	80	90	100','Cannot			Moderately				highly certain 	   ','do at all			Can do					can do']
 
 var Question = function (_Component) {
@@ -639,7 +641,8 @@ var Question = function (_Component) {
           {
             style: {
               padding: 30,
-              margin: '2% 15% 15%'
+              margin: '2% 15% 15%',
+              minWidth: 900
             }
           },
           _react2.default.createElement(_Card.CardHeader, {

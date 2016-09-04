@@ -4,9 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends2 = require('babel-runtime/helpers/extends');
+var _regenerator = require('babel-runtime/regenerator');
 
-var _extends3 = _interopRequireDefault(_extends2);
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -48,76 +56,144 @@ var _MenuItem = require('material-ui/MenuItem');
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-var _Card = require('material-ui/Card');
-
-var _FlatButton = require('material-ui/FlatButton');
-
-var _FlatButton2 = _interopRequireDefault(_FlatButton);
-
-var _RaisedButton = require('material-ui/RaisedButton');
-
-var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
-
-var _Avatar = require('material-ui/Avatar');
-
-var _Avatar2 = _interopRequireDefault(_Avatar);
-
-var _Chip = require('material-ui/Chip');
-
-var _Chip2 = _interopRequireDefault(_Chip);
-
-var _group = require('material-ui/svg-icons/social/group');
-
-var _group2 = _interopRequireDefault(_group);
-
-var _groupAdd = require('material-ui/svg-icons/social/group-add');
-
-var _groupAdd2 = _interopRequireDefault(_groupAdd);
-
-var _personOutline = require('material-ui/svg-icons/social/person-outline');
-
-var _personOutline2 = _interopRequireDefault(_personOutline);
-
-var _developerBoard = require('material-ui/svg-icons/hardware/developer-board');
-
-var _developerBoard2 = _interopRequireDefault(_developerBoard);
-
 var _memory = require('material-ui/svg-icons/hardware/memory');
 
 var _memory2 = _interopRequireDefault(_memory);
-
-var _modeEdit = require('material-ui/svg-icons/editor/mode-edit');
-
-var _modeEdit2 = _interopRequireDefault(_modeEdit);
 
 var _moreVert = require('material-ui/svg-icons/navigation/more-vert');
 
 var _moreVert2 = _interopRequireDefault(_moreVert);
 
-var _close = require('material-ui/svg-icons/navigation/close');
+var _groups = require('./groups');
 
-var _close2 = _interopRequireDefault(_close);
+var _websocketSimple = require('../../websocket-message/websocket-simple');
+
+var _websocketSimple2 = _interopRequireDefault(_websocketSimple);
+
+var _queryActions = require('../../websocket-message/query-actions');
+
+var _actions = require('../../actions/actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Icons
+// import Perf from 'react-addons-perf'
+// window.Perf = Perf
+
+// import GroupManager from './groups/group-manager';
 
 var ControlRoom = function (_React$Component) {
   (0, _inherits3.default)(ControlRoom, _React$Component);
 
+  // static childContextTypes = {
+  //   wsSession: React.PropTypes.object
+  // }
+  //
+  // async getChildContext() {
+  //   return { wsSession: this.state.wsSession };
+  // }
+
   function ControlRoom() {
     (0, _classCallCheck3.default)(this, ControlRoom);
-    return (0, _possibleConstructorReturn3.default)(this, (ControlRoom.__proto__ || (0, _getPrototypeOf2.default)(ControlRoom)).apply(this, arguments));
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, (ControlRoom.__proto__ || (0, _getPrototypeOf2.default)(ControlRoom)).call(this));
+
+    _this.state = {
+      // WebSocket Session, used to create an admin connection.
+      wsSession: {},
+      // storeSession. Estore the server session store.
+      storeSession: {}
+    };
+    return _this;
   }
 
   (0, _createClass3.default)(ControlRoom, [{
-    key: 'render',
-    value: function render() {
-      var style = {
-        gray: {
-          color: '#565555'
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      console.log('testing storeStateWithoutWebSocket' + (0, _actions.storeStateWithoutWebSocket)({ mlk: 'supermlk' }));
+      // Connection example: "wss://localhost:8008"
+      var ws = new WebSocket('wss://' + location.hostname + ':' + (parseInt(location.port) + 1));
+
+      ws.onmessage = function (event) {
+        // Check the query.
+        // Process action.
+        var message = void 0;
+        console.log('>>>' + event.data);
+        if (/^\{.*\}$/.test(event.data)) {
+          message = JSON.parse(event.data);
+        } else {
+          console.log(event.data);
+          return;
+        }
+        console.log('>>>' + (0, _stringify2.default)(event.data));
+
+        switch (message.type) {
+          // Process message of type MUTATE
+          case 'MUTATE':
+            // mutate({
+            //   action: message.action,
+            //   payload: message.payload,
+            //   websocket,
+            //   store
+            // })
+            break;
+          // Process message of type QUERY
+          case 'QUERY':
+            // console.log(message.type + ' ' + message.payload.email || '')
+            break;
+          // Process message of type ACTIONS
+          default:
+            switch (message.action) {
+              case _queryActions.SESSION_STATE_GET:
+                _this2.setState({ storeSession: message.payload });
+                break;
+              default:
+
+            }
+            // dispatch 'ACTIONS'
+            console.log(message.type + ' ' + message.payload || '');
+          // store.dispatch( { type: message.action, payload: message.payload } )
         }
       };
+      ws.onopen = function (e) {
+        // var websocket used to send data.
+        var websocket = new _websocketSimple2.default(ws);
+        // Ask for the server state
+        websocket.send((0, _queryActions.wsSessionStateGet)());
+        _this2.setState({ wsSession: websocket });
+      };
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function () {
+      var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee() {
+        return _regenerator2.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.state.wsSession.ws.close();
+                this.setState({ wsSession: {} });
+                // debugger
+
+              case 2:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentWillUnmount() {
+        return _ref.apply(this, arguments);
+      }
+
+      return componentWillUnmount;
+    }()
+  }, {
+    key: 'render',
+    value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
@@ -144,227 +220,16 @@ var ControlRoom = function (_React$Component) {
             _react2.default.createElement(_MenuItem2.default, { primaryText: 'Sign out' })
           )
         }),
-        _react2.default.createElement(
-          _Card.Card,
-          {
-            style: {
-              paddingBottom: 20
-            }
-          },
-          _react2.default.createElement(_Card.CardHeader, {
-            title: _react2.default.createElement(
-              'span',
-              null,
-              _react2.default.createElement(
-                _IconButton2.default,
-                null,
-                _react2.default.createElement(_group2.default, null)
-              ),
-              ' Groups manager '
-            ),
-            subtitle: 'Groups manager'
-            // avatar="images/jsa-128.jpg"
-          }),
-          _react2.default.createElement(_Card.CardTitle, {
-            title: _react2.default.createElement(
-              'span',
-              null,
-              _react2.default.createElement(_group2.default, { style: style.gray }),
-              _react2.default.createElement(_developerBoard2.default, { style: (0, _extends3.default)({}, style.gray, { marginRight: 10 }) }),
-              'Groups automated'
-            ),
-            subtitle: 'Groups creation with AI help'
-          }),
-          _react2.default.createElement(
-            _Card.CardText,
-            null,
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi. Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque. Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.'
-          ),
-          _react2.default.createElement(_Card.CardTitle, {
-            title: _react2.default.createElement(
-              'span',
-              null,
-              _react2.default.createElement(_group2.default, { style: style.gray }),
-              _react2.default.createElement(_modeEdit2.default, { style: (0, _extends3.default)({}, style.gray, { marginRight: 10 }) }),
-              'Groups customization'
-            ),
-            subtitle: 'Groups manual fine customization'
-          }),
-          _react2.default.createElement(_RaisedButton2.default
-          // Unassigned Accounts
-          , { label: _react2.default.createElement(
-              'span',
-              null,
-              _react2.default.createElement(_personOutline2.default, { style: {
-                  color: '#6c6c6c',
-                  position: 'relative',
-                  top: 6,
-                  marginRight: 7
-                } }),
-              '10',
-              _react2.default.createElement(
-                'span',
-                {
-                  style: {
-                    color: '#6c6c6c',
-                    marginLeft: 15
-                  }
-                },
-                'Unassigned Accounts'
-              )
-            ),
-            onClick: function onClick() {
-              return console.log('onclik!!!!');
-            },
-            backgroundColor: '#efefef',
-            style: {
-              minWidth: '95%',
-              margin: '2.5%'
-            }
-          }),
-          _react2.default.createElement(
-            'div',
-            {
-              // Unassigned Chips
-              style: {
-                minWidth: '95%',
-                margin: '2.5%',
-                marginTop: 0
-              }
-            },
-            _react2.default.createElement(
-              _Chip2.default,
-              {
-                backgroundColor: '#d6d6d6'
-                // onRequestDelete={ () => console.log('onclik!!!!') }
-                , onTouchTap: function onTouchTap() {
-                  return console.log('onclik!!!!');
-                },
-                style: {
-                  margin: 3
-                }
-              },
-              'Colored Chip'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            {
-              // Assign Groups
-              // Groups Chips
-              style: {
-                minWidth: '95%',
-                margin: '2.5%',
-                marginTop: 65
-              }
-            },
-            _react2.default.createElement(_RaisedButton2.default, {
-              label: _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement(_groupAdd2.default, { style: {
-                    position: 'relative',
-                    top: 6,
-                    marginRight: 7
-                  } }),
-                'Add group'
-              ),
-              onClick: function onClick() {
-                return console.log('onclik!!!!');
-              },
-              backgroundColor: '#ddffb1',
-              style: {
-                // minWidth: '95%',
-                marginBottom: 20
-              }
-            }),
-            _react2.default.createElement(
-              _Card.Card,
-              {
-                style: {
-                  width: 460,
-                  paddingBottom: 15
-                }
-              },
-              _react2.default.createElement(_RaisedButton2.default, {
-                label: _react2.default.createElement(
-                  'span',
-                  null,
-                  _react2.default.createElement(_group2.default, {
-                    style: {
-                      color: '#6c6c6c',
-                      position: 'relative',
-                      top: 6,
-                      marginRight: 7
-                    }
-                  }),
-                  'Group 1',
-                  _react2.default.createElement(_personOutline2.default, {
-                    style: {
-                      color: '#6c6c6c',
-                      position: 'relative',
-                      top: 6,
-                      marginLeft: 7,
-                      marginRight: 7
-                    }
-                  }),
-                  '10',
-                  _react2.default.createElement(
-                    'span',
-                    {
-                      style: {
-                        color: '#6c6c6c',
-                        marginLeft: 15
-                      }
-                    },
-                    'Assigned Accounts'
-                  )
-                ),
-                onClick: function onClick() {
-                  return console.log('onclik!!!!');
-                },
-                backgroundColor: '#f59999',
-                style: {
-                  minWidth: '95%',
-                  margin: '2.5%'
-                }
-              }),
-              _react2.default.createElement(
-                'div',
-                {
-                  // Group 1 Chips
-                  style: {
-                    minWidth: '95%',
-                    margin: '2.5%'
-                  }
-                },
-                _react2.default.createElement(
-                  _Chip2.default,
-                  {
-                    backgroundColor: '#efefef',
-                    onRequestDelete: function onRequestDelete() {
-                      return console.log('onclik!!!!');
-                    },
-                    onTouchTap: function onTouchTap() {
-                      return console.log('onclik!!!!');
-                    },
-                    style: {
-                      margin: 4
-                    }
-                  },
-                  'Colored Chip'
-                )
-              )
-            )
-          )
-        )
+        _react2.default.createElement(_groups.GroupManager, {
+          wsSession: this.state.wsSession,
+          accounts: this.state.storeSession.accounts,
+          groups: this.state.storeSession.groups
+        })
       );
     }
   }]);
   return ControlRoom;
 }(_react2.default.Component);
-
-// groups
 
 exports.default = ControlRoom;
 //# sourceMappingURL=control-room.js.map

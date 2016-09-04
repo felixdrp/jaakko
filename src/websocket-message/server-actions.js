@@ -8,12 +8,27 @@ import {
   ACCOUNT_LOG_USER
 } from '../actions/client-actions'
 
+import {
+  GROUPS_ADD,
+  GROUPS_REMOVE,
+  GROUPS_ADD_ACCOUNT,
+  GROUPS_REMOVE_ACCOUNT,
+  GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
+  GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
+  GROUPS_ACCOUNTS_UNASSIGN,
+} from '../actions/actions'
+
+import {
+  SESSION_STATE_GET
+} from './query-actions'
+
 // Server socket actions
 // Socket action types:
 
 export const MUTATE = 'MUTATE'
 export const QUERY = 'QUERY'
 export const ACTION = 'ACTION'
+
 
 
 // Register a new account in the db and add to the account list
@@ -74,5 +89,70 @@ export function wsGotoPage({ url, options = {} }) {
     type: ACTION,
     action: routerAction.type,
     payload: routerAction.payload
+  }
+}
+
+
+// Register a group socket action creator
+export function wsGroupAdd(obj) {
+  let name = (obj && 'name' in obj)? obj.name : '';
+  return {
+    type: MUTATE,
+    action: GROUPS_ADD,
+    payload: {
+      name,
+    }
+  }
+}
+
+// Remove a group socket action creator
+export function wsGroupRemove(groupId) {
+  return {
+    type: MUTATE,
+    action: GROUPS_REMOVE,
+    payload: {
+      groupId,
+    }
+  }
+}
+
+// Register selected accounts to a group socket action creator
+export function wsAssignSelectedAccountsToGroup( groupId, selected = [] ) {
+  return {
+    type: MUTATE,
+    action: GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
+    payload: {
+      groupId,
+      selected,
+    }
+  }
+}
+
+export function wsUnassignSelectedAccounts(selected = [] ) {
+  return {
+    type: MUTATE,
+    action: GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
+    payload: {
+      selected,
+    }
+  }
+}
+
+export function wsUnassignAccount(accountId) {
+  return {
+    type: MUTATE,
+    action: GROUPS_ACCOUNTS_UNASSIGN,
+    payload: {
+      accountId,
+    }
+  }
+}
+
+// update state in components ControlRoom socket action creator
+export function swUpdateControlRoom(state) {
+  return {
+    type: ACTION,
+    action: SESSION_STATE_GET,
+    payload: state,
   }
 }
