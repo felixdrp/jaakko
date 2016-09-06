@@ -30,7 +30,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _ = require('./');
 
-var _filterAccountsByGroup = require('./filter-accounts-by-group');
+var _filterAccountsByGroup = require('../../../modules/filter-accounts-by-group');
 
 var _filterAccountsByGroup2 = _interopRequireDefault(_filterAccountsByGroup);
 

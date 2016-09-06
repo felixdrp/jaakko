@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 
 import { UnassignedView } from './';
 
-import filterAccountsByGroup from './filter-accounts-by-group'
+import filterAccountsByGroup from '../../../modules/filter-accounts-by-group'
 
 
 class UnassignedContainer extends Component {

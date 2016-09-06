@@ -13,6 +13,7 @@ exports.wsGroupRemove = wsGroupRemove;
 exports.wsAssignSelectedAccountsToGroup = wsAssignSelectedAccountsToGroup;
 exports.wsUnassignSelectedAccounts = wsUnassignSelectedAccounts;
 exports.wsUnassignAccount = wsUnassignAccount;
+exports.wsAutomateGroupsCreation = wsAutomateGroupsCreation;
 exports.swUpdateControlRoom = swUpdateControlRoom;
 
 var _reactRouterRedux = require('react-router-redux');
@@ -161,6 +162,16 @@ function wsUnassignAccount(accountId) {
     action: _actions.GROUPS_ACCOUNTS_UNASSIGN,
     payload: {
       accountId: accountId
+    }
+  };
+}
+
+function wsAutomateGroupsCreation(numberOfGroups) {
+  return {
+    type: MUTATE,
+    action: _actions.GROUPS_AUTOMATE_CREATION,
+    payload: {
+      numberOfGroups: numberOfGroups
     }
   };
 }

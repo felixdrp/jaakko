@@ -4,9 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -30,6 +38,9 @@ var _loginAccount = require('../modules/account/login-account');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import filterAccountsByGroup from '../modules/filter-accounts-by-group'
+
+
 /**
  * Mutate will process an asynchronous message from a client send by a websocket
  *
@@ -44,16 +55,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // WebSocket communications types
 // look doc/server-websocket-message-system.md
 exports.default = function () {
-  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2) {
+    var _this = this;
+
     var action = _ref2.action;
     var payload = _ref2.payload;
     var ws = _ref2.ws;
     var store = _ref2.store;
-    var payloadResponse, result, account, reduxStoreServerAndClientRegisterAccountAndGoToWait;
-    return _regenerator2.default.wrap(function _callee$(_context) {
+
+    var payloadResponse, result, account, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, _ret;
+
+    return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
+            addAccountToGroup = function addAccountToGroup(accountId, groupId, store) {
+              var result = store.getState();
+              if (result.accounts[accountId].group == 'unassigned') {
+                store.dispatch((0, _actions.groupsAddAccount)(groupId, accountId));
+                store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: groupId })));
+              } else {
+                store.dispatch((0, _actions.moveAccounFromGroup)(accountId, groupId));
+              }
+            };
+
+            removeAccountFromGroup = function removeAccountFromGroup(accountId, store) {
+              var result = store.getState();
+              // remove account from group
+              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[accountId].group, accountId));
+              // account to 'unassigned'
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+            };
+
+            removeGroup = function removeGroup(groupId, store) {
+              var result = store.getState();
+              result.groups[groupId].map(function (accountId) {
+                return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
+              });
+              store.dispatch((0, _actions.groupsRemove)(groupId));
+            };
+
             reduxStoreServerAndClientRegisterAccountAndGoToWait = function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
               var tempAccount = void 0;
               // Register the user in the server store.
@@ -72,183 +113,360 @@ exports.default = function () {
             };
 
             payloadResponse = void 0, result = void 0, account = void 0;
-            _context.t0 = action;
-            _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 5 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 17 : _context.t0 === _actions.GROUPS_ADD ? 33 : _context.t0 === _actions.GROUPS_REMOVE ? 35 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 43 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 44 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 45 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 48 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 51 : 54;
-            break;
+            return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
+              var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc;
 
-          case 5:
-            _context.next = 7;
-            return (0, _createAccount.createAccount)({
-              firstName: payload.firstName,
-              surename: payload.surename,
-              email: payload.email,
-              password: payload.password,
-              reEnterPassword: payload.password
-            }, _config.fieldsOptions);
+              return _regenerator2.default.wrap(function _callee$(_context) {
+                while (1) {
+                  switch (_context.prev = _context.next) {
+                    case 0:
+                      _context.t0 = action;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : 92;
+                      break;
 
-          case 7:
-            result = _context.sent;
+                    case 3:
+                      _context.next = 5;
+                      return (0, _createAccount.createAccount)({
+                        firstName: payload.firstName,
+                        surename: payload.surename,
+                        email: payload.email,
+                        password: payload.password,
+                        reEnterPassword: payload.password
+                      }, _config.fieldsOptions);
 
-            if (!('message' in result)) {
-              _context.next = 13;
+                    case 5:
+                      result = _context.sent;
+
+                      if (!('message' in result)) {
+                        _context.next = 11;
+                        break;
+                      }
+
+                      // Error try register again.
+                      // Send message of error to the client.
+                      console.error(result.message);
+                      if (result.message === 'The input field email not valid' || result.message === 'The input field email is not a valid email') {
+                        payloadResponse = { email: 'The email is not valid' };
+                      } else if (result.message === 'The input field password not valid') {
+                        payloadResponse = { password: 'The password is not valid' };
+                      } else if (result.message === 'Email already used.') {
+                        payloadResponse = { email: 'Please, choose another email.' };
+                      }
+                      // Send email error
+                      ws.send({
+                        type: _serverActions.ACTION,
+                        action: _clientActions.ACCOUNT_REGISTER_ERROR,
+                        payload: payloadResponse
+                      });
+                      return _context.abrupt('return', {
+                        v: void 0
+                      });
+
+                    case 11:
+                      // User registered!!
+                      //
+                      // To give websocket.accountCode the account email
+                      // Register the websocket 'ws.accountCode' with the email.
+                      // So we can identify the ws with the account email.
+                      ws.accountCode = payload.email;
+
+                      account = {
+                        email: payload.email,
+                        firstName: payload.firstName,
+                        surename: payload.surename,
+                        token: result,
+                        ws: ws
+                      };
+                      reduxStoreServerAndClientRegisterAccountAndGoToWait(account);
+                      // Ready to asign to a group
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 15:
+                      _context.next = 17;
+                      return (0, _loginAccount.loginAccount)({
+                        email: payload.email,
+                        password: payload.password
+                      });
+
+                    case 17:
+                      result = _context.sent;
+
+                      console.log(result);
+
+                      if (!('message' in result)) {
+                        _context.next = 24;
+                        break;
+                      }
+
+                      // Error try login.
+                      // Send message of error to the client.
+                      console.error(result.message);
+                      if (result.message === 'The input field email not valid' || result.message === 'The input field email is not a valid email') {
+                        payloadResponse = { email: 'The email is not valid' };
+                      } else if (result.message === 'Password not valid.') {
+                        payloadResponse = { password: 'The password is not valid' };
+                      } else if (result.message === 'Account Email not found.') {
+                        payloadResponse = { email: 'Please, check email and password.' };
+                      }
+                      // Send email error
+                      ws.send({
+                        type: _serverActions.ACTION,
+                        action: _clientActions.ACCOUNT_LOGIN_ERROR,
+                        payload: payloadResponse
+                      });
+                      return _context.abrupt('return', {
+                        v: void 0
+                      });
+
+                    case 24:
+                      // Register the websocket 'ws.accountCode' with the email.
+                      // So we can identify the ws with the account email.
+                      ws.accountCode = payload.email;
+
+                      account = {
+                        email: payload.email,
+                        firstName: result.firstName,
+                        surename: result.surename,
+                        token: result.token,
+                        ws: ws
+                      };
+
+                      console.log('>>>>>state');
+                      reduxStoreServerAndClientRegisterAccountAndGoToWait(account);
+                      console.log('>>>>>state');
+                      console.log(store.getState());
+                      // console.log('send error login')
+                      // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 31:
+                      store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 33:
+                      result = store.getState();
+                      // console.log('>>>>> ' + GROUPS_REMOVE)
+                      // console.log(payload)
+                      // console.log(store.getState())
+                      // console.log('result.accounts[accountId]> ')
+                      // console.log(result.accounts[accountId])
+                      // Free all the accounts from group
+                      removeGroup(payload.groupId, store);
+                      // result.groups[payload.groupId].map(
+                      //   (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+                      // )
+                      // store.dispatch( groupsRemove( payload.groupId ) )
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 36:
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 37:
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 38:
+                      result = store.getState();
+                      payload.selected.map(function (accountId) {
+                        addAccountToGroup(accountId, payload.groupId, store);
+                      });
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 41:
+                      result = store.getState();
+                      payload.selected.map(function (accountId) {
+                        removeAccountFromGroup(accountId, store);
+                      });
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 44:
+                      result = store.getState();
+                      if (result.accounts[payload.accountId]) {
+                        removeAccountFromGroup(payload.accountId, store);
+                      }
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 47:
+                      result = store.getState();
+
+                      // Correct the number of groups
+                      while (payload.numberOfGroups != result.groups.list.length) {
+                        if (payload.numberOfGroups > result.groups.list.length) {
+                          // Add group
+                          store.dispatch((0, _actions.groupsAdd)(Date.now()));
+                        } else {
+                          // Remove group
+                          removeGroup(result.groups.list[result.groups.list.length - 1], store);
+                        }
+                      }
+
+                      // reapeted from class GroupAutomatic
+
+                      drawGroups = function drawGroups(g, a) {
+                        var baseA = Math.floor(a / g);
+                        var orderedGroupsAndAccounts = [];
+
+                        for (var i = 0; i < g; i++) {
+                          orderedGroupsAndAccounts.push(baseA);
+                        }
+
+                        for (var _i = 0; _i < a % g; _i++) {
+                          orderedGroupsAndAccounts[_i] += 1;
+                        }
+
+                        return orderedGroupsAndAccounts;
+                      };
+
+                      orderedGroupsAndAccounts = drawGroups(payload.numberOfGroups, result.accounts.list.length);
+                      accountId = void 0, group = void 0, groupId = void 0;
+
+                      // remove accounts to excess groups
+
+                      for (i = 0; i < payload.numberOfGroups; i++) {
+                        group = result.groups[result.groups.list[i]];
+                        if (group.length > orderedGroupsAndAccounts[i]) {
+                          removeAccountFromGroup(
+                          // last account of the group
+                          group[group.length - 1], store);
+                        }
+                      }
+                      // Add accounts to deficit groups
+                      _i2 = 0;
+
+                    case 54:
+                      if (!(_i2 < payload.numberOfGroups)) {
+                        _context.next = 91;
+                        break;
+                      }
+
+                      groupId = result.groups.list[_i2];
+                      group = result.groups[groupId];
+
+                    case 57:
+                      if (!(group.length < orderedGroupsAndAccounts[_i2])) {
+                        _context.next = 88;
+                        break;
+                      }
+
+                      // Find a free accountId
+                      _iteratorNormalCompletion = true;
+                      _didIteratorError = false;
+                      _iteratorError = undefined;
+                      _context.prev = 61;
+                      _iterator = (0, _getIterator3.default)(result.accounts.list);
+
+                    case 63:
+                      if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                        _context.next = 71;
+                        break;
+                      }
+
+                      acc = _step.value;
+
+                      if (!(result.accounts[acc].group == 'unassigned')) {
+                        _context.next = 68;
+                        break;
+                      }
+
+                      accountId = acc;
+                      return _context.abrupt('break', 71);
+
+                    case 68:
+                      _iteratorNormalCompletion = true;
+                      _context.next = 63;
+                      break;
+
+                    case 71:
+                      _context.next = 77;
+                      break;
+
+                    case 73:
+                      _context.prev = 73;
+                      _context.t1 = _context['catch'](61);
+                      _didIteratorError = true;
+                      _iteratorError = _context.t1;
+
+                    case 77:
+                      _context.prev = 77;
+                      _context.prev = 78;
+
+                      if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                      }
+
+                    case 80:
+                      _context.prev = 80;
+
+                      if (!_didIteratorError) {
+                        _context.next = 83;
+                        break;
+                      }
+
+                      throw _iteratorError;
+
+                    case 83:
+                      return _context.finish(80);
+
+                    case 84:
+                      return _context.finish(77);
+
+                    case 85:
+
+                      addAccountToGroup(accountId, groupId, store);
+                      _context.next = 57;
+                      break;
+
+                    case 88:
+                      _i2++;
+                      _context.next = 54;
+                      break;
+
+                    case 91:
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 92:
+                    case 'end':
+                      return _context.stop();
+                  }
+                }
+              }, _callee, _this, [[61, 73, 77, 85], [78,, 80, 84]]);
+            })(), 't0', 6);
+
+          case 6:
+            _ret = _context2.t0;
+
+            if (!((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object")) {
+              _context2.next = 9;
               break;
             }
 
-            // Error try register again.
-            // Send message of error to the client.
-            console.error(result.message);
-            if (result.message === 'The input field email not valid' || result.message === 'The input field email is not a valid email') {
-              payloadResponse = { email: 'The email is not valid' };
-            } else if (result.message === 'The input field password not valid') {
-              payloadResponse = { password: 'The password is not valid' };
-            } else if (result.message === 'Email already used.') {
-              payloadResponse = { email: 'Please, choose another email.' };
-            }
-            // Send email error
-            ws.send({
-              type: _serverActions.ACTION,
-              action: _clientActions.ACCOUNT_REGISTER_ERROR,
-              payload: payloadResponse
-            });
-            return _context.abrupt('return');
+            return _context2.abrupt('return', _ret.v);
 
-          case 13:
-            // User registered!!
-            //
-            // To give websocket.accountCode the account email
-            // Register the websocket 'ws.accountCode' with the email.
-            // So we can identify the ws with the account email.
-            ws.accountCode = payload.email;
-
-            account = {
-              email: payload.email,
-              firstName: payload.firstName,
-              surename: payload.surename,
-              token: result,
-              ws: ws
-            };
-            reduxStoreServerAndClientRegisterAccountAndGoToWait(account);
-            // Ready to asign to a group
-            return _context.abrupt('return', true);
-
-          case 17:
-            _context.next = 19;
-            return (0, _loginAccount.loginAccount)({
-              email: payload.email,
-              password: payload.password
-            });
-
-          case 19:
-            result = _context.sent;
-
-            console.log(result);
-
-            if (!('message' in result)) {
-              _context.next = 26;
-              break;
-            }
-
-            // Error try login.
-            // Send message of error to the client.
-            console.error(result.message);
-            if (result.message === 'The input field email not valid' || result.message === 'The input field email is not a valid email') {
-              payloadResponse = { email: 'The email is not valid' };
-            } else if (result.message === 'Password not valid.') {
-              payloadResponse = { password: 'The password is not valid' };
-            } else if (result.message === 'Account Email not found.') {
-              payloadResponse = { email: 'Please, check email and password.' };
-            }
-            // Send email error
-            ws.send({
-              type: _serverActions.ACTION,
-              action: _clientActions.ACCOUNT_LOGIN_ERROR,
-              payload: payloadResponse
-            });
-            return _context.abrupt('return');
-
-          case 26:
-            // Register the websocket 'ws.accountCode' with the email.
-            // So we can identify the ws with the account email.
-            ws.accountCode = payload.email;
-
-            account = {
-              email: payload.email,
-              firstName: result.firstName,
-              surename: result.surename,
-              token: result.token,
-              ws: ws
-            };
-
-            console.log('>>>>>state');
-            reduxStoreServerAndClientRegisterAccountAndGoToWait(account);
-            console.log('>>>>>state');
-            console.log(store.getState());
-            // console.log('send error login')
-            // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
-            return _context.abrupt('return', true);
-
-          case 33:
-            store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
-            return _context.abrupt('return', true);
-
-          case 35:
-            result = store.getState();
-            console.log('>>>>> ' + _actions.GROUPS_REMOVE);
-            console.log(payload);
-            console.log(store.getState());
-            console.log('result.accounts[accountId]> ');
-            // console.log(result.accounts[accountId])
-            // Free all the accounts from group
-            result.groups[payload.groupId].map(function (accountId) {
-              return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
-            });
-            store.dispatch((0, _actions.groupsRemove)(payload.groupId));
-            return _context.abrupt('return', true);
-
-          case 43:
-            return _context.abrupt('return', true);
-
-          case 44:
-            return _context.abrupt('return', true);
-
-          case 45:
-            result = store.getState();
-            payload.selected.map(function (accountId) {
-              if (result.accounts[accountId].group == 'unassigned') {
-                store.dispatch((0, _actions.groupsAddAccount)(payload.groupId, accountId));
-                store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: payload.groupId })));
-              } else {
-                store.dispatch((0, _actions.moveAccounFromGroup)(accountId, payload.groupId));
-              }
-            });
-            return _context.abrupt('return', true);
-
-          case 48:
-            result = store.getState();
-            payload.selected.map(function (accountId) {
-              // remove account from group
-              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[accountId].group, accountId));
-              // account to 'unassigned'
-              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
-            });
-            return _context.abrupt('return', true);
-
-          case 51:
-            result = store.getState();
-            if (result.accounts[payload.accountId]) {
-              // remove account from group
-              store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[payload.accountId].group, payload.accountId));
-              // account to 'unassigned'
-              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[payload.accountId], { group: 'unassigned' })));
-            }
-            return _context.abrupt('return', true);
-
-          case 54:
+          case 9:
           case 'end':
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, this);
+    }, _callee2, this);
   }));
 
   function mutate(_x) {

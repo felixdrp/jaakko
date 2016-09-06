@@ -65,7 +65,8 @@ var GroupAutomatic = function (_Component) {
     _this.state = {
       accounts: {},
       groups: {},
-      selection: []
+      selection: [],
+      numberGroups: 0
     };
 
     // Used to store references.
@@ -74,8 +75,49 @@ var GroupAutomatic = function (_Component) {
   }
 
   (0, _createClass3.default)(GroupAutomatic, [{
+    key: 'createGroups',
+    value: function createGroups(e) {
+      // Send a call to the server to create the groups automatically.
+      if (this.state.numberGroups > 0) {
+        this.props.automateGroupCreation(this.state.numberGroups);
+      }
+    }
+  }, {
+    key: 'removeGroup',
+    value: function removeGroup(e) {
+      if (this.state.numberGroups > 0) {
+        this.setState({ numberGroups: this.state.numberGroups - 1 });
+      }
+    }
+  }, {
+    key: 'addGroup',
+    value: function addGroup(e) {
+      this.setState({ numberGroups: this.state.numberGroups + 1 });
+    }
+  }, {
+    key: 'drawGroups',
+    value: function drawGroups(g, a) {
+      console.log(a / g);
+      console.log(a % g);
+
+      var baseA = Math.floor(a / g);
+      var orderedGroupsAndAccounts = [];
+
+      for (var i = 0; i < g; i++) {
+        orderedGroupsAndAccounts.push(baseA);
+      }
+
+      for (var _i = 0; _i < a % g; _i++) {
+        orderedGroupsAndAccounts[_i] += 1;
+      }
+
+      return orderedGroupsAndAccounts;
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var style = {
         iconGroup: {
           // color: '#565555',
@@ -89,9 +131,13 @@ var GroupAutomatic = function (_Component) {
         }
       };
       var props = this.props;
+      var st = this.state;
       var unassignedAccounts = {
         list: []
       };
+      var accounts = props.accounts || { list: [] };
+
+      var groupsProto = this.drawGroups(st.numberGroups, accounts.list.length);
 
       return _react2.default.createElement(
         'div',
@@ -112,8 +158,17 @@ var GroupAutomatic = function (_Component) {
             }
           },
           _react2.default.createElement(
-            _FloatingActionButton2.default,
-            { mini: true, style: {} },
+            _FloatingActionButton2.default
+            // Minus button
+
+            // Plus button
+            ,
+            { mini: true,
+              style: {},
+              onClick: function onClick(e) {
+                return _this2.removeGroup(e);
+              }
+            },
             _react2.default.createElement(_remove2.default, null)
           ),
           _react2.default.createElement(
@@ -126,19 +181,26 @@ var GroupAutomatic = function (_Component) {
                 fontFamily: 'monospace'
               }
             },
-            '1'
+            st.numberGroups
           ),
           _react2.default.createElement(
             _FloatingActionButton2.default,
-            { mini: true, style: {} },
+            { mini: true,
+              style: {},
+              onClick: function onClick(e) {
+                return _this2.addGroup(e);
+              }
+            },
             _react2.default.createElement(_add2.default, null)
           ),
           _react2.default.createElement(
             _RaisedButton2.default
-            // Group main button
-            // onClick={}
+            // Group create main button
             ,
-            { backgroundColor: '#efefef',
+            { onClick: function onClick(e) {
+                return _this2.createGroups(e);
+              },
+              backgroundColor: '#efefef',
               style: {
                 height: 36,
                 marginLeft: 45,
@@ -146,34 +208,32 @@ var GroupAutomatic = function (_Component) {
                 bottom: 10
               }
             },
-            'Create'
+            _react2.default.createElement(
+              'span',
+              {
+                style: {
+                  paddingLeft: 15,
+                  paddingRight: 15
+                }
+              },
+              'Create Groups'
+            )
           )
         ),
-        _react2.default.createElement(
-          'div',
-          {
-            style: {
-              height: 100,
-              border: 10,
-              boxSizing: 'border-box',
-              boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
-              overflowY: 'scroll'
-            },
-            onScroll: function onScroll(e) {
-              return console.log(e.nativeEvent.target.scrollTop);
-            }
-          },
-          _react2.default.createElement('div', {
-            style: {
-              height: 500
-            }
-          })
-        ),
-        _react2.default.createElement(_group2.default, { style: style.iconGroup }),
-        ' ',
-        _react2.default.createElement(_personOutline2.default, { style: style.iconAccount }),
-        ' ',
-        _react2.default.createElement(_personOutline2.default, { style: style.iconAccount })
+
+        // Add group and accounts icons
+        groupsProto.map(function (groupAccountsLength, index) {
+          return _react2.default.createElement(
+            'div',
+            { key: index },
+            _react2.default.createElement(_group2.default, { style: style.iconGroup }),
+
+            // Add as many user icons as groupAccountsLength
+            Array(groupAccountsLength).fill('').map(function (ignored, index) {
+              return _react2.default.createElement(_personOutline2.default, { key: index, style: style.iconAccount });
+            })
+          );
+        })
       );
     }
   }]);

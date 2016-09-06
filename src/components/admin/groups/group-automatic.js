@@ -27,10 +27,46 @@ class GroupAutomatic extends Component {
       accounts: { },
       groups: { },
       selection: [],
+      numberGroups: 0,
     };
 
     // Used to store references.
     this._input = {};
+  }
+
+  createGroups(e) {
+    // Send a call to the server to create the groups automatically.
+    if (this.state.numberGroups > 0) {
+      this.props.automateGroupCreation(this.state.numberGroups)
+    }
+  }
+
+  removeGroup(e) {
+    if (this.state.numberGroups > 0) {
+      this.setState({numberGroups: this.state.numberGroups - 1})
+    }
+  }
+
+  addGroup(e) {
+    this.setState({numberGroups: this.state.numberGroups + 1})
+  }
+
+  drawGroups(g, a) {
+    console.log(a/g);
+    console.log(a%g);
+
+    let baseA = Math.floor(a/g)
+    let orderedGroupsAndAccounts = []
+
+    for (let i = 0; i < g; i++) {
+      orderedGroupsAndAccounts.push(baseA)
+    }
+
+    for (let i = 0; i < a%g; i++) {
+      orderedGroupsAndAccounts[i] += 1
+    }
+
+    return orderedGroupsAndAccounts
   }
 
   render() {
@@ -47,9 +83,13 @@ class GroupAutomatic extends Component {
       }
     }
     let props = this.props
+    let st = this.state
     let unassignedAccounts = {
       list: [],
     }
+    let accounts = props.accounts || { list: [] }
+
+    let groupsProto = this.drawGroups(st.numberGroups, accounts.list.length)
 
     return (
       <div
@@ -66,7 +106,12 @@ class GroupAutomatic extends Component {
             marginBottom: 30,
           }}
         >
-          <FloatingActionButton mini={true} style={{}}>
+          <FloatingActionButton
+            // Minus button
+            mini={true}
+            style={{}}
+            onClick={(e) => this.removeGroup(e)}
+          >
             <ContentRemove />
           </FloatingActionButton>
           <span
@@ -77,15 +122,20 @@ class GroupAutomatic extends Component {
               fontFamily: 'monospace',
             }}
           >
-            1
+            {st.numberGroups}
           </span>
-          <FloatingActionButton mini={true} style={{}}>
+          <FloatingActionButton
+            // Plus button
+            mini={true}
+            style={{}}
+            onClick={(e) => this.addGroup(e)}
+          >
             <ContentAdd />
           </FloatingActionButton>
 
           <RaisedButton
-            // Group main button
-            // onClick={}
+            // Group create main button
+            onClick={(e) => this.createGroups(e)}
             backgroundColor={'#efefef'}
             style={{
               height: 36,
@@ -94,29 +144,33 @@ class GroupAutomatic extends Component {
               bottom: 10,
             }}
           >
-            Create
+            <span
+              style={{
+                paddingLeft: 15,
+                paddingRight: 15,
+              }}
+            >
+              Create Groups
+            </span>
           </ RaisedButton>
         </div>
-        <div
-          style={{
-            height: 100,
-            border: 10,
-            boxSizing: 'border-box',
-            boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
-            overflowY: 'scroll',
-          }}
-          onScroll={ (e) => console.log(e.nativeEvent.target.scrollTop) }
-        >
-          <div
-            style={{
-              height: 500,
-            }}
-          >
 
-          </div>
-        </div>
-
-        <Group style={style.iconGroup} /> <PersonOutline style={style.iconAccount} /> <PersonOutline style={style.iconAccount} />
+        {
+          // Add group and accounts icons
+          groupsProto.map(
+            (groupAccountsLength, index) => (
+              <div key={index}>
+                <Group style={style.iconGroup} />
+                {
+                  // Add as many user icons as groupAccountsLength
+                  Array(groupAccountsLength).fill('').map(
+                    (ignored, index)=> <PersonOutline key={index} style={style.iconAccount} />
+                  )
+                }
+              </div>
+            )
+          )
+        }
       </div>
     )
   }

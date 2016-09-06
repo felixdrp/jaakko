@@ -152,6 +152,11 @@ var GroupManager = function (_Component) {
       _this.props.wsSession.send((0, _serverActions.wsGroupRemove)(groupId));
     };
 
+    _this.automateGroupCreation = function (numberOfGroups) {
+      // send WsAddGroup
+      _this.props.wsSession.send((0, _serverActions.wsAutomateGroupsCreation)(numberOfGroups));
+    };
+
     _this.state = {
       accounts: {},
       groups: {},
@@ -216,7 +221,8 @@ var GroupManager = function (_Component) {
           'div',
           null,
           _react2.default.createElement(_.GroupAutomatic, {
-            accounts: this.props.accounts
+            accounts: this.props.accounts,
+            automateGroupCreation: this.automateGroupCreation
           })
         ),
         _react2.default.createElement(_Card.CardTitle, {

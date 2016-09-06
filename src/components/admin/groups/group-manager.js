@@ -26,6 +26,7 @@ import {
   wsAssignSelectedAccountsToGroup,
   wsUnassignSelectedAccounts,
   wsUnassignAccount,
+  wsAutomateGroupsCreation,
 } from '../../../websocket-message/server-actions'
 
 class GroupManager extends Component {
@@ -130,6 +131,13 @@ class GroupManager extends Component {
     )
   }
 
+  automateGroupCreation = (numberOfGroups) => {
+    // send WsAddGroup
+    this.props.wsSession.send(
+      wsAutomateGroupsCreation(numberOfGroups)
+    )
+  }
+
   render() {
     console.log(this.context)
     const style = {
@@ -161,6 +169,7 @@ class GroupManager extends Component {
         <div>
           <GroupAutomatic
             accounts={this.props.accounts}
+            automateGroupCreation={this.automateGroupCreation}
           />
         </div>
 

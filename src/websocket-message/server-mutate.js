@@ -24,6 +24,7 @@ import {
   GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
   GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
   GROUPS_ACCOUNTS_UNASSIGN,
+  GROUPS_AUTOMATE_CREATION,
 
   groupsAdd,
   groupsRemove,
@@ -43,6 +44,9 @@ import { fieldsOptions } from '../config'
 
 import { createAccount } from '../modules/account/create-account'
 import { loginAccount } from '../modules/account/login-account'
+
+// import filterAccountsByGroup from '../modules/filter-accounts-by-group'
+
 
 /**
  * Mutate will process an asynchronous message from a client send by a websocket
@@ -76,7 +80,32 @@ export default async function mutate({ action, payload, ws, store }) {
       wsGotoPage({ url: '/survey/waitSync', options: {} })
     )
     console.log('>>>>>state')
+  }
 
+  function removeGroup(groupId, store) {
+    let result = store.getState()
+    result.groups[groupId].map(
+      (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+    )
+    store.dispatch( groupsRemove( groupId ) )
+  }
+
+  function removeAccountFromGroup(accountId, store) {
+    let result = store.getState()
+    // remove account from group
+    store.dispatch( groupsRemoveAccount(result.accounts[accountId].group, accountId) )
+    // account to 'unassigned'
+    store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+  }
+
+  function addAccountToGroup(accountId, groupId, store) {
+    let result = store.getState()
+    if ( result.accounts[accountId].group == 'unassigned' ) {
+      store.dispatch( groupsAddAccount( groupId, accountId ) )
+      store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: groupId }) )
+    } else {
+      store.dispatch( moveAccounFromGroup( accountId, groupId ) )
+    }
   }
 
   switch (action) {
@@ -200,16 +229,17 @@ export default async function mutate({ action, payload, ws, store }) {
 
     case GROUPS_REMOVE:
       result = store.getState()
-      console.log('>>>>> ' + GROUPS_REMOVE)
-      console.log(payload)
-      console.log(store.getState())
-      console.log('result.accounts[accountId]> ')
+      // console.log('>>>>> ' + GROUPS_REMOVE)
+      // console.log(payload)
+      // console.log(store.getState())
+      // console.log('result.accounts[accountId]> ')
       // console.log(result.accounts[accountId])
       // Free all the accounts from group
-      result.groups[payload.groupId].map(
-        (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
-      )
-      store.dispatch( groupsRemove( payload.groupId ) )
+      removeGroup(payload.groupId, store)
+      // result.groups[payload.groupId].map(
+      //   (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+      // )
+      // store.dispatch( groupsRemove( payload.groupId ) )
       return true
 
     case GROUPS_ADD_ACCOUNT:
@@ -222,12 +252,7 @@ export default async function mutate({ action, payload, ws, store }) {
       result = store.getState()
       payload.selected.map(
         (accountId) => {
-          if ( result.accounts[accountId].group == 'unassigned' ) {
-            store.dispatch( groupsAddAccount( payload.groupId, accountId ) )
-            store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: payload.groupId }) )
-          } else {
-            store.dispatch( moveAccounFromGroup( accountId, payload.groupId ) )
-          }
+          addAccountToGroup(accountId, payload.groupId, store)
         }
       )
       return true
@@ -236,10 +261,7 @@ export default async function mutate({ action, payload, ws, store }) {
       result = store.getState()
       payload.selected.map(
         (accountId) => {
-          // remove account from group
-          store.dispatch( groupsRemoveAccount(result.accounts[accountId].group, accountId) )
-          // account to 'unassigned'
-          store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
+          removeAccountFromGroup(accountId, store)
         }
       )
       return true
@@ -247,10 +269,75 @@ export default async function mutate({ action, payload, ws, store }) {
     case GROUPS_ACCOUNTS_UNASSIGN:
       result = store.getState()
       if (result.accounts[payload.accountId]) {
-        // remove account from group
-        store.dispatch( groupsRemoveAccount(result.accounts[payload.accountId].group, payload.accountId) )
-        // account to 'unassigned'
-        store.dispatch( accountsUpdate({ ...result.accounts[payload.accountId], group: 'unassigned' }) )
+        removeAccountFromGroup(payload.accountId, store)
+      }
+      return true
+
+    case GROUPS_AUTOMATE_CREATION:
+      result = store.getState()
+
+      // Correct the number of groups
+      while (payload.numberOfGroups != result.groups.list.length) {
+        if (payload.numberOfGroups > result.groups.list.length) {
+          // Add group
+          store.dispatch( groupsAdd( Date.now() ) )
+        } else {
+          // Remove group
+          removeGroup(result.groups.list[result.groups.list.length - 1], store)
+        }
+      }
+
+      // reapeted from class GroupAutomatic
+      function drawGroups(g, a) {
+        let baseA = Math.floor(a/g)
+        let orderedGroupsAndAccounts = []
+
+        for (let i = 0; i < g; i++) {
+          orderedGroupsAndAccounts.push(baseA)
+        }
+
+        for (let i = 0; i < a%g; i++) {
+          orderedGroupsAndAccounts[i] += 1
+        }
+
+        return orderedGroupsAndAccounts
+      }
+
+      {
+        let orderedGroupsAndAccounts = drawGroups(payload.numberOfGroups, result.accounts.list.length)
+        let accountId, group, groupId
+
+        // remove accounts to excess groups
+        for (let i = 0; i < payload.numberOfGroups; i++) {
+          group = result.groups[ result.groups.list[i] ]
+          if (group.length > orderedGroupsAndAccounts[i]) {
+            removeAccountFromGroup(
+              // last account of the group
+              group[ group.length - 1 ],
+              store
+            )
+          }
+        }
+        // Add accounts to deficit groups
+        for (let i = 0; i < payload.numberOfGroups; i++) {
+          groupId = result.groups.list[i]
+          group = result.groups[ groupId ]
+          while (group.length < orderedGroupsAndAccounts[i]) {
+            // Find a free accountId
+            for (let acc of result.accounts.list) {
+              if (result.accounts[acc].group == 'unassigned') {
+                accountId = acc
+                break;
+              }
+            }
+
+            addAccountToGroup(
+              accountId,
+              groupId,
+              store
+            )
+          }
+        }
       }
       return true
 

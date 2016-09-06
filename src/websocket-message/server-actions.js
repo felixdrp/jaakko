@@ -16,6 +16,7 @@ import {
   GROUPS_SELECTED_ACCOUNTS_TO_GROUP,
   GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
   GROUPS_ACCOUNTS_UNASSIGN,
+  GROUPS_AUTOMATE_CREATION,
 } from '../actions/actions'
 
 import {
@@ -147,6 +148,17 @@ export function wsUnassignAccount(accountId) {
     }
   }
 }
+
+export function wsAutomateGroupsCreation(numberOfGroups) {
+  return {
+    type: MUTATE,
+    action: GROUPS_AUTOMATE_CREATION,
+    payload: {
+      numberOfGroups,
+    }
+  }
+}
+
 
 // update state in components ControlRoom socket action creator
 export function swUpdateControlRoom(state) {
