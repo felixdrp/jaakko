@@ -137,14 +137,15 @@ var AltObjectTask = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { style: { display: 'flex' } },
         _react2.default.createElement(
           _Card.Card,
           {
             style: {
               padding: 30,
-              margin: '2% 15% 15%',
-              minWidth: 900
+              margin: '2% 3% 0%',
+              maxWidth: 900,
+              minWidth: 750
             }
           },
           _react2.default.createElement(_Card.CardHeader, {
@@ -182,14 +183,15 @@ var AltObjectTask = function (_Component) {
                     _Card.CardText,
                     null,
                     'Title: ',
-                    _react2.default.createElement(_TextField2.default, { id: entry.name + "_title", style: {} }),
+                    _react2.default.createElement(_TextField2.default, { id: entry.name + "_title", style: { marginLeft: 10
+                      } }),
                     _react2.default.createElement('br', null),
                     'Description: ',
                     _react2.default.createElement(_TextField2.default, {
                       multiLine: true,
                       rows: 1,
                       rowsMax: 10,
-                      id: entry.name + "_description", style: { width: '80%'
+                      id: entry.name + "_description", style: { marginLeft: 10, width: '80%'
                       } })
                   )
                 )
@@ -220,6 +222,45 @@ var AltObjectTask = function (_Component) {
                   type: 'submit'
                 }, 'style', { marginTop: 20 }),
                 'Submit'
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          _Card.Card,
+          { style: {
+              padding: 30,
+              margin: '2% 0% 5%',
+              minWidth: 400
+
+            }
+          },
+          _react2.default.createElement(_Card.CardHeader, {
+            title: 'Group entries',
+            titleStyle: {
+              fontSize: 24,
+              color: textColor
+            }
+          }),
+          _react2.default.createElement(
+            _Card.CardText,
+            {
+              style: {
+                paddingTop: 0
+              }
+            },
+            _react2.default.createElement(
+              _Card.Card,
+              null,
+              _react2.default.createElement(
+                _Card.CardHeader,
+                null,
+                'Super paper clip'
+              ),
+              _react2.default.createElement(
+                _Card.CardText,
+                null,
+                'Paper clip to rule them all.'
               )
             )
           )

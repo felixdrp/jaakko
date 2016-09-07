@@ -18,8 +18,7 @@ class Timer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {elapsed:0, totalSeconds: 10 };
-
+    this.state = {elapsed:0, totalSeconds: 420 };
   }
 
   handleSave(text) {
@@ -54,6 +53,7 @@ class Timer extends Component {
         // elapsed counter. Calling setState causes the component to be re-rendered
         if ((this.state.elapsed/1000) >= this.state.totalSeconds){
           this.stopCountDown();
+          this.props.timerCallback();
         }
         this.setState({elapsed : new Date() - this.state.startt});
   }
@@ -66,14 +66,18 @@ class Timer extends Component {
 
 
     return (
-        <div><RaisedButton
-          id="startTimer"
-          style={{ fontWeight:'bolder',
-                    fontSize:'large',}}
-          onClick={ this.startCountDown }
-        >
-          Start
-        </RaisedButton><div style={{
+        <div>
+        {
+        // <RaisedButton
+        //   id="startTimer"
+        //   style={{ fontWeight:'bolder',
+        //             fontSize:'large',}}
+        //   onClick={ this.startCountDown }
+        // >
+        //   Start
+        // </RaisedButton>
+        }
+        <div style={{
           display: 'inline',
           border: '1px solid black',
           backgroundColor: 'white',
@@ -96,7 +100,7 @@ Timer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    //firstName : state.account.firstName
   }
 }
 

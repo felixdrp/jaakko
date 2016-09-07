@@ -87,7 +87,7 @@ class AltObjectTask extends Component {
 
 
     return (
-      <div>
+      <div style={{display:'flex'}}>
       {
         // <h1>{message}</h1>
         // <Wait melacome={<ActionShop />} /><ActionStore /> <ActionShop />
@@ -98,8 +98,9 @@ class AltObjectTask extends Component {
           <Card
             style={{
               padding: 30,
-              margin: '2% 15% 15%',
-              minWidth: 900,
+              margin: '2% 3% 0%',
+              maxWidth: 900,
+              minWidth: 750,
             }}
           >
             <CardHeader
@@ -126,13 +127,13 @@ class AltObjectTask extends Component {
                   return <div key={i} style={{marginTop:20}}>
                             <Card>
                             <CardText>
-                                Title: <TextField id={entry.name+"_title"} style={{
+                                Title: <TextField id={entry.name+"_title"} style={{marginLeft:10,
                                 }} /><br/>
                                 Description: <TextField
                                               multiLine={true}
                                               rows={1}
                                               rowsMax={10}
-                                              id={entry.name+"_description"} style={{ width: '80%',
+                                              id={entry.name+"_description"} style={{ marginLeft:10, width: '80%',
                                    }} />
                             </CardText>
                            </Card>
@@ -164,6 +165,46 @@ class AltObjectTask extends Component {
                     </RaisedButton>
               </div>
             </CardText>
+
+          </Card>
+
+          <Card  style={{
+              padding: 30,
+              margin: '2% 0% 5%',
+              minWidth: 400,
+
+            }}
+          >
+            <CardHeader
+              title='Group entries'
+              titleStyle={{
+                fontSize: 24,
+                color: textColor,
+              }}
+            />
+            <CardText
+              style={{
+                paddingTop: 0,
+              }}
+              >
+              {
+                //aqui tenemos los group entries
+              }
+              <Card>
+                <CardHeader>
+                  Super paper clip
+                </CardHeader>
+                <CardText>
+                  Paper clip to rule them all.
+                </CardText>
+              </Card>
+
+
+
+
+
+
+              </CardText>
 
           </Card>
 

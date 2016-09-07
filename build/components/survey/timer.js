@@ -81,12 +81,12 @@ var Timer = function (_Component) {
       // elapsed counter. Calling setState causes the component to be re-rendered
       if (_this.state.elapsed / 1000 >= _this.state.totalSeconds) {
         _this.stopCountDown();
+        _this.props.timerCallback();
       }
       _this.setState({ elapsed: new Date() - _this.state.startt });
     };
 
-    _this.state = { elapsed: 0, totalSeconds: 10 };
-
+    _this.state = { elapsed: 0, totalSeconds: 420 };
     return _this;
   }
 
@@ -108,16 +108,6 @@ var Timer = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          _RaisedButton2.default,
-          {
-            id: 'startTimer',
-            style: { fontWeight: 'bolder',
-              fontSize: 'large' },
-            onClick: this.startCountDown
-          },
-          'Start'
-        ),
         _react2.default.createElement(
           'div',
           { style: {
@@ -153,7 +143,7 @@ Timer.propTypes = {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    //firstName : state.account.firstName
   };
 };
 

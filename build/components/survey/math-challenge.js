@@ -70,7 +70,6 @@ function getNumbers(N, M) {
     }
     results.push({ numbers: numbers, sum: sum });
   }
-  //  debugger;
   return results;
 }
 
@@ -132,6 +131,8 @@ var MathChallenge = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var props = this.props;
+
       var title = this.props.message ? this.props.message : 'Math Challenge';
       var elapsed = Math.round(this.state.elapsed / 100);
       var seconds = (elapsed / 10).toFixed(1);
@@ -165,15 +166,17 @@ var MathChallenge = function (_Component) {
                 paddingTop: 0
               }
             },
-            instructions.split('\n').map(function (item) {
+            instructions.split('\n').map(function (item, i) {
               return _react2.default.createElement(
                 'div',
-                { key: item, style: { marginBottom: 20 } },
+                { key: i, style: { marginBottom: 20 } },
                 item
               );
             }),
             _react2.default.createElement('br', null),
-            _react2.default.createElement(_timer2.default, null),
+            _react2.default.createElement(_timer2.default, { timerCallback: function timerCallback() {
+                alert('boom');
+              } }),
             _react2.default.createElement(
               'div',
               null,

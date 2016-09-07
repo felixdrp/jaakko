@@ -23,6 +23,7 @@ import {
   MathChallenge,
   AltObjectTask,
   Question,
+  Instructions,
   Wait,
 } from './components/'
 
@@ -49,6 +50,8 @@ var routes = (history) => (
         <Route path="question" component={Question} />
         <Route path="mathChallenge" component={MathChallenge} />
         <Route path="altObjectTask" component={AltObjectTask} />
+        <Route path="instructions" component={Instructions} />
+
       </Route>
 
       {/*

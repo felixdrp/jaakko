@@ -28,7 +28,6 @@ function getNumbers(N,M){
     }
     results.push({numbers : numbers , sum : sum });
   }
-//  debugger;
   return results;
 }
 
@@ -55,6 +54,8 @@ class MathChallenge extends Component {
     router: React.PropTypes.object.isRequired,
     websocket: React.PropTypes.object,
   };
+
+
 
   handleSave(text) {
     if (text.length !== 0) {
@@ -86,6 +87,8 @@ class MathChallenge extends Component {
   }
 
   render() {
+    let props = this.props;
+
     let title = this.props.message ? this.props.message : 'Math Challenge'
     let elapsed = Math.round(this.state.elapsed / 100)
     let seconds = (elapsed / 10).toFixed(1)
@@ -114,10 +117,10 @@ class MathChallenge extends Component {
           }}
           >
           {
-            instructions.split('\n').map( (item) => <div key={item} style={{marginBottom:20}}>{item}</div>)
+            instructions.split('\n').map( (item,i) => <div key={i} style={{marginBottom:20}}>{item}</div>)
           }
           <br />
-            <Timer></Timer>
+            <Timer timerCallback={() => {alert('boom')}}></Timer>
             <div>
             {
                 this.state.numbers.map( (q,i) => <div key={i}>{formatNumbers(q.numbers)}
