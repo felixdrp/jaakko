@@ -4,6 +4,7 @@ import React, { PropTypes, Component } from 'react'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Timer from './timer'
 
 
@@ -129,14 +130,14 @@ class MathChallenge extends Component {
             </div>
           <br />
 
-          <FlatButton
+          <RaisedButton
             id="submitAnswers"
             style={{backgroundColor: 'grey',}}
             type="submit"
-            
+
           >
             Submit
-          </FlatButton>
+          </RaisedButton>
 
         </CardText>
 

@@ -38,6 +38,10 @@ var _FlatButton = require('material-ui/FlatButton');
 
 var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
 var _timer = require('./timer');
 
 var _timer2 = _interopRequireDefault(_timer);
@@ -187,7 +191,7 @@ var MathChallenge = function (_Component) {
             ),
             _react2.default.createElement('br', null),
             _react2.default.createElement(
-              _FlatButton2.default,
+              _RaisedButton2.default,
               {
                 id: 'submitAnswers',
                 style: { backgroundColor: 'grey' },

@@ -21,6 +21,7 @@ import {
   CommonViewContainer,
   Example,
   MathChallenge,
+  AltObjectTask,
   Question,
   Wait,
 } from './components/'
@@ -47,6 +48,7 @@ var routes = (history) => (
         <Route path="example" component={Example} />
         <Route path="question" component={Question} />
         <Route path="mathChallenge" component={MathChallenge} />
+        <Route path="altObjectTask" component={AltObjectTask} />
       </Route>
 
       {/*

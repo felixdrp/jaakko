@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Wait = exports.Question = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Wait = exports.Question = exports.AltObjectTask = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -32,6 +32,10 @@ var _example2 = _interopRequireDefault(_example);
 var _mathChallenge = require('./survey/math-challenge');
 
 var _mathChallenge2 = _interopRequireDefault(_mathChallenge);
+
+var _altObjectTask = require('./survey/alt-object-task');
+
+var _altObjectTask2 = _interopRequireDefault(_altObjectTask);
 
 var _question = require('./survey/question');
 
@@ -65,6 +69,7 @@ exports.CommonViewContainer = _commonViewContainer2.default;
 
 exports.Example = _example2.default;
 exports.MathChallenge = _mathChallenge2.default;
+exports.AltObjectTask = _altObjectTask2.default;
 exports.Question = _question2.default;
 exports.Wait = _wait2.default;
 //# sourceMappingURL=index.js.map
