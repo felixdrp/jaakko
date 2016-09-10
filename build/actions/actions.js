@@ -66,10 +66,13 @@ var GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIG
 var GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_ACCOUNTS_UNASSIGN = 'GROUPS_ACCOUNTS_UNASSIGN';
 var GROUPS_AUTOMATE_CREATION = exports.GROUPS_AUTOMATE_CREATION = 'GROUPS_AUTOMATE_CREATION';
 
-function groupsAdd(groupId) {
-  var list = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+function groupsAdd(_ref) {
+  var groupId = _ref.groupId;
+  var type = _ref.type;
+  var _ref$list = _ref.list;
+  var list = _ref$list === undefined ? [] : _ref$list;
 
-  return { type: GROUPS_ADD, payload: { groupId: groupId, list: list } };
+  return { type: GROUPS_ADD, payload: { groupId: groupId, type: type, list: list } };
 }
 function groupsRemove(groupId) {
   return { type: GROUPS_REMOVE, payload: { groupId: groupId } };
@@ -114,9 +117,12 @@ var SEND_ACCOUNT_MESSAGE = exports.SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE'
 
 function storeStateWithoutWebSocket(state) {
   var copyWithoutWS = {};
-  console.log('XXXXXXXresult');
-  console.log(state);
-  console.time('time1');
+  var vervose = true;
+  if (vervose) {
+    console.log('XXXXXXXresult');
+    console.log(state);
+    console.time('time1');
+  }
   for (var key in state) {
     if (key == 'accounts') {
       copyWithoutWS[key] = {};
@@ -132,9 +138,11 @@ function storeStateWithoutWebSocket(state) {
       copyWithoutWS[key] = state[key];
     }
   }
-  console.timeEnd('time1');
-  console.log(copyWithoutWS);
-  console.log(state);
+  if (vervose) {
+    console.timeEnd('time1');
+    console.log(copyWithoutWS);
+    console.log(state);
+  }
 
   return copyWithoutWS;
 }

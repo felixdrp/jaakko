@@ -79,12 +79,20 @@ webServer.listen( portWeb, () => console.log('server running at https://localhos
 
 // middleware to send store updates to the admins
 const updateControlRooms = store => next => action => {
-  console.log('dispatching', action)
+  let vervose = true
+
+  if (vervose) {
+    console.log('dispatching', action)
+  }
+
   let result = next(action)
   let payload = storeStateWithoutWebSocket( store.getState() )
-  // console.log('UPDATE ControlRoom state' + payload )
-  console.log('MEMORY USAGE state' + JSON.stringify(process.memoryUsage()) )
-  // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+
+  if (vervose) {
+    // console.log('UPDATE ControlRoom state' + payload )
+    console.log('MEMORY USAGE state' + JSON.stringify(process.memoryUsage()) )
+    // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+  }
 
   // transfer asynchronously
   new Promise((resolve, reject) => {

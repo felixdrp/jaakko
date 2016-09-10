@@ -65,7 +65,10 @@ function groups() {
       }
       // Add to the list
       state.list.push(payload.groupId);
-      state[payload.groupId] = payload.list || [];
+      state[payload.groupId] = {
+        accountList: payload.list || [],
+        type: payload.type || 0
+      };
       return state;
     case _actions.GROUPS_REMOVE:
       // Check if account is already in list
@@ -81,16 +84,16 @@ function groups() {
       // Check if account is already in list
       // console.log(payload)
       // console.log(state[payload.groupId].indexOf(payload.account))
-      if (state[payload.groupId].indexOf(payload.account) !== -1) {
+      if (state[payload.groupId].accountList.indexOf(payload.account) !== -1) {
         return state;
       }
-      state[payload.groupId].push(payload.account);
+      state[payload.groupId].accountList.push(payload.account);
       return state;
     case _actions.GROUPS_REMOVE_ACCOUNT:
       // Check if account is already in list
-      if (state[payload.groupId].includes(payload.account)) {
+      if (state[payload.groupId].accountList.includes(payload.account)) {
         // Remove from list
-        state[payload.groupId].splice(state[payload.groupId].indexOf(payload.account), 1);
+        state[payload.groupId].accountList.splice(state[payload.groupId].accountList.indexOf(payload.account), 1);
       }
       return state;
     default:

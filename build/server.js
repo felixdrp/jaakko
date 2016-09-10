@@ -110,12 +110,20 @@ webServer.listen(portWeb, function () {
 var updateControlRooms = function updateControlRooms(store) {
   return function (next) {
     return function (action) {
-      console.log('dispatching', action);
+      var vervose = true;
+
+      if (vervose) {
+        console.log('dispatching', action);
+      }
+
       var result = next(action);
       var payload = (0, _actions.storeStateWithoutWebSocket)(store.getState());
-      // console.log('UPDATE ControlRoom state' + payload )
-      console.log('MEMORY USAGE state' + (0, _stringify2.default)(process.memoryUsage()));
-      // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+
+      if (vervose) {
+        // console.log('UPDATE ControlRoom state' + payload )
+        console.log('MEMORY USAGE state' + (0, _stringify2.default)(process.memoryUsage()));
+        // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+      }
 
       // transfer asynchronously
       new _promise2.default(function (resolve, reject) {

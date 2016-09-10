@@ -5,7 +5,7 @@ import { deleteAccount } from '../../../src/modules/account/delete-account'
 
 require('chromedriver');
 const webdriver = require('selenium-webdriver');
-const { By, until } = webdriver;
+const { By, until, Key } = webdriver;
 
 const driver = new webdriver.Builder()
         .forBrowser('chrome')

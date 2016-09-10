@@ -41,8 +41,8 @@ export const GROUPS_SELECTED_ACCOUNTS_UNASSIGN = 'GROUPS_SELECTED_ACCOUNTS_UNASS
 export const GROUPS_ACCOUNTS_UNASSIGN = 'GROUPS_ACCOUNTS_UNASSIGN'
 export const GROUPS_AUTOMATE_CREATION = 'GROUPS_AUTOMATE_CREATION'
 
-export function groupsAdd(groupId, list=[]) {
-  return { type: GROUPS_ADD, payload: { groupId, list } }
+export function groupsAdd({groupId, type, list=[],}) {
+  return { type: GROUPS_ADD, payload: { groupId, type, list } }
 }
 export function groupsRemove(groupId) {
   return { type: GROUPS_REMOVE, payload: { groupId } }
@@ -89,9 +89,12 @@ export const SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE'
 
 export function storeStateWithoutWebSocket(state) {
   let copyWithoutWS = {}
-  console.log('XXXXXXXresult')
-  console.log(state)
-  console.time('time1')
+  let vervose = true
+  if (vervose) {
+    console.log('XXXXXXXresult')
+    console.log(state)
+    console.time('time1')
+  }
   for(let key in state) {
     if (key == 'accounts') {
       copyWithoutWS[key] = {}
@@ -103,9 +106,11 @@ export function storeStateWithoutWebSocket(state) {
       copyWithoutWS[key] = state[key]
     }
   }
-  console.timeEnd('time1')
-  console.log(copyWithoutWS)
-  console.log(state)
+  if (vervose) {
+    console.timeEnd('time1')
+    console.log(copyWithoutWS)
+    console.log(state)
+  }
 
   return copyWithoutWS
 }

@@ -89,7 +89,7 @@ exports.default = function () {
 
             removeGroup = function removeGroup(groupId, store) {
               var result = store.getState();
-              result.groups[groupId].map(function (accountId) {
+              result.groups[groupId].accountList.map(function (accountId) {
                 return store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
               });
               store.dispatch((0, _actions.groupsRemove)(groupId));
@@ -114,14 +114,14 @@ exports.default = function () {
 
             payloadResponse = void 0, result = void 0, account = void 0;
             return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
-              var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc;
+              var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, random, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _acc;
 
               return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : 92;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : 117;
                       break;
 
                     case 3:
@@ -244,7 +244,11 @@ exports.default = function () {
                       });
 
                     case 31:
-                      store.dispatch((0, _actions.groupsAdd)(payload.name || Date.now()));
+                      store.dispatch((0, _actions.groupsAdd)({
+                        groupId: payload.name || Date.now(),
+                        type: payload.type || 0,
+                        list: payload.list || []
+                      }));
                       return _context.abrupt('return', {
                         v: true
                       });
@@ -310,7 +314,12 @@ exports.default = function () {
                       while (payload.numberOfGroups != result.groups.list.length) {
                         if (payload.numberOfGroups > result.groups.list.length) {
                           // Add group
-                          store.dispatch((0, _actions.groupsAdd)(Date.now()));
+                          store.dispatch((0, _actions.groupsAdd)({
+                            groupId: payload.name || Date.now(),
+                            // Assign a type from 0 - 3
+                            type: payload.type || result.groups.list.length % 4,
+                            list: payload.list || []
+                          }));
                         } else {
                           // Remove group
                           removeGroup(result.groups.list[result.groups.list.length - 1], store);
@@ -336,119 +345,182 @@ exports.default = function () {
 
                       orderedGroupsAndAccounts = drawGroups(payload.numberOfGroups, result.accounts.list.length);
                       accountId = void 0, group = void 0, groupId = void 0;
+                      // Make the gropus random
+
+                      random = true;
 
                       // remove accounts to excess groups
 
                       for (i = 0; i < payload.numberOfGroups; i++) {
                         group = result.groups[result.groups.list[i]];
-                        if (group.length > orderedGroupsAndAccounts[i]) {
+                        while (group.accountList.length > orderedGroupsAndAccounts[i]) {
                           removeAccountFromGroup(
                           // last account of the group
-                          group[group.length - 1], store);
+                          group.accountList[group.accountList.length - 1], store);
                         }
                       }
                       // Add accounts to deficit groups
                       _i2 = 0;
 
-                    case 54:
+                    case 55:
                       if (!(_i2 < payload.numberOfGroups)) {
-                        _context.next = 91;
+                        _context.next = 116;
                         break;
                       }
 
                       groupId = result.groups.list[_i2];
                       group = result.groups[groupId];
 
-                    case 57:
-                      if (!(group.length < orderedGroupsAndAccounts[_i2])) {
-                        _context.next = 88;
+                    case 58:
+                      if (!(group.accountList.length < orderedGroupsAndAccounts[_i2])) {
+                        _context.next = 113;
+                        break;
+                      }
+
+                      if (!(random == true)) {
+                        _context.next = 83;
                         break;
                       }
 
                       // Find a free accountId
+                      accountId = [];
                       _iteratorNormalCompletion = true;
                       _didIteratorError = false;
                       _iteratorError = undefined;
-                      _context.prev = 61;
-                      _iterator = (0, _getIterator3.default)(result.accounts.list);
+                      _context.prev = 64;
+                      for (_iterator = (0, _getIterator3.default)(result.accounts.list); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        acc = _step.value;
 
-                    case 63:
-                      if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                        _context.next = 71;
-                        break;
+                        if (result.accounts[acc].group == 'unassigned') {
+                          accountId.push(acc);
+                        }
                       }
 
-                      acc = _step.value;
-
-                      if (!(result.accounts[acc].group == 'unassigned')) {
-                        _context.next = 68;
-                        break;
-                      }
-
-                      accountId = acc;
-                      return _context.abrupt('break', 71);
+                      _context.next = 72;
+                      break;
 
                     case 68:
-                      _iteratorNormalCompletion = true;
-                      _context.next = 63;
-                      break;
-
-                    case 71:
-                      _context.next = 77;
-                      break;
-
-                    case 73:
-                      _context.prev = 73;
-                      _context.t1 = _context['catch'](61);
+                      _context.prev = 68;
+                      _context.t1 = _context['catch'](64);
                       _didIteratorError = true;
                       _iteratorError = _context.t1;
 
-                    case 77:
-                      _context.prev = 77;
-                      _context.prev = 78;
+                    case 72:
+                      _context.prev = 72;
+                      _context.prev = 73;
 
                       if (!_iteratorNormalCompletion && _iterator.return) {
                         _iterator.return();
                       }
 
-                    case 80:
-                      _context.prev = 80;
+                    case 75:
+                      _context.prev = 75;
 
                       if (!_didIteratorError) {
-                        _context.next = 83;
+                        _context.next = 78;
                         break;
                       }
 
                       throw _iteratorError;
 
-                    case 83:
-                      return _context.finish(80);
+                    case 78:
+                      return _context.finish(75);
 
-                    case 84:
-                      return _context.finish(77);
+                    case 79:
+                      return _context.finish(72);
 
-                    case 85:
-
-                      addAccountToGroup(accountId, groupId, store);
-                      _context.next = 57;
+                    case 80:
+                      addAccountToGroup(accountId[Math.floor(Math.random() * accountId.length)], groupId, store);
+                      _context.next = 111;
                       break;
+
+                    case 83:
+                      // Find a free accountId
+                      _iteratorNormalCompletion2 = true;
+                      _didIteratorError2 = false;
+                      _iteratorError2 = undefined;
+                      _context.prev = 86;
+                      _iterator2 = (0, _getIterator3.default)(result.accounts.list);
 
                     case 88:
-                      _i2++;
-                      _context.next = 54;
+                      if (_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done) {
+                        _context.next = 96;
+                        break;
+                      }
+
+                      _acc = _step2.value;
+
+                      if (!(result.accounts[_acc].group == 'unassigned')) {
+                        _context.next = 93;
+                        break;
+                      }
+
+                      accountId = _acc;
+                      return _context.abrupt('break', 96);
+
+                    case 93:
+                      _iteratorNormalCompletion2 = true;
+                      _context.next = 88;
                       break;
 
-                    case 91:
+                    case 96:
+                      _context.next = 102;
+                      break;
+
+                    case 98:
+                      _context.prev = 98;
+                      _context.t2 = _context['catch'](86);
+                      _didIteratorError2 = true;
+                      _iteratorError2 = _context.t2;
+
+                    case 102:
+                      _context.prev = 102;
+                      _context.prev = 103;
+
+                      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                      }
+
+                    case 105:
+                      _context.prev = 105;
+
+                      if (!_didIteratorError2) {
+                        _context.next = 108;
+                        break;
+                      }
+
+                      throw _iteratorError2;
+
+                    case 108:
+                      return _context.finish(105);
+
+                    case 109:
+                      return _context.finish(102);
+
+                    case 110:
+
+                      addAccountToGroup(accountId, groupId, store);
+
+                    case 111:
+                      _context.next = 58;
+                      break;
+
+                    case 113:
+                      _i2++;
+                      _context.next = 55;
+                      break;
+
+                    case 116:
                       return _context.abrupt('return', {
                         v: true
                       });
 
-                    case 92:
+                    case 117:
                     case 'end':
                       return _context.stop();
                   }
                 }
-              }, _callee, _this, [[61, 73, 77, 85], [78,, 80, 84]]);
+              }, _callee, _this, [[64, 68, 72, 80], [73,, 75, 79], [86, 98, 102, 110], [103,, 105, 109]]);
             })(), 't0', 6);
 
           case 6:

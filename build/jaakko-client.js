@@ -123,12 +123,21 @@ ws.onmessage = function (event) {
 
 // Simulate a login...
 // setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'me@me.me', password: 'algo'} } ), 2000)
+// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'felixdrp@gmail.com', password: '1234'} } ), 1000)
+// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'rpsoft@gmail.com', password: '1234'} } ), 1000)
+
+function login20Accounts() {
+  var email = function email(i) {
+    return 'lucas' + i + '.George@sky.wl';
+  };
+  for (var i = 1; i < 21; i++) {
+    websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: email(i), password: '1234' } });
+  }
+}
 setTimeout(function () {
-  return websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: 'felixdrp@gmail.com', password: '1234' } });
+  return login20Accounts();
 }, 1000);
-setTimeout(function () {
-  return websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: 'rpsoft@gmail.com', password: '1234' } });
-}, 1000);
+
 // {"firstName":"Jesus","surename":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
 // Move the client to a web page...
 // setTimeout( () => store.dispatch(push('/modules/example')), 3000)

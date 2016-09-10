@@ -84,7 +84,7 @@ export default async function mutate({ action, payload, ws, store }) {
 
   function removeGroup(groupId, store) {
     let result = store.getState()
-    result.groups[groupId].map(
+    result.groups[groupId].accountList.map(
       (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
     )
     store.dispatch( groupsRemove( groupId ) )
@@ -224,7 +224,11 @@ export default async function mutate({ action, payload, ws, store }) {
       return true
 
     case GROUPS_ADD:
-      store.dispatch( groupsAdd( payload.name || Date.now() ) )
+      store.dispatch( groupsAdd({
+         groupId: payload.name || Date.now(),
+         type: payload.type || 0,
+         list: payload.list || [],
+      }) )
       return true
 
     case GROUPS_REMOVE:
@@ -280,7 +284,12 @@ export default async function mutate({ action, payload, ws, store }) {
       while (payload.numberOfGroups != result.groups.list.length) {
         if (payload.numberOfGroups > result.groups.list.length) {
           // Add group
-          store.dispatch( groupsAdd( Date.now() ) )
+          store.dispatch( groupsAdd({
+            groupId: payload.name || Date.now(),
+            // Assign a type from 0 - 3
+            type: payload.type || result.groups.list.length % 4,
+            list: payload.list || [],
+          }) )
         } else {
           // Remove group
           removeGroup(result.groups.list[result.groups.list.length - 1], store)
@@ -306,14 +315,16 @@ export default async function mutate({ action, payload, ws, store }) {
       {
         let orderedGroupsAndAccounts = drawGroups(payload.numberOfGroups, result.accounts.list.length)
         let accountId, group, groupId
+        // Make the gropus random
+        let random = true
 
         // remove accounts to excess groups
         for (let i = 0; i < payload.numberOfGroups; i++) {
           group = result.groups[ result.groups.list[i] ]
-          if (group.length > orderedGroupsAndAccounts[i]) {
+          while (group.accountList.length > orderedGroupsAndAccounts[i]) {
             removeAccountFromGroup(
               // last account of the group
-              group[ group.length - 1 ],
+              group.accountList[ group.accountList.length - 1 ],
               store
             )
           }
@@ -322,20 +333,38 @@ export default async function mutate({ action, payload, ws, store }) {
         for (let i = 0; i < payload.numberOfGroups; i++) {
           groupId = result.groups.list[i]
           group = result.groups[ groupId ]
-          while (group.length < orderedGroupsAndAccounts[i]) {
-            // Find a free accountId
-            for (let acc of result.accounts.list) {
-              if (result.accounts[acc].group == 'unassigned') {
-                accountId = acc
-                break;
+          while (group.accountList.length < orderedGroupsAndAccounts[i]) {
+            // Do it random?
+            if (random == true) {
+              // Find a free accountId
+              accountId = []
+              for (let acc of result.accounts.list) {
+                if (result.accounts[acc].group == 'unassigned') {
+                  accountId.push( acc )
+                }
               }
+
+              addAccountToGroup(
+                accountId[ Math.floor( Math.random() * accountId.length ) ],
+                groupId,
+                store
+              )
+            } else {
+              // Find a free accountId
+              for (let acc of result.accounts.list) {
+                if (result.accounts[acc].group == 'unassigned') {
+                  accountId = acc
+                  break;
+                }
+              }
+
+              addAccountToGroup(
+                accountId,
+                groupId,
+                store
+              )
             }
 
-            addAccountToGroup(
-              accountId,
-              groupId,
-              store
-            )
           }
         }
       }
