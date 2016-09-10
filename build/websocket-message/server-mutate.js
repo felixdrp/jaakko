@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof2 = require('babel-runtime/helpers/typeof');
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
@@ -15,6 +11,10 @@ var _regenerator2 = _interopRequireDefault(_regenerator);
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -137,7 +137,7 @@ exports.default = function () {
                     case 5:
                       result = _context.sent;
 
-                      if (!('message' in result)) {
+                      if (!((typeof result === 'undefined' ? 'undefined' : (0, _typeof3.default)(result)) == 'object' && 'message' in result)) {
                         _context.next = 11;
                         break;
                       }
@@ -195,7 +195,7 @@ exports.default = function () {
 
                       console.log(result);
 
-                      if (!('message' in result)) {
+                      if (!((typeof result === 'undefined' ? 'undefined' : (0, _typeof3.default)(result)) == 'object' && 'message' in result)) {
                         _context.next = 24;
                         break;
                       }

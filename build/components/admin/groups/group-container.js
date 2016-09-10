@@ -68,7 +68,8 @@ var GroupContainer = function (_Component) {
             key: index,
             groupId: groupId,
             accounts: accounts,
-            accountsNumber: props.groups[groupId].length,
+            accountsNumber: props.groups[groupId].accountList.length,
+            groupType: props.groups[groupId].type,
             assignToGroup: function assignToGroup(event) {
               return props.assignSelectedAccountsToGroup(event, groupId);
             },

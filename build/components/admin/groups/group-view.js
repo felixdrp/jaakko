@@ -120,6 +120,16 @@ var GroupView = function (_Component) {
               }
             },
             'Accounts'
+          ),
+          _react2.default.createElement(
+            'span',
+            {
+              style: {
+                marginLeft: 5
+              }
+            },
+            'Type ',
+            props.groupType
           )
         ),
         _react2.default.createElement(_svgIcons.NavigationCancel, {

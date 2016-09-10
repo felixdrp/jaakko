@@ -53,7 +53,7 @@ class GroupView extends Component {
               ...style.centerIcon
             }}
           />
-        {props.accountsNumber}
+            {props.accountsNumber}
           <span
             style={{
               color: '#6c6c6c',
@@ -61,6 +61,13 @@ class GroupView extends Component {
             }}
           >
             Accounts
+          </span>
+          <span
+            style={{
+              marginLeft: 5,
+            }}
+          >
+            Type {props.groupType}
           </span>
         </span>
 

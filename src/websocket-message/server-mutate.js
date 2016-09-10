@@ -121,7 +121,8 @@ export default async function mutate({ action, payload, ws, store }) {
         },
         fieldsOptions
       )
-      if ('message' in result) {
+
+      if (typeof result == 'object' && 'message' in result) {
         // Error try register again.
         // Send message of error to the client.
         console.error(result.message)
@@ -175,7 +176,7 @@ export default async function mutate({ action, payload, ws, store }) {
       })
       console.log(result)
 
-      if ('message' in result) {
+      if (typeof result == 'object' && 'message' in result) {
         // Error try login.
         // Send message of error to the client.
         console.error(result.message)

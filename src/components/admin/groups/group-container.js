@@ -42,7 +42,8 @@ class GroupContainer extends Component {
               key={index}
               groupId={groupId}
               accounts={accounts}
-              accountsNumber={props.groups[groupId].length}
+              accountsNumber={props.groups[groupId].accountList.length}
+              groupType={props.groups[groupId].type}
               assignToGroup={ (event) => props.assignSelectedAccountsToGroup( event, groupId ) }
               removeGroup={ () => {props.removeGroup(groupId)} }
               selectionHandler={props.selectionHandler}
