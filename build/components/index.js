@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Wait = exports.Question = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Wait = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -33,9 +33,17 @@ var _mathChallenge = require('./survey/math-challenge');
 
 var _mathChallenge2 = _interopRequireDefault(_mathChallenge);
 
+var _altObjectTask = require('./survey/alt-object-task');
+
+var _altObjectTask2 = _interopRequireDefault(_altObjectTask);
+
 var _question = require('./survey/question');
 
 var _question2 = _interopRequireDefault(_question);
+
+var _instructions = require('./survey/instructions');
+
+var _instructions2 = _interopRequireDefault(_instructions);
 
 var _wait = require('./survey/wait');
 
@@ -65,6 +73,8 @@ exports.CommonViewContainer = _commonViewContainer2.default;
 
 exports.Example = _example2.default;
 exports.MathChallenge = _mathChallenge2.default;
+exports.AltObjectTask = _altObjectTask2.default;
 exports.Question = _question2.default;
+exports.Instructions = _instructions2.default;
 exports.Wait = _wait2.default;
 //# sourceMappingURL=index.js.map

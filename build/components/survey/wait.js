@@ -98,7 +98,6 @@ var Wait = function (_Component) {
           _react2.default.createElement(
             'div',
             null,
-            'puta puta puta ',
             this.props.melacome,
             ' '
           )
