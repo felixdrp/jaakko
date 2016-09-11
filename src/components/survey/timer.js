@@ -66,28 +66,18 @@ class Timer extends Component {
 
 
     return (
-        <div>
-        {
-        // <RaisedButton
-        //   id="startTimer"
-        //   style={{ fontWeight:'bolder',
-        //             fontSize:'large',}}
-        //   onClick={ this.startCountDown }
-        // >
-        //   Start
-        // </RaisedButton>
-        }
+
         <div style={{
           display: 'inline',
           border: '1px solid black',
           backgroundColor: 'white',
           padding: 7,
           position: 'fixed',
-          top:0,
-          left:0,
+          top:4,
+          left:4,
           fontWeight:'bolder',
           fontSize:'large',
-        }}> Time Left: <div style={{  display: 'inline', color:'red',}}>{minutes}:{seconds}</div></div></div>
+        }}> Time Left: <div style={{  display: 'inline', color:'red',}}>{minutes}:{seconds}</div></div>
 
     )
   }

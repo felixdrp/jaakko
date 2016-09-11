@@ -107,28 +107,24 @@ var Timer = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { style: {
+            display: 'inline',
+            border: '1px solid black',
+            backgroundColor: 'white',
+            padding: 7,
+            position: 'fixed',
+            top: 4,
+            left: 4,
+            fontWeight: 'bolder',
+            fontSize: 'large'
+          } },
+        ' Time Left: ',
         _react2.default.createElement(
           'div',
-          { style: {
-              display: 'inline',
-              border: '1px solid black',
-              backgroundColor: 'white',
-              padding: 7,
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              fontWeight: 'bolder',
-              fontSize: 'large'
-            } },
-          ' Time Left: ',
-          _react2.default.createElement(
-            'div',
-            { style: { display: 'inline', color: 'red' } },
-            minutes,
-            ':',
-            seconds
-          )
+          { style: { display: 'inline', color: 'red' } },
+          minutes,
+          ':',
+          seconds
         )
       );
     }

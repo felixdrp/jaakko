@@ -33,7 +33,7 @@ class AltObjectTask extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {entries:[]};
+     this.state = {entries:[],groupEntries:[]};
 
 
   }
@@ -46,33 +46,40 @@ class AltObjectTask extends Component {
 
   componentWillMount() {
     this.addEntry();
+    this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
   }
 
-  handleSave(text) {
-    if (text.length !== 0) {
-      this.props.addTodo(text)
-    }
-  }
-
-  handleChange(event, index, value, name) {
-    //debugger;
-    this.setState({[name] : value})
-  };
-
-  handleSliderChange(event, value, name) {
-//    debugger;
-    this.setState({[name] : value})
-  };
-
-  handleRadioChange(event, value, name) {
-
-    this.setState({[name] : value})
-  };
+//   handleSave(text) {
+//     if (text.length !== 0) {
+//       this.props.addTodo(text)
+//     }
+//   }
+//
+//   handleChange(event, index, value, name) {
+//     //debugger;
+//     this.setState({[name] : value})
+//   };
+//
+//   handleSliderChange(event, value, name) {
+// //    debugger;
+//     this.setState({[name] : value})
+//   };
+//
+//   handleRadioChange(event, value, name) {
+//
+//     this.setState({[name] : value})
+//   };
 
   addEntry = () => {
     var entries  = this.state.entries.slice()
     entries.push({name : ('entry'+entries.length), title : '',description : ''});
     this.setState({entries : entries });
+  }
+
+  addGroupEntry = (entry) => {
+    var entries  = this.state.groupEntries.slice()
+    entries.push({name : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
+    this.setState({groupEntries : entries });
   }
 
 
@@ -88,12 +95,6 @@ class AltObjectTask extends Component {
 
     return (
       <div style={{display:'flex'}}>
-      {
-        // <h1>{message}</h1>
-        // <Wait melacome={<ActionShop />} /><ActionStore /> <ActionShop />
-        // <div> {this.props.firstName} {v} {this.mlk()}</div>
-      }
-
 
           <Card
             style={{
@@ -118,7 +119,7 @@ class AltObjectTask extends Component {
               {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
-              <br />
+
               <Timer></Timer>
 
               {
@@ -169,7 +170,7 @@ class AltObjectTask extends Component {
           </Card>
 
           <Card  style={{
-              padding: 30,
+
               margin: '2% 0% 5%',
               minWidth: 400,
 
@@ -187,27 +188,26 @@ class AltObjectTask extends Component {
                 paddingTop: 0,
               }}
               >
+
               {
-                //aqui tenemos los group entries
+                this.state.groupEntries.map( (entry,i) => {
+
+                  return <div key={i} style={{padding:5}}>
+                                <Card>
+                                  <CardHeader style={{padding:8}}>
+                                    {entry.title}
+                                  </CardHeader>
+                                  <CardText style={{padding:8}}>
+                                    {entry.description}
+                                  </CardText>
+                                </Card>
+                        </div>
+                })
               }
-              <Card>
-                <CardHeader>
-                  Super paper clip
-                </CardHeader>
-                <CardText>
-                  Paper clip to rule them all.
-                </CardText>
-              </Card>
-
-
-
-
-
 
               </CardText>
 
           </Card>
-
       </div>
     )
   }

@@ -88,7 +88,13 @@ var AltObjectTask = function (_Component) {
       _this.setState({ entries: entries });
     };
 
-    _this.state = { entries: [] };
+    _this.addGroupEntry = function (entry) {
+      var entries = _this.state.groupEntries.slice();
+      entries.push({ name: 'groupEntry' + entries.length, title: entry.title, description: entry.description });
+      _this.setState({ groupEntries: entries });
+    };
+
+    _this.state = { entries: [], groupEntries: [] };
 
     return _this;
   }
@@ -97,32 +103,30 @@ var AltObjectTask = function (_Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       this.addEntry();
+      this.addGroupEntry({ title: 'Super paper clip', description: 'the super super paperclip that will rule them all' });
     }
-  }, {
-    key: 'handleSave',
-    value: function handleSave(text) {
-      if (text.length !== 0) {
-        this.props.addTodo(text);
-      }
-    }
-  }, {
-    key: 'handleChange',
-    value: function handleChange(event, index, value, name) {
-      //debugger;
-      this.setState((0, _defineProperty3.default)({}, name, value));
-    }
-  }, {
-    key: 'handleSliderChange',
-    value: function handleSliderChange(event, value, name) {
-      //    debugger;
-      this.setState((0, _defineProperty3.default)({}, name, value));
-    }
-  }, {
-    key: 'handleRadioChange',
-    value: function handleRadioChange(event, value, name) {
 
-      this.setState((0, _defineProperty3.default)({}, name, value));
-    }
+    //   handleSave(text) {
+    //     if (text.length !== 0) {
+    //       this.props.addTodo(text)
+    //     }
+    //   }
+    //
+    //   handleChange(event, index, value, name) {
+    //     //debugger;
+    //     this.setState({[name] : value})
+    //   };
+    //
+    //   handleSliderChange(event, value, name) {
+    // //    debugger;
+    //     this.setState({[name] : value})
+    //   };
+    //
+    //   handleRadioChange(event, value, name) {
+    //
+    //     this.setState({[name] : value})
+    //   };
+
   }, {
     key: 'render',
 
@@ -169,7 +173,6 @@ var AltObjectTask = function (_Component) {
                 item
               );
             }),
-            _react2.default.createElement('br', null),
             _react2.default.createElement(_timer2.default, null),
             this.state.entries.map(function (entry, i) {
 
@@ -229,7 +232,7 @@ var AltObjectTask = function (_Component) {
         _react2.default.createElement(
           _Card.Card,
           { style: {
-              padding: 30,
+
               margin: '2% 0% 5%',
               minWidth: 400
 
@@ -249,20 +252,27 @@ var AltObjectTask = function (_Component) {
                 paddingTop: 0
               }
             },
-            _react2.default.createElement(
-              _Card.Card,
-              null,
-              _react2.default.createElement(
-                _Card.CardHeader,
-                null,
-                'Super paper clip'
-              ),
-              _react2.default.createElement(
-                _Card.CardText,
-                null,
-                'Paper clip to rule them all.'
-              )
-            )
+            this.state.groupEntries.map(function (entry, i) {
+
+              return _react2.default.createElement(
+                'div',
+                { key: i, style: { padding: 5 } },
+                _react2.default.createElement(
+                  _Card.Card,
+                  null,
+                  _react2.default.createElement(
+                    _Card.CardHeader,
+                    { style: { padding: 8 } },
+                    entry.title
+                  ),
+                  _react2.default.createElement(
+                    _Card.CardText,
+                    { style: { padding: 8 } },
+                    entry.description
+                  )
+                )
+              );
+            })
           )
         )
       );
