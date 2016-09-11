@@ -82,6 +82,9 @@ class AltObjectTask extends Component {
     this.setState({groupEntries : entries });
   }
 
+  alerthing = () => {
+    alert('boom');
+  }
 
 //'_marker'
   render() {
@@ -90,8 +93,6 @@ class AltObjectTask extends Component {
 
     let title = 'Alternative Objects Task';
     let text = 'Come up with as many alternative objects for a stapler as possible. \n	You will have 5 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
-
-
 
     return (
       <div style={{display:'flex'}}>
@@ -120,7 +121,9 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
-              <Timer></Timer>
+
+
+              <Timer timerCallback={ this.alerthing }></Timer>
 
               {
                 this.state.entries.map( (entry,i) => {
@@ -173,7 +176,7 @@ class AltObjectTask extends Component {
 
               margin: '2% 0% 5%',
               minWidth: 400,
-
+              backgroundColor: 'rgb(234, 233, 233)',
             }}
           >
             <CardHeader

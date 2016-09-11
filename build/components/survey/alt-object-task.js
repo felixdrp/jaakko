@@ -94,6 +94,10 @@ var AltObjectTask = function (_Component) {
       _this.setState({ groupEntries: entries });
     };
 
+    _this.alerthing = function () {
+      alert('boom');
+    };
+
     _this.state = { entries: [], groupEntries: [] };
 
     return _this;
@@ -173,7 +177,7 @@ var AltObjectTask = function (_Component) {
                 item
               );
             }),
-            _react2.default.createElement(_timer2.default, null),
+            _react2.default.createElement(_timer2.default, { timerCallback: this.alerthing }),
             this.state.entries.map(function (entry, i) {
 
               return _react2.default.createElement(
@@ -234,8 +238,8 @@ var AltObjectTask = function (_Component) {
           { style: {
 
               margin: '2% 0% 5%',
-              minWidth: 400
-
+              minWidth: 400,
+              backgroundColor: 'rgb(234, 233, 233)'
             }
           },
           _react2.default.createElement(_Card.CardHeader, {

@@ -44,7 +44,10 @@ var routes = function routes(history) {
         _react2.default.createElement(_reactRouter.Route, { path: 'question', component: _components.Question }),
         _react2.default.createElement(_reactRouter.Route, { path: 'mathChallenge', component: _components.MathChallenge }),
         _react2.default.createElement(_reactRouter.Route, { path: 'altObjectTask', component: _components.AltObjectTask }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'instructions', component: _components.Instructions })
+        _react2.default.createElement(_reactRouter.Route, { path: 'instructions', component: _components.Instructions }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'similarities', component: _components.Similarities }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'favourites', component: _components.Favourites }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'results', component: _components.Results })
       )
     )
   );

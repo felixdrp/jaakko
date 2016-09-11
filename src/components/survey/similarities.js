@@ -26,11 +26,14 @@ import {
 } from 'material-ui/svg-icons';
 
 
-class Question extends Component {
+
+
+class Similarities extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {};
+     this.state = {data : []};
+
   }
 
   static contextTypes = {
@@ -40,8 +43,47 @@ class Question extends Component {
   };
 
   componentWillMount() {
-
+    this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[2,5,6]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]}] });
   }
+
+
+  handleChange = (event, selectionIndex, field, originIndex) => {
+
+    var data = this.state.data;
+
+    if( field > -1 ){
+      var clean_array = []
+      for ( var a in data[originIndex].similars ){
+
+         if(data[originIndex].similars[a] == field ){
+           if ( data[originIndex].similars.indexOf(selectionIndex) < 0){
+             clean_array.push(selectionIndex);
+           }
+           continue;
+         }
+         clean_array.push(data[originIndex].similars[a]);
+      }
+      data[originIndex].similars = clean_array;
+
+    }
+
+    if ( data[originIndex].similars.indexOf(selectionIndex) < 0){
+      data[originIndex].similars.push(selectionIndex);
+    }
+    this.setState({data : data})
+  };
+
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text)
@@ -54,14 +96,11 @@ class Question extends Component {
 
     const { textColor } = this.context.muiTheme.palette;
 
-    let title = 'Example of Alternative Objects Task';
-    let text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:'
-            	+'\nIf the object given is a paper clip then here is how you would complete the task.'
-              +'\n1. First you would enter the name of the object in the “object name” field, for example, the alternative object could be a “reset button pressing tool”. '
-              +'\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be, for example, A tool that can be used to press reset buttons which can be pressed with your fingers.'
-              +'\n3. When you are finished you can press the “submit button” to submit the entry. '
-              +'\n4. Your name will be shown next to your entries and so each entry will have an author. '
-              +'\n\nThe previous example would look like this…';
+    let title = 'Similarities Task';
+    let text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:';
+
+    let data = this.state.data;
+
 
     return (
       <div>
@@ -94,24 +133,56 @@ class Question extends Component {
 
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
-              <div style={{marginTop:20}}>
-                  <Card>
-                  <CardText>
-                      Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
-                      }} /><br/>
-                      Description: <TextField
-                                    id='dummy2'
-                                    multiLine={true}
-                                    rows={1}
-                                    rowsMax={10}
-                                    value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
-                                    style={{ marginLeft:20, width: '80%',
-                         }} />
-                  </CardText>
-                 </Card>
-              </div>
-
               <br />
+
+              {
+                data.map( (entry,i) => {
+                  return <div key={i} style={{padding:5,display:'flex'}}>
+
+                                <Card style={{paddingTop: '0%',fontWeight: 800,}}>
+                                  <CardText style={{padding:8}}>
+                                    {i+'.'}
+                                  </CardText>
+                                </Card>
+
+                                <Card>
+                                  <CardHeader style={{padding:8}}>
+                                    {entry.title}
+                                  </CardHeader>
+                                  <CardText style={{padding:8}}>
+                                    {entry.description}
+                                  </CardText>
+                                </Card>
+
+                                {
+                                    entry.similars.map(  (sim_entry,j) => {
+
+                                                return <Card key = {j}>
+                                                  <CardText style={{padding:8}}>
+                                                  <SelectField  value={sim_entry} onChange={(event, index, value) => this.handleChange(event, index, sim_entry, i)} style={{width:30, maxHeight:85}} >
+                                                    {
+                                                      data.map( (entry_options,z) => { return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : '' })
+                                                    }
+                                                   </SelectField>
+                                                  </CardText>
+                                                </Card>
+                                              })
+                               }
+
+                               <Card>
+                                 <CardText style={{padding:8}}>
+                                 <SelectField value={-1} onChange={(event, index, value) => this.handleChange(event, index, -1, i)} style={{width:30}}>
+                                   {
+                                     data.map( (entry_options,z) => { return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z+'. '+entry_options.title} /> : '' })
+                                   }
+                                  </SelectField>
+                                 </CardText>
+                               </Card>
+
+                        </div>
+                } )
+              }
+
 
               <FlatButton
                 id="ready"
@@ -130,7 +201,7 @@ class Question extends Component {
   }
 }
 
-Question.propTypes = {
+Similarities.propTypes = {
   // addTodo: PropTypes.func.isRequired
 }
 
@@ -142,4 +213,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Question)
+export default connect(mapStateToProps)(Similarities)

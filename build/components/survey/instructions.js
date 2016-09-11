@@ -62,19 +62,19 @@ var _svgIcons = require('material-ui/svg-icons');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Question = function (_Component) {
-  (0, _inherits3.default)(Question, _Component);
+var Instructions = function (_Component) {
+  (0, _inherits3.default)(Instructions, _Component);
 
-  function Question(props) {
-    (0, _classCallCheck3.default)(this, Question);
+  function Instructions(props) {
+    (0, _classCallCheck3.default)(this, Instructions);
 
-    var _this = (0, _possibleConstructorReturn3.default)(this, (Question.__proto__ || (0, _getPrototypeOf2.default)(Question)).call(this, props));
+    var _this = (0, _possibleConstructorReturn3.default)(this, (Instructions.__proto__ || (0, _getPrototypeOf2.default)(Instructions)).call(this, props));
 
     _this.state = {};
     return _this;
   }
 
-  (0, _createClass3.default)(Question, [{
+  (0, _createClass3.default)(Instructions, [{
     key: 'componentWillMount',
     value: function componentWillMount() {}
   }, {
@@ -169,17 +169,17 @@ var Question = function (_Component) {
       );
     }
   }]);
-  return Question;
+  return Instructions;
 }(_react.Component);
 
-Question.contextTypes = {
+Instructions.contextTypes = {
   muiTheme: _react2.default.PropTypes.object.isRequired,
   router: _react2.default.PropTypes.object.isRequired,
   websocket: _react2.default.PropTypes.object
 };
 
 
-Question.propTypes = {}
+Instructions.propTypes = {}
 // addTodo: PropTypes.func.isRequired
 
 
@@ -191,5 +191,5 @@ Question.propTypes = {}
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Question);
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Instructions);
 //# sourceMappingURL=instructions.js.map

@@ -26,7 +26,7 @@ import {
 } from 'material-ui/svg-icons';
 
 
-class Question extends Component {
+class Favourites extends Component {
 
   constructor(props) {
     super(props);
@@ -130,7 +130,7 @@ class Question extends Component {
   }
 }
 
-Question.propTypes = {
+Favourites.propTypes = {
   // addTodo: PropTypes.func.isRequired
 }
 
@@ -142,4 +142,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Question)
+export default connect(mapStateToProps)(Favourites)
