@@ -52,6 +52,10 @@ var _Slider2 = _interopRequireDefault(_Slider);
 
 var _RadioButton = require('material-ui/RadioButton');
 
+var _timer = require('./timer');
+
+var _timer2 = _interopRequireDefault(_timer);
+
 var _reactRedux = require('react-redux');
 
 var _wait = require('./wait');
@@ -89,10 +93,34 @@ var Similarities = function (_Component) {
         data[originIndex].similars = clean_array;
       }
 
+      if (field > -1) {
+        var clean_array = [];
+        for (var a in data[field].similars) {
+
+          if (data[field].similars[a] == originIndex) {
+            if (data[field].similars.indexOf(originIndex) < 0) {
+              clean_array.push(originIndex);
+            }
+            continue;
+          }
+          clean_array.push(data[field].similars[a]);
+        }
+        data[field].similars = clean_array;
+      }
+
       if (data[originIndex].similars.indexOf(selectionIndex) < 0) {
         data[originIndex].similars.push(selectionIndex);
       }
+
+      if (data[selectionIndex].similars.indexOf(originIndex) < 0) {
+        data[selectionIndex].similars.push(originIndex);
+      }
+
       _this.setState({ data: data });
+    };
+
+    _this.alerthing = function () {
+      alert('boom');
     };
 
     _this.state = { data: [] };
@@ -103,7 +131,7 @@ var Similarities = function (_Component) {
   (0, _createClass3.default)(Similarities, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.setState({ 'data': [{ title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [2, 5, 6] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }] });
+      this.setState({ 'data': [{ title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }] });
     }
   }, {
     key: 'handleSave',
@@ -112,11 +140,11 @@ var Similarities = function (_Component) {
         this.props.addTodo(text);
       }
     }
-
-    //'_marker'
-
   }, {
     key: 'render',
+
+
+    //'_marker'
     value: function render() {
       var _this2 = this;
 
@@ -162,6 +190,7 @@ var Similarities = function (_Component) {
               );
             }),
             _react2.default.createElement('br', null),
+            _react2.default.createElement(_timer2.default, { timerCallback: this.alerthing }),
             data.map(function (entry, i) {
               return _react2.default.createElement(
                 'div',
@@ -187,6 +216,15 @@ var Similarities = function (_Component) {
                     _Card.CardText,
                     { style: { padding: 8 } },
                     entry.description
+                  )
+                ),
+                _react2.default.createElement(
+                  _Card.Card,
+                  null,
+                  _react2.default.createElement(
+                    _Card.CardText,
+                    { style: { padding: 8, paddingTop: 28, fontWeight: 800 } },
+                    'Similar to:'
                   )
                 ),
                 entry.similars.map(function (sim_entry, j) {
@@ -227,16 +265,7 @@ var Similarities = function (_Component) {
                   )
                 )
               );
-            }),
-            _react2.default.createElement(
-              _FlatButton2.default,
-              {
-                id: 'ready',
-                backgroundColor: 'green',
-                style: { color: 'white' }
-              },
-              'I\'m ready'
-            )
+            })
           )
         )
       );

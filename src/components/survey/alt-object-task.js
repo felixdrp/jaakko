@@ -155,19 +155,6 @@ class AltObjectTask extends Component {
                 New Entry
               </RaisedButton>
 
-              <br />
-              <div
-              style={{ marginLeft:'90%',}}
-              >
-                    <RaisedButton
-                      id="submitAnswers"
-                      style={{color: 'white',}}
-                      type="submit"
-                      style={{marginTop:20}}
-                    >
-                      Submit
-                    </RaisedButton>
-              </div>
             </CardText>
 
           </Card>

@@ -26,6 +26,44 @@ import {
 } from 'material-ui/svg-icons';
 
 
+var instructionsData = {
+
+  alternativeObject : {
+    title : 'Instructions for Alternative Objects Task',
+    text : 'The task is to come up with as many alternative objects for a given object. \n\n For example:'
+            	+'\nIf the object given is a paper clip then here is how you would complete the task.'
+              +'\n1. First you would enter the name of the object in the “object name” field, for example, the alternative object could be a “reset button pressing tool”. '
+              +'\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be, for example, A tool that can be used to press reset buttons which can be pressed with your fingers.'
+              +'\n3. When you are finished you can press the “submit button” to submit the entry. '
+              +'\n4. Your name will be shown next to your entries and so each entry will have an author. '
+              +'\n\nThe previous example would look like this…',
+  },
+  similarities : {
+    title : 'Instructions for Similarity rounds',
+    text : 'How you judge another groups entries to be similar will not affect your pay or the way others judge your entries. This round is completely anonymous.'
+            	+'\nPlease look through the group’s answers and judge if any 2 answers are similar. If two people deem the same two entries to be similar to an already existing entry then the entry that was given after the original entry will not be taken into account in the favouriting round. This means that if the entry is disqualified from the favouriting round it cannot be favourited and so will not count toward your earnings.  That is to say that if an answer is deemed to be similar to another existing answer, by two or more people, then the answer that was given after the original will not appear in the favourites round  and so not be taken into account when determining payoffs. Thus no money can be made on ideas which have been seen similar to existing ideas by two or more people. The maximum number of similar ideas to be submitted is 3, so if there are more than 3 ideas which you view as similar ideas then you are asked to prioritise which ideas are more similar than the others.'
+              +'\nSome guidelines for what might be “similar” '
+              +'\n1. If the entry is not original and is largely expressed in an existing entry.'
+              +'\n2. If the entry is an exact copy of an existing entry '
+              +'\n\nRemember that the answers are from another group and will not affect your performance in the task. If two entries are flagged similar then the later entry will be eliminated from the favouriting round.	'
+              +'\n\nThe following shows an example of how the different entries will show in the interface. Each row represents each of the entries. On each row, from left to right, each entry has a number, a title and description, and the numbers of the questions it is similar to.',
+  },
+  favourites : {
+    title : 'Instructions for Favourites rounds',
+    text : 'You will be asked to name your 5 favourites entries from the list of entries that are presented to you and the entries will be from another group than yours. How you individually favourite the entries will not be known by the members of the group you are favouriting or even the members of your group. Thus you will be completely anonymous when favouriting.'
+            	+'\nEvery groups entries will be favorited and based on the total amount of favourites an individual receives it will determine where they rank within their group and so how much they will be paid. '
+              +'\nYou are asked to rank the 5 favourite entries by giving your favourite 5 stars, second favourite 4 starts, etc. thus..'
+              +'\n1. First place = 5 Stars'
+              +'\n2. Second place = 4 Stars'
+              +'\n3. Third place = 3 Stars'
+              +'\n4. Fourth place = 2 Stars'
+              +'\n5. Fifth place = 1 Star'
+              +'\n\nOnly your 5 favourites will receive stars, you cannot give any other entry a star. No half stars can be given; they can only be given as shown above.'
+              +'\n\nThe previous example would look like this…',
+  },
+}
+
+
 class Instructions extends Component {
 
   constructor(props) {
@@ -48,20 +86,125 @@ class Instructions extends Component {
     }
   }
 
+  getTaskExample = (tasktype) => {
+        switch(tasktype){
+          case 'alternativeObject':
+           return <div style={{marginTop:20}}>
+               <Card>
+               <CardText>
+                   Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
+                   }} /><br/>
+                   Description: <TextField
+                                 id='dummy2'
+                                 multiLine={true}
+                                 rows={1}
+                                 rowsMax={10}
+                                 value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
+                                 style={{ marginLeft:20, width: '80%',
+                      }} />
+               </CardText>
+              </Card>
+           </div>
+          case 'similarities':
+            return <div> <div style={{padding:5,display:'flex'}}>
+
+                          <Card style={{paddingTop: '0%',fontWeight: 800,}}>
+                            <CardText style={{padding:8}}>
+                              0.
+                            </CardText>
+                          </Card>
+
+                          <Card>
+                            <CardHeader style={{padding:8}}>
+                              Reset button pressing tool
+                            </CardHeader>
+                            <CardText style={{padding:8}}>
+                              A tool that can be used to press reset buttons which cannot be pressed with your fingers
+                            </CardText>
+                          </Card>
+
+                          <Card>
+                            <CardText style={{padding:8, paddingTop:28,fontWeight: 800}}>
+                              Similar to:
+                            </CardText>
+                          </Card>
+
+                          <Card>
+                            <CardText style={{padding:8}}>
+                            <SelectField value={-1} onChange={ () => {alert('This will set the selected entries as similar')}} style={{width:30}}>
+                                  <MenuItem value={0} primaryText={0} />
+                                  <MenuItem  value={1} primaryText={1} />
+                                  <MenuItem  value={2} primaryText={2} />
+                             </SelectField>
+                            </CardText>
+                    </Card>
+                    </div>
+
+                    <div style={{padding:5,display:'flex'}}>
+                    <Card style={{paddingTop: '0%',fontWeight: 800,}}>
+                      <CardText style={{padding:8}}>
+                        1.
+                      </CardText>
+                    </Card>
+
+                    <Card>
+                      <CardHeader style={{padding:8}}>
+                        Reset button pressing tool
+                      </CardHeader>
+                      <CardText style={{padding:8}}>
+                        A tool that can be used to press reset buttons which cannot be pressed with your fingers
+                      </CardText>
+                    </Card>
+
+                    <Card>
+                      <CardText style={{padding:8, paddingTop:28,fontWeight: 800}}>
+                        Similar to:
+                      </CardText>
+                    </Card>
+
+                    <Card>
+                      <CardText style={{padding:8}}>
+                      <SelectField value={-1} onChange={ () => {alert('This will set the selected entries as similar')}} style={{width:30}}>
+                            <MenuItem value={0} primaryText={0} />
+                            <MenuItem  value={1} primaryText={1} />
+                            <MenuItem  value={2} primaryText={2} />
+                       </SelectField>
+                      </CardText>
+              </Card>
+              </div>
+              </div>
+          case 'favourites':
+            return <div style={{marginTop:20}}>
+                <Card>
+                <CardText>
+                    Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
+                    }} /><br/>
+                    Description: <TextField
+                                  id='dummy2'
+                                  multiLine={true}
+                                  rows={1}
+                                  rowsMax={10}
+                                  value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
+                                  style={{ marginLeft:20, width: '80%',
+                       }} />
+                </CardText>
+               </Card>
+            </div>
+          default:
+            return <div> yourmaw</div>
+
+    }
+  }
 
 //'_marker'
   render() {
 
     const { textColor } = this.context.muiTheme.palette;
+    let tasktype = 'similarities';
+    let title = instructionsData[tasktype].title;
+    let text = instructionsData[tasktype].text;
+    let example = this.getTaskExample(tasktype);
 
-    let title = 'Example of Alternative Objects Task';
-    let text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:'
-            	+'\nIf the object given is a paper clip then here is how you would complete the task.'
-              +'\n1. First you would enter the name of the object in the “object name” field, for example, the alternative object could be a “reset button pressing tool”. '
-              +'\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be, for example, A tool that can be used to press reset buttons which can be pressed with your fingers.'
-              +'\n3. When you are finished you can press the “submit button” to submit the entry. '
-              +'\n4. Your name will be shown next to your entries and so each entry will have an author. '
-              +'\n\nThe previous example would look like this…';
 
     return (
       <div>
@@ -77,6 +220,7 @@ class Instructions extends Component {
               padding: 30,
               margin: '2% 15% 15%',
               minWidth: 900,
+              maxWidth: 1200,
             }}
           >
             <CardHeader
@@ -94,23 +238,7 @@ class Instructions extends Component {
 
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
-              <div style={{marginTop:20}}>
-                  <Card>
-                  <CardText>
-                      Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
-                      }} /><br/>
-                      Description: <TextField
-                                    id='dummy2'
-                                    multiLine={true}
-                                    rows={1}
-                                    rowsMax={10}
-                                    value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
-                                    style={{ marginLeft:20, width: '80%',
-                         }} />
-                  </CardText>
-                 </Card>
-              </div>
-
+              {example}
               <br />
 
               <FlatButton

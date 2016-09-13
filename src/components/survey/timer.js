@@ -16,7 +16,7 @@ class Timer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {elapsed:0, totalSeconds: 5 };
+    this.state = {elapsed:0, totalSeconds: 420 };
   }
 
   handleSave(text) {

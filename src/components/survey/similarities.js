@@ -10,6 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
+import Timer from './timer'
 
 import { connect } from 'react-redux'
 
@@ -43,7 +44,7 @@ class Similarities extends Component {
   };
 
   componentWillMount() {
-    this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[2,5,6]},
+    this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
                 { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
                 { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
                 { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
@@ -78,9 +79,31 @@ class Similarities extends Component {
 
     }
 
+    if( field > -1 ){
+      var clean_array = []
+      for ( var a in data[field].similars ){
+
+         if(data[field].similars[a] == originIndex ){
+           if ( data[field].similars.indexOf(originIndex) < 0){
+             clean_array.push(originIndex);
+           }
+           continue;
+         }
+         clean_array.push(data[field].similars[a]);
+      }
+      data[field].similars = clean_array;
+
+    }
+
+
     if ( data[originIndex].similars.indexOf(selectionIndex) < 0){
       data[originIndex].similars.push(selectionIndex);
     }
+
+    if ( data[selectionIndex].similars.indexOf(originIndex) < 0){
+      data[selectionIndex].similars.push(originIndex);
+    }
+
     this.setState({data : data})
   };
 
@@ -90,6 +113,9 @@ class Similarities extends Component {
     }
   }
 
+  alerthing = () => {
+    alert('boom');
+  }
 
 //'_marker'
   render() {
@@ -134,6 +160,7 @@ class Similarities extends Component {
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
               <br />
+              <Timer timerCallback={ this.alerthing }></Timer>
 
               {
                 data.map( (entry,i) => {
@@ -154,14 +181,22 @@ class Similarities extends Component {
                                   </CardText>
                                 </Card>
 
+                                <Card>
+
+                                  <CardText style={{padding:8, paddingTop:28,fontWeight: 800}}>
+                                    Similar to:
+                                  </CardText>
+                                </Card>
+
                                 {
                                     entry.similars.map(  (sim_entry,j) => {
 
                                                 return <Card key = {j}>
                                                   <CardText style={{padding:8}}>
                                                   <SelectField  value={sim_entry} onChange={(event, index, value) => this.handleChange(event, index, sim_entry, i)} style={{width:30, maxHeight:85}} >
+
                                                     {
-                                                      data.map( (entry_options,z) => { return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : '' })
+                                                      data.map( (entry_options,z) => {return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : '' })
                                                     }
                                                    </SelectField>
                                                   </CardText>
@@ -172,6 +207,7 @@ class Similarities extends Component {
                                <Card>
                                  <CardText style={{padding:8}}>
                                  <SelectField value={-1} onChange={(event, index, value) => this.handleChange(event, index, -1, i)} style={{width:30}}>
+
                                    {
                                      data.map( (entry_options,z) => { return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z+'. '+entry_options.title} /> : '' })
                                    }
@@ -182,15 +218,6 @@ class Similarities extends Component {
                         </div>
                 } )
               }
-
-
-              <FlatButton
-                id="ready"
-                backgroundColor='green'
-                style={{color: 'white',}}
-              >
-                I'm ready
-              </FlatButton>
 
             </CardText>
 

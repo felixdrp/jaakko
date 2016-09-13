@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -214,22 +210,6 @@ var AltObjectTask = function (_Component) {
                 style: { marginTop: 20 }
               },
               'New Entry'
-            ),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(
-              'div',
-              {
-                style: { marginLeft: '90%' }
-              },
-              _react2.default.createElement(
-                _RaisedButton2.default,
-                (0, _defineProperty3.default)({
-                  id: 'submitAnswers',
-                  style: { color: 'white' },
-                  type: 'submit'
-                }, 'style', { marginTop: 20 }),
-                'Submit'
-              )
             )
           )
         ),
