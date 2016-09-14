@@ -40,8 +40,16 @@ class Results extends Component {
   };
 
   componentWillMount() {
-
+    this.setState(
+                   {'data' : [{ username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
+                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
+                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
+                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
+                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]}
+                             ]
+                   });
   }
+
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text)

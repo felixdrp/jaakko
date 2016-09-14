@@ -200,7 +200,7 @@ class Instructions extends Component {
   render() {
 
     const { textColor } = this.context.muiTheme.palette;
-    let tasktype = 'similarities';
+    let tasktype = 'alternativeObject';
     let title = instructionsData[tasktype].title;
     let text = instructionsData[tasktype].text;
     let example = this.getTaskExample(tasktype);

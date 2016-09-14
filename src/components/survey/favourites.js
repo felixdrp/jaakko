@@ -13,7 +13,10 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import { connect } from 'react-redux'
 
+import Timer from './timer'
+
 import Wait from './wait'
+import Rater from './rater'
 
 import {
  ActionShop,
@@ -39,29 +42,78 @@ class Favourites extends Component {
     websocket: React.PropTypes.object,
   };
 
-  componentWillMount() {
 
-  }
+  componentWillMount() {
+      this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
+                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0}] });
+      this.setState({favourites : new Array(6)})
+
+    }
+
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text)
     }
   }
 
+  rater = (index,rating) => {
+    var data = this.state.data;
+    var favourites = this.state.favourites;
 
-//'_marker'
+    if ( rating == -1 ){
+      for ( var f in favourites){
+        if (favourites[f] == index ){
+          favourites[f] = undefined;
+          this.currentRating = 0;
+          data[index].rating = 0;
+
+        }
+      }
+    } else {
+      if ( favourites[rating] == undefined ){
+      //  debugger
+        for ( var f in favourites){
+          if (favourites[f] == index ){
+            favourites[f] = undefined;
+            this.currentRating = 0;
+            data[index].rating = 0;
+
+          }
+        }
+        data[index].rating = rating;
+        this.currentRating = rating;
+        favourites[rating] = index;
+      }
+    }
+
+    this.setState({data: data});
+    this.setState({favourites: favourites});
+
+  }
+
+  alerthing = () => {
+    alert('boom');
+  }
+
   render() {
 
     const { textColor } = this.context.muiTheme.palette;
 
-    let title = 'Example of Alternative Objects Task';
-    let text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:'
-            	+'\nIf the object given is a paper clip then here is how you would complete the task.'
-              +'\n1. First you would enter the name of the object in the “object name” field, for example, the alternative object could be a “reset button pressing tool”. '
-              +'\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be, for example, A tool that can be used to press reset buttons which can be pressed with your fingers.'
-              +'\n3. When you are finished you can press the “submit button” to submit the entry. '
-              +'\n4. Your name will be shown next to your entries and so each entry will have an author. '
-              +'\n\nThe previous example would look like this…';
+    let title = 'Favourites task';
+    let text = 'Rate the following works, and show which ones are your favourites:';
+
+    let data = this.state.data;
+    let raters = new Array(data.lenght);
 
     return (
       <div>
@@ -70,6 +122,7 @@ class Favourites extends Component {
         // <Wait melacome={<ActionShop />} /><ActionStore /> <ActionShop />
         // <div> {this.props.firstName} {v} {this.mlk()}</div>
       }
+
 
 
           <Card
@@ -93,35 +146,41 @@ class Favourites extends Component {
               >
 
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
-
-              <div style={{marginTop:20}}>
-                  <Card>
-                  <CardText>
-                      Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
-                      }} /><br/>
-                      Description: <TextField
-                                    id='dummy2'
-                                    multiLine={true}
-                                    rows={1}
-                                    rowsMax={10}
-                                    value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
-                                    style={{ marginLeft:20, width: '80%',
-                         }} />
-                  </CardText>
-                 </Card>
-              </div>
-
-              <br />
-
-              <FlatButton
-                id="ready"
-                backgroundColor='green'
-                style={{color: 'white',}}
-              >
-                I'm ready
-              </FlatButton>
-
             </CardText>
+
+
+            <br />
+            <Timer timerCallback={ this.alerthing }></Timer>
+
+            {
+              data.map( (entry,i) => {
+                return <div key={i} style={{padding:5,display:'flex'}}>
+
+                              <Card style={{paddingTop: '0%',fontWeight: 800,}}>
+                                <CardText style={{padding:8}}>
+                                  {i+'.'}
+                                </CardText>
+                              </Card>
+
+                              <Card style={{width:460}}>
+                                <CardHeader style={{padding:8}}>
+                                  {entry.title}
+                                </CardHeader>
+                                <CardText style={{padding:8}}>
+                                  {entry.description}
+                                </CardText>
+                              </Card>
+
+                              <Card>
+                                  <CardText style={{padding:20}}>
+                                    <Rater entryIndex={i} raterCallback={this.rater} currentRating={entry.rating}/>
+                                  </CardText>
+                              </Card>
+
+                      </div>
+              } )
+            }
+
 
           </Card>
 

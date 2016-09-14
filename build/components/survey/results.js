@@ -76,7 +76,10 @@ var Results = function (_Component) {
 
   (0, _createClass3.default)(Results, [{
     key: 'componentWillMount',
-    value: function componentWillMount() {}
+    value: function componentWillMount() {
+      this.setState({ 'data': [{ username: 'person1 ramirez perez', stars: [2, 4, 7, 2, 1] }, { username: 'person1 ramirez perez', stars: [2, 4, 7, 2, 1] }, { username: 'person1 ramirez perez', stars: [2, 4, 7, 2, 1] }, { username: 'person1 ramirez perez', stars: [2, 4, 7, 2, 1] }, { username: 'person1 ramirez perez', stars: [2, 4, 7, 2, 1] }]
+      });
+    }
   }, {
     key: 'handleSave',
     value: function handleSave(text) {

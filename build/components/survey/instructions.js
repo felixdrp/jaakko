@@ -284,7 +284,7 @@ var Instructions = function (_Component) {
     value: function render() {
       var textColor = this.context.muiTheme.palette.textColor;
 
-      var tasktype = 'similarities';
+      var tasktype = 'alternativeObject';
       var title = instructionsData[tasktype].title;
       var text = instructionsData[tasktype].text;
       var example = this.getTaskExample(tasktype);

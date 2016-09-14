@@ -54,9 +54,17 @@ var _RadioButton = require('material-ui/RadioButton');
 
 var _reactRedux = require('react-redux');
 
+var _timer = require('./timer');
+
+var _timer2 = _interopRequireDefault(_timer);
+
 var _wait = require('./wait');
 
 var _wait2 = _interopRequireDefault(_wait);
+
+var _rater = require('./rater');
+
+var _rater2 = _interopRequireDefault(_rater);
 
 var _svgIcons = require('material-ui/svg-icons');
 
@@ -70,13 +78,52 @@ var Favourites = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (Favourites.__proto__ || (0, _getPrototypeOf2.default)(Favourites)).call(this, props));
 
+    _this.rater = function (index, rating) {
+      var data = _this.state.data;
+      var favourites = _this.state.favourites;
+
+      if (rating == -1) {
+        for (var f in favourites) {
+          if (favourites[f] == index) {
+            favourites[f] = undefined;
+            _this.currentRating = 0;
+            data[index].rating = 0;
+          }
+        }
+      } else {
+        if (favourites[rating] == undefined) {
+          //  debugger
+          for (var f in favourites) {
+            if (favourites[f] == index) {
+              favourites[f] = undefined;
+              _this.currentRating = 0;
+              data[index].rating = 0;
+            }
+          }
+          data[index].rating = rating;
+          _this.currentRating = rating;
+          favourites[rating] = index;
+        }
+      }
+
+      _this.setState({ data: data });
+      _this.setState({ favourites: favourites });
+    };
+
+    _this.alerthing = function () {
+      alert('boom');
+    };
+
     _this.state = {};
     return _this;
   }
 
   (0, _createClass3.default)(Favourites, [{
     key: 'componentWillMount',
-    value: function componentWillMount() {}
+    value: function componentWillMount() {
+      this.setState({ 'data': [{ title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', rating: 0 }] });
+      this.setState({ favourites: new Array(6) });
+    }
   }, {
     key: 'handleSave',
     value: function handleSave(text) {
@@ -84,17 +131,19 @@ var Favourites = function (_Component) {
         this.props.addTodo(text);
       }
     }
-
-    //'_marker'
-
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var textColor = this.context.muiTheme.palette.textColor;
 
 
-      var title = 'Example of Alternative Objects Task';
-      var text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:' + '\nIf the object given is a paper clip then here is how you would complete the task.' + '\n1. First you would enter the name of the object in the “object name” field, for example, the alternative object could be a “reset button pressing tool”. ' + '\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be, for example, A tool that can be used to press reset buttons which can be pressed with your fingers.' + '\n3. When you are finished you can press the “submit button” to submit the entry. ' + '\n4. Your name will be shown next to your entries and so each entry will have an author. ' + '\n\nThe previous example would look like this…';
+      var title = 'Favourites task';
+      var text = 'Rate the following works, and show which ones are your favourites:';
+
+      var data = this.state.data;
+      var raters = new Array(data.lenght);
 
       return _react2.default.createElement(
         'div',
@@ -128,43 +177,48 @@ var Favourites = function (_Component) {
                 { key: i, style: { marginBottom: 10 } },
                 item
               );
-            }),
-            _react2.default.createElement(
+            })
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(_timer2.default, { timerCallback: this.alerthing }),
+          data.map(function (entry, i) {
+            return _react2.default.createElement(
               'div',
-              { style: { marginTop: 20 } },
+              { key: i, style: { padding: 5, display: 'flex' } },
+              _react2.default.createElement(
+                _Card.Card,
+                { style: { paddingTop: '0%', fontWeight: 800 } },
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  i + '.'
+                )
+              ),
+              _react2.default.createElement(
+                _Card.Card,
+                { style: { width: 460 } },
+                _react2.default.createElement(
+                  _Card.CardHeader,
+                  { style: { padding: 8 } },
+                  entry.title
+                ),
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  entry.description
+                )
+              ),
               _react2.default.createElement(
                 _Card.Card,
                 null,
                 _react2.default.createElement(
                   _Card.CardText,
-                  null,
-                  'Title: ',
-                  _react2.default.createElement(_TextField2.default, { id: 'dummy', value: 'Reset button pressing tool', style: { marginLeft: 10
-                    } }),
-                  _react2.default.createElement('br', null),
-                  'Description: ',
-                  _react2.default.createElement(_TextField2.default, {
-                    id: 'dummy2',
-                    multiLine: true,
-                    rows: 1,
-                    rowsMax: 10,
-                    value: 'A tool that can be used to press reset buttons which cannot be pressed with your fingers.',
-                    style: { marginLeft: 20, width: '80%'
-                    } })
+                  { style: { padding: 20 } },
+                  _react2.default.createElement(_rater2.default, { entryIndex: i, raterCallback: _this2.rater, currentRating: entry.rating })
                 )
               )
-            ),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(
-              _FlatButton2.default,
-              {
-                id: 'ready',
-                backgroundColor: 'green',
-                style: { color: 'white' }
-              },
-              'I\'m ready'
-            )
-          )
+            );
+          })
         )
       );
     }
