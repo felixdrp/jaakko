@@ -23,6 +23,8 @@ import {
  ActionSpellcheck,
  ActionStars,
  ActionStore,
+ ToggleStar,
+ ToggleStarBorder,
 } from 'material-ui/svg-icons';
 
 
@@ -40,20 +42,107 @@ class Results extends Component {
   };
 
   componentWillMount() {
-    this.setState(
-                   {'data' : [{ username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
-                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
-                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
-                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]},
-                              { username : 'person1 ramirez perez', stars: [2,4,7,2,1]}
-                             ]
-                   });
+    var data = [{ account : {email:'melacome@gmail.com', firstname:'paco', surname:'perez caballero'}, stars: [2,4,7,2,1]},
+               { account : {email:'melacome@gmail.com', firstname:'iker', surname:'jimenez'}, stars: [2,4,3,2,1]},
+               { account : {email:'melacome@gmail.com', firstname:'carmen', surname:'porter'}, stars: [2,2,7,2,1]},
+               { account : {email:'melacome@gmail.com', firstname:'el maestro', surname:'enrique de vicente'}, stars: [2,1,1,2,0]},
+               { account : {email:'melacome@gmail.com', firstname:'doctor', surname:'gaona'}, stars: [1,1,1,1,1]}
+             ];
+
+    this.computeRanking(data);
+
+    this.setState({groupType: 3});
+
+    data.sort(function(a, b){
+      if ( b.score-a.score == 0){
+        if ( b.stars[4]-a.stars[4] == 0){
+          if ( b.stars[3]-a.stars[3] == 0){
+            if ( b.stars[2]-a.stars[2] == 0){
+              if ( b.stars[1]-a.stars[1] == 0){
+                  return b.stars[0]-a.stars[0]
+              } else { return b.stars[1]-a.stars[1] }
+            } else { return b.stars[2]-a.stars[2] }
+          } else { return b.stars[3]-a.stars[3] }
+        } else { return b.stars[4]-a.stars[4] }
+      } else { return b.score-a.score }
+    });
+
+    data.map((item,i) => {item.rank = (i+1); item.pay = this.getPay(i+1);});
+
+    this.setState({data});
+
   }
+
+  getPay = (i) => {
+    switch (i) {
+      case 1:
+        return 4;
+      case 2:
+        return 2;
+      case 3:
+        return 1;
+      case 4:
+        return 0.5;
+      case 5:
+        return 0.5;
+      default:
+        return 0;
+    }
+  }
+
+  // Function to compute the ranking of each participant and add to the object.
+  computeRanking = (data) =>{
+    data.map( (participant) => {participant.score = this.computeStarScore(participant.stars)});
+
+
+  }
+
+  computeStarScore = (stars) => {
+    var totalScore = 0;
+    for ( var i = 0; i < stars.length; i++){
+      totalScore +=  (i+1)*stars[i];
+    }
+    return totalScore
+  }
+
 
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text)
     }
+  }
+
+  getStarIcon = (i) => {
+    switch (i) {
+      case 1:
+          return <div style={{width: 22, height: 36}}>
+                    <ToggleStar style={{width:10,height:10, position:'relative', top: 8, left: 5}}/></div>
+      case 2:
+          return <div style={{width: 22, height: 36}}>
+                    <ToggleStar style={{width:10,height:10, position:'relative',top: 3,left:5}}/><br/>
+                    <ToggleStar style={{width:10,height:10, position:'relative',left:5,bottom:3}}/>
+                  </div>
+      case 3:
+          return <div style={{width: 22, height: 36}}>
+                  <ToggleStar style={{width:10,height:10, position:'relative', top: 3}}/>
+                  <ToggleStar style={{width:10,height:10, position:'relative', top: 3}}/><br/>
+                  <ToggleStar style={{width:10,height:10, position:'relative',left:5,bottom:3}}/>
+                 </div>
+      case 4:
+          return <div style={{width: 22, height: 36}}>
+                  <ToggleStar style={{width:10,height:10,position: 'relative', top: 3}}/>
+                  <ToggleStar style={{width:10,height:10,position: 'relative', top: 3}}/><br/>
+                  <ToggleStar style={{width:10,height:10,position: 'relative',bottom:3}}/>
+                  <ToggleStar style={{width:10,height:10,position: 'relative',bottom:3}}/>
+                 </div>
+      case 5:
+          return <div style={{width: 22, height: 36}}><ToggleStar style={{width:10,height:10}}/><ToggleStar style={{width:10,height:10}}/><br/>
+                      <ToggleStar style={{width:10,height:10}}/><ToggleStar style={{width:10,height:10}}/><br/>
+                      <ToggleStar style={{width:10,height:10, position:'relative', top: -24, left: 5}}/></div>
+      default:
+        return <div style={{width: 22, height: 36}}></div>
+    }
+
   }
 
 
@@ -62,14 +151,9 @@ class Results extends Component {
 
     const { textColor } = this.context.muiTheme.palette;
 
-    let title = 'Example of Alternative Objects Task';
-    let text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:'
-            	+'\nIf the object given is a paper clip then here is how you would complete the task.'
-              +'\n1. First you would enter the name of the object in the “object name” field, for example, the alternative object could be a “reset button pressing tool”. '
-              +'\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be, for example, A tool that can be used to press reset buttons which can be pressed with your fingers.'
-              +'\n3. When you are finished you can press the “submit button” to submit the entry. '
-              +'\n4. Your name will be shown next to your entries and so each entry will have an author. '
-              +'\n\nThe previous example would look like this…';
+    let title = 'Results Summary';
+    let text = 'Here you can see you performance with respect to ther other participants within your group:';
+    let data = this.state.data;
 
     return (
       <div>
@@ -94,40 +178,49 @@ class Results extends Component {
                 color: textColor,
               }}
             />
-            <CardText
-              style={{
-                paddingTop: 0,
-              }}
-              >
+            <CardText style={{ paddingTop: 0, }} >
 
-              {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
-
-              <div style={{marginTop:20}}>
-                  <Card>
-                  <CardText>
-                      Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
-                      }} /><br/>
-                      Description: <TextField
-                                    id='dummy2'
-                                    multiLine={true}
-                                    rows={1}
-                                    rowsMax={10}
-                                    value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
-                                    style={{ marginLeft:20, width: '80%',
-                         }} />
-                  </CardText>
-                 </Card>
+              {text}
+              <br/><br/>
+              <div style={{display:'flex',textAlign:'center'}}>
+                  <Card ><CardText style={{fontSize:'large'}}>Rank</CardText></Card>
+                  <Card style={{minWidth:300}}><CardText style={{fontSize:'large'}}>Participant</CardText></Card>
+                  <Card style={{minWidth:252}}><CardText style={{fontSize:'large'}}>Stars</CardText></Card>
+                  <Card><CardText style={{fontSize:'large'}}>Score</CardText></Card>
+                  <Card style={{minWidth:75}}><CardText style={{fontSize:'large'}}>Pay</CardText></Card>
               </div>
 
-              <br />
+                {
 
-              <FlatButton
-                id="ready"
-                backgroundColor='green'
-                style={{color: 'white',}}
-              >
-                I'm ready
-              </FlatButton>
+                  data.map( (participant,i) => {
+
+                        return <div key={i} style={{display:'flex',}}>
+                                      <Card style={{minWidth:72, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>{participant.rank}</CardText></Card>
+                                      <Card style={{minWidth:300, paddingTop: 10,}}><CardText style={{fontSize:16}}>{participant.account.firstname +' '+ participant.account.surname} </CardText></Card>
+                                      <Card style={{paddingTop: 10,}}>
+                                            <CardText>
+                                              <div style={{display:'flex'}}>{
+                                                participant.stars.map( (number,starType) => {
+                                                    return <div key={starType} style={{display:'flex'}}>
+                                                                  {this.getStarIcon(starType+1)}
+                                                                <div style={{ padding: 5, paddingLeft: 0, fontSize:'large',marginLeft:3, marginRight:4}}>
+                                                                  {number}
+                                                                </div>
+                                                           </div>
+                                                })
+                                              }
+                                              </div>
+                                            </CardText></Card>
+                                      <Card style={{minWidth:77, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>{participant.score}</CardText></Card>
+                                      <Card style={{minWidth:75, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>£{participant.pay}</CardText></Card>
+                               </div>
+
+                  })
+
+
+                }
+
+
 
             </CardText>
 
