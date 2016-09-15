@@ -28,6 +28,8 @@ import {
 } from 'material-ui/svg-icons';
 
 
+var currentUserEmail = 'melacome3@gmail.com'; // need to set the current user email here for the attribution variable. (type 0 and 2)
+
 class Results extends Component {
 
   constructor(props) {
@@ -42,16 +44,19 @@ class Results extends Component {
   };
 
   componentWillMount() {
-    var data = [{ account : {email:'melacome@gmail.com', firstname:'paco', surname:'perez caballero'}, stars: [2,4,7,2,1]},
+
+
+
+    var data = [{ account : {email:'melacomeNot@gmail.com', firstname:'paco', surname:'perez caballero'}, stars: [2,4,7,2,1]},
                { account : {email:'melacome@gmail.com', firstname:'iker', surname:'jimenez'}, stars: [2,4,3,2,1]},
-               { account : {email:'melacome@gmail.com', firstname:'carmen', surname:'porter'}, stars: [2,2,7,2,1]},
-               { account : {email:'melacome@gmail.com', firstname:'el maestro', surname:'enrique de vicente'}, stars: [2,1,1,2,0]},
+               { account : {email:'melacome3@gmail.com', firstname:'carmen', surname:'porter'}, stars: [2,2,7,2,1]},
+               { account : {email:'melacome2@gmail.com', firstname:'el maestro', surname:'enrique de vicente'}, stars: [2,1,1,2,0]},
                { account : {email:'melacome@gmail.com', firstname:'doctor', surname:'gaona'}, stars: [1,1,1,1,1]}
              ];
 
     this.computeRanking(data);
 
-    this.setState({groupType: 3});
+    this.setState({groupType: 0});
 
     data.sort(function(a, b){
       if ( b.score-a.score == 0){
@@ -145,6 +150,39 @@ class Results extends Component {
 
   }
 
+  getParticipantLine = (participant,i) => {
+    var participantLine = <div key={i} style={{display:'flex',}}>
+                  <Card style={{minWidth:72, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>{participant.rank}</CardText></Card>
+                  <Card style={{minWidth:300, paddingTop: 10,}}><CardText style={{fontSize:16}}>{participant.account.firstname +' '+ participant.account.surname} </CardText></Card>
+                  <Card style={{paddingTop: 10,}}>
+                        <CardText>
+                          <div style={{display:'flex'}}>{
+                            participant.stars.map( (number,starType) => {
+                                return <div key={starType} style={{display:'flex'}}>
+                                              {this.getStarIcon(starType+1)}
+                                            <div style={{ padding: 5, paddingLeft: 0, fontSize:'large',marginLeft:3, marginRight:4}}>
+                                              {number}
+                                            </div>
+                                       </div>
+                            })
+                          }
+                          </div>
+                        </CardText></Card>
+                  <Card style={{minWidth:77, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>{participant.score}</CardText></Card>
+                  { (this.state.groupType > 1) ? <Card style={{minWidth:75, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>£{participant.pay}</CardText></Card> : '' }
+           </div>
+
+    if ( this.state.groupType == 0 || this.state.groupType == 2 ){
+      if ( currentUserEmail == participant.account.email ){
+        return participantLine;
+      }
+    }else {
+
+        return participantLine;
+
+    }
+
+  }
 
 //'_marker'
   render() {
@@ -161,6 +199,7 @@ class Results extends Component {
         // <h1>{message}</h1>
         // <Wait melacome={<ActionShop />} /><ActionStore /> <ActionShop />
         // <div> {this.props.firstName} {v} {this.mlk()}</div>
+
       }
 
 
@@ -187,33 +226,14 @@ class Results extends Component {
                   <Card style={{minWidth:300}}><CardText style={{fontSize:'large'}}>Participant</CardText></Card>
                   <Card style={{minWidth:252}}><CardText style={{fontSize:'large'}}>Stars</CardText></Card>
                   <Card><CardText style={{fontSize:'large'}}>Score</CardText></Card>
-                  <Card style={{minWidth:75}}><CardText style={{fontSize:'large'}}>Pay</CardText></Card>
+                  { (this.state.groupType > 1) ? <Card style={{minWidth:75}}><CardText style={{fontSize:'large'}}>Pay</CardText></Card> : ''}
               </div>
 
                 {
 
                   data.map( (participant,i) => {
 
-                        return <div key={i} style={{display:'flex',}}>
-                                      <Card style={{minWidth:72, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>{participant.rank}</CardText></Card>
-                                      <Card style={{minWidth:300, paddingTop: 10,}}><CardText style={{fontSize:16}}>{participant.account.firstname +' '+ participant.account.surname} </CardText></Card>
-                                      <Card style={{paddingTop: 10,}}>
-                                            <CardText>
-                                              <div style={{display:'flex'}}>{
-                                                participant.stars.map( (number,starType) => {
-                                                    return <div key={starType} style={{display:'flex'}}>
-                                                                  {this.getStarIcon(starType+1)}
-                                                                <div style={{ padding: 5, paddingLeft: 0, fontSize:'large',marginLeft:3, marginRight:4}}>
-                                                                  {number}
-                                                                </div>
-                                                           </div>
-                                                })
-                                              }
-                                              </div>
-                                            </CardText></Card>
-                                      <Card style={{minWidth:77, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>{participant.score}</CardText></Card>
-                                      <Card style={{minWidth:75, paddingTop: 10,}}><CardText style={{fontSize:'large',textAlign:'center'}}>£{participant.pay}</CardText></Card>
-                               </div>
+                        return this.getParticipantLine(participant,i)
 
                   })
 

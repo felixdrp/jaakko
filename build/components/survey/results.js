@@ -62,6 +62,8 @@ var _svgIcons = require('material-ui/svg-icons');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var currentUserEmail = 'melacome3@gmail.com'; // need to set the current user email here for the attribution variable. (type 0 and 2)
+
 var Results = function (_Component) {
   (0, _inherits3.default)(Results, _Component);
 
@@ -153,6 +155,84 @@ var Results = function (_Component) {
       }
     };
 
+    _this.getParticipantLine = function (participant, i) {
+      var participantLine = _react2.default.createElement(
+        'div',
+        { key: i, style: { display: 'flex' } },
+        _react2.default.createElement(
+          _Card.Card,
+          { style: { minWidth: 72, paddingTop: 10 } },
+          _react2.default.createElement(
+            _Card.CardText,
+            { style: { fontSize: 'large', textAlign: 'center' } },
+            participant.rank
+          )
+        ),
+        _react2.default.createElement(
+          _Card.Card,
+          { style: { minWidth: 300, paddingTop: 10 } },
+          _react2.default.createElement(
+            _Card.CardText,
+            { style: { fontSize: 16 } },
+            participant.account.firstname + ' ' + participant.account.surname,
+            ' '
+          )
+        ),
+        _react2.default.createElement(
+          _Card.Card,
+          { style: { paddingTop: 10 } },
+          _react2.default.createElement(
+            _Card.CardText,
+            null,
+            _react2.default.createElement(
+              'div',
+              { style: { display: 'flex' } },
+              participant.stars.map(function (number, starType) {
+                return _react2.default.createElement(
+                  'div',
+                  { key: starType, style: { display: 'flex' } },
+                  _this.getStarIcon(starType + 1),
+                  _react2.default.createElement(
+                    'div',
+                    { style: { padding: 5, paddingLeft: 0, fontSize: 'large', marginLeft: 3, marginRight: 4 } },
+                    number
+                  )
+                );
+              })
+            )
+          )
+        ),
+        _react2.default.createElement(
+          _Card.Card,
+          { style: { minWidth: 77, paddingTop: 10 } },
+          _react2.default.createElement(
+            _Card.CardText,
+            { style: { fontSize: 'large', textAlign: 'center' } },
+            participant.score
+          )
+        ),
+        _this.state.groupType > 1 ? _react2.default.createElement(
+          _Card.Card,
+          { style: { minWidth: 75, paddingTop: 10 } },
+          _react2.default.createElement(
+            _Card.CardText,
+            { style: { fontSize: 'large', textAlign: 'center' } },
+            '£',
+            participant.pay
+          )
+        ) : ''
+      );
+
+      if (_this.state.groupType == 0 || _this.state.groupType == 2) {
+        if (currentUserEmail == participant.account.email) {
+          return participantLine;
+        }
+      } else {
+
+        return participantLine;
+      }
+    };
+
     _this.state = {};
     return _this;
   }
@@ -162,11 +242,11 @@ var Results = function (_Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      var data = [{ account: { email: 'melacome@gmail.com', firstname: 'paco', surname: 'perez caballero' }, stars: [2, 4, 7, 2, 1] }, { account: { email: 'melacome@gmail.com', firstname: 'iker', surname: 'jimenez' }, stars: [2, 4, 3, 2, 1] }, { account: { email: 'melacome@gmail.com', firstname: 'carmen', surname: 'porter' }, stars: [2, 2, 7, 2, 1] }, { account: { email: 'melacome@gmail.com', firstname: 'el maestro', surname: 'enrique de vicente' }, stars: [2, 1, 1, 2, 0] }, { account: { email: 'melacome@gmail.com', firstname: 'doctor', surname: 'gaona' }, stars: [1, 1, 1, 1, 1] }];
+      var data = [{ account: { email: 'melacomeNot@gmail.com', firstname: 'paco', surname: 'perez caballero' }, stars: [2, 4, 7, 2, 1] }, { account: { email: 'melacome@gmail.com', firstname: 'iker', surname: 'jimenez' }, stars: [2, 4, 3, 2, 1] }, { account: { email: 'melacome3@gmail.com', firstname: 'carmen', surname: 'porter' }, stars: [2, 2, 7, 2, 1] }, { account: { email: 'melacome2@gmail.com', firstname: 'el maestro', surname: 'enrique de vicente' }, stars: [2, 1, 1, 2, 0] }, { account: { email: 'melacome@gmail.com', firstname: 'doctor', surname: 'gaona' }, stars: [1, 1, 1, 1, 1] }];
 
       this.computeRanking(data);
 
-      this.setState({ groupType: 3 });
+      this.setState({ groupType: 0 });
 
       data.sort(function (a, b) {
         if (b.score - a.score == 0) {
@@ -287,7 +367,7 @@ var Results = function (_Component) {
                   'Score'
                 )
               ),
-              _react2.default.createElement(
+              this.state.groupType > 1 ? _react2.default.createElement(
                 _Card.Card,
                 { style: { minWidth: 75 } },
                 _react2.default.createElement(
@@ -295,76 +375,11 @@ var Results = function (_Component) {
                   { style: { fontSize: 'large' } },
                   'Pay'
                 )
-              )
+              ) : ''
             ),
             data.map(function (participant, i) {
 
-              return _react2.default.createElement(
-                'div',
-                { key: i, style: { display: 'flex' } },
-                _react2.default.createElement(
-                  _Card.Card,
-                  { style: { minWidth: 72, paddingTop: 10 } },
-                  _react2.default.createElement(
-                    _Card.CardText,
-                    { style: { fontSize: 'large', textAlign: 'center' } },
-                    participant.rank
-                  )
-                ),
-                _react2.default.createElement(
-                  _Card.Card,
-                  { style: { minWidth: 300, paddingTop: 10 } },
-                  _react2.default.createElement(
-                    _Card.CardText,
-                    { style: { fontSize: 16 } },
-                    participant.account.firstname + ' ' + participant.account.surname,
-                    ' '
-                  )
-                ),
-                _react2.default.createElement(
-                  _Card.Card,
-                  { style: { paddingTop: 10 } },
-                  _react2.default.createElement(
-                    _Card.CardText,
-                    null,
-                    _react2.default.createElement(
-                      'div',
-                      { style: { display: 'flex' } },
-                      participant.stars.map(function (number, starType) {
-                        return _react2.default.createElement(
-                          'div',
-                          { key: starType, style: { display: 'flex' } },
-                          _this3.getStarIcon(starType + 1),
-                          _react2.default.createElement(
-                            'div',
-                            { style: { padding: 5, paddingLeft: 0, fontSize: 'large', marginLeft: 3, marginRight: 4 } },
-                            number
-                          )
-                        );
-                      })
-                    )
-                  )
-                ),
-                _react2.default.createElement(
-                  _Card.Card,
-                  { style: { minWidth: 77, paddingTop: 10 } },
-                  _react2.default.createElement(
-                    _Card.CardText,
-                    { style: { fontSize: 'large', textAlign: 'center' } },
-                    participant.score
-                  )
-                ),
-                _react2.default.createElement(
-                  _Card.Card,
-                  { style: { minWidth: 75, paddingTop: 10 } },
-                  _react2.default.createElement(
-                    _Card.CardText,
-                    { style: { fontSize: 'large', textAlign: 'center' } },
-                    '£',
-                    participant.pay
-                  )
-                )
-              );
+              return _this3.getParticipantLine(participant, i);
             })
           )
         )

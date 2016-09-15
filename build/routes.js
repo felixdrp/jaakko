@@ -47,7 +47,8 @@ var routes = function routes(history) {
         _react2.default.createElement(_reactRouter.Route, { path: 'instructions', component: _components.Instructions }),
         _react2.default.createElement(_reactRouter.Route, { path: 'similarities', component: _components.Similarities }),
         _react2.default.createElement(_reactRouter.Route, { path: 'favourites', component: _components.Favourites }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'results', component: _components.Results })
+        _react2.default.createElement(_reactRouter.Route, { path: 'results', component: _components.Results }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'mathResults', component: _components.MathResults })
       )
     )
   );

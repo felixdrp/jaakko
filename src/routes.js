@@ -21,6 +21,7 @@ import {
   CommonViewContainer,
   Example,
   MathChallenge,
+  MathResults,
   AltObjectTask,
   Question,
   Instructions,
@@ -57,6 +58,8 @@ var routes = (history) => (
         <Route path="similarities" component={Similarities} />
         <Route path="favourites" component={Favourites} />
         <Route path="results" component={Results} />
+        <Route path="mathResults" component={MathResults} />
+
       </Route>
 
       {/*

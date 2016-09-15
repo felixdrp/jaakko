@@ -21,6 +21,7 @@ export CommonViewContainer from './common-view-container'
 
 export Example from './survey/example'
 export MathChallenge from './survey/math-challenge'
+export MathResults from './survey/math-results'
 export AltObjectTask from './survey/alt-object-task'
 export Question from './survey/question'
 export Instructions from './survey/instructions'
