@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Wait = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathChallenge = exports.Example = exports.SurveyContainer = exports.CommonViewContainer = exports.AppContainer = exports.SessionManager = exports.GroupManager = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Wait = exports.Results = exports.Similarities = exports.Favourites = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathResults = exports.MathChallenge = exports.Example = exports.SurveyContainer = exports.CommonViewContainer = exports.AppContainer = exports.SessionManager = exports.GroupManager = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -45,6 +45,10 @@ var _mathChallenge = require('./survey/math-challenge');
 
 var _mathChallenge2 = _interopRequireDefault(_mathChallenge);
 
+var _mathResults = require('./survey/math-results');
+
+var _mathResults2 = _interopRequireDefault(_mathResults);
+
 var _altObjectTask = require('./survey/alt-object-task');
 
 var _altObjectTask2 = _interopRequireDefault(_altObjectTask);
@@ -56,6 +60,18 @@ var _question2 = _interopRequireDefault(_question);
 var _instructions = require('./survey/instructions');
 
 var _instructions2 = _interopRequireDefault(_instructions);
+
+var _favourites = require('./survey/favourites');
+
+var _favourites2 = _interopRequireDefault(_favourites);
+
+var _similarities = require('./survey/similarities');
+
+var _similarities2 = _interopRequireDefault(_similarities);
+
+var _results = require('./survey/results');
+
+var _results2 = _interopRequireDefault(_results);
 
 var _wait = require('./survey/wait');
 
@@ -88,8 +104,12 @@ exports.CommonViewContainer = _commonViewContainer2.default;
 exports.SurveyContainer = _surveyContainer2.default;
 exports.Example = _example2.default;
 exports.MathChallenge = _mathChallenge2.default;
+exports.MathResults = _mathResults2.default;
 exports.AltObjectTask = _altObjectTask2.default;
 exports.Question = _question2.default;
 exports.Instructions = _instructions2.default;
+exports.Favourites = _favourites2.default;
+exports.Similarities = _similarities2.default;
+exports.Results = _results2.default;
 exports.Wait = _wait2.default;
 //# sourceMappingURL=index.js.map

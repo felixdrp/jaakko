@@ -12,8 +12,6 @@ import { connect } from 'react-redux'
 import Wait from './wait'
 
 
-var instructions = 'For this task you will be asked to solve simple addition problems correct. For example you could be asked to solve the following “56+73+5+10+11” you would simply answer is “155” and move onto the next question. There will be multiple problems and you will be asked to solve as many as possible in the 5 minutes given. The number of correct answers will then be calculated and showed to you after the task is over. \n Your name will appear on a ranking of the group’s performance and your will be ranked from the best performer (person with the most correct answers) to the worst performer (person with the least amount of correct answers). The exact score of the participant in your group will not be shown. \n In this task your pay will depend on your performance relative to the other members in the group. The pay structure will be as shown below. \n The task will have a series of addition problems like the ones below. You will be asked to solve as many as you can in the 5 minutes. Only correct answers will be counted toward your score.';
-
 class Timer extends Component {
 
   constructor(props) {
@@ -30,6 +28,10 @@ class Timer extends Component {
   setTimer = (totalSeconds) => {
     this.setState({totalSeconds : totalSeconds})
 
+  }
+
+  componentDidMount() {
+      this.startCountDown();
   }
 
   startCountDown = () => {
@@ -66,28 +68,18 @@ class Timer extends Component {
 
 
     return (
-        <div>
-        {
-        // <RaisedButton
-        //   id="startTimer"
-        //   style={{ fontWeight:'bolder',
-        //             fontSize:'large',}}
-        //   onClick={ this.startCountDown }
-        // >
-        //   Start
-        // </RaisedButton>
-        }
+
         <div style={{
           display: 'inline',
           border: '1px solid black',
           backgroundColor: 'white',
           padding: 7,
           position: 'fixed',
-          top:0,
-          left:0,
+          top:4,
+          left:4,
           fontWeight:'bolder',
           fontSize:'large',
-        }}> Time Left: <div style={{  display: 'inline', color:'red',}}>{minutes}:{seconds}</div></div></div>
+        }}> Time Left: <div style={{  display: 'inline', color:'red',}}>{minutes}:{seconds}</div></div>
 
     )
   }
