@@ -108,6 +108,11 @@ export default async function mutate({ action, payload, ws, store }) {
     }
   }
 
+  function nextStep(account) {
+    let result = store.getState()
+    store.dispatch( accountsUpdate({ ...account, surveyPointer: 'surveyPointer' in account? account.surveyPointer + 1: null }) )
+  }
+
   switch (action) {
     case REGISTER_ACCOUNT:
       // Register an Account

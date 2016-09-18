@@ -42,6 +42,10 @@ var _serverActions = require('./websocket-message/server-actions');
 
 var _config = require('./config');
 
+var _sessionData = require('./session-data');
+
+var _sessionData2 = _interopRequireDefault(_sessionData);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _marked = [nameMe].map(_regenerator2.default.mark);

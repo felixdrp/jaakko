@@ -87,6 +87,7 @@ export const SEND_ALL_MESSAGE = 'SEND_GROUP_MESSAGE'
 export const SEND_GROUP_MESSAGE = 'SEND_GROUP_MESSAGE'
 export const SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE'
 
+// Return a copy of the store without the cyclic web socket of the client
 export function storeStateWithoutWebSocket(state) {
   let copyWithoutWS = {}
   let vervose = true
@@ -114,6 +115,10 @@ export function storeStateWithoutWebSocket(state) {
 
   return copyWithoutWS
 }
+
+// Add the session information to the store
+export const SESSION_DATA_ADD = 'SESSION_DATA_ADD'
+
 
 /*
  * action creators

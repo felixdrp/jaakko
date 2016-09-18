@@ -11,6 +11,8 @@ export AccountSignUp from './account/signup'
 // Admin Page
 
 export ControlRoom from './admin/control-room'
+export GroupManager from './admin/groups/group-manager';
+export SessionManager from './admin/session/session-manager';
 
 // Generic
 
@@ -19,6 +21,7 @@ export CommonViewContainer from './common-view-container'
 
 // Survey
 
+export SurveyContainer from './survey/survey-container'
 export Example from './survey/example'
 export MathChallenge from './survey/math-challenge'
 export AltObjectTask from './survey/alt-object-task'

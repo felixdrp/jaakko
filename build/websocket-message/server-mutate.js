@@ -63,12 +63,17 @@ exports.default = function () {
     var ws = _ref2.ws;
     var store = _ref2.store;
 
-    var payloadResponse, result, account, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, _ret;
+    var payloadResponse, result, account, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, _ret;
 
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            nextStep = function nextStep(account) {
+              var result = store.getState();
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, account, { surveyPointer: 'surveyPointer' in account ? account.surveyPointer + 1 : null })));
+            };
+
             addAccountToGroup = function addAccountToGroup(accountId, groupId, store) {
               var result = store.getState();
               if (result.accounts[accountId].group == 'unassigned') {
@@ -521,19 +526,19 @@ exports.default = function () {
                   }
                 }
               }, _callee, _this, [[64, 68, 72, 80], [73,, 75, 79], [86, 98, 102, 110], [103,, 105, 109]]);
-            })(), 't0', 6);
+            })(), 't0', 7);
 
-          case 6:
+          case 7:
             _ret = _context2.t0;
 
             if (!((typeof _ret === 'undefined' ? 'undefined' : (0, _typeof3.default)(_ret)) === "object")) {
-              _context2.next = 9;
+              _context2.next = 10;
               break;
             }
 
             return _context2.abrupt('return', _ret.v);
 
-          case 9:
+          case 10:
           case 'end':
             return _context2.stop();
         }

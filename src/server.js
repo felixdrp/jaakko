@@ -43,6 +43,8 @@ import {
 
 import { port } from './config'
 
+import sessionData from './session-data'
+
 var webTemplate = require('../web-template');
 
 var portWeb = parseInt(process.env.PORT_WEB) || port;

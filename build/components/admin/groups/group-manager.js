@@ -111,17 +111,17 @@ var GroupManager = function (_Component) {
 
       _this.setState({ selectedAccounts: selected });
       // debugger
-      console.log('select an account!!! > ' + accountId);
+      // console.log('select an account!!! > ' + accountId)
     };
 
     _this.unassignAccount = function (accountId) {
-      console.log('unassign an account!!! > ' + accountId);
-      console.log(_this.props);
+      // console.log('unassign an account!!! > ' + accountId)
+      // console.log(this.props)
       _this.props.wsSession.send((0, _serverActions.wsUnassignAccount)(accountId));
     };
 
     _this.unassignSelectedAccounts = function () {
-      console.log('unassign!!!');
+      // console.log('unassign!!!')
       _this.props.wsSession.send((0, _serverActions.wsUnassignSelectedAccounts)(_this.state.selectedAccounts));
       _this.setState({ selectedAccounts: [] });
     };
@@ -137,13 +137,13 @@ var GroupManager = function (_Component) {
       _this.props.wsSession.send((0, _serverActions.wsAssignSelectedAccountsToGroup)(groupId, selected));
 
       _this.setState({ selectedAccounts: [] });
-      console.log('assign to group !!! > ' + groupId);
+      // console.log('assign to group !!! > ' + groupId)
     };
 
     _this.addGroup = function (name) {
       // send WsAddGroup
       _this.props.wsSession.send((0, _serverActions.wsGroupAdd)());
-      console.log('addgroup!!!');
+      // console.log('addgroup!!!')
       // console.log(this.props)
     };
 

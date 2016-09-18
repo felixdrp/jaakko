@@ -3,12 +3,15 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import Drawer from 'material-ui/Drawer';
 
 import Memory from 'material-ui/svg-icons/hardware/memory';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Group from 'material-ui/svg-icons/social/group';
+import Class from 'material-ui/svg-icons/action/class';
 
-import { GroupManager } from './groups';
-// import GroupManager from './groups/group-manager';
+
+import { Link } from 'react-router'
 
 import WebSocketSimple from '../../websocket-message/websocket-simple'
 
@@ -44,6 +47,7 @@ class ControlRoom extends React.Component {
       wsSession: {},
       // storeSession. Estore the server session store.
       storeSession: {},
+      openSideMenu: false,
     };
   }
 
@@ -108,13 +112,31 @@ class ControlRoom extends React.Component {
     // debugger
   }
 
-  render() {
+  handleToggle = () => this.setState({openSideMenu: !this.state.openSideMenu});
 
+  handleClose = () => this.setState({openSideMenu: false});
+
+  render() {
+    const style = {
+      gray: {
+        color: '#565555'
+      },
+      iconGray: {
+        fill: '#565555',
+        position: 'relative',
+        top: 6,
+        marginRight: 7,
+      }
+    }
     return (
       <div>
         <AppBar
           title="Study Admin"
-          iconElementLeft={<IconButton><Memory /></IconButton>}
+          iconElementLeft={
+            <IconButton onTouchTap={this.handleToggle}>
+              <Memory />
+            </IconButton>
+          }
           iconElementRight={
             <IconMenu
               iconButtonElement={
@@ -129,12 +151,55 @@ class ControlRoom extends React.Component {
             </IconMenu>
           }
         />
+        <Drawer
+          docked={false}
+          width={200}
+          open={this.state.openSideMenu}
+          onRequestChange={(open) => this.setState({openSideMenu: open})}
+        >
+          <Link to={`/controlRoom/groups`} style={{ textDecoration: 'none' }}>
+            <MenuItem onTouchTap={this.handleClose}>
+              <span style={style.gray}>
+                <Group style={style.iconGray} />
+                Groups manager
+              </span>
+            </MenuItem>
+          </Link>
 
-      <GroupManager
-        wsSession={ this.state.wsSession }
-        accounts={this.state.storeSession.accounts}
-        groups={this.state.storeSession.groups}
-      />
+          <Link to={`/controlRoom/sessionControl`} style={{ textDecoration: 'none' }}>
+            <MenuItem onTouchTap={this.handleClose}>
+              <span style={style.gray}>
+                <Class style={style.iconGray} />
+                Session manager
+              </span>
+            </MenuItem>
+          </Link>
+
+          <Link to={`/survey/altObjectTask`} style={{ textDecoration: 'none' }}>
+            <MenuItem onTouchTap={this.handleClose}>
+              /survey/altObjectTask
+            </MenuItem>
+          </Link>
+
+          <Link to={`/survey/waitSync`} style={{ textDecoration: 'none' }}>
+            <MenuItem onTouchTap={this.handleClose}>
+              /survey/waitSync
+            </MenuItem>
+          </Link>
+        </Drawer>
+        {
+          this.props.children &&
+          React.cloneElement(
+            this.props.children,
+            {
+              wsSession: this.state.wsSession,
+              accounts: this.state.storeSession.accounts,
+              groups: this.state.storeSession.groups,
+              storeSession: this.state.storeSession,
+            }
+          )
+        }
+
       </div>
     );
   }

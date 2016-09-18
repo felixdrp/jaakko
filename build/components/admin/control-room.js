@@ -56,6 +56,10 @@ var _MenuItem = require('material-ui/MenuItem');
 
 var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
+var _Drawer = require('material-ui/Drawer');
+
+var _Drawer2 = _interopRequireDefault(_Drawer);
+
 var _memory = require('material-ui/svg-icons/hardware/memory');
 
 var _memory2 = _interopRequireDefault(_memory);
@@ -64,7 +68,15 @@ var _moreVert = require('material-ui/svg-icons/navigation/more-vert');
 
 var _moreVert2 = _interopRequireDefault(_moreVert);
 
-var _groups = require('./groups');
+var _group = require('material-ui/svg-icons/social/group');
+
+var _group2 = _interopRequireDefault(_group);
+
+var _class = require('material-ui/svg-icons/action/class');
+
+var _class2 = _interopRequireDefault(_class);
+
+var _reactRouter = require('react-router');
 
 var _websocketSimple = require('../../websocket-message/websocket-simple');
 
@@ -78,8 +90,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // import Perf from 'react-addons-perf'
 // window.Perf = Perf
-
-// import GroupManager from './groups/group-manager';
 
 var ControlRoom = function (_React$Component) {
   (0, _inherits3.default)(ControlRoom, _React$Component);
@@ -97,11 +107,20 @@ var ControlRoom = function (_React$Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (ControlRoom.__proto__ || (0, _getPrototypeOf2.default)(ControlRoom)).call(this));
 
+    _this.handleToggle = function () {
+      return _this.setState({ openSideMenu: !_this.state.openSideMenu });
+    };
+
+    _this.handleClose = function () {
+      return _this.setState({ openSideMenu: false });
+    };
+
     _this.state = {
       // WebSocket Session, used to create an admin connection.
       wsSession: {},
       // storeSession. Estore the server session store.
-      storeSession: {}
+      storeSession: {},
+      openSideMenu: false
     };
     return _this;
   }
@@ -193,7 +212,19 @@ var ControlRoom = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
 
+      var style = {
+        gray: {
+          color: '#565555'
+        },
+        iconGray: {
+          fill: '#565555',
+          position: 'relative',
+          top: 6,
+          marginRight: 7
+        }
+      };
       return _react2.default.createElement(
         'div',
         null,
@@ -201,7 +232,7 @@ var ControlRoom = function (_React$Component) {
           title: 'Study Admin',
           iconElementLeft: _react2.default.createElement(
             _IconButton2.default,
-            null,
+            { onTouchTap: this.handleToggle },
             _react2.default.createElement(_memory2.default, null)
           ),
           iconElementRight: _react2.default.createElement(
@@ -220,10 +251,68 @@ var ControlRoom = function (_React$Component) {
             _react2.default.createElement(_MenuItem2.default, { primaryText: 'Sign out' })
           )
         }),
-        _react2.default.createElement(_groups.GroupManager, {
+        _react2.default.createElement(
+          _Drawer2.default,
+          {
+            docked: false,
+            width: 200,
+            open: this.state.openSideMenu,
+            onRequestChange: function onRequestChange(open) {
+              return _this3.setState({ openSideMenu: open });
+            }
+          },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/controlRoom/groups', style: { textDecoration: 'none' } },
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { onTouchTap: this.handleClose },
+              _react2.default.createElement(
+                'span',
+                { style: style.gray },
+                _react2.default.createElement(_group2.default, { style: style.iconGray }),
+                'Groups manager'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/controlRoom/sessionControl', style: { textDecoration: 'none' } },
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { onTouchTap: this.handleClose },
+              _react2.default.createElement(
+                'span',
+                { style: style.gray },
+                _react2.default.createElement(_class2.default, { style: style.iconGray }),
+                'Session manager'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/survey/altObjectTask', style: { textDecoration: 'none' } },
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { onTouchTap: this.handleClose },
+              '/survey/altObjectTask'
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/survey/waitSync', style: { textDecoration: 'none' } },
+            _react2.default.createElement(
+              _MenuItem2.default,
+              { onTouchTap: this.handleClose },
+              '/survey/waitSync'
+            )
+          )
+        ),
+        this.props.children && _react2.default.cloneElement(this.props.children, {
           wsSession: this.state.wsSession,
           accounts: this.state.storeSession.accounts,
-          groups: this.state.storeSession.groups
+          groups: this.state.storeSession.groups,
+          storeSession: this.state.storeSession
         })
       );
     }

@@ -8,6 +8,8 @@ import {
   GROUPS_REMOVE,
   GROUPS_ADD_ACCOUNT,
   GROUPS_REMOVE_ACCOUNT,
+
+  SESSION_DATA_ADD,
 } from '../actions/actions'
 
 /*

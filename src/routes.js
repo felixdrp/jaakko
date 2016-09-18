@@ -14,11 +14,22 @@ import { Router, Route, IndexRoute, IndexRedirect } from 'react-router'
 // Please add new core components to /components/index.js
 
 import {
+  // Core components
+  AppContainer,
+  CommonViewContainer,
+
+  // Account Login and register
   AccountSignIn,
   AccountSignUp,
-  AppContainer,
+
+
+  // Control session
   ControlRoom,
-  CommonViewContainer,
+  GroupManager,
+  SessionManager,
+
+  // Survey
+  SurveyContainer,
   Example,
   MathChallenge,
   AltObjectTask,
@@ -40,11 +51,13 @@ var routes = (history) => (
         <Route path="signup" component={AccountSignUp} />
       </Route>
 
-      <Route path="controlRoom" component={CommonViewContainer} >
-        <IndexRoute component={ControlRoom} />
+      <Route path="controlRoom" component={ControlRoom} >
+        <IndexRoute component={GroupManager} />
+        <Route path="groups" component={GroupManager} />
+        <Route path="sessionControl" component={SessionManager} />
       </Route>
 
-      <Route path="survey" component={CommonViewContainer} >
+      <Route path="survey" component={SurveyContainer} >
         <Route path="waitSync" component={Wait} />
         <Route path="example" component={Example} />
         <Route path="question" component={Question} />

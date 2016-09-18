@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Wait = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathChallenge = exports.Example = exports.CommonViewContainer = exports.AppContainer = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Wait = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathChallenge = exports.Example = exports.SurveyContainer = exports.CommonViewContainer = exports.AppContainer = exports.SessionManager = exports.GroupManager = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -17,6 +17,14 @@ var _controlRoom = require('./admin/control-room');
 
 var _controlRoom2 = _interopRequireDefault(_controlRoom);
 
+var _groupManager = require('./admin/groups/group-manager');
+
+var _groupManager2 = _interopRequireDefault(_groupManager);
+
+var _sessionManager = require('./admin/session/session-manager');
+
+var _sessionManager2 = _interopRequireDefault(_sessionManager);
+
 var _appContainer = require('./app-container');
 
 var _appContainer2 = _interopRequireDefault(_appContainer);
@@ -24,6 +32,10 @@ var _appContainer2 = _interopRequireDefault(_appContainer);
 var _commonViewContainer = require('./common-view-container');
 
 var _commonViewContainer2 = _interopRequireDefault(_commonViewContainer);
+
+var _surveyContainer = require('./survey/survey-container');
+
+var _surveyContainer2 = _interopRequireDefault(_surveyContainer);
 
 var _example = require('./survey/example');
 
@@ -63,6 +75,8 @@ exports.AccountSignUp = _signup2.default;
 // Admin Page
 
 exports.ControlRoom = _controlRoom2.default;
+exports.GroupManager = _groupManager2.default;
+exports.SessionManager = _sessionManager2.default;
 
 // Generic
 
@@ -71,6 +85,7 @@ exports.CommonViewContainer = _commonViewContainer2.default;
 
 // Survey
 
+exports.SurveyContainer = _surveyContainer2.default;
 exports.Example = _example2.default;
 exports.MathChallenge = _mathChallenge2.default;
 exports.AltObjectTask = _altObjectTask2.default;

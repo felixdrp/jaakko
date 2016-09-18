@@ -33,12 +33,14 @@ var routes = function routes(history) {
       ),
       _react2.default.createElement(
         _reactRouter.Route,
-        { path: 'controlRoom', component: _components.CommonViewContainer },
-        _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.ControlRoom })
+        { path: 'controlRoom', component: _components.ControlRoom },
+        _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.GroupManager }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'groups', component: _components.GroupManager }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'sessionControl', component: _components.SessionManager })
       ),
       _react2.default.createElement(
         _reactRouter.Route,
-        { path: 'survey', component: _components.CommonViewContainer },
+        { path: 'survey', component: _components.SurveyContainer },
         _react2.default.createElement(_reactRouter.Route, { path: 'waitSync', component: _components.Wait }),
         _react2.default.createElement(_reactRouter.Route, { path: 'example', component: _components.Example }),
         _react2.default.createElement(_reactRouter.Route, { path: 'question', component: _components.Question }),

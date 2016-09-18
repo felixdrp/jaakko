@@ -75,14 +75,14 @@ class GroupManager extends Component {
 
     this.setState({ selectedAccounts: selected })
     // debugger
-    console.log('select an account!!! > ' + accountId)
+    // console.log('select an account!!! > ' + accountId)
 
   }
 
   // Free an account from group
   unassignAccount = (accountId) => {
-    console.log('unassign an account!!! > ' + accountId)
-    console.log(this.props)
+    // console.log('unassign an account!!! > ' + accountId)
+    // console.log(this.props)
     this.props.wsSession.send(
       wsUnassignAccount( accountId )
     )
@@ -90,7 +90,7 @@ class GroupManager extends Component {
 
   // Free the selected accounts from groups
   unassignSelectedAccounts = () => {
-    console.log('unassign!!!')
+    // console.log('unassign!!!')
     this.props.wsSession.send(
       wsUnassignSelectedAccounts( this.state.selectedAccounts )
     )
@@ -111,7 +111,7 @@ class GroupManager extends Component {
     )
 
     this.setState({ selectedAccounts: [] })
-    console.log('assign to group !!! > ' + groupId)
+    // console.log('assign to group !!! > ' + groupId)
   }
 
   addGroup = (name) => {
@@ -119,7 +119,7 @@ class GroupManager extends Component {
     this.props.wsSession.send(
       wsGroupAdd()
     )
-    console.log('addgroup!!!')
+    // console.log('addgroup!!!')
     // console.log(this.props)
 
   }
