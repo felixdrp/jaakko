@@ -157,8 +157,13 @@ var updateControlRooms = function updateControlRooms(store) {
 // Create Redux store
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   accounts: _server.accounts,
-  groups: _server.groups
+  groups: _server.groups,
+  session: _server.session
 }), (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
+
+store.dispatch((0, _actions.sessionDataAdd)(_sessionData2.default));
+console.log('~~~~ session estas ahi?');
+console.log(store.getState());
 
 wss.broadcast = function broadcast(data) {
   // debugger
@@ -266,7 +271,7 @@ var websocketManager = function websocketManager(ws, parent) {
 
             case 10:
               _context2.t0 = message.type;
-              _context2.next = _context2.t0 === 'MUTATE' ? 13 : _context2.t0 === 'QUERY' ? 16 : 21;
+              _context2.next = _context2.t0 === 'MUTATE' ? 13 : _context2.t0 === 'QUERY' ? 16 : 22;
               break;
 
             case 13:
@@ -279,7 +284,7 @@ var websocketManager = function websocketManager(ws, parent) {
               });
 
             case 15:
-              return _context2.abrupt('break', 22);
+              return _context2.abrupt('break', 23);
 
             case 16:
               _context2.next = 18;
@@ -292,17 +297,18 @@ var websocketManager = function websocketManager(ws, parent) {
 
             case 18:
               console.log('Query to the server');
-              console.log(message.type + ' ' + message.payload.email);
-              return _context2.abrupt('break', 22);
+              console.log(message.type);
+              console.log(message);
+              return _context2.abrupt('break', 23);
 
-            case 21:
+            case 22:
               // dispatch 'ACTIONS'
               store.dispatch(message.payload);
 
-            case 22:
+            case 23:
               console.log('ws.readyState>>>' + ws.readyState + ' < ID < ' + ws.accountCode);
 
-            case 23:
+            case 24:
             case 'end':
               return _context2.stop();
           }

@@ -30,11 +30,13 @@ import thunk from 'redux-thunk';
 import {
   accounts,
   groups,
+  session,
 } from './reducers/server';
 
 import {
   // Remove the WS from a store state
   storeStateWithoutWebSocket,
+  sessionDataAdd,
 } from './actions/actions'
 
 import {
@@ -126,12 +128,17 @@ const store = createStore(
   combineReducers({
     accounts,
     groups,
+    session,
   }),
   applyMiddleware(
     thunk,
     updateControlRooms
   )
 );
+
+store.dispatch( sessionDataAdd(sessionData) )
+console.log('~~~~ session estas ahi?')
+console.log(store.getState())
 
 wss.broadcast = function broadcast(data) {
   // debugger
@@ -230,7 +237,8 @@ var websocketManager = function (ws, parent) {
             store
           })
           console.log('Query to the server')
-          console.log(message.type + ' ' + message.payload.email)
+          console.log(message.type)
+          console.log(message)
           break;
         // Process message of type ACTIONS
         default:

@@ -3,8 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SESSION_STATE_GET = undefined;
+exports.SURVEY_STATE_GET = exports.SESSION_STATE_GET = undefined;
 exports.wsSessionStateGet = wsSessionStateGet;
+exports.wsSurveyStateGet = wsSurveyStateGet;
 
 var _serverActions = require('./server-actions');
 
@@ -17,6 +18,16 @@ function wsSessionStateGet() {
   return {
     type: _serverActions.QUERY,
     action: SESSION_STATE_GET
+  };
+}
+
+var SURVEY_STATE_GET = exports.SURVEY_STATE_GET = 'SURVEY_STATE_GET';
+// Ask for the survey information.
+function wsSurveyStateGet(accountId) {
+  return {
+    type: _serverActions.QUERY,
+    action: SURVEY_STATE_GET,
+    payload: accountId
   };
 }
 //# sourceMappingURL=query-actions.js.map

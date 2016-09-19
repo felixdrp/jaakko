@@ -20,6 +20,7 @@ exports.groupsAddAccount = groupsAddAccount;
 exports.groupsRemoveAccount = groupsRemoveAccount;
 exports.moveAccounFromGroup = moveAccounFromGroup;
 exports.storeStateWithoutWebSocket = storeStateWithoutWebSocket;
+exports.sessionDataAdd = sessionDataAdd;
 exports.synchronize = synchronize;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -150,6 +151,10 @@ function storeStateWithoutWebSocket(state) {
 
 // Add the session information to the store
 var SESSION_DATA_ADD = exports.SESSION_DATA_ADD = 'SESSION_DATA_ADD';
+
+function sessionDataAdd(sessionData) {
+  return { type: SESSION_DATA_ADD, payload: sessionData };
+}
 
 /*
  * action creators

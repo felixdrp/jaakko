@@ -28,10 +28,11 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = require('react-redux');
+
+var _queryActions = require('../../websocket-message/query-actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// import GeneralInfoView from './general-info-view'
-
 
 var SurveyContainer = function (_Component) {
   (0, _inherits3.default)(SurveyContainer, _Component);
@@ -58,6 +59,9 @@ var SurveyContainer = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      // Load the study information
+      // Ask for the information to the server
+      this.context.websocket.send((0, _queryActions.wsSurveyStateGet)(this.props.account.email));
       setTimeout(function () {
         console.log('didMount> ' + _this2.state.payload);_this2.setState({ payload: 'some more info!!' });
       }, 4000);
@@ -95,5 +99,13 @@ SurveyContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired,
   websocket: _react.PropTypes.object
 };
-exports.default = SurveyContainer;
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    account: state.account
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(SurveyContainer);
 //# sourceMappingURL=survey-container.js.map

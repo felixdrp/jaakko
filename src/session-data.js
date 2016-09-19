@@ -6,6 +6,7 @@ import {
 
 const sessionData = {
   sessionInfo: {
+    nickName: 'Primera',
     date: '20/9/2016',
   },
   surveyPath: [

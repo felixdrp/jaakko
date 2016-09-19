@@ -45,6 +45,10 @@ import { fieldsOptions } from '../config'
 import { createAccount } from '../modules/account/create-account'
 import { loginAccount } from '../modules/account/login-account'
 
+// Get an url from an survey-type
+import { resolveSurveyURL } from '../components/survey/survey-types'
+
+
 // import filterAccountsByGroup from '../modules/filter-accounts-by-group'
 
 
@@ -75,10 +79,12 @@ export default async function mutate({ action, payload, ws, store }) {
     ws.send(  wsLogAccount(account) )
     console.log('>>>>>state')
 
-    // Go to WaitSync to start session
-    ws.send(
-      wsGotoPage({ url: '/survey/waitSync', options: {} })
-    )
+    // // Go to WaitSync to start session
+    // ws.send(
+    //   wsGotoPage({ url: '/survey/waitSync', options: {} })
+    // )
+
+    nextStep(account.email)
     console.log('>>>>>state')
   }
 
@@ -108,9 +114,16 @@ export default async function mutate({ action, payload, ws, store }) {
     }
   }
 
-  function nextStep(account) {
+  function nextStep(accountId) {
+    // Get the session survey
     let result = store.getState()
-    store.dispatch( accountsUpdate({ ...account, surveyPointer: 'surveyPointer' in account? account.surveyPointer + 1: null }) )
+    let account = result.accounts[accountId]
+    let accountSessionPointer = 'surveyPointer' in account? account.surveyPointer + 1:  0
+    store.dispatch( accountsUpdate({ ...account, surveyPointer: accountSessionPointer }) )
+    // Go to WaitSync to start session
+    ws.send(
+      wsGotoPage({ url: resolveSurveyURL( result.session.surveyPath[ accountSessionPointer ].type ), options: {} })
+    )
   }
 
   switch (action) {

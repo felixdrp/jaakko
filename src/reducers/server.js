@@ -102,28 +102,14 @@ export function groups(state = { list: [] }, action) {
   }
 }
 
-//
-// const initialState = [
-//   {
-//     text: 'Use Redux',
-//     completed: false,
-//     id: 0
-//   }
-// ]
+export function session(state = { }, action) {
+  let payload = action.payload || ''
+  switch (action.type) {
+    case SESSION_DATA_ADD:
+      state = payload
+      return state
 
-// export default function todos(state = initialState, action) {
-//   switch (action.type) {
-//     case REGISTER_ACCOUNT:
-//       return [
-//         {
-//           id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-//           completed: false,
-//           text: action.text
-//         },
-//         ...state
-//       ]
-//
-//     default:
-//       return state
-//   }
-// }
+    default:
+      return state
+  }
+}

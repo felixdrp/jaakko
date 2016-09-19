@@ -43,6 +43,8 @@ import {
 } from './components/'
 
 // Assign the history:
+
+// ALERT!!!! if any change in survye routes... change also 'survey-types.js'
 var routes = (history) => (
   <Router history={history}>
     <Route path="/" component={AppContainer} >

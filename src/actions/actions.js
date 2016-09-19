@@ -119,6 +119,11 @@ export function storeStateWithoutWebSocket(state) {
 // Add the session information to the store
 export const SESSION_DATA_ADD = 'SESSION_DATA_ADD'
 
+export function sessionDataAdd(sessionData) {
+  return { type: SESSION_DATA_ADD, payload: sessionData }
+}
+
+
 
 /*
  * action creators

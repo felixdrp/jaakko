@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.accounts = accounts;
 exports.groups = groups;
+exports.session = session;
 
 var _actions = require('../actions/actions');
 
@@ -101,29 +102,18 @@ function groups() {
   }
 }
 
-//
-// const initialState = [
-//   {
-//     text: 'Use Redux',
-//     completed: false,
-//     id: 0
-//   }
-// ]
+function session() {
+  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var action = arguments[1];
 
-// export default function todos(state = initialState, action) {
-//   switch (action.type) {
-//     case REGISTER_ACCOUNT:
-//       return [
-//         {
-//           id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-//           completed: false,
-//           text: action.text
-//         },
-//         ...state
-//       ]
-//
-//     default:
-//       return state
-//   }
-// }
+  var payload = action.payload || '';
+  switch (action.type) {
+    case _actions.SESSION_DATA_ADD:
+      state = payload;
+      return state;
+
+    default:
+      return state;
+  }
+}
 //# sourceMappingURL=server.js.map

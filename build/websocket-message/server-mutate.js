@@ -36,6 +36,8 @@ var _createAccount = require('../modules/account/create-account');
 
 var _loginAccount = require('../modules/account/login-account');
 
+var _surveyTypes = require('../components/survey/survey-types');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import filterAccountsByGroup from '../modules/filter-accounts-by-group'
@@ -51,9 +53,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {}
  */
 
-// Redux client actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
+// Default Input fields type and options
+
+
+// Redux server actions
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2) {
     var _this = this;
@@ -69,9 +72,14 @@ exports.default = function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            nextStep = function nextStep(account) {
+            nextStep = function nextStep(accountId) {
+              // Get the session survey
               var result = store.getState();
-              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, account, { surveyPointer: 'surveyPointer' in account ? account.surveyPointer + 1 : null })));
+              var account = result.accounts[accountId];
+              var accountSessionPointer = 'surveyPointer' in account ? account.surveyPointer + 1 : 0;
+              store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, account, { surveyPointer: accountSessionPointer })));
+              // Go to WaitSync to start session
+              ws.send((0, _serverActions.wsGotoPage)({ url: (0, _surveyTypes.resolveSurveyURL)(result.session.surveyPath[accountSessionPointer].type), options: {} }));
             };
 
             addAccountToGroup = function addAccountToGroup(accountId, groupId, store) {
@@ -112,8 +120,12 @@ exports.default = function () {
               ws.send((0, _serverActions.wsLogAccount)(account));
               console.log('>>>>>state');
 
-              // Go to WaitSync to start session
-              ws.send((0, _serverActions.wsGotoPage)({ url: '/survey/waitSync', options: {} }));
+              // // Go to WaitSync to start session
+              // ws.send(
+              //   wsGotoPage({ url: '/survey/waitSync', options: {} })
+              // )
+
+              nextStep(account.email);
               console.log('>>>>>state');
             };
 
@@ -553,8 +565,10 @@ exports.default = function () {
   return mutate;
 }();
 
-// Default Input fields type and options
+// Get an url from an survey-type
 
 
-// Redux server actions
+// Redux client actions
+// WebSocket communications types
+// look doc/server-websocket-message-system.md
 //# sourceMappingURL=server-mutate.js.map

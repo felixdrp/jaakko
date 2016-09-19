@@ -15,6 +15,8 @@ var _components = require('./components/');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Assign the history:
+
+// ALERT!!!! if any change in survye routes... change also 'survey-types.js'
 var routes = function routes(history) {
   return _react2.default.createElement(
     _reactRouter.Router,

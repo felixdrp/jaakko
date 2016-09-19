@@ -8,6 +8,7 @@ var _surveyTypes = require('./components/survey/survey-types');
 
 var sessionData = {
   sessionInfo: {
+    nickName: 'Primera',
     date: '20/9/2016'
   },
   surveyPath: [{

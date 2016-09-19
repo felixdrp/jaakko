@@ -17,9 +17,7 @@ import WebSocketSimple from '../../websocket-message/websocket-simple'
 
 import {
   SESSION_STATE_GET,
-} from '../../websocket-message/query-actions'
 
-import {
   wsSessionStateGet,
 } from '../../websocket-message/query-actions'
 

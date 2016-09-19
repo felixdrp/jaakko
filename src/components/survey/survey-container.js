@@ -1,7 +1,9 @@
 import React, { PropTypes, Component } from 'react'
+import { connect } from 'react-redux'
 
-// import GeneralInfoView from './general-info-view'
-
+import {
+  wsSurveyStateGet,
+} from '../../websocket-message/query-actions'
 
 class SurveyContainer extends Component {
   static propTypes = {
@@ -28,6 +30,9 @@ class SurveyContainer extends Component {
   }
 
   componentDidMount() {
+    // Load the study information
+    // Ask for the information to the server
+    this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
     setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
   }
 
@@ -56,4 +61,10 @@ class SurveyContainer extends Component {
   }
 }
 
-export default SurveyContainer
+const mapStateToProps = (state) => {
+  return {
+    account: state.account
+  }
+}
+
+export default connect(mapStateToProps)(SurveyContainer)

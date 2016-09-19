@@ -130,12 +130,13 @@ function login20Accounts() {
   var email = function email(i) {
     return 'lucas' + i + '.George@sky.wl';
   };
-  for (var i = 1; i < 21; i++) {
+  for (var i = 1; i < 5; i++) {
     websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: email(i), password: '1234' } });
   }
 }
-// setTimeout( () => login20Accounts(), 1000)
-
+setTimeout(function () {
+  return login20Accounts();
+}, 1000);
 
 // {"firstName":"Jesus","surename":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
 // Move the client to a web page...
