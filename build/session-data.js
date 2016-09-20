@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _surveyTypes = require('./components/survey/survey-types');
 
+// import {
+//   question1,
+// } from './survey-data/survey-questions'
+
 var sessionData = {
   sessionInfo: {
     nickName: 'Primera',
@@ -16,7 +20,7 @@ var sessionData = {
     time: 'inf'
   }, {
     type: _surveyTypes.QUESTION,
-    questions: ' ',
+    payload: 4,
     time: 'inf'
   }, {
     type: _surveyTypes.AWAIT,

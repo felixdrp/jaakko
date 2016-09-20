@@ -134,9 +134,8 @@ function login20Accounts() {
     websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: email(i), password: '1234' } });
   }
 }
-setTimeout(function () {
-  return login20Accounts();
-}, 1000);
+// setTimeout( () => login20Accounts(), 1000)
+
 
 // {"firstName":"Jesus","surename":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
 // Move the client to a web page...

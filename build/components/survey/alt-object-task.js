@@ -137,7 +137,7 @@ var AltObjectTask = function (_Component) {
 
 
       var title = 'Alternative Objects Task';
-      var text = 'Come up with as many alternative objects for a stapler as possible. \n	You will have 5 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
+      var text = 'Come up with as many alternative objects for a stapler as possible. \n\tYou will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
 
       return _react2.default.createElement(
         'div',

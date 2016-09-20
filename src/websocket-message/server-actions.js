@@ -17,6 +17,8 @@ import {
   GROUPS_SELECTED_ACCOUNTS_UNASSIGN,
   GROUPS_ACCOUNTS_UNASSIGN,
   GROUPS_AUTOMATE_CREATION,
+
+  SURVEY_STEP_ALL,
 } from '../actions/actions'
 
 import {
@@ -159,12 +161,20 @@ export function wsAutomateGroupsCreation(numberOfGroups) {
   }
 }
 
-
 // update state in components ControlRoom socket action creator
 export function swUpdateControlRoom(state) {
   return {
     type: ACTION,
     action: SESSION_STATE_GET,
     payload: state,
+  }
+}
+
+// update state in components ControlRoom socket action creator
+export function wsSurveyStepAll(accountList) {
+  return {
+    type: MUTATE,
+    action: SURVEY_STEP_ALL,
+    payload: accountList,
   }
 }

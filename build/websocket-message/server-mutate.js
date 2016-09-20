@@ -38,6 +38,10 @@ var _loginAccount = require('../modules/account/login-account');
 
 var _surveyTypes = require('../components/survey/survey-types');
 
+var _websocketSimple = require('./websocket-simple');
+
+var _websocketSimple2 = _interopRequireDefault(_websocketSimple);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import filterAccountsByGroup from '../modules/filter-accounts-by-group'
@@ -53,12 +57,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {}
  */
 
-// Default Input fields type and options
+// Get an url from an survey-type
 
 
-// Redux server actions
+// Redux client actions
+// WebSocket communications types
+// look doc/server-websocket-message-system.md
 exports.default = function () {
-  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2) {
+  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2, clientsSocket) {
     var _this = this;
 
     var action = _ref2.action;
@@ -73,13 +79,27 @@ exports.default = function () {
         switch (_context2.prev = _context2.next) {
           case 0:
             nextStep = function nextStep(accountId) {
+              var tempWs = '';
+              var index = clientsSocket.clients.findIndex(function (wsElement) {
+                return wsElement.accountCode == accountId;
+              });
+              if (index >= 0) {
+                // debugger
+
+                tempWs = new _websocketSimple2.default(clientsSocket.clients[index]);
+              } else {
+                console.log('accountId not found. It looks like not connected > ' + accountId);
+                // console.error(Object.keys(mainSockets))
+                // throw Error('accountId not found')
+                return false;
+              }
               // Get the session survey
               var result = store.getState();
               var account = result.accounts[accountId];
               var accountSessionPointer = 'surveyPointer' in account ? account.surveyPointer + 1 : 0;
               store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, account, { surveyPointer: accountSessionPointer })));
               // Go to WaitSync to start session
-              ws.send((0, _serverActions.wsGotoPage)({ url: (0, _surveyTypes.resolveSurveyURL)(result.session.surveyPath[accountSessionPointer].type), options: {} }));
+              tempWs.send((0, _serverActions.wsGotoPage)({ url: (0, _surveyTypes.resolveSurveyURL)(result.session.surveyPath[accountSessionPointer].type), options: {} }));
             };
 
             addAccountToGroup = function addAccountToGroup(accountId, groupId, store) {
@@ -138,7 +158,7 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : 117;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : 119;
                       break;
 
                     case 3:
@@ -533,6 +553,16 @@ exports.default = function () {
                       });
 
                     case 117:
+                      if ((typeof payload === 'undefined' ? 'undefined' : (0, _typeof3.default)(payload)) == 'object' && payload.constructor.name == 'Array') {
+                        payload.forEach(function (accountId) {
+                          return nextStep(accountId);
+                        });
+                      }
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 119:
                     case 'end':
                       return _context.stop();
                   }
@@ -558,17 +588,15 @@ exports.default = function () {
     }, _callee2, this);
   }));
 
-  function mutate(_x) {
+  function mutate(_x, _x2) {
     return _ref.apply(this, arguments);
   }
 
   return mutate;
 }();
 
-// Get an url from an survey-type
+// Default Input fields type and options
 
 
-// Redux client actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
+// Redux server actions
 //# sourceMappingURL=server-mutate.js.map

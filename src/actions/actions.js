@@ -123,6 +123,9 @@ export function sessionDataAdd(sessionData) {
   return { type: SESSION_DATA_ADD, payload: sessionData }
 }
 
+// Take a step on the survey for all account in the array.
+export const SURVEY_STEP_ALL = 'SURVEY_STEP_ALL'
+
 
 
 /*

@@ -4,6 +4,10 @@ import {
   INSTRUCTIONS,
 } from './components/survey/survey-types'
 
+// import {
+//   question1,
+// } from './survey-data/survey-questions'
+
 const sessionData = {
   sessionInfo: {
     nickName: 'Primera',
@@ -16,7 +20,7 @@ const sessionData = {
     },
     {
       type: QUESTION,
-      questions: ' ',
+      payload: 4,
       time: 'inf',
     },
     {

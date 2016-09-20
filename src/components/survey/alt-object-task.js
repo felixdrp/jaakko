@@ -92,7 +92,7 @@ class AltObjectTask extends Component {
     const { textColor } = this.context.muiTheme.palette;
 
     let title = 'Alternative Objects Task';
-    let text = 'Come up with as many alternative objects for a stapler as possible. \n	You will have 5 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
+    let text = `Come up with as many alternative objects for a stapler as possible. \n	You will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button`;
 
     return (
       <div style={{display:'flex'}}>

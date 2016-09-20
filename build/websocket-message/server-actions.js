@@ -15,6 +15,7 @@ exports.wsUnassignSelectedAccounts = wsUnassignSelectedAccounts;
 exports.wsUnassignAccount = wsUnassignAccount;
 exports.wsAutomateGroupsCreation = wsAutomateGroupsCreation;
 exports.swUpdateControlRoom = swUpdateControlRoom;
+exports.wsSurveyStepAll = wsSurveyStepAll;
 
 var _reactRouterRedux = require('react-router-redux');
 
@@ -182,6 +183,15 @@ function swUpdateControlRoom(state) {
     type: ACTION,
     action: _queryActions.SESSION_STATE_GET,
     payload: state
+  };
+}
+
+// update state in components ControlRoom socket action creator
+function wsSurveyStepAll(accountList) {
+  return {
+    type: MUTATE,
+    action: _actions.SURVEY_STEP_ALL,
+    payload: accountList
   };
 }
 //# sourceMappingURL=server-actions.js.map

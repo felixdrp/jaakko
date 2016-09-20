@@ -198,6 +198,9 @@ class Instructions extends Component {
 
 //'_marker'
   render() {
+    if (!this.props.payload) {
+      return <span></span>
+    }
 
     const { textColor } = this.context.muiTheme.palette;
     let tasktype = 'alternativeObject';

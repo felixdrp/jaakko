@@ -282,6 +282,10 @@ var Instructions = function (_Component) {
 
     //'_marker'
     value: function render() {
+      if (!this.props.payload) {
+        return _react2.default.createElement('span', null);
+      }
+
       var textColor = this.context.muiTheme.palette.textColor;
 
       var tasktype = 'alternativeObject';

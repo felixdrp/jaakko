@@ -223,7 +223,10 @@ var SessionManager = function (_Component) {
             ' Session Tracker '
           )
         }),
-        _react2.default.createElement(_sessionTrackerContainer2.default, { storeSession: this.props.storeSession })
+        _react2.default.createElement(_sessionTrackerContainer2.default, {
+          storeSession: this.props.storeSession,
+          wsSession: this.props.wsSession
+        })
       );
     }
   }]);

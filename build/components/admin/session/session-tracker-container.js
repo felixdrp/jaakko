@@ -36,6 +36,18 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Menu = require('material-ui/Menu');
+
+var _Menu2 = _interopRequireDefault(_Menu);
+
+var _Popover = require('material-ui/Popover');
+
+var _Popover2 = _interopRequireDefault(_Popover);
+
+var _MenuItem = require('material-ui/MenuItem');
+
+var _MenuItem2 = _interopRequireDefault(_MenuItem);
+
 var _playArrow = require('material-ui/svg-icons/av/play-arrow');
 
 var _playArrow2 = _interopRequireDefault(_playArrow);
@@ -52,6 +64,10 @@ var _sessionData = require('../../../session-data');
 
 var _sessionData2 = _interopRequireDefault(_sessionData);
 
+var _surveyTypes = require('../../survey/survey-types');
+
+var _serverActions = require('../../../websocket-message/server-actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SessionTrackerContainer = function (_Component) {
@@ -62,10 +78,38 @@ var SessionTrackerContainer = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (SessionTrackerContainer.__proto__ || (0, _getPrototypeOf2.default)(SessionTrackerContainer)).call(this));
 
+    _this.handleTouchTap = function (event) {
+      // This prevents ghost click.
+      event.preventDefault();
+      var openMenus = _this.state.openMenus.slice();
+      var anchorEl = _this.state.anchorEl.slice();
+      var index = Number(event.currentTarget.attributes.getNamedItem('name').value);
+
+      openMenus[index] = true;
+      anchorEl[index] = event.currentTarget;
+
+      _this.setState({
+        openMenus: openMenus,
+        anchorEl: anchorEl
+      });
+    };
+
+    _this.handleRequestClose = function (index) {
+      var openMenus = _this.state.openMenus.slice();
+
+      openMenus[index] = false;
+      _this.setState({
+        openMenus: openMenus
+      });
+    };
+
     _this.state = {
-      accounts: {},
-      groups: {},
-      selection: []
+      // accounts: { },
+      // groups: { },
+      selection: [],
+
+      openMenus: [],
+      anchorEl: []
     };
 
     // Used to store references.
@@ -76,6 +120,8 @@ var SessionTrackerContainer = function (_Component) {
   (0, _createClass3.default)(SessionTrackerContainer, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var props = this.props;
       var storeSession = props.storeSession;
       var groupList = { list: [] },
@@ -117,9 +163,11 @@ var SessionTrackerContainer = function (_Component) {
           for (var _iterator = (0, _getIterator3.default)(accountsPerSurvey), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var survey = _step.value;
 
-            if (survey == 'undefined') {
+            if (survey == undefined || survey == 'undefined') {
               if (filterAccountByGroup == null) {
                 sessionTrack.push(_react2.default.createElement(_done2.default, { style: { fill: 'green' } }));
+              } else {
+                sessionTrack.push(_react2.default.createElement('span', null));
               }
             } else {
               filterAccountByGroup = survey.reduce(function (prev, actual) {
@@ -147,6 +195,8 @@ var SessionTrackerContainer = function (_Component) {
               ));
             }
           }
+
+          // console.log(accountsPerSurvey)
         } catch (err) {
           _didIteratorError = true;
           _iteratorError = err;
@@ -162,7 +212,6 @@ var SessionTrackerContainer = function (_Component) {
           }
         }
 
-        console.log(accountsPerSurvey);
         groups = groups.list.length;
       }
 
@@ -179,8 +228,60 @@ var SessionTrackerContainer = function (_Component) {
           return _react2.default.createElement(
             'div',
             { key: index },
-            _react2.default.createElement(_playArrow2.default, null),
-            _react2.default.createElement(
+            step.type == _surveyTypes.AWAIT ? _react2.default.createElement(
+              'span',
+              null,
+              _react2.default.createElement(
+                'span',
+                {
+                  name: index,
+                  style: {
+                    color: '#6c6c6c',
+                    cursor: 'pointer'
+                  },
+                  onTouchTap: _this2.handleTouchTap
+                },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  step.type,
+                  ' '
+                )
+              ),
+              _react2.default.createElement(
+                _Popover2.default,
+                {
+                  name: index,
+                  open: _this2.state.openMenus[index] || false,
+                  anchorEl: _this2.state.anchorEl[index],
+                  anchorOrigin: { horizontal: 'left', vertical: 'bottom' },
+                  targetOrigin: { horizontal: 'left', vertical: 'top' },
+                  onRequestClose: function onRequestClose() {
+                    return _this2.handleRequestClose(index);
+                  }
+                },
+                _react2.default.createElement(
+                  _Menu2.default,
+                  null,
+                  _react2.default.createElement(
+                    _MenuItem2.default,
+                    {
+                      onClick: function onClick() {
+                        console.log('mlkkkk' + index);
+                        if (accountsPerSurvey[index] != undefined) {
+                          _this2.props.wsSession.send((0, _serverActions.wsSurveyStepAll)(accountsPerSurvey[index]));
+                          console.log(accountsPerSurvey[index]);
+                        }
+                        _this2.handleRequestClose(index);
+                      }
+                    },
+                    _react2.default.createElement(_playArrow2.default, null),
+                    'Continue'
+                  )
+                )
+              )
+            ) : _react2.default.createElement(
               'span',
               null,
               ' ',

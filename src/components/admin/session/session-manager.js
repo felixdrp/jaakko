@@ -163,7 +163,10 @@ class SessionManager extends Component {
         <CardHeader
           title={ <span><Language /> Session Tracker </span> }
         />
-        <SessionTrackerContainer storeSession={ this.props.storeSession } />
+        <SessionTrackerContainer
+          storeSession={ this.props.storeSession }
+          wsSession={ this.props.wsSession }
+        />
       </Card>
     )
   }

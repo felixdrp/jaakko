@@ -26,6 +26,8 @@ import {
   GROUPS_ACCOUNTS_UNASSIGN,
   GROUPS_AUTOMATE_CREATION,
 
+  SURVEY_STEP_ALL,
+
   groupsAdd,
   groupsRemove,
   groupsAddAccount,
@@ -48,6 +50,7 @@ import { loginAccount } from '../modules/account/login-account'
 // Get an url from an survey-type
 import { resolveSurveyURL } from '../components/survey/survey-types'
 
+import WebSocketSimple from './websocket-simple'
 
 // import filterAccountsByGroup from '../modules/filter-accounts-by-group'
 
@@ -62,11 +65,10 @@ import { resolveSurveyURL } from '../components/survey/survey-types'
  * @returns {}
  */
 
-export default async function mutate({ action, payload, ws, store }) {
+export default async function mutate({ action, payload, ws, store }, clientsSocket) {
   let payloadResponse,
       result,
       account
-
   function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
     let tempAccount
     // Register the user in the server store.
@@ -115,13 +117,25 @@ export default async function mutate({ action, payload, ws, store }) {
   }
 
   function nextStep(accountId) {
+    let tempWs = ''
+    let index = clientsSocket.clients.findIndex( wsElement => wsElement.accountCode == accountId )
+    if (index >= 0) {
+      // debugger
+
+      tempWs = new WebSocketSimple( clientsSocket.clients[ index ] )
+    } else {
+      console.log('accountId not found. It looks like not connected > ' + accountId)
+      // console.error(Object.keys(mainSockets))
+      // throw Error('accountId not found')
+      return false
+    }
     // Get the session survey
     let result = store.getState()
     let account = result.accounts[accountId]
     let accountSessionPointer = 'surveyPointer' in account? account.surveyPointer + 1:  0
     store.dispatch( accountsUpdate({ ...account, surveyPointer: accountSessionPointer }) )
     // Go to WaitSync to start session
-    ws.send(
+    tempWs.send(
       wsGotoPage({ url: resolveSurveyURL( result.session.surveyPath[ accountSessionPointer ].type ), options: {} })
     )
   }
@@ -386,6 +400,12 @@ export default async function mutate({ action, payload, ws, store }) {
 
           }
         }
+      }
+      return true
+
+    case SURVEY_STEP_ALL:
+      if (typeof payload == 'object' && payload.constructor.name == 'Array') {
+        payload.forEach( accountId => nextStep( accountId ) )
       }
       return true
 

@@ -1,11 +1,26 @@
 import React, { PropTypes, Component } from 'react'
 
+import Menu from 'material-ui/Menu';
+import Popover from 'material-ui/Popover';
+import MenuItem from 'material-ui/MenuItem';
+
 import PlayArrow from 'material-ui/svg-icons/av/play-arrow';
 import Done from 'material-ui/svg-icons/action/done';
 
 import AccountsPerGroupView from './accounts-per-group-view'
 
 import sessionData from '../../../session-data'
+
+import {
+  AWAIT,
+  // QUESTION,
+  // INSTRUCTIONS,
+} from '../../survey/survey-types'
+
+import {
+  wsSurveyStepAll,
+} from '../../../websocket-message/server-actions'
+
 
 
 class SessionTrackerContainer extends Component {
@@ -17,20 +32,47 @@ class SessionTrackerContainer extends Component {
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
     // wsSession: PropTypes.object,
-    // websocket: PropTypes.object,
   };
 
   constructor() {
     super()
     this.state = {
-      accounts: { },
-      groups: { },
+      // accounts: { },
+      // groups: { },
       selection: [],
+
+      openMenus: [],
+      anchorEl: [],
     };
 
     // Used to store references.
     this._input = {};
   }
+
+  handleTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+    let openMenus = this.state.openMenus.slice()
+    let anchorEl = this.state.anchorEl.slice()
+    let index = Number( event.currentTarget.attributes.getNamedItem('name').value )
+
+    openMenus[index] = true
+    anchorEl[index] = event.currentTarget
+
+    this.setState({
+      openMenus,
+      anchorEl,
+    });
+  };
+
+  handleRequestClose = (index) => {
+    let openMenus = this.state.openMenus.slice()
+
+    openMenus[index] = false
+    this.setState({
+      openMenus,
+    });
+  };
 
   render() {
     let props = this.props
@@ -70,9 +112,11 @@ class SessionTrackerContainer extends Component {
 
       // Add type to the finished surveys.
       for ( let survey of accountsPerSurvey ) {
-        if ( survey == 'undefined' ) {
+        if ( survey == undefined || survey == 'undefined' ) {
           if ( filterAccountByGroup == null ) {
             sessionTrack.push(<Done style={{fill: 'green'}} />)
+          } else {
+            sessionTrack.push(<span />)
           }
         } else {
           filterAccountByGroup = survey.reduce(
@@ -107,7 +151,7 @@ class SessionTrackerContainer extends Component {
         }
       }
 
-      console.log(accountsPerSurvey)
+      // console.log(accountsPerSurvey)
       groups = groups.list.length
     }
 
@@ -124,8 +168,53 @@ class SessionTrackerContainer extends Component {
           (step, index) => {
             return (
               <div key={index}>
-                <PlayArrow />
-                <span> {step.type} </span>
+                { step.type == AWAIT?
+                  <span>
+                    <span
+                      name={index}
+                      style={{
+                        color: '#6c6c6c',
+                        cursor: 'pointer',
+                      }}
+                      onTouchTap={this.handleTouchTap}
+                    >
+                      <span> {step.type} </span>
+                    </span>
+                    <Popover
+                      name={index}
+                      open={this.state.openMenus[index] || false}
+                      anchorEl={this.state.anchorEl[index]}
+                      anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                      targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                      onRequestClose={ () => this.handleRequestClose(index) }
+                    >
+                      <Menu>
+                        <MenuItem
+                          onClick={
+                            ()=> {
+                              console.log('mlkkkk' + index);
+                              if (accountsPerSurvey[index] != undefined) {
+                                this.props.wsSession.send(
+                                  wsSurveyStepAll( accountsPerSurvey[index] )
+                                )
+                                console.log(accountsPerSurvey[index]);
+                              }
+                              this.handleRequestClose(index);
+                            }
+                          }
+                        >
+                          <PlayArrow />
+                          Continue
+                        </MenuItem>
+                      </Menu>
+                    </Popover>
+                  </span>
+                  :
+
+                  <span> {step.type} </span>
+                }
+
+
                 { sessionTrack[index]? sessionTrack[index]: '' }
               </div>
             )

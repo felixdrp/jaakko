@@ -1,12 +1,12 @@
 'use strict';
 
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
 var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 var _promise = require('babel-runtime/core-js/promise');
 
@@ -47,8 +47,6 @@ var _sessionData = require('./session-data');
 var _sessionData2 = _interopRequireDefault(_sessionData);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _marked = [nameMe].map(_regenerator2.default.mark);
 
 // Usando servidor seguro:
 // https://localhost:8000/
@@ -167,46 +165,27 @@ console.log(store.getState());
 
 wss.broadcast = function broadcast(data) {
   // debugger
-  wss.clients.forEach(function each(client) {
+  wss.clients.forEach(function (client) {
     if (client.readyState != 1) {
       console.log('socket on state: ' + client.readyState + ' prevented send');
       return;
     }
     console.log('wss.clients length: ' + wss.clients.length);
-    console.log('message sent to: ' + client.nombre);
+    console.log('message sent to: ' + client.accountCode);
     client.send(data);
   });
 };
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
-// setTimeout( () => {
-// setInterval( () => {
-// console.log('broadcast')
-// wss.broadcast(
-//   JSON.stringify(
-//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
-//   )
-// )
-// }, 3000)
+setTimeout(function () {
+  // setInterval( () => {
+  debugger;
+  console.log('broadcast');
+  wss.broadcast((0, _stringify2.default)({ type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }));
+}, 8000);
 
-function nameMe() {
-  return _regenerator2.default.wrap(function nameMe$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          return _context.delegateYield(['maria', 'jose', 'jesus', 'burro', 'angel'], 't0', 1);
-
-        case 1:
-        case 'end':
-          return _context.stop();
-      }
-    }
-  }, _marked[0], this);
-}
-var nameMeIterator = nameMe();
-
-var websocketManager = function websocketManager(ws, parent) {
-  var name = nameMeIterator.next().value;
+var websocketManager = function websocketManager(ws) {
+  var name = 'temporal';
   console.log('started websocket client' + name);
   // When user login will be the email
   ws.name = name;
@@ -221,7 +200,7 @@ var websocketManager = function websocketManager(ws, parent) {
 
   ws.on('close', function () {
     console.log('stopping websocket client ' + ws.accountCode);
-    console.log('yo soy tu padre!!!!>>>  ' + parent.clients);
+    //  console.log('yo soy tu padre!!!!>>>  ' + parent.clients);
 
     // Remove from
     // console.log(queryWebSocketList.indexOf(ws));
@@ -235,9 +214,9 @@ var websocketManager = function websocketManager(ws, parent) {
   ws.onmessage = function () {
     var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(event) {
       var message;
-      return _regenerator2.default.wrap(function _callee$(_context2) {
+      return _regenerator2.default.wrap(function _callee$(_context) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context.prev = _context.next) {
             case 0:
               // Check the query.
               // Process action.
@@ -246,48 +225,48 @@ var websocketManager = function websocketManager(ws, parent) {
               // Check it is a JSON response
 
               if (!/^\{.*\}$/.test(event.data)) {
-                _context2.next = 5;
+                _context.next = 5;
                 break;
               }
 
               message = JSON.parse(event.data);
-              _context2.next = 7;
+              _context.next = 7;
               break;
 
             case 5:
               console.log('No protocol>>String>>>' + event.data);
-              return _context2.abrupt('return');
+              return _context.abrupt('return');
 
             case 7:
               console.log('>>>' + (0, _stringify2.default)(event.data));
               // console.log( '>>>' + Object.keys(event) )
 
               if (!(typeof message == 'string')) {
-                _context2.next = 10;
+                _context.next = 10;
                 break;
               }
 
-              return _context2.abrupt('return');
+              return _context.abrupt('return');
 
             case 10:
-              _context2.t0 = message.type;
-              _context2.next = _context2.t0 === 'MUTATE' ? 13 : _context2.t0 === 'QUERY' ? 16 : 22;
+              _context.t0 = message.type;
+              _context.next = _context.t0 === 'MUTATE' ? 13 : _context.t0 === 'QUERY' ? 16 : 22;
               break;
 
             case 13:
-              _context2.next = 15;
+              _context.next = 15;
               return (0, _serverMutate2.default)({
                 action: message.action || '',
                 payload: message.payload || '',
                 ws: new _websocketSimple2.default(ws),
                 store: store
-              });
+              }, wss);
 
             case 15:
-              return _context2.abrupt('break', 23);
+              return _context.abrupt('break', 23);
 
             case 16:
-              _context2.next = 18;
+              _context.next = 18;
               return (0, _serverQuery2.default)({
                 action: message.action || '',
                 payload: message.payload || '',
@@ -299,7 +278,7 @@ var websocketManager = function websocketManager(ws, parent) {
               console.log('Query to the server');
               console.log(message.type);
               console.log(message);
-              return _context2.abrupt('break', 23);
+              return _context.abrupt('break', 23);
 
             case 22:
               // dispatch 'ACTIONS'
@@ -310,7 +289,7 @@ var websocketManager = function websocketManager(ws, parent) {
 
             case 24:
             case 'end':
-              return _context2.stop();
+              return _context.stop();
           }
         }
       }, _callee, this);
@@ -324,9 +303,9 @@ var websocketManager = function websocketManager(ws, parent) {
 
 // wss.on('connection', (ws) => websocketManager(ws));
 wss.on('connection', function (ws) {
-  return websocketManager(ws, wss);
+  return websocketManager(ws);
 });
 wssAdmin.on('connection', function (ws) {
-  return websocketManager(ws, wssAdmin);
+  return websocketManager(ws);
 });
 //# sourceMappingURL=server.js.map

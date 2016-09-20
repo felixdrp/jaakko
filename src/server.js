@@ -142,45 +142,37 @@ console.log(store.getState())
 
 wss.broadcast = function broadcast(data) {
   // debugger
-  wss.clients.forEach(function each(client) {
+  wss.clients.forEach( (client) => {
     if (client.readyState != 1) {
       console.log('socket on state: ' + client.readyState + ' prevented send')
       return
     }
     console.log('wss.clients length: ' + wss.clients.length)
-    console.log('message sent to: ' + client.nombre)
+    console.log('message sent to: ' + client.accountCode)
     client.send(data);
   });
 };
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
-// setTimeout( () => {
+setTimeout( () => {
 // setInterval( () => {
-// console.log('broadcast')
-// wss.broadcast(
-//   JSON.stringify(
-//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
-//   )
-// )
-// }, 3000)
+debugger
+console.log('broadcast')
+wss.broadcast(
+  JSON.stringify(
+    { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+  )
+)
+}, 8000)
 
-function* nameMe() {
-  yield* [
-    'maria',
-    'jose',
-    'jesus',
-    'burro',
-    'angel'
-  ];
-}
-var nameMeIterator = nameMe()
 
-var websocketManager = function (ws, parent) {
-    let name = nameMeIterator.next().value
+var websocketManager = function (ws) {
+    let name = 'temporal'
     console.log('started websocket client' + name);
     // When user login will be the email
     ws.name = name
     ws.accountCode = Date.now()
+
 
     // Add the Websocket to the list
     // queryWebSocketList.push(ws);
@@ -191,7 +183,7 @@ var websocketManager = function (ws, parent) {
 
     ws.on('close', () => {
      console.log('stopping websocket client ' + ws.accountCode);
-     console.log('yo soy tu padre!!!!>>>  ' + parent.clients);
+    //  console.log('yo soy tu padre!!!!>>>  ' + parent.clients);
 
        // Remove from
 	// console.log(queryWebSocketList.indexOf(ws));
@@ -221,12 +213,15 @@ var websocketManager = function (ws, parent) {
   	  switch ( message.type ) {
         // Process message of type MUTATE
         case 'MUTATE':
-          await mutate({
-            action: message.action || '',
-            payload: message.payload || '',
-            ws: new WebSocketSimple(ws),
-            store
-          })
+          await mutate(
+            {
+              action: message.action || '',
+              payload: message.payload || '',
+              ws: new WebSocketSimple(ws),
+              store,
+            },
+            wss
+          )
           break;
         // Process message of type QUERY
         case 'QUERY':
@@ -251,5 +246,5 @@ var websocketManager = function (ws, parent) {
 }
 
 // wss.on('connection', (ws) => websocketManager(ws));
-wss.on('connection', (ws) => websocketManager(ws, wss) );
-wssAdmin.on('connection', (ws) => websocketManager(ws, wssAdmin));
+wss.on('connection', (ws) => websocketManager(ws) );
+wssAdmin.on('connection', (ws) => websocketManager(ws) );

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CONTINUE = exports.WAIT = exports.SESSION_DATA_ADD = exports.SEND_ACCOUNT_MESSAGE = exports.SEND_GROUP_MESSAGE = exports.SEND_ALL_MESSAGE = exports.GROUPS_AUTOMATE_CREATION = exports.GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_TO_GROUP = exports.GROUPS_REMOVE_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = exports.GROUPS_REMOVE = exports.GROUPS_ADD = exports.ACCOUNTS_REMOVE = exports.ACCOUNTS_UPDATE = exports.ACCOUNTS_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = undefined;
+exports.CONTINUE = exports.WAIT = exports.SURVEY_STEP_ALL = exports.SESSION_DATA_ADD = exports.SEND_ACCOUNT_MESSAGE = exports.SEND_GROUP_MESSAGE = exports.SEND_ALL_MESSAGE = exports.GROUPS_AUTOMATE_CREATION = exports.GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_TO_GROUP = exports.GROUPS_REMOVE_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = exports.GROUPS_REMOVE = exports.GROUPS_ADD = exports.ACCOUNTS_REMOVE = exports.ACCOUNTS_UPDATE = exports.ACCOUNTS_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = undefined;
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -155,6 +155,9 @@ var SESSION_DATA_ADD = exports.SESSION_DATA_ADD = 'SESSION_DATA_ADD';
 function sessionDataAdd(sessionData) {
   return { type: SESSION_DATA_ADD, payload: sessionData };
 }
+
+// Take a step on the survey for all account in the array.
+var SURVEY_STEP_ALL = exports.SURVEY_STEP_ALL = 'SURVEY_STEP_ALL';
 
 /*
  * action creators
