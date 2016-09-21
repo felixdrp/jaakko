@@ -356,6 +356,7 @@ var Question = function (_Component) {
     _this.gatherData = function () {
 
       console.log((0, _stringify2.default)(_this.state));
+      return _this.state;
     };
 
     _this.state = { questionnaire: 'entry' };
@@ -689,7 +690,9 @@ var Question = function (_Component) {
                 id: 'submitAnswers',
                 style: { color: 'white' },
                 type: 'submit',
-                onClick: this.gatherData
+                onClick: function onClick() {
+                  return _this2.props.submit(_this2.gatherData());
+                }
               },
               'Submit'
             )

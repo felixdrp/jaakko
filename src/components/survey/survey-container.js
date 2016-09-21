@@ -42,7 +42,7 @@ class SurveyContainer extends Component {
     // this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
     // Take the payload directly from the session-data file.
     // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
-    setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)
+    // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)
     this.setState({start: Date.now()});
   }
 
@@ -76,7 +76,7 @@ class SurveyContainer extends Component {
           this.props.children,
           {
             payload: this.state.payload,
-            submit: (infoToSubmit) => console.log(infoToSubmit),
+            submit: ( infoToSubmit ) => this.submitInfo( infoToSubmit ),
           }
         )
       }

@@ -35,6 +35,7 @@ import {
 } from './reducers/server';
 
 import {
+  STORE_SURVEY_INFO,
   // Remove the WS from a store state
   storeStateWithoutWebSocket,
   sessionDataAdd,
@@ -80,8 +81,8 @@ app.use('/', function (req, res) {
 });
 
 webServer.listen( portWeb, () => console.log('server running at https://localhost:' + portWeb) );
-
-
+// File to maintain a hard copy of the state
+var stream = fs.createWriteStream('resultsBackup.txt', {flags: 'w', autoClose: true});
 // middleware to send store updates to the admins
 const updateControlRooms = store => next => action => {
   let vervose = true
@@ -96,7 +97,13 @@ const updateControlRooms = store => next => action => {
   if (vervose) {
     // console.log('UPDATE ControlRoom state' + payload )
     console.log('MEMORY USAGE state' + JSON.stringify(process.memoryUsage()) )
+    console.log(JSON.stringify(store.getState().results, null, 4))
     // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+  }
+
+  if (action.type == STORE_SURVEY_INFO) {
+    // Write state to a file only when STORE_SURVEY_INFO action
+    stream.write( JSON.stringify(payload) )
   }
 
   // transfer asynchronously

@@ -400,8 +400,8 @@ class Question extends Component {
 
   gatherData = () => {
 
-      console.log(JSON.stringify(this.state));
-
+    console.log(JSON.stringify(this.state));
+    return this.state
 
   }
 
@@ -650,7 +650,7 @@ class Question extends Component {
                 id="submitAnswers"
                 style={{color: 'white',}}
                 type="submit"
-                onClick= {this.gatherData}
+                onClick= { () => this.props.submit( this.gatherData() ) }
               >
                 Submit
               </RaisedButton>

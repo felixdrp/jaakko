@@ -67,16 +67,12 @@ var SurveyContainer = function (_Component) {
   (0, _createClass3.default)(SurveyContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
       // Load the study information
       // Ask for the information to the server
       // this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
       // Take the payload directly from the session-data file.
       // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
-      setTimeout(function () {
-        console.log('didMount> ' + _this2.state.payload);_this2.submitInfo({ payload: 'some more info!!' });
-      }, 4000);
+      // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)
       this.setState({ start: Date.now() });
     }
   }, {
@@ -92,6 +88,8 @@ var SurveyContainer = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var props = this.props;
 
       return _react2.default.createElement(
@@ -105,7 +103,7 @@ var SurveyContainer = function (_Component) {
         this.props.children && _react2.default.cloneElement(this.props.children, {
           payload: this.state.payload,
           submit: function submit(infoToSubmit) {
-            return console.log(infoToSubmit);
+            return _this2.submitInfo(infoToSubmit);
           }
         })
       );
