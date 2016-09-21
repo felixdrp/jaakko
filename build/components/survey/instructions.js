@@ -75,6 +75,10 @@ var instructionsData = {
   favourites: {
     title: 'Instructions for Favourites rounds',
     text: 'You will be asked to name your 5 favourites entries from the list of entries that are presented to you and the entries will be from another group than yours. How you individually favourite the entries will not be known by the members of the group you are favouriting or even the members of your group. Thus you will be completely anonymous when favouriting.' + '\nEvery groups entries will be favorited and based on the total amount of favourites an individual receives it will determine where they rank within their group and so how much they will be paid. ' + '\nYou are asked to rank the 5 favourite entries by giving your favourite 5 stars, second favourite 4 starts, etc. thus..' + '\n1. First place = 5 Stars' + '\n2. Second place = 4 Stars' + '\n3. Third place = 3 Stars' + '\n4. Fourth place = 2 Stars' + '\n5. Fifth place = 1 Star' + '\n\nOnly your 5 favourites will receive stars, you cannot give any other entry a star. No half stars can be given; they can only be given as shown above.' + '\n\nThe previous example would look like this…'
+  },
+  math: {
+    title: 'Instructions for Math task',
+    text: 'For this task you will be asked to solve simple addition problems correct. For example you could be asked to solve the following “56+73+5+10+11” you would simply type “155” and move onto the next question.' + 'There will be multiple problems and you will be asked to solve as many as possible in the 5 minutes given. The number of correct answers will then be calculated and showed to you after the task is over.' + '\n Your name will appear on a ranking of the group’s performance and your will be ranked from the best performer (person with the most correct answers) to the worst performer (person with the least amount of correct answers).' + 'The exact score of the participant in your group will not be shown.' + '\n In this task your pay will depend on your performance relative to the other members in the group. The pay structure will be as shown below.' + '\n The task will have a series of addition problems like the ones below. You will be asked to solve as many as you can in the 5 minutes. Only correct answers will be counted toward your score.' + '\n\n The aforementioned example would look like this…'
   }
 };
 
@@ -252,12 +256,31 @@ var Instructions = function (_Component) {
               )
             )
           );
-        default:
+        case 'math':
           return _react2.default.createElement(
             'div',
-            null,
-            ' yourmaw'
+            { style: { marginTop: 20 } },
+            _react2.default.createElement(
+              _Card.Card,
+              null,
+              _react2.default.createElement(
+                _Card.CardText,
+                null,
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  '56+73+5+10+11 =',
+                  _react2.default.createElement(_TextField2.default, { style: {
+                      paddingLeft: 10,
+                      marginRight: 20
+                    },
+                    value: 155 })
+                )
+              )
+            )
           );
+        default:
+          return _react2.default.createElement('div', null);
 
       }
     };
@@ -289,7 +312,7 @@ var Instructions = function (_Component) {
 
       var textColor = this.context.muiTheme.palette.textColor;
 
-      var tasktype = 'alternativeObject';
+      var tasktype = 'math';
       var title = instructionsData[tasktype].title;
       var text = instructionsData[tasktype].text;
       var example = this.getTaskExample(tasktype);

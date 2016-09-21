@@ -61,6 +61,16 @@ var instructionsData = {
               +'\n\nOnly your 5 favourites will receive stars, you cannot give any other entry a star. No half stars can be given; they can only be given as shown above.'
               +'\n\nThe previous example would look like this…',
   },
+  math : {
+    title : 'Instructions for Math task',
+    text : 'For this task you will be asked to solve simple addition problems correct. For example you could be asked to solve the following “56+73+5+10+11” you would simply type “155” and move onto the next question.'
+            +'There will be multiple problems and you will be asked to solve as many as possible in the 5 minutes given. The number of correct answers will then be calculated and showed to you after the task is over.'
+            +'\n Your name will appear on a ranking of the group’s performance and your will be ranked from the best performer (person with the most correct answers) to the worst performer (person with the least amount of correct answers).'
+                +'The exact score of the participant in your group will not be shown.'
+            +'\n In this task your pay will depend on your performance relative to the other members in the group. The pay structure will be as shown below.'
+            +'\n The task will have a series of addition problems like the ones below. You will be asked to solve as many as you can in the 5 minutes. Only correct answers will be counted toward your score.'
+            +'\n\n The aforementioned example would look like this…',
+  },
 }
 
 
@@ -81,6 +91,7 @@ class Instructions extends Component {
   componentWillMount() {
 
   }
+  
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text)
@@ -191,8 +202,22 @@ class Instructions extends Component {
                 </CardText>
                </Card>
             </div>
+          case 'math':
+              return <div style={{marginTop:20}}>
+                  <Card>
+                  <CardText>
+                    <div>56+73+5+10+11 =
+                        <TextField  style={{
+                            paddingLeft: 10,
+                            marginRight: 20,
+                            }}
+                            value={155}/>
+                    </div>
+                  </CardText>
+                 </Card>
+              </div>
           default:
-            return <div> yourmaw</div>
+            return <div></div>
 
     }
   }
@@ -204,7 +229,7 @@ class Instructions extends Component {
     }
 
     const { textColor } = this.context.muiTheme.palette;
-    let tasktype = 'alternativeObject';
+    let tasktype = 'math';
     let title = instructionsData[tasktype].title;
     let text = instructionsData[tasktype].text;
     let example = this.getTaskExample(tasktype);

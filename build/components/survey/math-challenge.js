@@ -68,7 +68,7 @@ function getNumbers(N, M) {
       sum += number;
       numbers.push(number);
     }
-    results.push({ numbers: numbers, sum: sum });
+    results.push({ numbers: numbers, sum: sum, solution: undefined });
   }
   return results;
 }
@@ -81,7 +81,7 @@ function formatNumbers(numberArray) {
   return result.slice(0, result.length - 2) + '= ';
 }
 
-var instructions = 'For this task you will be asked to solve simple addition problems correct. For example you could be asked to solve the following “56+73+5+10+11” you would simply answer is “155” and move onto the next question. There will be multiple problems and you will be asked to solve as many as possible in the 5 minutes given. The number of correct answers will then be calculated and showed to you after the task is over. \n Your name will appear on a ranking of the group’s performance and your will be ranked from the best performer (person with the most correct answers) to the worst performer (person with the least amount of correct answers). The exact score of the participant in your group will not be shown. \n In this task your pay will depend on your performance relative to the other members in the group. The pay structure will be as shown below. \n The task will have a series of addition problems like the ones below. You will be asked to solve as many as you can in the 5 minutes. Only correct answers will be counted toward your score.';
+var instructions = 'Solve as many math problems as you can in 7 minutes';
 
 var MathChallenge = function (_Component) {
   (0, _inherits3.default)(MathChallenge, _Component);
@@ -99,7 +99,10 @@ var MathChallenge = function (_Component) {
       _this.setState({ elapsed: new Date() - _this.state.startt });
     };
 
-    _this.state = { elapsed: 0, startt: new Date(), numbers: getNumbers(30, 5) };
+    _this.state = { elapsed: 0,
+      startt: new Date(),
+      numbers: getNumbers(30, 5)
+    };
 
     return _this;
   }
@@ -129,8 +132,20 @@ var MathChallenge = function (_Component) {
       clearInterval(this.state.timer);
     }
   }, {
+    key: 'handleChange',
+    value: function handleChange(event, index, value, id) {
+      var numbers = this.state.numbers.slice();
+      var index = id.split("_")[1];
+      numbers[index].solution = value;
+
+      this.setState({ numbers: numbers });
+      debugger;
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var props = this.props;
 
       var title = this.props.message ? this.props.message : 'Math Challenge';
@@ -188,7 +203,11 @@ var MathChallenge = function (_Component) {
                   _react2.default.createElement(_TextField2.default, { id: 'math_' + i, style: {
                       paddingLeft: 10,
                       marginRight: 20
-                    } })
+                    },
+                    onChange: function onChange(event, index, value) {
+                      return _this2.handleChange(event, value, index, 'math_' + i);
+                    }
+                  })
                 );
               })
             ),

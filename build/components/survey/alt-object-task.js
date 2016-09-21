@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -80,31 +84,67 @@ var AltObjectTask = function (_Component) {
 
     _this.addEntry = function () {
       var entries = _this.state.entries.slice();
-      entries.push({ name: 'entry' + entries.length, title: '', description: '' });
-      _this.setState({ entries: entries });
-    };
+      // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
+      //                 title : '',
+      //                 description : '',
+      //                 creator : null,
+      //                 rating : [],
+      //                 timeSubmitted : null,
+      //                 similarTo : [],
+      //               });
 
-    _this.addGroupEntry = function (entry) {
-      var entries = _this.state.groupEntries.slice();
-      entries.push({ name: 'groupEntry' + entries.length, title: entry.title, description: entry.description });
-      _this.setState({ groupEntries: entries });
+      var o2 = JSON.parse((0, _stringify2.default)(_this.state.currentEntry));
+      o2.timeSubmitted = Date.now();
+
+      entries.push(o2);
+
+      _this.setState({ entries: entries });
+
+      var newEntry = { id: btoa("PACO PEREZ AVELLAN".slice(0, 2) + Date.now() / 1000),
+        title: '',
+        description: '',
+        creator: null,
+        rating: [],
+        timeSubmitted: null,
+        similarTo: []
+      };
+
+      _this.setState({ currentEntry: newEntry });
+
+      _this.gatherData();
     };
 
     _this.alerthing = function () {
       alert('boom');
     };
 
-    _this.state = { entries: [], groupEntries: [] };
+    _this.gatherData = function () {
+
+      console.log((0, _stringify2.default)(_this.state));
+    };
+
+    _this.state = {
+      entries: [],
+      username: "PACO PEREZ AVELLAN",
+      currentEntry: { id: btoa("PACO PEREZ AVELLAN".slice(0, 2) + Date.now() / 1000),
+        title: '',
+        description: '',
+        creator: null,
+        rating: [],
+        timeSubmitted: null,
+        similarTo: []
+      }
+    };
 
     return _this;
   }
 
   (0, _createClass3.default)(AltObjectTask, [{
     key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.addEntry();
-      this.addGroupEntry({ title: 'Super paper clip', description: 'the super super paperclip that will rule them all' });
-    }
+    value: function componentWillMount() {}
+
+    //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
+
 
     //   handleSave(text) {
     //     if (text.length !== 0) {
@@ -127,17 +167,60 @@ var AltObjectTask = function (_Component) {
     //     this.setState({[name] : value})
     //   };
 
+    /**
+    * Just missing the account information.
+    */
+
+
+    // addGroupEntry = (entry) => {
+    //   var entries  = this.state.groupEntries.slice()
+    //   entries.push({id : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
+    //   this.setState({groupEntries : entries });
+    // }
+
+  }, {
+    key: 'handleEntryChange',
+    value: function handleEntryChange(event, index, value, id) {
+      //var entries  = this.state.entries.slice()
+      //
+      // var entryId = id.split(" ")[0]
+      //
+      var entryField = id.split(" ")[1];
+      //
+      // this.alterEntry (entries, entryId, entryField, value);
+      var currentEntry = this.state.currentEntry;
+      currentEntry[entryField] = value;
+
+      this.setState(currentEntry);
+
+      //this.setState({entries : entries });
+    }
+
+    // alterEntry  =  (entries, id, field, value) => {
+    //   for (var e in entries ){
+    //         var entry = entries[e]
+    //         if ( entry.id == id ){
+    //           entries[e][field] = value;
+    //           return entries;
+    //         }
+    //   }
+    // }
+
+
   }, {
     key: 'render',
 
 
     //'_marker'
     value: function render() {
+      var _this2 = this;
+
       var textColor = this.context.muiTheme.palette.textColor;
 
 
       var title = 'Alternative Objects Task';
       var text = 'Come up with as many alternative objects for a stapler as possible. \n\tYou will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
+      var currentEntry = this.state.currentEntry;
 
       return _react2.default.createElement(
         'div',
@@ -174,32 +257,39 @@ var AltObjectTask = function (_Component) {
               );
             }),
             _react2.default.createElement(_timer2.default, { timerCallback: this.alerthing }),
-            this.state.entries.map(function (entry, i) {
-
-              return _react2.default.createElement(
-                'div',
-                { key: i, style: { marginTop: 20 } },
+            _react2.default.createElement(
+              'div',
+              { style: { marginTop: 20 } },
+              _react2.default.createElement(
+                _Card.Card,
+                null,
                 _react2.default.createElement(
-                  _Card.Card,
+                  _Card.CardText,
                   null,
-                  _react2.default.createElement(
-                    _Card.CardText,
-                    null,
-                    'Title: ',
-                    _react2.default.createElement(_TextField2.default, { id: entry.name + "_title", style: { marginLeft: 10
-                      } }),
-                    _react2.default.createElement('br', null),
-                    'Description: ',
-                    _react2.default.createElement(_TextField2.default, {
-                      multiLine: true,
-                      rows: 1,
-                      rowsMax: 10,
-                      id: entry.name + "_description", style: { marginLeft: 10, width: '80%'
-                      } })
-                  )
+                  'Title: ',
+                  _react2.default.createElement(_TextField2.default, { id: currentEntry.id + " title",
+                    style: { marginLeft: 10 },
+                    value: this.state.currentEntry.title,
+                    onChange: function onChange(event, index, value) {
+                      return _this2.handleEntryChange(event, value, index, currentEntry.id + ' title');
+                    }
+                  }),
+                  _react2.default.createElement('br', null),
+                  'Description: ',
+                  _react2.default.createElement(_TextField2.default, {
+                    multiLine: true,
+                    rows: 1,
+                    rowsMax: 10,
+                    id: currentEntry.id + " description",
+                    style: { marginLeft: 10, width: '80%' },
+                    value: this.state.currentEntry.description,
+                    onChange: function onChange(event, index, value) {
+                      return _this2.handleEntryChange(event, value, index, currentEntry.id + ' description');
+                    }
+                  })
                 )
-              );
-            }),
+              )
+            ),
             _react2.default.createElement(
               _RaisedButton2.default,
               {
@@ -236,7 +326,7 @@ var AltObjectTask = function (_Component) {
                 paddingTop: 0
               }
             },
-            this.state.groupEntries.map(function (entry, i) {
+            this.state.entries.map(function (entry, i) {
 
               return _react2.default.createElement(
                 'div',

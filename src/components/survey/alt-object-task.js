@@ -33,8 +33,18 @@ class AltObjectTask extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {entries:[],groupEntries:[]};
-
+    this.state = {
+     entries:[],
+     username : "PACO PEREZ AVELLAN",
+     currentEntry : {  id : btoa("PACO PEREZ AVELLAN".slice(0,2)+(Date.now()/1000)),
+       title : '',
+       description : '',
+       creator : null,
+       rating : [],
+       timeSubmitted : null,
+       similarTo : [],
+     }
+    };
 
   }
 
@@ -45,8 +55,8 @@ class AltObjectTask extends Component {
   };
 
   componentWillMount() {
-    this.addEntry();
-    this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
+
+    //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
   }
 
 //   handleSave(text) {
@@ -70,20 +80,85 @@ class AltObjectTask extends Component {
 //     this.setState({[name] : value})
 //   };
 
+  /**
+  * Just missing the account information.
+  */
   addEntry = () => {
     var entries  = this.state.entries.slice()
-    entries.push({name : ('entry'+entries.length), title : '',description : ''});
+    // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
+    //                 title : '',
+    //                 description : '',
+    //                 creator : null,
+    //                 rating : [],
+    //                 timeSubmitted : null,
+    //                 similarTo : [],
+    //               });
+
+    var o2 = JSON.parse(JSON.stringify(this.state.currentEntry));
+    o2.timeSubmitted = Date.now();
+
+    entries.push(o2);
+
     this.setState({entries : entries });
+
+    var newEntry = { id : btoa("PACO PEREZ AVELLAN".slice(0,2)+(Date.now()/1000)),
+      title : '',
+      description : '',
+      creator : null,
+      rating : [],
+      timeSubmitted : null,
+      similarTo : [],
+    };
+
+    this.setState({currentEntry : newEntry});
+
+    this.gatherData();
   }
 
-  addGroupEntry = (entry) => {
-    var entries  = this.state.groupEntries.slice()
-    entries.push({name : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
-    this.setState({groupEntries : entries });
-  }
+  // addGroupEntry = (entry) => {
+  //   var entries  = this.state.groupEntries.slice()
+  //   entries.push({id : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
+  //   this.setState({groupEntries : entries });
+  // }
 
   alerthing = () => {
     alert('boom');
+  }
+
+  handleEntryChange(event, index, value, id) {
+    //var entries  = this.state.entries.slice()
+      //
+      // var entryId = id.split(" ")[0]
+      //
+      var entryField = id.split(" ")[1];
+      //
+      // this.alterEntry (entries, entryId, entryField, value);
+      var currentEntry = this.state.currentEntry;
+      currentEntry[entryField] = value;
+
+      this.setState(currentEntry : currentEntry);
+
+
+
+    //this.setState({entries : entries });
+  }
+
+  // alterEntry  =  (entries, id, field, value) => {
+  //   for (var e in entries ){
+  //         var entry = entries[e]
+  //         if ( entry.id == id ){
+  //           entries[e][field] = value;
+  //           return entries;
+  //         }
+  //   }
+  // }
+
+
+  gatherData = () => {
+
+      console.log(JSON.stringify(this.state));
+
+
   }
 
 //'_marker'
@@ -93,6 +168,7 @@ class AltObjectTask extends Component {
 
     let title = 'Alternative Objects Task';
     let text = `Come up with as many alternative objects for a stapler as possible. \n	You will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button`;
+    let currentEntry = this.state.currentEntry;
 
     return (
       <div style={{display:'flex'}}>
@@ -121,29 +197,28 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
-
-
               <Timer timerCallback={ this.alerthing }></Timer>
 
-              {
-                this.state.entries.map( (entry,i) => {
-
-                  return <div key={i} style={{marginTop:20}}>
-                            <Card>
-                            <CardText>
-                                Title: <TextField id={entry.name+"_title"} style={{marginLeft:10,
-                                }} /><br/>
-                                Description: <TextField
-                                              multiLine={true}
-                                              rows={1}
-                                              rowsMax={10}
-                                              id={entry.name+"_description"} style={{ marginLeft:10, width: '80%',
-                                   }} />
-                            </CardText>
-                           </Card>
-                        </div>
-                })
-              }
+              <div style={{marginTop:20}}>
+                  <Card>
+                  <CardText>
+                      Title: <TextField id={currentEntry.id+" title"}
+                                        style={{marginLeft:10,}}
+                                        value={this.state.currentEntry.title}
+                                        onChange={ (event, index, value) => this.handleEntryChange(event, value, index, (currentEntry.id+' title'))}
+                             /><br/>
+                      Description: <TextField
+                                    multiLine={true}
+                                    rows={1}
+                                    rowsMax={10}
+                                    id={currentEntry.id+" description"}
+                                    style={{marginLeft:10, width: '80%',}}
+                                    value={this.state.currentEntry.description}
+                                    onChange={ (event, index, value) => this.handleEntryChange(event, value, index, (currentEntry.id+' description'))}
+                             />
+                  </CardText>
+                 </Card>
+              </div>
 
               <RaisedButton
                 id="newEntry"
@@ -180,7 +255,7 @@ class AltObjectTask extends Component {
               >
 
               {
-                this.state.groupEntries.map( (entry,i) => {
+                this.state.entries.map( (entry,i) => {
 
                   return <div key={i} style={{padding:5}}>
                                 <Card>
