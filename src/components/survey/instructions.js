@@ -69,6 +69,7 @@ class Instructions extends Component {
   constructor(props) {
     super(props);
      this.state = {};
+     console.log("INSTRUCTIONS: "+props.payload)
   }
 
   static contextTypes = {

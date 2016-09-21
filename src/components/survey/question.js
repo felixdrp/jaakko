@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
@@ -308,9 +308,9 @@ var exitQuestionnaire = {
     },
     {
       name : 'howMuchRisk',
-      text : '7. Assuming you could risk up to 100£ but the probability of winning would be unknown, how much of the £100 would you be willing to risk?',
-      type : TEXT_FIELD_TYPE,
-      typeVars : {}
+      text : '7. Assuming you could risk up to 100£ but the probability of winning would be unknown,\n how much of the £100 would you be willing to risk?',
+      type : SLIDER_FIELD_TYPE,
+      typeVars : {min: 0, max:100, step:1}
     },
     {
       name : 'preferredPayment2',
@@ -356,14 +356,15 @@ var exitQuestionnaire = {
 };
 
 
-questionnaire = entryQuestionnarie;
+
 // '0	10	20	30	40	50	60	70	80	90	100','Cannot			Moderately				highly certain 	   ','do at all			Can do					can do']
 
 class Question extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {};
+
+    this.state = {questionnaire : 'entry' };
   }
 
   static contextTypes = {
@@ -382,7 +383,7 @@ class Question extends Component {
   }
 
   handleChange(event, index, value, name) {
-    //debugger;
+  //  debugger;
     this.setState({[name] : value})
   };
 
@@ -397,12 +398,18 @@ class Question extends Component {
   };
 
 
+  gatherData = () => {
 
+      console.log(JSON.stringify(this.state));
+
+
+  }
 
 
 //'_marker'
   render() {
     // let message = this.props.message? this.props.message : 'Question'
+    let questionnaire = (this.state.questionnaire == 'entry') ? entryQuestionnarie : exitQuestionnaire
     let message =  'Question'
 
     const { textColor } = this.context.muiTheme.palette;
@@ -414,10 +421,12 @@ class Question extends Component {
       (q,i)=>{
         switch (q.type) {
           case TEXT_FIELD_TYPE:
-            return <div key={i} >{q.text}<TextField id={q.name} style={{
+            return <div key={i} style={{marginTop: 20,}}>{q.text}<TextField id={q.name} style={{
                     paddingLeft: 10,
-                    marginTop: 20,
-                  }} /><br /></div>
+                  }} //       handleChange(event, index, value, name) {
+                    onChange={ (event, index, value)=>this.handleChange(event, value, index,  q.name)}/>
+
+                   </div>
 
           case LIST_FIELD_TYPE:
             return <div key={i} >{q.text}
@@ -440,6 +449,7 @@ class Question extends Component {
                    style={{
                      position: 'relative',
                      marginTop: 20,
+                     marginBottom: 30,
                    }}
                    >
                    <span
@@ -452,7 +462,8 @@ class Question extends Component {
                        margin: 1,
                        padding: 1,
                        width: 200,
-                       top: -24,
+                       top: 5,
+                       left: 218,
                        position: 'absolute',
                            }}
                      id={q.name}
@@ -469,10 +480,12 @@ class Question extends Component {
                      margin: 1,
                      paddingLeft: 93,
                      width: 200,
-                     top: -15,
+                     top: 20,
+                     left: 211,
                      fontWeight: 'bold',
                      position: 'absolute',
                    }}> {this.state[(q.name)]} </div>
+                   <br/>
              </div>
            case COMMENT_TYPE:
             return <div key={i}>
@@ -487,7 +500,9 @@ class Question extends Component {
                                     <TextField id={q.name+j} style={{
                                     paddingLeft: 10,
                                     marginRight: 20,
-                                    }} />
+                                    }}
+                                    onChange={ (event, index, value)=> this.handleChange(event, index, value, (q.name+j))}
+                                    />
                                     {getTextPart(k,1)}
                                     <br />
                                   </div>
@@ -533,7 +548,7 @@ class Question extends Component {
                          id={q.name}
                          name={q.name}
                          defaultSelected={this.state[q.name]}
-                         onChange={ (event, index, value)=>this.handleChange(event, index, value, q.name)}
+                         onChange={ (event, index, value)=>this.handleRadioChange(event, index, q.name)}
                        >
                          {
                            q.typeVars.opts.map(
@@ -631,13 +646,14 @@ class Question extends Component {
 
               {qs}
 
-              <FlatButton
+              <RaisedButton
                 id="submitAnswers"
                 style={{color: 'white',}}
                 type="submit"
+                onClick= {this.gatherData}
               >
                 Submit
-              </FlatButton>
+              </RaisedButton>
 
             </CardText>
 

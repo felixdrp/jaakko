@@ -263,6 +263,7 @@ var Instructions = function (_Component) {
     };
 
     _this.state = {};
+    console.log("INSTRUCTIONS: " + props.payload);
     return _this;
   }
 

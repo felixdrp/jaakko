@@ -8,6 +8,10 @@ var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -42,9 +46,9 @@ var _TextField = require('material-ui/TextField');
 
 var _TextField2 = _interopRequireDefault(_TextField);
 
-var _FlatButton = require('material-ui/FlatButton');
+var _RaisedButton = require('material-ui/RaisedButton');
 
-var _FlatButton2 = _interopRequireDefault(_FlatButton);
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
 var _SelectField = require('material-ui/SelectField');
 
@@ -308,9 +312,9 @@ var exitQuestionnaire = {
     typeVars: { opts: ['a. Stay at £200', 'b. Have a 50% chance of receiving £300 and a 50% chance of receiving £100', 'c. Have a 50% chance of receiving £400 and a 50% chance of receiving £0', 'd. Have a 10% chance of receiving £1500 and a 90% chance of receiving £0'] }
   }, {
     name: 'howMuchRisk',
-    text: '7. Assuming you could risk up to 100£ but the probability of winning would be unknown, how much of the £100 would you be willing to risk?',
-    type: TEXT_FIELD_TYPE,
-    typeVars: {}
+    text: '7. Assuming you could risk up to 100£ but the probability of winning would be unknown,\n how much of the £100 would you be willing to risk?',
+    type: SLIDER_FIELD_TYPE,
+    typeVars: { min: 0, max: 100, step: 1 }
   }, {
     name: 'preferredPayment2',
     text: '8. Which would you prefer?',
@@ -339,7 +343,6 @@ var exitQuestionnaire = {
   }]
 };
 
-questionnaire = entryQuestionnarie;
 // '0	10	20	30	40	50	60	70	80	90	100','Cannot			Moderately				highly certain 	   ','do at all			Can do					can do']
 
 var Question = function (_Component) {
@@ -350,7 +353,12 @@ var Question = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (Question.__proto__ || (0, _getPrototypeOf2.default)(Question)).call(this, props));
 
-    _this.state = {};
+    _this.gatherData = function () {
+
+      console.log((0, _stringify2.default)(_this.state));
+    };
+
+    _this.state = { questionnaire: 'entry' };
     return _this;
   }
 
@@ -367,7 +375,7 @@ var Question = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(event, index, value, name) {
-      //debugger;
+      //  debugger;
       this.setState((0, _defineProperty3.default)({}, name, value));
     }
   }, {
@@ -384,10 +392,14 @@ var Question = function (_Component) {
     }
   }, {
     key: 'render',
+
+
+    //'_marker'
     value: function render() {
       var _this2 = this;
 
       // let message = this.props.message? this.props.message : 'Question'
+      var questionnaire = this.state.questionnaire == 'entry' ? entryQuestionnarie : exitQuestionnaire;
       var message = 'Question';
 
       var textColor = this.context.muiTheme.palette.textColor;
@@ -401,13 +413,14 @@ var Question = function (_Component) {
           case TEXT_FIELD_TYPE:
             return _react2.default.createElement(
               'div',
-              { key: i },
+              { key: i, style: { marginTop: 20 } },
               q.text,
               _react2.default.createElement(_TextField2.default, { id: q.name, style: {
-                  paddingLeft: 10,
-                  marginTop: 20
-                } }),
-              _react2.default.createElement('br', null)
+                  paddingLeft: 10
+                } //       handleChange(event, index, value, name) {
+                , onChange: function onChange(event, index, value) {
+                  return _this2.handleChange(event, value, index, q.name);
+                } })
             );
 
           case LIST_FIELD_TYPE:
@@ -437,7 +450,8 @@ var Question = function (_Component) {
               { key: i,
                 style: {
                   position: 'relative',
-                  marginTop: 20
+                  marginTop: 20,
+                  marginBottom: 30
                 }
               },
               _react2.default.createElement(
@@ -454,7 +468,8 @@ var Question = function (_Component) {
                   margin: 1,
                   padding: 1,
                   width: 200,
-                  top: -24,
+                  top: 5,
+                  left: 218,
                   position: 'absolute'
                 },
                 id: q.name,
@@ -475,14 +490,16 @@ var Question = function (_Component) {
                     margin: 1,
                     paddingLeft: 93,
                     width: 200,
-                    top: -15,
+                    top: 20,
+                    left: 211,
                     fontWeight: 'bold',
                     position: 'absolute'
                   } },
                 ' ',
                 _this2.state[q.name],
                 ' '
-              )
+              ),
+              _react2.default.createElement('br', null)
             );
           case COMMENT_TYPE:
             return _react2.default.createElement(
@@ -503,7 +520,11 @@ var Question = function (_Component) {
                   _react2.default.createElement(_TextField2.default, { id: q.name + j, style: {
                       paddingLeft: 10,
                       marginRight: 20
-                    } }),
+                    },
+                    onChange: function onChange(event, index, value) {
+                      return _this2.handleChange(event, index, value, q.name + j);
+                    }
+                  }),
                   getTextPart(k, 1),
                   _react2.default.createElement('br', null)
                 );
@@ -557,7 +578,7 @@ var Question = function (_Component) {
                   name: q.name,
                   defaultSelected: _this2.state[q.name],
                   onChange: function onChange(event, index, value) {
-                    return _this2.handleChange(event, index, value, q.name);
+                    return _this2.handleRadioChange(event, index, q.name);
                   }
                 },
                 q.typeVars.opts.map(function (q, i) {
@@ -663,11 +684,12 @@ var Question = function (_Component) {
             _react2.default.createElement('br', null),
             qs,
             _react2.default.createElement(
-              _FlatButton2.default,
+              _RaisedButton2.default,
               {
                 id: 'submitAnswers',
                 style: { color: 'white' },
-                type: 'submit'
+                type: 'submit',
+                onClick: this.gatherData
               },
               'Submit'
             )

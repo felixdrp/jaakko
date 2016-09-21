@@ -130,7 +130,7 @@ function login20Accounts() {
   var email = function email(i) {
     return 'lucas' + i + '.George@sky.wl';
   };
-  for (var i = 1; i < 5; i++) {
+  for (var i = 1; i < 21; i++) {
     websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: email(i), password: '1234' } });
   }
 }
