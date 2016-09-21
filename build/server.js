@@ -156,12 +156,16 @@ var updateControlRooms = function updateControlRooms(store) {
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   accounts: _server.accounts,
   groups: _server.groups,
-  session: _server.session
+  // Session survey questions
+  session: _server.session,
+  // Results to the surveys
+  results: _server.results
 }), (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
 
+// Add the survey questions data to the redux store
 store.dispatch((0, _actions.sessionDataAdd)(_sessionData2.default));
-console.log('~~~~ session estas ahi?');
-console.log(store.getState());
+// console.log('~~~~ session estas ahi?')
+// console.log(store.getState())
 
 wss.broadcast = function broadcast(data) {
   // debugger
@@ -177,12 +181,17 @@ wss.broadcast = function broadcast(data) {
 };
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
-setTimeout(function () {
-  // setInterval( () => {
-  debugger;
-  console.log('broadcast');
-  wss.broadcast((0, _stringify2.default)({ type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }));
-}, 8000);
+// setTimeout( () => {
+// // setInterval( () => {
+// debugger
+// console.log('broadcast')
+// wss.broadcast(
+//   JSON.stringify(
+//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+//   )
+// )
+// }, 8000)
+
 
 var websocketManager = function websocketManager(ws) {
   var name = 'temporal';

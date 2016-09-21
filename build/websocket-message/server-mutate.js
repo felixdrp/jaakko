@@ -158,7 +158,7 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : 119;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : 126;
                       break;
 
                     case 3:
@@ -563,6 +563,33 @@ exports.default = function () {
                       });
 
                     case 119:
+                      if (!((typeof payload === 'undefined' ? 'undefined' : (0, _typeof3.default)(payload)) != 'object' || !payload.accountId || payload.accountId == 'unassigned')) {
+                        _context.next = 122;
+                        break;
+                      }
+
+                      console.log('SUBMIT_SURVEY_INFO: No valid accountId');
+                      return _context.abrupt('return', {
+                        v: false
+                      });
+
+                    case 122:
+
+                      result = store.getState();
+
+                      // Add survey info to the redux store and to the database.
+                      store.dispatch((0, _actions.storeSurveInfo)((0, _extends3.default)({
+                        surveyId: result.accounts[payload.accountId].surveyPointer
+                      }, payload)));
+
+                      // After that move to the next survey step.
+                      nextStep(payload.accountId);
+
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 126:
                     case 'end':
                       return _context.stop();
                   }

@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -31,6 +35,8 @@ var _react2 = _interopRequireDefault(_react);
 var _reactRedux = require('react-redux');
 
 var _queryActions = require('../../websocket-message/query-actions');
+
+var _serverActions = require('../../websocket-message/server-actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61,10 +67,23 @@ var SurveyContainer = function (_Component) {
 
       // Load the study information
       // Ask for the information to the server
-      this.context.websocket.send((0, _queryActions.wsSurveyStateGet)(this.props.account.email));
+      // this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
+      // Take the payload directly from the session-data file.
+      // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
       setTimeout(function () {
-        console.log('didMount> ' + _this2.state.payload);_this2.setState({ payload: 'some more info!!' });
+        console.log('didMount> ' + _this2.state.payload);_this2.submitInfo({ payload: 'some more info!!' });
       }, 4000);
+      this.setState({ start: Date.now() });
+    }
+  }, {
+    key: 'submitInfo',
+    value: function submitInfo(infoObject) {
+      var props = this.props;
+      this.context.websocket.send((0, _serverActions.wsSubmitSurveyInfo)((0, _extends3.default)({
+        accountId: 'account' in props ? props.account.email || 'unassigned' : '',
+        startTimestamp: this.state.start,
+        endTimestamp: Date.now()
+      }, infoObject)));
     }
   }, {
     key: 'render',

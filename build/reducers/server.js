@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.accounts = accounts;
 exports.groups = groups;
 exports.session = session;
+exports.results = results;
 
 var _actions = require('../actions/actions');
 
@@ -110,6 +111,21 @@ function session() {
   switch (action.type) {
     case _actions.SESSION_DATA_ADD:
       state = payload;
+      return state;
+
+    default:
+      return state;
+  }
+}
+
+function results() {
+  var state = arguments.length <= 0 || arguments[0] === undefined ? { surveyInfo: [] } : arguments[0];
+  var action = arguments[1];
+
+  var payload = action.payload || '';
+  switch (action.type) {
+    case _actions.STORE_SURVEY_INFO:
+      state.surveyInfo.push(payload);
       return state;
 
     default:

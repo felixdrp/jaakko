@@ -10,6 +10,8 @@ import {
   GROUPS_REMOVE_ACCOUNT,
 
   SESSION_DATA_ADD,
+  STORE_SURVEY_INFO,
+
 } from '../actions/actions'
 
 /*
@@ -107,6 +109,18 @@ export function session(state = { }, action) {
   switch (action.type) {
     case SESSION_DATA_ADD:
       state = payload
+      return state
+
+    default:
+      return state
+  }
+}
+
+export function results(state = { surveyInfo: [] }, action) {
+  let payload = action.payload || ''
+  switch (action.type) {
+    case STORE_SURVEY_INFO:
+      state.surveyInfo.push(payload)
       return state
 
     default:

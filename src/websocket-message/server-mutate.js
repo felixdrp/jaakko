@@ -13,10 +13,6 @@ import {
 
 // Redux server actions
 import {
-  accountsAdd,
-  accountsUpdate,
-  accountsRemove,
-
   GROUPS_ADD,
   GROUPS_REMOVE,
   GROUPS_ADD_ACCOUNT,
@@ -27,12 +23,19 @@ import {
   GROUPS_AUTOMATE_CREATION,
 
   SURVEY_STEP_ALL,
+  SUBMIT_SURVEY_INFO,
+
+  accountsAdd,
+  accountsUpdate,
+  accountsRemove,
 
   groupsAdd,
   groupsRemove,
   groupsAddAccount,
   groupsRemoveAccount,
   moveAccounFromGroup,
+
+  storeSurveInfo,
 } from '../actions/actions'
 
 // Redux client actions
@@ -408,6 +411,30 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
         payload.forEach( accountId => nextStep( accountId ) )
       }
       return true
+
+    case SUBMIT_SURVEY_INFO:
+      // Check payload && payload accountId
+      if (typeof payload != 'object' || !payload.accountId || payload.accountId == 'unassigned') {
+        console.log('SUBMIT_SURVEY_INFO: No valid accountId')
+        return false
+      }
+
+      result = store.getState()
+
+      // Add survey info to the redux store and to the database.
+      store.dispatch(
+        storeSurveInfo({
+          surveyId: result.accounts[payload.accountId].surveyPointer,
+          ...payload
+        })
+      )
+
+      // After that move to the next survey step.
+      nextStep( payload.accountId )
+
+      return true
+
+
 
   }
 }

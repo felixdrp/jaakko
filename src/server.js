@@ -31,6 +31,7 @@ import {
   accounts,
   groups,
   session,
+  results,
 } from './reducers/server';
 
 import {
@@ -128,7 +129,10 @@ const store = createStore(
   combineReducers({
     accounts,
     groups,
+    // Session survey questions
     session,
+    // Results to the surveys
+    results,
   }),
   applyMiddleware(
     thunk,
@@ -136,9 +140,10 @@ const store = createStore(
   )
 );
 
+// Add the survey questions data to the redux store
 store.dispatch( sessionDataAdd(sessionData) )
-console.log('~~~~ session estas ahi?')
-console.log(store.getState())
+// console.log('~~~~ session estas ahi?')
+// console.log(store.getState())
 
 wss.broadcast = function broadcast(data) {
   // debugger
@@ -154,16 +159,16 @@ wss.broadcast = function broadcast(data) {
 };
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
-setTimeout( () => {
-// setInterval( () => {
-debugger
-console.log('broadcast')
-wss.broadcast(
-  JSON.stringify(
-    { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
-  )
-)
-}, 8000)
+// setTimeout( () => {
+// // setInterval( () => {
+// debugger
+// console.log('broadcast')
+// wss.broadcast(
+//   JSON.stringify(
+//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+//   )
+// )
+// }, 8000)
 
 
 var websocketManager = function (ws) {
