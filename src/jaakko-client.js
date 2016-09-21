@@ -89,7 +89,7 @@ ws.onmessage = (event) => {
 
 function login20Accounts() {
   let email = (i) => `lucas${i}.George@sky.wl`
-  for (let i = 1; i < 5; i++) {
+  for (let i = 1; i < 21; i++) {
     websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email: email(i), password: '1234'} } )
   }
 }
