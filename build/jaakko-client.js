@@ -70,7 +70,8 @@ var middleware = (0, _reactRouterRedux.routerMiddleware)(_reactRouter.browserHis
 // // Create Redux store with initial state
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   account: _clientReducers.account,
-  routing: _reactRouterRedux.routerReducer
+  routing: _reactRouterRedux.routerReducer,
+  task: _clientReducers.task
 }), initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(middleware),
 // Redux devToolsExtension
 window.devToolsExtension ? window.devToolsExtension() : function (f) {
@@ -102,12 +103,12 @@ ws.onmessage = function (event) {
   switch (message.type) {
     // Process message of type MUTATE
     case 'MUTATE':
-      mutate({
-        action: message.action,
-        payload: message.payload,
-        websocket: websocket,
-        store: store
-      });
+      // mutate({
+      //   action: message.action,
+      //   payload: message.payload,
+      //   websocket,
+      //   store
+      // })
       break;
     // Process message of type QUERY
     case 'QUERY':

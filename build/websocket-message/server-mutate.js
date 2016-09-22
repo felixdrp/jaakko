@@ -158,7 +158,7 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : 126;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 126 : 129;
                       break;
 
                     case 3:
@@ -590,6 +590,18 @@ exports.default = function () {
                       });
 
                     case 126:
+                      result = store.getState();
+
+                      store.dispatch((0, _actions.taskIdeaAdd)((0, _extends3.default)({
+                        group: result.accounts[payload.creator].group,
+                        groupType: result.groups[result.accounts[payload.creator].group].type
+                      }, payload)));
+
+                      return _context.abrupt('return', {
+                        v: true
+                      });
+
+                    case 129:
                     case 'end':
                       return _context.stop();
                   }

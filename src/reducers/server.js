@@ -12,6 +12,8 @@ import {
   SESSION_DATA_ADD,
   STORE_SURVEY_INFO,
 
+  TASK_ADD_IDEA,
+  TASK_INCREASE_POINTER,
 } from '../actions/actions'
 
 /*
@@ -122,6 +124,19 @@ export function results(state = { surveyInfo: [] }, action) {
     case STORE_SURVEY_INFO:
       state.surveyInfo.push(payload)
       return state
+
+    default:
+      return state
+  }
+}
+
+export function task(state = { taskPointer: 0, taskList: [ [] ] }, action) {
+  let payload = action.payload || ''
+  switch (action.type) {
+    case TASK_ADD_IDEA:
+      state.taskList[ state.taskPointer ].push( payload )
+      return state
+    case TASK_INCREASE_POINTER:
 
     default:
       return state

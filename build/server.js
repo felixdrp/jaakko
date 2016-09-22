@@ -125,7 +125,7 @@ var updateControlRooms = function updateControlRooms(store) {
       if (vervose) {
         // console.log('UPDATE ControlRoom state' + payload )
         console.log('MEMORY USAGE state' + (0, _stringify2.default)(process.memoryUsage()));
-        console.log((0, _stringify2.default)(store.getState().results, null, 4));
+        console.log((0, _stringify2.default)(store.getState().task, null, 4));
         // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
       }
 
@@ -134,7 +134,18 @@ var updateControlRooms = function updateControlRooms(store) {
         stream.write((0, _stringify2.default)(payload));
       }
 
-      // transfer asynchronously
+      // If new idea added transmit to the same group
+      if (action.type == _actions.TASK_ADD_IDEA) {
+        store.getState().groups[action.payload.group].accountList.forEach(function (client) {
+          var state = store.getState();
+          state.accounts[client].ws.send((0, _serverActions.wsTaskUpdateGroupIdeas)(state.task.taskList[state.task.taskPointer].filter(function (element) {
+            return state.accounts[client].group == element.group;
+          })));
+          console.log('send to group friends > ' + client);
+        });
+      }
+
+      // transfer asynchronously to all the admins
       new _promise2.default(function (resolve, reject) {
         wssAdmin.clients.forEach(function (wsControlRoom) {
           // console.log('UPDATE ControlRoom state (promise) >' + payload)
@@ -166,7 +177,8 @@ var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   // Session survey questions
   session: _server.session,
   // Results to the surveys
-  results: _server.results
+  results: _server.results,
+  task: _server.task
 }), (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
 
 // Add the survey questions data to the redux store

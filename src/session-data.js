@@ -37,6 +37,11 @@ const sessionData = {
       time: 'inf',
     },
     {
+      type: ALT_OBJECT_TASK,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+    {
       type: QUESTION,
       payload: 'entry',
       time: 'inf',

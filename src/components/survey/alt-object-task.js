@@ -28,18 +28,24 @@ import {
  ActionStore,
 } from 'material-ui/svg-icons';
 
+import {
+  swTaskIdeaAdd,
+} from '../../websocket-message/server-actions'
+
 
 class AltObjectTask extends Component {
 
   constructor(props) {
     super(props);
+    let accountId = this.props.account.email || 'unassigned'
     this.state = {
      entries:[],
      username : "PACO PEREZ AVELLAN",
-     currentEntry : {  id : btoa("PACO PEREZ AVELLAN".slice(0,2)+(Date.now()/1000)),
+     currentEntry : {
+       id : btoa( accountId.slice(0,2)+(Date.now()/1000) ),
        title : '',
        description : '',
-       creator : null,
+       creator : accountId,
        rating : [],
        timeSubmitted : null,
        similarTo : [],
@@ -83,7 +89,8 @@ class AltObjectTask extends Component {
   /**
   * Just missing the account information.
   */
-  addEntry = () => {
+  addEntry = (e) => {
+
     var entries  = this.state.entries.slice()
     // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
     //                 title : '',
@@ -94,17 +101,30 @@ class AltObjectTask extends Component {
     //                 similarTo : [],
     //               });
 
+    if (
+      this.state.currentEntry.title == '' ||
+      this.state.currentEntry.description == ''
+    ) {
+      return
+    }
+
+    let accountId = this.props.account.email || 'unassigned'
     var o2 = JSON.parse(JSON.stringify(this.state.currentEntry));
     o2.timeSubmitted = Date.now();
+
+    this.context.websocket.send(
+      swTaskIdeaAdd( o2 )
+    )
 
     entries.push(o2);
 
     this.setState({entries : entries });
 
-    var newEntry = { id : btoa("PACO PEREZ AVELLAN".slice(0,2)+(Date.now()/1000)),
+    var newEntry = {
+      id : btoa( accountId.slice(0,2)+(Date.now()/1000) ),
       title : '',
       description : '',
-      creator : null,
+      creator : accountId,
       rating : [],
       timeSubmitted : null,
       similarTo : [],
@@ -157,7 +177,6 @@ class AltObjectTask extends Component {
   gatherData = () => {
 
       console.log(JSON.stringify(this.state));
-
 
   }
 
@@ -222,7 +241,7 @@ class AltObjectTask extends Component {
 
               <RaisedButton
                 id="newEntry"
-                onClick={ this.addEntry }
+                onClick={ (e) => this.addEntry(e) }
                 type="button"
                 backgroundColor='rgb(124, 210, 118)'
                 style={{marginTop:20, }}
@@ -286,7 +305,8 @@ AltObjectTask.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    firstName : state.account.firstName,
+    account: state.account,
   }
 }
 

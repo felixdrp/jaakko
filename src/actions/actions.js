@@ -136,6 +136,16 @@ export function storeSurveInfo( surveyInfo ) {
   return { type: STORE_SURVEY_INFO, payload: surveyInfo }
 }
 
+export const TASK_ADD_IDEA = 'TASK_ADD_IDEA'
+
+export function taskIdeaAdd( idea ) {
+  return { type: TASK_ADD_IDEA, payload: idea }
+}
+
+export const TASK_INCREASE_POINTER = 'TASK_INCREASE_POINTER'
+
+
+
 /*
  * action creators
  */

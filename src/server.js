@@ -32,10 +32,12 @@ import {
   groups,
   session,
   results,
+  task,
 } from './reducers/server';
 
 import {
   STORE_SURVEY_INFO,
+  TASK_ADD_IDEA,
   // Remove the WS from a store state
   storeStateWithoutWebSocket,
   sessionDataAdd,
@@ -43,6 +45,7 @@ import {
 
 import {
   swUpdateControlRoom,
+  wsTaskUpdateGroupIdeas,
 } from './websocket-message/server-actions'
 
 import { port } from './config'
@@ -97,7 +100,7 @@ const updateControlRooms = store => next => action => {
   if (vervose) {
     // console.log('UPDATE ControlRoom state' + payload )
     console.log('MEMORY USAGE state' + JSON.stringify(process.memoryUsage()) )
-    console.log(JSON.stringify(store.getState().results, null, 4))
+    console.log(JSON.stringify(store.getState().task, null, 4))
     // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
   }
 
@@ -106,7 +109,24 @@ const updateControlRooms = store => next => action => {
     stream.write( JSON.stringify(payload) )
   }
 
-  // transfer asynchronously
+  // If new idea added transmit to the same group
+  if (action.type == TASK_ADD_IDEA) {
+    store.getState().groups[ action.payload.group ].accountList.forEach(
+      client => {
+        let state = store.getState()
+        state.accounts[ client ].ws.send(
+          wsTaskUpdateGroupIdeas(
+            state.task.taskList[ state.task.taskPointer ].filter(
+              element => state.accounts[ client ].group == element.group
+            )
+          )
+        )
+        console.log('send to group friends > ' + client)
+      }
+    )
+  }
+
+  // transfer asynchronously to all the admins
   new Promise((resolve, reject) => {
     wssAdmin.clients.forEach( (wsControlRoom) => {
       // console.log('UPDATE ControlRoom state (promise) >' + payload)
@@ -140,6 +160,7 @@ const store = createStore(
     session,
     // Results to the surveys
     results,
+    task,
   }),
   applyMiddleware(
     thunk,

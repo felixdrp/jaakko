@@ -7,6 +7,7 @@ exports.accounts = accounts;
 exports.groups = groups;
 exports.session = session;
 exports.results = results;
+exports.task = task;
 
 var _actions = require('../actions/actions');
 
@@ -127,6 +128,22 @@ function results() {
     case _actions.STORE_SURVEY_INFO:
       state.surveyInfo.push(payload);
       return state;
+
+    default:
+      return state;
+  }
+}
+
+function task() {
+  var state = arguments.length <= 0 || arguments[0] === undefined ? { taskPointer: 0, taskList: [[]] } : arguments[0];
+  var action = arguments[1];
+
+  var payload = action.payload || '';
+  switch (action.type) {
+    case _actions.TASK_ADD_IDEA:
+      state.taskList[state.taskPointer].push(payload);
+      return state;
+    case _actions.TASK_INCREASE_POINTER:
 
     default:
       return state;

@@ -9,6 +9,9 @@ import {
   REGISTER_ACCOUNT,
   wsLogAccount,
   wsGotoPage,
+
+  TASK_IDEA_ADD,
+
 } from './server-actions'
 
 // Redux server actions
@@ -36,6 +39,7 @@ import {
   moveAccounFromGroup,
 
   storeSurveInfo,
+  taskIdeaAdd,
 } from '../actions/actions'
 
 // Redux client actions
@@ -434,6 +438,20 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
 
       return true
 
+    case TASK_IDEA_ADD:
+      result = store.getState()
+
+      store.dispatch(
+        taskIdeaAdd({
+          group: result.accounts[payload.creator].group,
+          groupType: result.groups[
+            result.accounts[payload.creator].group
+          ].type,
+          ...payload,
+        })
+      )
+
+      return true
 
 
   }

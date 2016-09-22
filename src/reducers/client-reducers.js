@@ -4,6 +4,10 @@ import {
   ACCOUNT_LOG_USER,
 } from '../actions/client-actions'
 
+import {
+  TASK_UPDATE_GROUP_IDEAS,
+} from '../websocket-message/server-actions'
+
 
 export function account(state = { registerStatus: {}, loginStatus: {} }, action) {
   switch (action.type) {
@@ -15,6 +19,17 @@ export function account(state = { registerStatus: {}, loginStatus: {} }, action)
     if ('token' in action.payload)
       document.cookie = 'token=' + action.payload.token
     return { ...state, ...action.payload }
+  default:
+    return state
+  }
+}
+
+export function task(state = { tasks: [] }, action) {
+  switch (action.type) {
+  case TASK_UPDATE_GROUP_IDEAS:
+    state.tasks = action.payload
+    return state
+
   default:
     return state
   }

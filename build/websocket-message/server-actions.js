@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = exports.ACTION = exports.QUERY = exports.MUTATE = undefined;
+exports.TASK_UPDATE_GROUP_IDEAS = exports.TASK_IDEA_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = exports.ACTION = exports.QUERY = exports.MUTATE = undefined;
 exports.registerAccount = registerAccount;
 exports.loginAccount = loginAccount;
 exports.wsLogAccount = wsLogAccount;
@@ -17,6 +17,8 @@ exports.wsAutomateGroupsCreation = wsAutomateGroupsCreation;
 exports.swUpdateControlRoom = swUpdateControlRoom;
 exports.wsSurveyStepAll = wsSurveyStepAll;
 exports.wsSubmitSurveyInfo = wsSubmitSurveyInfo;
+exports.swTaskIdeaAdd = swTaskIdeaAdd;
+exports.wsTaskUpdateGroupIdeas = wsTaskUpdateGroupIdeas;
 
 var _reactRouterRedux = require('react-router-redux');
 
@@ -202,6 +204,28 @@ function wsSubmitSurveyInfo(info) {
     type: MUTATE,
     action: _actions.SUBMIT_SURVEY_INFO,
     payload: info
+  };
+}
+
+// Add ideas to de redux
+var TASK_IDEA_ADD = exports.TASK_IDEA_ADD = 'TASK_IDEA_ADD';
+
+function swTaskIdeaAdd(idea) {
+  return {
+    type: MUTATE,
+    action: TASK_IDEA_ADD,
+    payload: idea
+  };
+}
+
+// Share idea with the group
+var TASK_UPDATE_GROUP_IDEAS = exports.TASK_UPDATE_GROUP_IDEAS = 'TASK_UPDATE_GROUP_IDEAS';
+
+function wsTaskUpdateGroupIdeas(bunchIdeas) {
+  return {
+    type: ACTION,
+    action: TASK_UPDATE_GROUP_IDEAS,
+    payload: bunchIdeas
   };
 }
 //# sourceMappingURL=server-actions.js.map

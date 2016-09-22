@@ -72,6 +72,8 @@ var _wait2 = _interopRequireDefault(_wait);
 
 var _svgIcons = require('material-ui/svg-icons');
 
+var _serverActions = require('../../websocket-message/server-actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AltObjectTask = function (_Component) {
@@ -82,54 +84,17 @@ var AltObjectTask = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (AltObjectTask.__proto__ || (0, _getPrototypeOf2.default)(AltObjectTask)).call(this, props));
 
-    _this.addEntry = function () {
-      var entries = _this.state.entries.slice();
-      // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
-      //                 title : '',
-      //                 description : '',
-      //                 creator : null,
-      //                 rating : [],
-      //                 timeSubmitted : null,
-      //                 similarTo : [],
-      //               });
+    _initialiseProps.call(_this);
 
-      var o2 = JSON.parse((0, _stringify2.default)(_this.state.currentEntry));
-      o2.timeSubmitted = Date.now();
-
-      entries.push(o2);
-
-      _this.setState({ entries: entries });
-
-      var newEntry = { id: btoa("PACO PEREZ AVELLAN".slice(0, 2) + Date.now() / 1000),
-        title: '',
-        description: '',
-        creator: null,
-        rating: [],
-        timeSubmitted: null,
-        similarTo: []
-      };
-
-      _this.setState({ currentEntry: newEntry });
-
-      _this.gatherData();
-    };
-
-    _this.alerthing = function () {
-      alert('boom');
-    };
-
-    _this.gatherData = function () {
-
-      console.log((0, _stringify2.default)(_this.state));
-    };
-
+    var accountId = _this.props.account.email || 'unassigned';
     _this.state = {
       entries: [],
       username: "PACO PEREZ AVELLAN",
-      currentEntry: { id: btoa("PACO PEREZ AVELLAN".slice(0, 2) + Date.now() / 1000),
+      currentEntry: {
+        id: btoa(accountId.slice(0, 2) + Date.now() / 1000),
         title: '',
         description: '',
-        creator: null,
+        creator: accountId,
         rating: [],
         timeSubmitted: null,
         similarTo: []
@@ -294,7 +259,9 @@ var AltObjectTask = function (_Component) {
               _RaisedButton2.default,
               {
                 id: 'newEntry',
-                onClick: this.addEntry,
+                onClick: function onClick(e) {
+                  return _this2.addEntry(e);
+                },
                 type: 'button',
                 backgroundColor: 'rgb(124, 210, 118)',
                 style: { marginTop: 20 }
@@ -361,6 +328,59 @@ AltObjectTask.contextTypes = {
   websocket: _react2.default.PropTypes.object
 };
 
+var _initialiseProps = function _initialiseProps() {
+  var _this3 = this;
+
+  this.addEntry = function (e) {
+
+    var entries = _this3.state.entries.slice();
+    // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
+    //                 title : '',
+    //                 description : '',
+    //                 creator : null,
+    //                 rating : [],
+    //                 timeSubmitted : null,
+    //                 similarTo : [],
+    //               });
+
+    if (_this3.state.currentEntry.title == '' || _this3.state.currentEntry.description == '') {
+      return;
+    }
+
+    var accountId = _this3.props.account.email || 'unassigned';
+    var o2 = JSON.parse((0, _stringify2.default)(_this3.state.currentEntry));
+    o2.timeSubmitted = Date.now();
+
+    _this3.context.websocket.send((0, _serverActions.swTaskIdeaAdd)(o2));
+
+    entries.push(o2);
+
+    _this3.setState({ entries: entries });
+
+    var newEntry = {
+      id: btoa(accountId.slice(0, 2) + Date.now() / 1000),
+      title: '',
+      description: '',
+      creator: accountId,
+      rating: [],
+      timeSubmitted: null,
+      similarTo: []
+    };
+
+    _this3.setState({ currentEntry: newEntry });
+
+    _this3.gatherData();
+  };
+
+  this.alerthing = function () {
+    alert('boom');
+  };
+
+  this.gatherData = function () {
+
+    console.log((0, _stringify2.default)(_this3.state));
+  };
+};
 
 AltObjectTask.propTypes = {}
 // addTodo: PropTypes.func.isRequired
@@ -370,7 +390,8 @@ AltObjectTask.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    firstName: state.account.firstName,
+    account: state.account
   };
 };
 

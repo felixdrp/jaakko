@@ -188,3 +188,26 @@ export function wsSubmitSurveyInfo(info) {
     payload: info,
   }
 }
+
+
+// Add ideas to de redux
+export const TASK_IDEA_ADD = 'TASK_IDEA_ADD'
+
+export function swTaskIdeaAdd( idea ) {
+  return {
+    type: MUTATE,
+    action: TASK_IDEA_ADD,
+    payload: idea,
+  }
+}
+
+// Share idea with the group
+export const TASK_UPDATE_GROUP_IDEAS = 'TASK_UPDATE_GROUP_IDEAS'
+
+export function wsTaskUpdateGroupIdeas( bunchIdeas ) {
+  return {
+    type: ACTION,
+    action: TASK_UPDATE_GROUP_IDEAS,
+    payload: bunchIdeas,
+  }
+}

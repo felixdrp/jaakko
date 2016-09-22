@@ -31,6 +31,10 @@ var sessionData = {
     type: _surveyTypes.AWAIT,
     time: 'inf'
   }, {
+    type: _surveyTypes.ALT_OBJECT_TASK,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }, {
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'

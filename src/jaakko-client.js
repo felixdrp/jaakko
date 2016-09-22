@@ -12,7 +12,10 @@ import WebSocketSimple from './websocket-message/websocket-simple'
 
 // console.log(Object.keys(reactRR))
 // *** Load store reducers ***
-import { account } from './reducers/client-reducers'
+import {
+  account,
+  task,
+} from './reducers/client-reducers'
 
 // The initial state from server-generated HTML
 // have a look to server code.
@@ -29,6 +32,7 @@ const store = createStore(
   combineReducers({
     account,
     routing: routerReducer,
+    task,
   }),
   initialState,
   compose(
@@ -63,12 +67,12 @@ ws.onmessage = (event) => {
   switch ( message.type ) {
     // Process message of type MUTATE
     case 'MUTATE':
-      mutate({
-        action: message.action,
-        payload: message.payload,
-        websocket,
-        store
-      })
+      // mutate({
+      //   action: message.action,
+      //   payload: message.payload,
+      //   websocket,
+      //   store
+      // })
       break
     // Process message of type QUERY
     case 'QUERY':
