@@ -99,7 +99,7 @@ class AltObjectTask extends Component {
   */
   addEntry = (e) => {
 
-    var entries  = this.state.entries.slice()
+    // var entries  = this.state.entries.slice()
     // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
     //                 title : '',
     //                 description : '',
@@ -124,9 +124,9 @@ class AltObjectTask extends Component {
       swTaskIdeaAdd( o2 )
     )
 
-    entries.push(o2);
+    // entries.push(o2);
 
-    this.setState({entries : entries });
+    // this.setState({entries : entries });
 
     var newEntry = {
       id : btoa( accountId.slice(0,2)+(Date.now()/1000) ),
@@ -185,7 +185,7 @@ class AltObjectTask extends Component {
   gatherData = () => {
 
       console.log(JSON.stringify(this.state));
-
+      return this.state
   }
 
 //'_marker'
@@ -196,6 +196,8 @@ class AltObjectTask extends Component {
     let title = 'Alternative Objects Task';
     let text = `Come up with as many alternative objects for a stapler as possible. \n	You will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button`;
     let currentEntry = this.state.currentEntry;
+
+    let groupTasks = this.props.tasks;
 
     return (
       <div style={{display:'flex'}}>
@@ -224,7 +226,7 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
-              <Timer timerCallback={ this.alerthing }></Timer>
+              <Timer timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
 
               <div style={{marginTop:20}}>
                   <Card>
@@ -282,7 +284,7 @@ class AltObjectTask extends Component {
               >
 
               {
-                this.state.entries.map( (entry,i) => {
+                groupTasks.map( (entry,i) => {
 
                   return <div key={i} style={{padding:5}}>
                                 <Card>
