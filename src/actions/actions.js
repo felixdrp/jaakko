@@ -126,7 +126,15 @@ export function sessionDataAdd(sessionData) {
 // Take a step on the survey for all account in the array.
 export const SURVEY_STEP_ALL = 'SURVEY_STEP_ALL'
 
+// Submit the survey info to the server to process
+export const SUBMIT_SURVEY_INFO = 'SUBMIT_SURVEY_INFO'
 
+
+export const STORE_SURVEY_INFO = 'STORE_SURVEY_INFO'
+
+export function storeSurveInfo( surveyInfo ) {
+  return { type: STORE_SURVEY_INFO, payload: surveyInfo }
+}
 
 /*
  * action creators

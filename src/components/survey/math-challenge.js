@@ -26,7 +26,7 @@ function getNumbers(N,M){
       sum += number;
       numbers.push(number);
     }
-    results.push({numbers : numbers , sum : sum, solution: undefined });
+    results.push({numbers : numbers , sum : sum, solution: undefined, timeSubmitted: undefined });
   }
   return results;
 }
@@ -45,9 +45,7 @@ class MathChallenge extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {elapsed:0,
-                  startt: new Date(),
-                  numbers: getNumbers(30,5),
+    this.state = { numbers: getNumbers(30,5),
      };
 
   }
@@ -70,7 +68,7 @@ class MathChallenge extends Component {
 
       // componentDidMount is called by react when the component
       // has been rendered on the page. We can set the interval here:
-      this.setState({timer : setInterval(this.tick, 50)});
+
   }
 
   componentWillUnmount(){
@@ -85,19 +83,16 @@ class MathChallenge extends Component {
     var numbers = this.state.numbers.slice();
     var index = id.split("_")[1];
     numbers[index].solution = value;
-
-
-
+    numbers[index].timeSubmitted = Date.now();
     this.setState({numbers})
-    debugger;
   }
 
-  tick = () => {
 
-        // This function is called every 50 ms. It updates the
-        // elapsed counter. Calling setState causes the component to be re-rendered
+  gatherData = () => {
 
-        this.setState({elapsed : new Date() - this.state.startt});
+    console.log(JSON.stringify(this.state));
+    return this.state
+
   }
 
   render() {
@@ -134,7 +129,7 @@ class MathChallenge extends Component {
             instructions.split('\n').map( (item,i) => <div key={i} style={{marginBottom:20}}>{item}</div>)
           }
           <br />
-            <Timer timerCallback={() => {alert('boom')}}></Timer>
+            <Timer timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
             <div>
             {
                 this.state.numbers.map( (q,i) => <div key={i}>{formatNumbers(q.numbers)}

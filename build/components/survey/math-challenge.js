@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -68,7 +72,7 @@ function getNumbers(N, M) {
       sum += number;
       numbers.push(number);
     }
-    results.push({ numbers: numbers, sum: sum, solution: undefined });
+    results.push({ numbers: numbers, sum: sum, solution: undefined, timeSubmitted: undefined });
   }
   return results;
 }
@@ -91,17 +95,13 @@ var MathChallenge = function (_Component) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (MathChallenge.__proto__ || (0, _getPrototypeOf2.default)(MathChallenge)).call(this, props));
 
-    _this.tick = function () {
+    _this.gatherData = function () {
 
-      // This function is called every 50 ms. It updates the
-      // elapsed counter. Calling setState causes the component to be re-rendered
-
-      _this.setState({ elapsed: new Date() - _this.state.startt });
+      console.log((0, _stringify2.default)(_this.state));
+      return _this.state;
     };
 
-    _this.state = { elapsed: 0,
-      startt: new Date(),
-      numbers: getNumbers(30, 5)
+    _this.state = { numbers: getNumbers(30, 5)
     };
 
     return _this;
@@ -120,7 +120,7 @@ var MathChallenge = function (_Component) {
 
       // componentDidMount is called by react when the component
       // has been rendered on the page. We can set the interval here:
-      this.setState({ timer: setInterval(this.tick, 50) });
+
     }
   }, {
     key: 'componentWillUnmount',
@@ -137,9 +137,8 @@ var MathChallenge = function (_Component) {
       var numbers = this.state.numbers.slice();
       var index = id.split("_")[1];
       numbers[index].solution = value;
-
+      numbers[index].timeSubmitted = Date.now();
       this.setState({ numbers: numbers });
-      debugger;
     }
   }, {
     key: 'render',
@@ -190,7 +189,7 @@ var MathChallenge = function (_Component) {
             }),
             _react2.default.createElement('br', null),
             _react2.default.createElement(_timer2.default, { timerCallback: function timerCallback() {
-                alert('boom');
+                return _this2.props.submit(_this2.gatherData());
               } }),
             _react2.default.createElement(
               'div',

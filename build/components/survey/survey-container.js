@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -36,6 +40,8 @@ var _sessionData2 = _interopRequireDefault(_sessionData);
 
 var _queryActions = require('../../websocket-message/query-actions');
 
+var _serverActions = require('../../websocket-message/server-actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SurveyContainer = function (_Component) {
@@ -61,18 +67,29 @@ var SurveyContainer = function (_Component) {
   (0, _createClass3.default)(SurveyContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
       // Load the study information
       // Ask for the information to the server
-      this.context.websocket.send((0, _queryActions.wsSurveyStateGet)(this.props.account.email));
-      setTimeout(function () {
-        console.log('didMount> ' + _this2.state.payload);_this2.setState({ payload: 'some more info!!' });
-      }, 4000);
+      // this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
+      // Take the payload directly from the session-data file.
+      // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
+      // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)
+      this.setState({ start: Date.now() });
+    }
+  }, {
+    key: 'submitInfo',
+    value: function submitInfo(infoObject) {
+      var props = this.props;
+      this.context.websocket.send((0, _serverActions.wsSubmitSurveyInfo)((0, _extends3.default)({
+        accountId: 'account' in props ? props.account.email || 'unassigned' : '',
+        startTimestamp: this.state.start,
+        endTimestamp: Date.now()
+      }, infoObject)));
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var props = this.props;
 
       return _react2.default.createElement(
@@ -86,7 +103,7 @@ var SurveyContainer = function (_Component) {
         this.props.children && _react2.default.cloneElement(this.props.children, {
           payload: this.state.payload,
           submit: function submit(infoToSubmit) {
-            return console.log(infoToSubmit);
+            return _this2.submitInfo(infoToSubmit);
           }
         })
       );

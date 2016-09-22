@@ -101,6 +101,13 @@ class Favourites extends Component {
 
   }
 
+  gatherData = () => {
+
+    console.log(JSON.stringify(this.state));
+    return this.state
+
+  }
+
   alerthing = () => {
     alert('boom');
   }
@@ -150,7 +157,7 @@ class Favourites extends Component {
 
 
             <br />
-            <Timer timerCallback={ this.alerthing }></Timer>
+            <Timer timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
             {
               data.map( (entry,i) => {

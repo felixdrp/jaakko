@@ -198,7 +198,7 @@ var Results = function (_Component) {
                     number
                   )
                 );
-              })
+              }).reverse()
             )
           )
         ),

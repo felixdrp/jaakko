@@ -400,8 +400,8 @@ class Question extends Component {
 
   gatherData = () => {
 
-      console.log(JSON.stringify(this.state));
-
+    console.log(JSON.stringify(this.state));
+    return this.state
 
   }
 
@@ -470,7 +470,7 @@ class Question extends Component {
                      min={(q.typeVars.min) ? q.typeVars.min : 0}
                      max={(q.typeVars.max) ? q.typeVars.max : 100}
                      step={(q.typeVars.step) ? q.typeVars.step : 10}
-                     defaultValue={(q.typeVars.max) ? (q.typeVars.max/2) : 50}
+                     defaultValue={(q.typeVars.max) ? (q.typeVars.max/2) : 0}
                      value={this.state[q.name]}
                      onChange={ (event, value)=>this.handleSliderChange(event, value, (q.name))}
                    />
@@ -587,7 +587,7 @@ class Question extends Component {
                                   min={0}
                                   max={100}
                                   step={10}
-                                  defaultValue={50}
+                                  defaultValue={0}
                                   value={this.state[q.name+j]}
                                   onChange={ (event, value)=>this.handleSliderChange(event, value, (q.name+j))}
                                 />
@@ -650,7 +650,7 @@ class Question extends Component {
                 id="submitAnswers"
                 style={{color: 'white',}}
                 type="submit"
-                onClick= {this.gatherData}
+                onClick= { () => this.props.submit( this.gatherData() ) }
               >
                 Submit
               </RaisedButton>

@@ -19,6 +19,7 @@ import {
   GROUPS_AUTOMATE_CREATION,
 
   SURVEY_STEP_ALL,
+  SUBMIT_SURVEY_INFO,
 } from '../actions/actions'
 
 import {
@@ -176,5 +177,14 @@ export function wsSurveyStepAll(accountList) {
     type: MUTATE,
     action: SURVEY_STEP_ALL,
     payload: accountList,
+  }
+}
+
+// update state in components ControlRoom socket action creator
+export function wsSubmitSurveyInfo(info) {
+  return {
+    type: MUTATE,
+    action: SUBMIT_SURVEY_INFO,
+    payload: info,
   }
 }

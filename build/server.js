@@ -107,7 +107,8 @@ app.use('/', function (req, res) {
 webServer.listen(portWeb, function () {
   return console.log('server running at https://localhost:' + portWeb);
 });
-
+// File to maintain a hard copy of the state
+var stream = fs.createWriteStream('resultsBackup.txt', { flags: 'w', autoClose: true });
 // middleware to send store updates to the admins
 var updateControlRooms = function updateControlRooms(store) {
   return function (next) {
@@ -124,7 +125,13 @@ var updateControlRooms = function updateControlRooms(store) {
       if (vervose) {
         // console.log('UPDATE ControlRoom state' + payload )
         console.log('MEMORY USAGE state' + (0, _stringify2.default)(process.memoryUsage()));
+        console.log((0, _stringify2.default)(store.getState().results, null, 4));
         // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
+      }
+
+      if (action.type == _actions.STORE_SURVEY_INFO) {
+        // Write state to a file only when STORE_SURVEY_INFO action
+        stream.write((0, _stringify2.default)(payload));
       }
 
       // transfer asynchronously
@@ -156,12 +163,16 @@ var updateControlRooms = function updateControlRooms(store) {
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   accounts: _server.accounts,
   groups: _server.groups,
-  session: _server.session
+  // Session survey questions
+  session: _server.session,
+  // Results to the surveys
+  results: _server.results
 }), (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
 
+// Add the survey questions data to the redux store
 store.dispatch((0, _actions.sessionDataAdd)(_sessionData2.default));
-console.log('~~~~ session estas ahi?');
-console.log(store.getState());
+// console.log('~~~~ session estas ahi?')
+// console.log(store.getState())
 
 wss.broadcast = function broadcast(data) {
   // debugger
@@ -177,12 +188,17 @@ wss.broadcast = function broadcast(data) {
 };
 //
 // setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
-setTimeout(function () {
-  // setInterval( () => {
-  debugger;
-  console.log('broadcast');
-  wss.broadcast((0, _stringify2.default)({ type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }));
-}, 8000);
+// setTimeout( () => {
+// // setInterval( () => {
+// debugger
+// console.log('broadcast')
+// wss.broadcast(
+//   JSON.stringify(
+//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+//   )
+// )
+// }, 8000)
+
 
 var websocketManager = function websocketManager(ws) {
   var name = 'temporal';

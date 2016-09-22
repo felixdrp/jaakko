@@ -5,3 +5,5 @@ npm-debug.log
 
 database/data/*
 database/log/*
+
+resultsBackup.txt

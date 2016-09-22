@@ -164,7 +164,7 @@ class Results extends Component {
                                               {number}
                                             </div>
                                        </div>
-                            })
+                            }).reverse()
                           }
                           </div>
                         </CardText></Card>

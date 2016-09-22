@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -110,6 +114,12 @@ var Favourites = function (_Component) {
       _this.setState({ favourites: favourites });
     };
 
+    _this.gatherData = function () {
+
+      console.log((0, _stringify2.default)(_this.state));
+      return _this.state;
+    };
+
     _this.alerthing = function () {
       alert('boom');
     };
@@ -180,7 +190,9 @@ var Favourites = function (_Component) {
             })
           ),
           _react2.default.createElement('br', null),
-          _react2.default.createElement(_timer2.default, { timerCallback: this.alerthing }),
+          _react2.default.createElement(_timer2.default, { timerCallback: function timerCallback() {
+              return _this2.props.submit(_this2.gatherData());
+            } }),
           data.map(function (entry, i) {
             return _react2.default.createElement(
               'div',

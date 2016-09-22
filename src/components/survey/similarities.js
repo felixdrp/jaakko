@@ -113,6 +113,14 @@ class Similarities extends Component {
     }
   }
 
+
+    gatherData = () => {
+
+      console.log(JSON.stringify(this.state));
+      return this.state
+
+    }
+
   alerthing = () => {
     alert('boom');
   }
@@ -160,7 +168,7 @@ class Similarities extends Component {
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
               <br />
-              <Timer timerCallback={ this.alerthing }></Timer>
+              <Timer timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
               {
                 data.map( (entry,i) => {

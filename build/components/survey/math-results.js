@@ -223,18 +223,6 @@ var MathResults = function (_Component) {
       this.setState({ groupType: 3 });
 
       data.sort(function (a, b) {
-        // if ( b.score-a.score == 0){
-        //   if ( b.stars[4]-a.stars[4] == 0){
-        //     if ( b.stars[3]-a.stars[3] == 0){
-        //       if ( b.stars[2]-a.stars[2] == 0){
-        //         if ( b.stars[1]-a.stars[1] == 0){
-        //             return b.stars[0]-a.stars[0]
-        //         } else { return b.stars[1]-a.stars[1] }
-        //       } else { return b.stars[2]-a.stars[2] }
-        //     } else { return b.stars[3]-a.stars[3] }
-        //   } else { return b.stars[4]-a.stars[4] }
-        // } else { return b.score-a.score }
-
         return b.mathScore - a.mathScore;
       });
 

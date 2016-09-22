@@ -6,6 +6,12 @@ import {
   wsSurveyStateGet,
 } from '../../websocket-message/query-actions'
 
+import {
+  wsSubmitSurveyInfo,
+} from '../../websocket-message/server-actions'
+
+
+
 class SurveyContainer extends Component {
   static propTypes = {
     // groups: PropTypes.object,
@@ -33,8 +39,25 @@ class SurveyContainer extends Component {
   componentDidMount() {
     // Load the study information
     // Ask for the information to the server
-    this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
-    setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
+    // this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
+    // Take the payload directly from the session-data file.
+    // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
+    // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)
+    this.setState({start: Date.now()});
+  }
+
+  submitInfo( infoObject ) {
+    let props = this.props
+    this.context.websocket.send(
+      wsSubmitSurveyInfo(
+        {
+          accountId: 'account' in props? props.account.email || 'unassigned': '',
+          startTimestamp: this.state.start,
+          endTimestamp: Date.now(),
+          ...infoObject,
+        }
+      )
+    )
   }
 
   render() {
@@ -53,7 +76,7 @@ class SurveyContainer extends Component {
           this.props.children,
           {
             payload: this.state.payload,
-            submit: (infoToSubmit) => console.log(infoToSubmit),
+            submit: ( infoToSubmit ) => this.submitInfo( infoToSubmit ),
           }
         )
       }

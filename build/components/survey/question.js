@@ -356,6 +356,7 @@ var Question = function (_Component) {
     _this.gatherData = function () {
 
       console.log((0, _stringify2.default)(_this.state));
+      return _this.state;
     };
 
     _this.state = { questionnaire: 'entry' };
@@ -476,7 +477,7 @@ var Question = function (_Component) {
                 min: q.typeVars.min ? q.typeVars.min : 0,
                 max: q.typeVars.max ? q.typeVars.max : 100,
                 step: q.typeVars.step ? q.typeVars.step : 10,
-                defaultValue: q.typeVars.max ? q.typeVars.max / 2 : 50,
+                defaultValue: q.typeVars.max ? q.typeVars.max / 2 : 0,
                 value: _this2.state[q.name],
                 onChange: function onChange(event, value) {
                   return _this2.handleSliderChange(event, value, q.name);
@@ -623,7 +624,7 @@ var Question = function (_Component) {
                     min: 0,
                     max: 100,
                     step: 10,
-                    defaultValue: 50,
+                    defaultValue: 0,
                     value: _this2.state[q.name + j],
                     onChange: function onChange(event, value) {
                       return _this2.handleSliderChange(event, value, q.name + j);
@@ -689,7 +690,9 @@ var Question = function (_Component) {
                 id: 'submitAnswers',
                 style: { color: 'white' },
                 type: 'submit',
-                onClick: this.gatherData
+                onClick: function onClick() {
+                  return _this2.props.submit(_this2.gatherData());
+                }
               },
               'Submit'
             )
