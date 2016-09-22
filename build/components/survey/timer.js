@@ -84,7 +84,7 @@ var Timer = function (_Component) {
       _this.setState({ elapsed: new Date() - _this.state.startt });
     };
 
-    _this.state = { elapsed: 0, totalSeconds: 40 * 60 };
+    _this.state = { elapsed: 0, totalSeconds: 20 };
     return _this;
   }
 
@@ -99,6 +99,11 @@ var Timer = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.startCountDown();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.stopCountDown();
     }
   }, {
     key: 'render',

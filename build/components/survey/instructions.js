@@ -270,11 +270,14 @@ var Instructions = function (_Component) {
                   'div',
                   null,
                   '56+73+5+10+11 =',
-                  _react2.default.createElement(_TextField2.default, { style: {
+                  _react2.default.createElement(_TextField2.default, {
+                    id: 'dummy',
+                    style: {
                       paddingLeft: 10,
                       marginRight: 20
                     },
-                    value: 155 })
+                    value: 155
+                  })
                 )
               )
             )

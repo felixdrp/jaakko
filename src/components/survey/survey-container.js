@@ -39,7 +39,18 @@ class SurveyContainer extends Component {
   componentDidMount() {
     // Load the study information
     // Ask for the information to the server
-    // this.context.websocket.send( wsSurveyStateGet(this.props.account.email) )
+    let getInfo = () => {
+      // console.log('this.context.websocket.ws.readyState')
+      // console.log(this.context.websocket.ws.readyState)
+      this.context.websocket.send( wsSurveyStateGet(this.props.account.email || 'unassigned') )
+    }
+
+    if (this.context.websocket.ws.readyState == 0) {
+      setTimeout( getInfo, 180 )
+    } else {
+      getInfo()
+    }
+
     // Take the payload directly from the session-data file.
     // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
     // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)

@@ -42,6 +42,11 @@ const sessionData = {
       time: 'inf',
     },
     {
+      type: SIMILARITIES,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+    {
       type: QUESTION,
       payload: 'entry',
       time: 'inf',

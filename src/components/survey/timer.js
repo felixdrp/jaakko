@@ -16,7 +16,7 @@ class Timer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {elapsed:0, totalSeconds: 40 * 60 };
+    this.state = {elapsed:0, totalSeconds: 20 };
   }
 
   handleSave(text) {
@@ -32,6 +32,10 @@ class Timer extends Component {
 
   componentDidMount() {
       this.startCountDown();
+  }
+
+  componentWillUnmount() {
+      this.stopCountDown();
   }
 
   startCountDown = () => {

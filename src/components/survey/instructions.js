@@ -91,7 +91,7 @@ class Instructions extends Component {
   componentWillMount() {
 
   }
-  
+
   handleSave(text) {
     if (text.length !== 0) {
       this.props.addTodo(text)
@@ -104,10 +104,10 @@ class Instructions extends Component {
            return <div style={{marginTop:20}}>
                <Card>
                <CardText>
-                   Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
+                   Title: <TextField id={'dummy'} value='Reset button pressing tool' style={{marginLeft:10,
                    }} /><br/>
                    Description: <TextField
-                                 id='dummy2'
+                                 id={'dummy2'}
                                  multiLine={true}
                                  rows={1}
                                  rowsMax={10}
@@ -189,10 +189,10 @@ class Instructions extends Component {
             return <div style={{marginTop:20}}>
                 <Card>
                 <CardText>
-                    Title: <TextField id='dummy' value='Reset button pressing tool' style={{marginLeft:10,
+                    Title: <TextField id={'dummy'} value='Reset button pressing tool' style={{marginLeft:10,
                     }} /><br/>
                     Description: <TextField
-                                  id='dummy2'
+                                  id={'dummy2'}
                                   multiLine={true}
                                   rows={1}
                                   rowsMax={10}
@@ -207,11 +207,14 @@ class Instructions extends Component {
                   <Card>
                   <CardText>
                     <div>56+73+5+10+11 =
-                        <TextField  style={{
-                            paddingLeft: 10,
-                            marginRight: 20,
-                            }}
-                            value={155}/>
+                      <TextField
+                        id={'dummy'}
+                        style={{
+                          paddingLeft: 10,
+                          marginRight: 20,
+                          }}
+                          value={155}
+                      />
                     </div>
                   </CardText>
                  </Card>
