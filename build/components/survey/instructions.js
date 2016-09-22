@@ -309,6 +309,8 @@ var Instructions = function (_Component) {
 
     //'_marker'
     value: function render() {
+      var _this2 = this;
+
       if (!this.props.payload) {
         return _react2.default.createElement('span', null);
       }
@@ -361,7 +363,10 @@ var Instructions = function (_Component) {
               {
                 id: 'ready',
                 backgroundColor: 'green',
-                style: { color: 'white' }
+                style: { color: 'white' },
+                onClick: function onClick() {
+                  return _this2.props.submit(_this2.state);
+                }
               },
               'I\'m ready'
             )

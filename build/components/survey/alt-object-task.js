@@ -195,6 +195,8 @@ var AltObjectTask = function (_Component) {
       var text = 'Come up with as many alternative objects for a stapler as possible. \n\tYou will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
       var currentEntry = this.state.currentEntry;
 
+      var groupTasks = this.props.tasks;
+
       return _react2.default.createElement(
         'div',
         { style: { display: 'flex' } },
@@ -229,7 +231,9 @@ var AltObjectTask = function (_Component) {
                 item
               );
             }),
-            _react2.default.createElement(_timer2.default, { timerCallback: this.alerthing }),
+            _react2.default.createElement(_timer2.default, { timerCallback: function timerCallback() {
+                return _this2.props.submit(_this2.gatherData());
+              } }),
             _react2.default.createElement(
               'div',
               { style: { marginTop: 20 } },
@@ -301,7 +305,7 @@ var AltObjectTask = function (_Component) {
                 paddingTop: 0
               }
             },
-            this.state.entries.map(function (entry, i) {
+            groupTasks.map(function (entry, i) {
 
               return _react2.default.createElement(
                 'div',
@@ -341,7 +345,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.addEntry = function (e) {
 
-    var entries = _this3.state.entries.slice();
+    // var entries  = this.state.entries.slice()
     // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
     //                 title : '',
     //                 description : '',
@@ -361,9 +365,9 @@ var _initialiseProps = function _initialiseProps() {
 
     _this3.context.websocket.send((0, _serverActions.swTaskIdeaAdd)(o2));
 
-    entries.push(o2);
+    // entries.push(o2);
 
-    _this3.setState({ entries: entries });
+    // this.setState({entries : entries });
 
     var newEntry = {
       id: btoa(accountId.slice(0, 2) + Date.now() / 1000),
@@ -387,6 +391,7 @@ var _initialiseProps = function _initialiseProps() {
   this.gatherData = function () {
 
     console.log((0, _stringify2.default)(_this3.state));
+    return _this3.state;
   };
 };
 

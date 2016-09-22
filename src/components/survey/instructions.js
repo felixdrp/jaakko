@@ -277,6 +277,7 @@ class Instructions extends Component {
                 id="ready"
                 backgroundColor='green'
                 style={{color: 'white',}}
+                  onClick= { () => this.props.submit( this.state ) }
               >
                 I'm ready
               </FlatButton>
