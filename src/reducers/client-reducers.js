@@ -27,8 +27,7 @@ export function account(state = { registerStatus: {}, loginStatus: {} }, action)
 export function task(state = { tasks: [] }, action) {
   switch (action.type) {
   case TASK_UPDATE_GROUP_IDEAS:
-    state.tasks = action.payload
-    return state
+    return { tasks: action.payload }
 
   default:
     return state

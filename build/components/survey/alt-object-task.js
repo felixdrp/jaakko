@@ -111,6 +111,14 @@ var AltObjectTask = function (_Component) {
     //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
 
 
+    // componentWillReceiveProps() {
+    //   console.log('componentWillReceiveProps')
+    // }
+    // shouldComponentUpdate() {
+    //   console.log('shouldComponentUpdate')
+    //   return true
+    // }
+
     //   handleSave(text) {
     //     if (text.length !== 0) {
     //       this.props.addTodo(text)
@@ -389,9 +397,13 @@ AltObjectTask.propTypes = {}
 //export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
+  var ownProps = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
   return {
     firstName: state.account.firstName,
-    account: state.account
+    account: state.account,
+    tasks: state.task.tasks,
+    taskLength: state.task.tasks.length
   };
 };
 

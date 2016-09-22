@@ -65,6 +65,14 @@ class AltObjectTask extends Component {
     //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
   }
 
+  // componentWillReceiveProps() {
+  //   console.log('componentWillReceiveProps')
+  // }
+  // shouldComponentUpdate() {
+  //   console.log('shouldComponentUpdate')
+  //   return true
+  // }
+
 //   handleSave(text) {
 //     if (text.length !== 0) {
 //       this.props.addTodo(text)
@@ -303,10 +311,12 @@ AltObjectTask.propTypes = {
 
 //export default Question
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps = {}) => {
   return {
     firstName : state.account.firstName,
     account: state.account,
+    tasks: state.task.tasks,
+    taskLength: state.task.tasks.length,
   }
 }
 

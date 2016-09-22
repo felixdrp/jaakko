@@ -75,7 +75,7 @@ class SurveyContainer extends Component {
         React.cloneElement(
           this.props.children,
           {
-            payload: this.state.payload,
+            payload: { ...this.state.payload, parentProps: this.props },
             submit: ( infoToSubmit ) => this.submitInfo( infoToSubmit ),
           }
         )
@@ -87,7 +87,7 @@ class SurveyContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.account
+    account: state.account,
   }
 }
 

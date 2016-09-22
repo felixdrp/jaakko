@@ -101,7 +101,7 @@ var SurveyContainer = function (_Component) {
           }
         },
         this.props.children && _react2.default.cloneElement(this.props.children, {
-          payload: this.state.payload,
+          payload: (0, _extends3.default)({}, this.state.payload, { parentProps: this.props }),
           submit: function submit(infoToSubmit) {
             return _this2.submitInfo(infoToSubmit);
           }

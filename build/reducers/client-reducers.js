@@ -40,8 +40,7 @@ function task() {
 
   switch (action.type) {
     case _serverActions.TASK_UPDATE_GROUP_IDEAS:
-      state.tasks = action.payload;
-      return state;
+      return { tasks: action.payload };
 
     default:
       return state;
