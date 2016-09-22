@@ -37,6 +37,15 @@ class SurveyContainer extends Component {
   }
 
   componentDidMount() {
+    this.getSurveyInfo()
+  }
+
+  componentWillReceiveProps() {
+    this.getSurveyInfo()
+  }
+
+  getSurveyInfo() {
+    console.log('mooooontttttooooooooooo!!!!!!!!!')
     // Load the study information
     // Ask for the information to the server
     let getInfo = () => {

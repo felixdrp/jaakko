@@ -67,8 +67,19 @@ var SurveyContainer = function (_Component) {
   (0, _createClass3.default)(SurveyContainer, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getSurveyInfo();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.getSurveyInfo();
+    }
+  }, {
+    key: 'getSurveyInfo',
+    value: function getSurveyInfo() {
       var _this2 = this;
 
+      console.log('mooooontttttooooooooooo!!!!!!!!!');
       // Load the study information
       // Ask for the information to the server
       var getInfo = function getInfo() {

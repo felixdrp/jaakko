@@ -88,11 +88,12 @@ export default async function query({ action, payload, ws, store }) {
 
       switch (temp.type) {
         case SIMILARITIES:
+          // debugger
           if ( result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length ) {
             temp.payload = {
               group: result.groups.list[0],
               groupType: result.groups[ result.groups.list[0] ].type,
-              ideas: result.task.tasks[ result.task.taskPointer ].filter(
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
                 element => result.groups.list[0] == element.group
               ),
             }
@@ -101,11 +102,13 @@ export default async function query({ action, payload, ws, store }) {
             temp.payload = {
               group: temp.selectedGroup,
               groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.tasks[ result.task.taskPointer ].filter(
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
                 element => temp.selectedGroup == element.group
               ),
             }
           }
+          console.log('SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES')
+          console.log(temp.payload)
 
           ws.send(
             swSetSurveyInitials( temp.payload )
@@ -119,7 +122,7 @@ export default async function query({ action, payload, ws, store }) {
             temp.payload = {
               group: temp.selectedGroup,
               groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.tasks[ result.task.taskPointer ].filter(
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
                 element => temp.selectedGroup == element.group
               ),
             }
@@ -128,7 +131,7 @@ export default async function query({ action, payload, ws, store }) {
             temp.payload = {
               group: temp.selectedGroup,
               groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.tasks[ result.task.taskPointer ].filter(
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
                 element => temp.selectedGroup == element.group
               ),
             }

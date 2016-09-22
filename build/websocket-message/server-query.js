@@ -54,7 +54,7 @@ exports.default = function () {
           case 0:
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             _context.t0 = action;
-            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 27;
+            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 29;
             break;
 
           case 4:
@@ -82,15 +82,16 @@ exports.default = function () {
             temp.type = result.session.surveyPath[temp.account.surveyPointer].type;
 
             _context.t1 = temp.type;
-            _context.next = _context.t1 === _surveyTypes.SIMILARITIES ? 17 : _context.t1 === _surveyTypes.FAVOURITES ? 20 : _context.t1 === _surveyTypes.RESULTS ? 23 : 25;
+            _context.next = _context.t1 === _surveyTypes.SIMILARITIES ? 17 : _context.t1 === _surveyTypes.FAVOURITES ? 22 : _context.t1 === _surveyTypes.RESULTS ? 25 : 27;
             break;
 
           case 17:
+            // debugger
             if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
               temp.payload = {
                 group: result.groups.list[0],
                 groupType: result.groups[result.groups.list[0]].type,
-                ideas: result.task.tasks[result.task.taskPointer].filter(function (element) {
+                ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
                   return result.groups.list[0] == element.group;
                 })
               };
@@ -99,23 +100,25 @@ exports.default = function () {
               temp.payload = {
                 group: temp.selectedGroup,
                 groupType: result.groups[temp.selectedGroup].type,
-                ideas: result.task.tasks[result.task.taskPointer].filter(function (element) {
+                ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
                   return temp.selectedGroup == element.group;
                 })
               };
             }
+            console.log('SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES');
+            console.log(temp.payload);
 
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
 
             return _context.abrupt('return');
 
-          case 20:
+          case 22:
             if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
               temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
               temp.payload = {
                 group: temp.selectedGroup,
                 groupType: result.groups[temp.selectedGroup].type,
-                ideas: result.task.tasks[result.task.taskPointer].filter(function (element) {
+                ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
                   return temp.selectedGroup == element.group;
                 })
               };
@@ -124,7 +127,7 @@ exports.default = function () {
               temp.payload = {
                 group: temp.selectedGroup,
                 groupType: result.groups[temp.selectedGroup].type,
-                ideas: result.task.tasks[result.task.taskPointer].filter(function (element) {
+                ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
                   return temp.selectedGroup == element.group;
                 })
               };
@@ -134,17 +137,17 @@ exports.default = function () {
 
             return _context.abrupt('return');
 
-          case 23:
+          case 25:
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
 
             return _context.abrupt('return');
 
-          case 25:
+          case 27:
 
             console.log('SESSION_STATE_GET return!!!');
             return _context.abrupt('return');
 
-          case 27:
+          case 29:
           case 'end':
             return _context.stop();
         }
