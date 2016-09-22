@@ -33,7 +33,7 @@ class Similarities extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {data : []};
+     this.state = {data : this.props.payload.ideas };
 
   }
 
@@ -44,18 +44,18 @@ class Similarities extends Component {
   };
 
   componentWillMount() {
-    this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-                { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]}] });
+    // this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]}] });
   }
 
 
@@ -63,49 +63,63 @@ class Similarities extends Component {
 
     var data = this.state.data;
 
-    if( field > -1 ){
-      var clean_array = []
-      for ( var a in data[originIndex].similars ){
+    if ( field > -1 && selectionIndex == data.length){ // this is the remove case.
 
-         if(data[originIndex].similars[a] == field ){
-           if ( data[originIndex].similars.indexOf(selectionIndex) < 0){
-             clean_array.push(selectionIndex);
-           }
-           continue;
-         }
-         clean_array.push(data[originIndex].similars[a]);
-      }
-      data[originIndex].similars = clean_array;
-
+        data = this.removeSimilars ( data, originIndex, field );
+        data = this.removeSimilars ( data, field, originIndex );
+        this.setState({data : data});
+        return;
     }
 
     if( field > -1 ){
-      var clean_array = []
-      for ( var a in data[field].similars ){
-
-         if(data[field].similars[a] == originIndex ){
-           if ( data[field].similars.indexOf(originIndex) < 0){
-             clean_array.push(originIndex);
-           }
-           continue;
-         }
-         clean_array.push(data[field].similars[a]);
-      }
-      data[field].similars = clean_array;
-
+      data = this.modifySimilars ( data, originIndex, selectionIndex, field );
+      data = this.modifySimilars ( data, field, originIndex, originIndex );
     }
 
 
-    if ( data[originIndex].similars.indexOf(selectionIndex) < 0){
-      data[originIndex].similars.push(selectionIndex);
+    if ( data[originIndex].similarTo.indexOf(selectionIndex) < 0){
+      data[originIndex].similarTo.push(selectionIndex);
     }
 
-    if ( data[selectionIndex].similars.indexOf(originIndex) < 0){
-      data[selectionIndex].similars.push(originIndex);
+    if ( data[selectionIndex].similarTo.indexOf(originIndex) < 0){
+      data[selectionIndex].similarTo.push(originIndex);
     }
 
     this.setState({data : data})
   };
+
+  modifySimilars = ( data, dataIndex, similarsIndex, modifyIndex ) => {
+
+    var clean_array = []
+    for ( var a in data[dataIndex].similarTo ){
+       if(data[dataIndex].similarTo[a] == modifyIndex ){
+         if ( data[dataIndex].similarTo.indexOf(similarsIndex) < 0){
+           clean_array.push(similarsIndex);
+         }
+         continue;
+       }
+       clean_array.push(data[dataIndex].similarTo[a]);
+    }
+    data[dataIndex].similarTo = clean_array;
+
+    return data;
+  }
+
+  removeSimilars = ( data, dataIndex, similarsIndex ) => {
+
+    var clean_array = []
+    for ( var a in data[dataIndex].similarTo ){
+       if(data[dataIndex].similarTo[a] == similarsIndex ){
+         if ( data[dataIndex].similarTo.indexOf(similarsIndex) > -1){
+           continue;
+         }
+       }
+       clean_array.push(data[dataIndex].similarTo[a]);
+    }
+    data[dataIndex].similarTo = clean_array;
+
+    return data;
+  }
 
   handleSave(text) {
     if (text.length !== 0) {
@@ -121,9 +135,6 @@ class Similarities extends Component {
 
     }
 
-  alerthing = () => {
-    alert('boom');
-  }
 
 //'_marker'
   render() {
@@ -206,6 +217,7 @@ class Similarities extends Component {
                                                     {
                                                       data.map( (entry_options,z) => {return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : '' })
                                                     }
+                                                      <MenuItem value={'remove'} primaryText={'remove'} />
                                                    </SelectField>
                                                   </CardText>
                                                 </Card>

@@ -82,45 +82,62 @@ var Similarities = function (_Component) {
 
       var data = _this.state.data;
 
-      if (field > -1) {
-        var clean_array = [];
-        for (var a in data[originIndex].similars) {
+      if (field > -1 && selectionIndex == data.length) {
+        // this is the remove case.
 
-          if (data[originIndex].similars[a] == field) {
-            if (data[originIndex].similars.indexOf(selectionIndex) < 0) {
-              clean_array.push(selectionIndex);
-            }
-            continue;
-          }
-          clean_array.push(data[originIndex].similars[a]);
-        }
-        data[originIndex].similars = clean_array;
+        data = _this.removeSimilars(data, originIndex, field);
+        data = _this.removeSimilars(data, field, originIndex);
+        _this.setState({ data: data });
+        return;
       }
 
       if (field > -1) {
-        var clean_array = [];
-        for (var a in data[field].similars) {
-
-          if (data[field].similars[a] == originIndex) {
-            if (data[field].similars.indexOf(originIndex) < 0) {
-              clean_array.push(originIndex);
-            }
-            continue;
-          }
-          clean_array.push(data[field].similars[a]);
-        }
-        data[field].similars = clean_array;
+        data = _this.modifySimilars(data, originIndex, selectionIndex, field);
+        data = _this.modifySimilars(data, field, originIndex, originIndex);
       }
 
-      if (data[originIndex].similars.indexOf(selectionIndex) < 0) {
-        data[originIndex].similars.push(selectionIndex);
+      if (data[originIndex].similarTo.indexOf(selectionIndex) < 0) {
+        data[originIndex].similarTo.push(selectionIndex);
       }
 
-      if (data[selectionIndex].similars.indexOf(originIndex) < 0) {
-        data[selectionIndex].similars.push(originIndex);
+      if (data[selectionIndex].similarTo.indexOf(originIndex) < 0) {
+        data[selectionIndex].similarTo.push(originIndex);
       }
 
       _this.setState({ data: data });
+    };
+
+    _this.modifySimilars = function (data, dataIndex, similarsIndex, modifyIndex) {
+
+      var clean_array = [];
+      for (var a in data[dataIndex].similarTo) {
+        if (data[dataIndex].similarTo[a] == modifyIndex) {
+          if (data[dataIndex].similarTo.indexOf(similarsIndex) < 0) {
+            clean_array.push(similarsIndex);
+          }
+          continue;
+        }
+        clean_array.push(data[dataIndex].similarTo[a]);
+      }
+      data[dataIndex].similarTo = clean_array;
+
+      return data;
+    };
+
+    _this.removeSimilars = function (data, dataIndex, similarsIndex) {
+
+      var clean_array = [];
+      for (var a in data[dataIndex].similarTo) {
+        if (data[dataIndex].similarTo[a] == similarsIndex) {
+          if (data[dataIndex].similarTo.indexOf(similarsIndex) > -1) {
+            continue;
+          }
+        }
+        clean_array.push(data[dataIndex].similarTo[a]);
+      }
+      data[dataIndex].similarTo = clean_array;
+
+      return data;
     };
 
     _this.gatherData = function () {
@@ -129,11 +146,7 @@ var Similarities = function (_Component) {
       return _this.state;
     };
 
-    _this.alerthing = function () {
-      alert('boom');
-    };
-
-    _this.state = { data: [] };
+    _this.state = { data: _this.props.payload.ideas };
 
     return _this;
   }
@@ -141,7 +154,18 @@ var Similarities = function (_Component) {
   (0, _createClass3.default)(Similarities, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.setState({ 'data': [{ title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }, { title: 'Super paper clip', description: 'the super super paperclip that will rule them all', similars: [] }] });
+      // this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
+      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]}] });
     }
   }, {
     key: 'handleSave',
@@ -254,7 +278,8 @@ var Similarities = function (_Component) {
                           }, style: { width: 30, maxHeight: 85 } },
                         data.map(function (entry_options, z) {
                           return entry.title == entry_options.title ? _react2.default.createElement(_MenuItem2.default, { key: z, value: z, primaryText: z }) : '';
-                        })
+                        }),
+                        _react2.default.createElement(_MenuItem2.default, { value: 'remove', primaryText: 'remove' })
                       )
                     )
                   );
