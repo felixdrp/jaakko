@@ -40,6 +40,8 @@ import {
 
   storeSurveInfo,
   taskIdeaAdd,
+  taskAddAllSimilarities,
+  taskIncreasePointer,
 } from '../actions/actions'
 
 // Redux client actions
@@ -64,6 +66,8 @@ import {
 } from '../components/survey/survey-types'
 
 import WebSocketSimple from './websocket-simple'
+
+import processSimilarities from '../modules/similarity'
 
 // import filterAccountsByGroup from '../modules/filter-accounts-by-group'
 
@@ -436,8 +440,8 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
       // Add survey info to the redux store and to the database.
       store.dispatch(
         storeSurveInfo({
-          surveyId: temp.accountSurveyPointer,
           ...payload,
+          surveyId: temp.accountSurveyPointer,
         })
       )
 
@@ -453,7 +457,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
         0
       )
 
-      temp.numActualSurveysRecived = result.results.surveyInfo.reduce.reduce(
+      temp.numActualSurveysRecived = result.results.surveyInfo.reduce(
         (prev, survey) => {
           if (survey.surveyId == temp.accountSurveyPointer) {
             return prev + 1
@@ -468,7 +472,20 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
       if ( temp.numActiveAccounts == temp.numActualSurveysRecived ) {
         switch (result.session.surveyPath[temp.accountSurveyPointer].type) {
           case SIMILARITIES:
-            
+            // Get the all SIMILARITIES survey results.
+            temp.dataSimilarities = result.results.surveyInfo.filter(
+              element => element.surveyId == temp.accountSurveyPointer
+            )
+            // Process SIMILARITIES and store in task.similarList
+            store.dispatch(
+              taskAddAllSimilarities(
+                processSimilarities( temp.dataSimilarities )
+              )
+            )
+            break;
+          case RESULTS:
+
+            store.dispatch( taskIncreasePointer() )
             break;
 
           default:

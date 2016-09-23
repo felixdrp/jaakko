@@ -3,6 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 exports.accounts = accounts;
 exports.groups = groups;
 exports.session = session;
@@ -10,6 +15,8 @@ exports.results = results;
 exports.task = task;
 
 var _actions = require('../actions/actions');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /*
  * reducers
@@ -135,16 +142,23 @@ function results() {
 }
 
 function task() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { taskPointer: 0, taskList: [[]] } : arguments[0];
+  var state = arguments.length <= 0 || arguments[0] === undefined ? { taskPointer: 0, taskList: [[]], similarList: [[]] } : arguments[0];
   var action = arguments[1];
 
   var payload = action.payload || '';
+  var temp = void 0;
   switch (action.type) {
     case _actions.TASK_ADD_IDEA:
       state.taskList[state.taskPointer].push(payload);
       return state;
-    case _actions.TASK_INCREASE_POINTER:
 
+    case _actions.TASK_ADD_ALL_SIMILARITIES:
+      temp = (0, _extends3.default)({}, state);
+      temp.similarList[state.taskPointer] = payload;
+      return temp;
+
+    case _actions.TASK_INCREASE_POINTER:
+      return (0, _extends3.default)({}, state, { taskPointer: state.taskPointer + 1 });
     default:
       return state;
   }

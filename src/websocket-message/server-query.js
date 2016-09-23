@@ -107,6 +107,7 @@ export default async function query({ action, payload, ws, store }) {
               ),
             }
           }
+
           console.log('SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES')
           console.log(temp.payload)
 
@@ -122,7 +123,7 @@ export default async function query({ action, payload, ws, store }) {
             temp.payload = {
               group: temp.selectedGroup,
               groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.taskList[ result.task.taskPointer ].filter(
+              ideas: result.task.similarList[ result.task.taskPointer ].filter(
                 element => temp.selectedGroup == element.group
               ),
             }
@@ -131,11 +132,14 @@ export default async function query({ action, payload, ws, store }) {
             temp.payload = {
               group: temp.selectedGroup,
               groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.taskList[ result.task.taskPointer ].filter(
+              ideas: result.task.similarList[ result.task.taskPointer ].filter(
                 element => temp.selectedGroup == element.group
               ),
             }
           }
+
+          console.log('FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES')
+          console.log(temp.payload)
 
           ws.send(
             swSetSurveyInitials( temp.payload )

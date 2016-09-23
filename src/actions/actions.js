@@ -142,8 +142,17 @@ export function taskIdeaAdd( idea ) {
   return { type: TASK_ADD_IDEA, payload: idea }
 }
 
+export const TASK_ADD_ALL_SIMILARITIES = 'TASK_ADD_ALL_SIMILARITIES'
+
+export function taskAddAllSimilarities( similarities ) {
+  return { type: TASK_ADD_ALL_SIMILARITIES, payload: similarities }
+}
+
 export const TASK_INCREASE_POINTER = 'TASK_INCREASE_POINTER'
 
+export function taskIncreasePointer() {
+  return { type: TASK_INCREASE_POINTER }
+}
 
 
 /*

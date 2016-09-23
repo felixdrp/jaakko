@@ -42,6 +42,10 @@ var _websocketSimple = require('./websocket-simple');
 
 var _websocketSimple2 = _interopRequireDefault(_websocketSimple);
 
+var _similarity = require('../modules/similarity');
+
+var _similarity2 = _interopRequireDefault(_similarity);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import filterAccountsByGroup from '../modules/filter-accounts-by-group'
@@ -57,12 +61,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @returns {}
  */
 
-// Get an url from an survey-type
+// Default Input fields type and options
 
 
-// Redux client actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
+// Redux server actions
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2, clientsSocket) {
     var _this = this;
@@ -158,7 +160,7 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 135 : 138;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 139 : 142;
                       break;
 
                     case 3:
@@ -578,9 +580,9 @@ exports.default = function () {
                       result = store.getState();
                       temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer;
                       // Add survey info to the redux store and to the database.
-                      store.dispatch((0, _actions.storeSurveInfo)((0, _extends3.default)({
+                      store.dispatch((0, _actions.storeSurveInfo)((0, _extends3.default)({}, payload, {
                         surveyId: temp.accountSurveyPointer
-                      }, payload)));
+                      })));
 
                       // After that move to the next survey step.
                       nextStep(payload.accountId);
@@ -591,7 +593,7 @@ exports.default = function () {
                         return prev + groups[groupID].accountList.length;
                       }, 0);
 
-                      temp.numActualSurveysRecived = result.results.surveyInfo.reduce.reduce(function (prev, survey) {
+                      temp.numActualSurveysRecived = result.results.surveyInfo.reduce(function (prev, survey) {
                         if (survey.surveyId == temp.accountSurveyPointer) {
                           return prev + 1;
                         }
@@ -602,23 +604,34 @@ exports.default = function () {
                       // EX: SIMILARITIES, FAVOURITES & RESULTS
 
                       if (!(temp.numActiveAccounts == temp.numActualSurveysRecived)) {
-                        _context.next = 134;
+                        _context.next = 138;
                         break;
                       }
 
                       _context.t3 = result.session.surveyPath[temp.accountSurveyPointer].type;
-                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 133 : 134;
+                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 133 : _context.t3 === _surveyTypes.RESULTS ? 136 : 138;
                       break;
 
                     case 133:
-                      return _context.abrupt('break', 134);
+                      // Get the all SIMILARITIES survey results.
+                      temp.dataSimilarities = result.results.surveyInfo.filter(function (element) {
+                        return element.surveyId == temp.accountSurveyPointer;
+                      });
+                      // Process SIMILARITIES and store in task.similarList
+                      store.dispatch((0, _actions.taskAddAllSimilarities)((0, _similarity2.default)(temp.dataSimilarities)));
+                      return _context.abrupt('break', 138);
 
-                    case 134:
+                    case 136:
+
+                      store.dispatch((0, _actions.taskIncreasePointer)());
+                      return _context.abrupt('break', 138);
+
+                    case 138:
                       return _context.abrupt('return', {
                         v: true
                       });
 
-                    case 135:
+                    case 139:
                       result = store.getState();
 
                       store.dispatch((0, _actions.taskIdeaAdd)((0, _extends3.default)({
@@ -630,7 +643,7 @@ exports.default = function () {
                         v: true
                       });
 
-                    case 138:
+                    case 142:
                     case 'end':
                       return _context.stop();
                   }
@@ -663,8 +676,10 @@ exports.default = function () {
   return mutate;
 }();
 
-// Default Input fields type and options
+// Get an url from an survey-type
 
 
-// Redux server actions
+// Redux client actions
+// WebSocket communications types
+// look doc/server-websocket-message-system.md
 //# sourceMappingURL=server-mutate.js.map

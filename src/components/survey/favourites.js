@@ -9,7 +9,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-
+import processSimilarities from '../../modules/similarity'
 
 import { connect } from 'react-redux'
 
@@ -44,21 +44,127 @@ class Favourites extends Component {
 
 
   componentWillMount() {
-      this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0},
-                  { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',rating:0}] });
+    var data = [
+      { group: 1474585598573,
+       groupType: 0,
+       id: '1',
+       title: 'gfdgdfs',
+       description: 'gfdgfds',
+       creator: 'rpsoft@gmail.com',
+       rating: [],
+       timeSubmitted: 10,
+       similarTo: ['2','7'],
+       similarityHide : false,
+     },
+     { group: 1474585598573,
+       groupType: 0,
+       id: '2',
+       title: '432432',
+       description: 'gfdsgfds',
+       creator: 'rpsoft@gmail.com',
+       rating: [],
+       timeSubmitted: 100,
+       similarTo: ['1','3'],
+       similarityHide : false,
+     },
+     { group: 1474585598573,
+       groupType: 0,
+       id: '3',
+       title: '543gfdgfds63',
+       description: 'hgdfsdf4',
+       creator: 'rpsoft@gmail.com',
+       rating: [],
+       timeSubmitted: 50,
+       similarTo: ['2'],
+       similarityHide : false,
+     },
+     { group: 1474585598573,
+        groupType: 0,
+        id: '1',
+        title: 'gfdgdfs',
+        description: 'gfdgfds',
+        creator: 'rpsoft@gmail.com',
+        rating: [],
+        timeSubmitted: 10,
+        similarTo: ['2'],
+        similarityHide : false,
+      },
+      { group: 1474585598573,
+        groupType: 0,
+        id: '2',
+        title: '432432',
+        description: 'gfdsgfds',
+        creator: 'rpsoft@gmail.com',
+        rating: [],
+        timeSubmitted: 100,
+        similarTo: ['1','3'],
+        similarityHide : false,
+       },
+      { group: 1474585598573,
+        groupType: 0,
+        id: '3',
+        title: '543gfdgfds63',
+        description: 'hgdfsdf4',
+        creator: 'rpsoft@gmail.com',
+        rating: [],
+        timeSubmitted: 50,
+        similarTo: ['2'],
+        similarityHide : false,
+      },
+      { group: 1474585598573,
+        groupType: 0,
+        id: '7',
+        title: 'erhrhgf',
+        description: 'hgfhgffhdg',
+        creator: 'rpsoft@gmail.com',
+        rating: [],
+        timeSubmitted: 1474585612141,
+        similarTo: ['1'],
+        similarityHide : false,
+      },
+     { group: 1474585598573,
+       groupType: 0,
+       id: '4',
+       title: 'erhrhgf',
+       description: 'hgfhgffhdg',
+       creator: 'rpsoft@gmail.com',
+       rating: [],
+       timeSubmitted: 1474585612141,
+       similarTo: [],
+       similarityHide : false,
+     },
+     { group: 1474585598573,
+       groupType: 0,
+       id: '5',
+       title: '654546',
+       description: 'hghgfhgfds',
+       creator: 'rpsoft@gmail.com',
+       rating: [],
+       timeSubmitted: 200,
+       similarTo: ['6'],
+       similarityHide : false,
+     },
+     { group: 1474585598573,
+       groupType: 0,
+       id: '6',
+       title: 'hgfghf',
+       description: 'gfdfgds',
+       creator: 'rpsoft@gmail.com',
+       rating: [],
+       timeSubmitted: 600,
+       similarTo: ['5'],
+       similarityHide : false, } ];
+
+      this.setState({data});
+
+      // var data = processSimilarities(data);
+      //
+      // console.log("finiquitao: "+JSON.stringify(data));
+
       this.setState({favourites : new Array(6)})
 
     }
+
 
   handleSave(text) {
     if (text.length !== 0) {

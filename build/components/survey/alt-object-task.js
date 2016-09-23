@@ -89,7 +89,7 @@ var AltObjectTask = function (_Component) {
     var accountId = _this.props.account.email || 'unassigned';
     _this.state = {
       entries: [],
-      username: "PACO PEREZ AVELLAN",
+      username: _this.props.account.firstname,
       currentEntry: {
         id: btoa(accountId.slice(0, 2) + Date.now() / 1000),
         title: '',
@@ -97,7 +97,8 @@ var AltObjectTask = function (_Component) {
         creator: accountId,
         rating: [],
         timeSubmitted: null,
-        similarTo: []
+        similarTo: [],
+        similarityHide: false
       }
     };
 

@@ -13,6 +13,7 @@ import {
   STORE_SURVEY_INFO,
 
   TASK_ADD_IDEA,
+  TASK_ADD_ALL_SIMILARITIES,
   TASK_INCREASE_POINTER,
 } from '../actions/actions'
 
@@ -130,14 +131,21 @@ export function results(state = { surveyInfo: [] }, action) {
   }
 }
 
-export function task(state = { taskPointer: 0, taskList: [ [] ] }, action) {
+export function task(state = { taskPointer: 0, taskList: [ [] ], similarList: [ [] ] }, action) {
   let payload = action.payload || ''
+  let temp
   switch (action.type) {
     case TASK_ADD_IDEA:
       state.taskList[ state.taskPointer ].push( payload )
       return state
-    case TASK_INCREASE_POINTER:
 
+    case TASK_ADD_ALL_SIMILARITIES:
+      temp = { ...state }
+      temp.similarList[ state.taskPointer ] = payload
+      return temp
+
+    case TASK_INCREASE_POINTER:
+      return { ...state, taskPointer: state.taskPointer + 1 }
     default:
       return state
   }
