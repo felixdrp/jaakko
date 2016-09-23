@@ -40,7 +40,7 @@ class AltObjectTask extends Component {
     let accountId = this.props.account.email || 'unassigned'
     this.state = {
      entries:[],
-     username : "PACO PEREZ AVELLAN",
+     username : this.props.account.firstname,
      currentEntry : {
        id : btoa( accountId.slice(0,2)+(Date.now()/1000) ),
        title : '',
@@ -49,6 +49,7 @@ class AltObjectTask extends Component {
        rating : [],
        timeSubmitted : null,
        similarTo : [],
+       similarityHide : false,
      }
     };
 
