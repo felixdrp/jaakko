@@ -35,6 +35,10 @@ var sessionData = {
     payload: 'altObjectTask',
     time: 'inf'
   }, {
+    type: _surveyTypes.SIMILARITIES,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }, {
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'

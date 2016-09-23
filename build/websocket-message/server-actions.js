@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TASK_UPDATE_GROUP_IDEAS = exports.TASK_IDEA_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = exports.ACTION = exports.QUERY = exports.MUTATE = undefined;
+exports.SET_SURVEY_INITIALS = exports.TASK_UPDATE_GROUP_IDEAS = exports.TASK_IDEA_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = exports.ACTION = exports.QUERY = exports.MUTATE = undefined;
 exports.registerAccount = registerAccount;
 exports.loginAccount = loginAccount;
 exports.wsLogAccount = wsLogAccount;
@@ -19,6 +19,7 @@ exports.wsSurveyStepAll = wsSurveyStepAll;
 exports.wsSubmitSurveyInfo = wsSubmitSurveyInfo;
 exports.swTaskIdeaAdd = swTaskIdeaAdd;
 exports.wsTaskUpdateGroupIdeas = wsTaskUpdateGroupIdeas;
+exports.swSetSurveyInitials = swSetSurveyInitials;
 
 var _reactRouterRedux = require('react-router-redux');
 
@@ -198,7 +199,7 @@ function wsSurveyStepAll(accountList) {
   };
 }
 
-// update state in components ControlRoom socket action creator
+// update redux state with info from survey
 function wsSubmitSurveyInfo(info) {
   return {
     type: MUTATE,
@@ -226,6 +227,17 @@ function wsTaskUpdateGroupIdeas(bunchIdeas) {
     type: ACTION,
     action: TASK_UPDATE_GROUP_IDEAS,
     payload: bunchIdeas
+  };
+}
+
+// Share idea with the group
+var SET_SURVEY_INITIALS = exports.SET_SURVEY_INITIALS = 'SET_SURVEY_INITIALS';
+
+function swSetSurveyInitials(payload) {
+  return {
+    type: ACTION,
+    action: SET_SURVEY_INITIALS,
+    payload: payload
   };
 }
 //# sourceMappingURL=server-actions.js.map

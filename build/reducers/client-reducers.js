@@ -35,12 +35,15 @@ function account() {
 }
 
 function task() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { tasks: [] } : arguments[0];
+  var state = arguments.length <= 0 || arguments[0] === undefined ? { tasks: [], payload: {} } : arguments[0];
   var action = arguments[1];
 
   switch (action.type) {
     case _serverActions.TASK_UPDATE_GROUP_IDEAS:
       return { tasks: action.payload };
+
+    case _serverActions.SET_SURVEY_INITIALS:
+      return { payload: action.payload };
 
     default:
       return state;

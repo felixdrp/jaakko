@@ -180,7 +180,7 @@ export function wsSurveyStepAll(accountList) {
   }
 }
 
-// update state in components ControlRoom socket action creator
+// update redux state with info from survey
 export function wsSubmitSurveyInfo(info) {
   return {
     type: MUTATE,
@@ -209,5 +209,16 @@ export function wsTaskUpdateGroupIdeas( bunchIdeas ) {
     type: ACTION,
     action: TASK_UPDATE_GROUP_IDEAS,
     payload: bunchIdeas,
+  }
+}
+
+// Share idea with the group
+export const SET_SURVEY_INITIALS = 'SET_SURVEY_INITIALS'
+
+export function swSetSurveyInitials( payload ) {
+  return {
+    type: ACTION,
+    action: SET_SURVEY_INITIALS,
+    payload: payload,
   }
 }

@@ -9,22 +9,35 @@ import {
 
   wsGotoPage,
   swUpdateControlRoom,
+  swSetSurveyInitials,
 } from './server-actions'
 
 import {
   SESSION_STATE_GET,
+  SURVEY_STATE_GET,
 } from './query-actions'
 
+import {
+  AWAIT,
+  QUESTION,
+  INSTRUCTIONS,
+  MATH_CHALLENGE,
+  ALT_OBJECT_TASK,
+  SIMILARITIES,
+  FAVOURITES,
+  MATH_RESULTS,
+  RESULTS,
+} from '../components/survey/survey-types'
 
 // Redux server actions
 import {
   // Remove the WS from a store state
   storeStateWithoutWebSocket,
-  groupsAdd,
-  groupsRemove,
-  groupsAddAccount,
-  groupsRemoveAccount,
-  moveAccounFromGroup,
+  // groupsAdd,
+  // groupsRemove,
+  // groupsAddAccount,
+  // groupsRemoveAccount,
+  // moveAccounFromGroup,
 } from '../actions/actions'
 
 // Redux client actions
@@ -46,7 +59,8 @@ import {
 export default async function query({ action, payload, ws, store }) {
   let payloadResponse,
       result,
-      account
+      account,
+      temp = {}
 
   switch (action) {
     case SESSION_STATE_GET:
@@ -57,61 +71,90 @@ export default async function query({ action, payload, ws, store }) {
         swUpdateControlRoom(payloadResponse)
       )
       return true
-    case LOGIN_ACCOUNT:
-      // Login an Account
-      result = await loginAccount({
-        email: payload.email,
-        password: payload.password,
-      })
-      console.log(result)
 
-      if ('message' in result) {
-        // Error try login.
-        // Send message of error to the client.
-        console.error(result.message)
-        if (
-          result.message === 'The input field email not valid' ||
-          result.message === 'The input field email is not a valid email'
-        ) {
-          payloadResponse = { email: 'The email is not valid' }
-        } else if (
-          result.message === 'Password not valid.'
-        ) {
-          payloadResponse = { password: 'The password is not valid' }
-        } else if (
-          result.message === 'Account Email not found.'
-        ) {
-          payloadResponse = { email: 'Please, check email and password.' }
-        }
-        // Send email error
-        ws.send(
-          {
-            type: ACTION,
-            action: ACCOUNT_LOGIN_ERROR,
-            payload: payloadResponse,
+    case SURVEY_STATE_GET:
+      // Send initial values to the surveys if needed
+      result = store.getState()
+      account = payload
+
+      if ( !result.accounts.list.includes(account) ) {
+        console.log( SURVEY_STATE_GET + ': Account not found' )
+        return false
+      }
+      temp.account = result.accounts[account]
+      temp.type = result.session.surveyPath[
+        temp.account.surveyPointer
+      ].type
+
+      switch (temp.type) {
+        case SIMILARITIES:
+          // debugger
+          if ( result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length ) {
+            temp.payload = {
+              group: result.groups.list[0],
+              groupType: result.groups[ result.groups.list[0] ].type,
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
+                element => result.groups.list[0] == element.group
+              ),
+            }
+          } else {
+            temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) + 1 ]
+            temp.payload = {
+              group: temp.selectedGroup,
+              groupType: result.groups[ temp.selectedGroup ].type,
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
+                element => temp.selectedGroup == element.group
+              ),
+            }
           }
-        )
-        return
-      }
-      // Register the websocket 'ws.accountCode' with the email.
-      // So we can identify the ws with the account email.
-      ws.accountCode = payload.email
+          console.log('SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES')
+          console.log(temp.payload)
 
-      account = {
-        email: payload.email,
-        firstName: result.firstName,
-        surename: result.surename,
-        token: result.token,
-        ws: ws,
+          ws.send(
+            swSetSurveyInitials( temp.payload )
+          )
+
+          return
+
+        case FAVOURITES:
+          if ( result.groups.list.indexOf(temp.account.group) - 1 < 0 ) {
+            temp.selectedGroup = result.groups.list[ result.groups.list.length - 1 ]
+            temp.payload = {
+              group: temp.selectedGroup,
+              groupType: result.groups[ temp.selectedGroup ].type,
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
+                element => temp.selectedGroup == element.group
+              ),
+            }
+          } else {
+            temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) - 1 ]
+            temp.payload = {
+              group: temp.selectedGroup,
+              groupType: result.groups[ temp.selectedGroup ].type,
+              ideas: result.task.taskList[ result.task.taskPointer ].filter(
+                element => temp.selectedGroup == element.group
+              ),
+            }
+          }
+
+          ws.send(
+            swSetSurveyInitials( temp.payload )
+          )
+
+          return
+
+        case RESULTS:
+          ws.send(
+            swSetSurveyInitials( temp.payload )
+          )
+
+          return
+
+        default:
+
       }
 
-      console.log('>>>>>state')
-      reduxStoreServerAndClientRegisterAccountAndGoToWait(account)
-      console.log('>>>>>state')
-      console.log(store.getState())
-      // console.log('send error login')
-      // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
-      return true
-      break;
+      console.log('SESSION_STATE_GET return!!!')
+      return
   }
 }

@@ -141,31 +141,144 @@ var Similarities = function (_Component) {
     };
 
     _this.gatherData = function () {
+      var data = _this.state.data.slice();
+      for (var d in data) {
+        var entry = data[d];
 
+        for (var s in entry.similarTo) {
+          var entry_index = entry.similarTo[s];
+
+          entry.similarTo[s] = data[entry_index].id;
+        }
+      }
+
+      //  this.setState({data})
       console.log((0, _stringify2.default)(_this.state));
-      return _this.state;
+      return data;
     };
 
-    _this.state = { data: _this.props.payload.ideas };
+    _this.state = { data: _this.props.ideas };
 
     return _this;
   }
 
   (0, _createClass3.default)(Similarities, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        data: nextProps.ideas || []
+      });
+    }
+  }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
-      // this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-      //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]}] });
+      // this.setState({data : [ { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
+      //    title: 'gfdgdfs',
+      //    description: 'gfdgfds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585604805,
+      //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA0LjgwNQ==',
+      // //    title: '432432',
+      // //    description: 'gfdsgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585607161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA3LjE2MQ==',
+      // //    title: '543gfdgfds63',
+      // //    description: 'hgdfsdf4',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585610161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEwLjE2MQ==',
+      // //    title: 'erhrhgf',
+      // //    description: 'hgfhgffhdg',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585612141,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEyLjE0MQ==',
+      // //    title: '654546',
+      // //    description: 'hghgfhgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585614096,
+      // //    similarTo: [] },
+      //  { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjE0LjA5Ng==',
+      //    title: 'hgfghf',
+      //    description: 'gf  // this.setState({data : [ { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
+      //    title: 'gfdgdfs',
+      //    description: 'gfdgfds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585604805,
+      //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA0LjgwNQ==',
+      // //    title: '432432',
+      // //    description: 'gfdsgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585607161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA3LjE2MQ==',
+      // //    title: '543gfdgfds63',
+      // //    description: 'hgdfsdf4',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585610161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEwLjE2MQ==',
+      // //    title: 'erhrhgf',
+      // //    description: 'hgfhgffhdg',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585612141,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEyLjE0MQ==',
+      // //    title: '654546',
+      // //    description: 'hghgfhgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585614096,
+      // //    similarTo: [] },
+      //  { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjE0LjA5Ng==',
+      //    title: 'hgfghf',
+      //    description: 'gfdfgds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585616712,
+      //    similarTo: [] } ]});dfgds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585616712,
+      //    similarTo: [] } ]});
     }
   }, {
     key: 'handleSave',
@@ -224,7 +337,7 @@ var Similarities = function (_Component) {
               );
             }),
             _react2.default.createElement('br', null),
-            _react2.default.createElement(_timer2.default, { timerCallback: function timerCallback() {
+            _react2.default.createElement(_timer2.default, { limitTime: 10, timerCallback: function timerCallback() {
                 return _this2.props.submit(_this2.gatherData());
               } }),
             data.map(function (entry, i) {
@@ -263,7 +376,7 @@ var Similarities = function (_Component) {
                     'Similar to:'
                   )
                 ),
-                entry.similars.map(function (sim_entry, j) {
+                entry.similarTo.map(function (sim_entry, j) {
 
                   return _react2.default.createElement(
                     _Card.Card,
@@ -277,9 +390,11 @@ var Similarities = function (_Component) {
                             return _this2.handleChange(event, index, sim_entry, i);
                           }, style: { width: 30, maxHeight: 85 } },
                         data.map(function (entry_options, z) {
-                          return entry.title == entry_options.title ? _react2.default.createElement(_MenuItem2.default, { key: z, value: z, primaryText: z }) : '';
-                        }),
-                        _react2.default.createElement(_MenuItem2.default, { value: 'remove', primaryText: 'remove' })
+                          return _react2.default.createElement(_MenuItem2.default, { key: z, value: z, primaryText: z + '', disabled: entry.title == entry_options.title });
+                        })
+                        // data.map( (entry_options,z) => {return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : <MenuItem key={z} /> })
+                        ,
+                        _react2.default.createElement(_MenuItem2.default, { value: data.length, primaryText: 'remove' })
                       )
                     )
                   );
@@ -296,7 +411,7 @@ var Similarities = function (_Component) {
                           return _this2.handleChange(event, index, -1, i);
                         }, style: { width: 30 } },
                       data.map(function (entry_options, z) {
-                        return entry.title == entry_options.title ? _react2.default.createElement(_MenuItem2.default, { key: z, value: z, primaryText: z + '. ' + entry_options.title }) : '';
+                        return _react2.default.createElement(_MenuItem2.default, { key: z, value: z, primaryText: z + '', disabled: entry.title == entry_options.title });
                       })
                     )
                   )
@@ -326,7 +441,8 @@ Similarities.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    firstName: state.account.firstName,
+    ideas: state.task.payload ? state.task.payload.ideas : []
   };
 };
 

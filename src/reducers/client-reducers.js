@@ -6,6 +6,7 @@ import {
 
 import {
   TASK_UPDATE_GROUP_IDEAS,
+  SET_SURVEY_INITIALS,
 } from '../websocket-message/server-actions'
 
 
@@ -24,10 +25,13 @@ export function account(state = { registerStatus: {}, loginStatus: {} }, action)
   }
 }
 
-export function task(state = { tasks: [] }, action) {
+export function task(state = { tasks: [], payload: {} }, action) {
   switch (action.type) {
   case TASK_UPDATE_GROUP_IDEAS:
     return { tasks: action.payload }
+
+  case SET_SURVEY_INITIALS:
+    return { payload: action.payload }
 
   default:
     return state

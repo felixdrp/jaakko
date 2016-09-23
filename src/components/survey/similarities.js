@@ -33,7 +33,7 @@ class Similarities extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {data : this.props.payload.ideas };
+    this.state = {data : this.props.ideas };
 
   }
 
@@ -43,19 +43,122 @@ class Similarities extends Component {
     websocket: React.PropTypes.object,
   };
 
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data : nextProps.ideas || []
+    });
+  }
+
+
   componentWillMount() {
-    // this.setState({'data' : [{ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]},
-    //             { title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all',similars:[]}] });
+    // this.setState({data : [ { group: 1474585598573,
+    //    groupType: 0,
+    //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
+    //    title: 'gfdgdfs',
+    //    description: 'gfdgfds',
+    //    creator: 'rpsoft@gmail.com',
+    //    rating: [],
+    //    timeSubmitted: 1474585604805,
+    //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjA0LjgwNQ==',
+    // //    title: '432432',
+    // //    description: 'gfdsgfds',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585607161,
+    // //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjA3LjE2MQ==',
+    // //    title: '543gfdgfds63',
+    // //    description: 'hgdfsdf4',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585610161,
+    // //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjEwLjE2MQ==',
+    // //    title: 'erhrhgf',
+    // //    description: 'hgfhgffhdg',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585612141,
+    // //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjEyLjE0MQ==',
+    // //    title: '654546',
+    // //    description: 'hghgfhgfds',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585614096,
+    // //    similarTo: [] },
+    //  { group: 1474585598573,
+    //    groupType: 0,
+    //    id: 'cnAxNDc0NTg1NjE0LjA5Ng==',
+    //    title: 'hgfghf',
+    //    description: 'gf  // this.setState({data : [ { group: 1474585598573,
+    //    groupType: 0,
+    //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
+    //    title: 'gfdgdfs',
+    //    description: 'gfdgfds',
+    //    creator: 'rpsoft@gmail.com',
+    //    rating: [],
+    //    timeSubmitted: 1474585604805,
+    //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjA0LjgwNQ==',
+    // //    title: '432432',
+    // //    description: 'gfdsgfds',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585607161,
+    // //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjA3LjE2MQ==',
+    // //    title: '543gfdgfds63',
+    // //    description: 'hgdfsdf4',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585610161,
+    // //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjEwLjE2MQ==',
+    // //    title: 'erhrhgf',
+    // //    description: 'hgfhgffhdg',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585612141,
+    // //    similarTo: [] },
+    // //  { group: 1474585598573,
+    // //    groupType: 0,
+    // //    id: 'cnAxNDc0NTg1NjEyLjE0MQ==',
+    // //    title: '654546',
+    // //    description: 'hghgfhgfds',
+    // //    creator: 'rpsoft@gmail.com',
+    // //    rating: [],
+    // //    timeSubmitted: 1474585614096,
+    // //    similarTo: [] },
+    //  { group: 1474585598573,
+    //    groupType: 0,
+    //    id: 'cnAxNDc0NTg1NjE0LjA5Ng==',
+    //    title: 'hgfghf',
+    //    description: 'gfdfgds',
+    //    creator: 'rpsoft@gmail.com',
+    //    rating: [],
+    //    timeSubmitted: 1474585616712,
+    //    similarTo: [] } ]});dfgds',
+    //    creator: 'rpsoft@gmail.com',
+    //    rating: [],
+    //    timeSubmitted: 1474585616712,
+    //    similarTo: [] } ]});
   }
 
 
@@ -129,9 +232,23 @@ class Similarities extends Component {
 
 
     gatherData = () => {
+      var data = this.state.data.slice();
+      for ( var d in data){
+          var entry = data[d];
 
+          for (var s in entry.similarTo){
+            var entry_index = entry.similarTo[s]
+
+            entry.similarTo[s] = data[entry_index].id;
+
+          }
+
+
+      }
+
+    //  this.setState({data})
       console.log(JSON.stringify(this.state));
-      return this.state
+      return data;
 
     }
 
@@ -179,7 +296,7 @@ class Similarities extends Component {
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
               <br />
-              <Timer timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
+              <Timer limitTime={10} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
               {
                 data.map( (entry,i) => {
@@ -208,16 +325,17 @@ class Similarities extends Component {
                                 </Card>
 
                                 {
-                                    entry.similars.map(  (sim_entry,j) => {
+                                    entry.similarTo.map(  (sim_entry,j) => {
 
                                                 return <Card key = {j}>
                                                   <CardText style={{padding:8}}>
                                                   <SelectField  value={sim_entry} onChange={(event, index, value) => this.handleChange(event, index, sim_entry, i)} style={{width:30, maxHeight:85}} >
 
                                                     {
-                                                      data.map( (entry_options,z) => {return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : '' })
+                                                      data.map( (entry_options,z) => {return <MenuItem key={z} value={z} primaryText={z+''} disabled={ entry.title == entry_options.title }  />} )
+                                                      // data.map( (entry_options,z) => {return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : <MenuItem key={z} /> })
                                                     }
-                                                      <MenuItem value={'remove'} primaryText={'remove'} />
+                                                      <MenuItem value={data.length} primaryText={'remove'} />
                                                    </SelectField>
                                                   </CardText>
                                                 </Card>
@@ -229,7 +347,7 @@ class Similarities extends Component {
                                  <SelectField value={-1} onChange={(event, index, value) => this.handleChange(event, index, -1, i)} style={{width:30}}>
 
                                    {
-                                     data.map( (entry_options,z) => { return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z+'. '+entry_options.title} /> : '' })
+                                      data.map( (entry_options,z) => { return <MenuItem key={z} value={z} primaryText={z+''} disabled={ entry.title == entry_options.title }  />} )
                                    }
                                   </SelectField>
                                  </CardText>
@@ -256,7 +374,8 @@ Similarities.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    firstName : state.account.firstName,
+    ideas: (state.task.payload) ? state.task.payload.ideas: [],
   }
 }
 
