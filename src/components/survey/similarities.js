@@ -51,7 +51,7 @@ class Similarities extends Component {
   }
 
 
-  componentWillMount() { 
+  componentWillMount() {
     // this.setState({data : [ { group: 1474585598573,
     //    groupType: 0,
     //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
@@ -296,7 +296,7 @@ class Similarities extends Component {
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
               <br />
-              <Timer limitTime={10} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
+              <Timer limitTime={15} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
               {
                 data.map( (entry,i) => {

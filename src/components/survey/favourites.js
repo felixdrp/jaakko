@@ -304,7 +304,7 @@ class Favourites extends Component {
 
 
             <br />
-            <Timer timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
+            <Timer limitTime={1000} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
             {
               data.map( (entry,i) => {

@@ -337,7 +337,7 @@ var Similarities = function (_Component) {
               );
             }),
             _react2.default.createElement('br', null),
-            _react2.default.createElement(_timer2.default, { limitTime: 10, timerCallback: function timerCallback() {
+            _react2.default.createElement(_timer2.default, { limitTime: 15, timerCallback: function timerCallback() {
                 return _this2.props.submit(_this2.gatherData());
               } }),
             data.map(function (entry, i) {

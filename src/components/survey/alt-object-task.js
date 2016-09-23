@@ -227,7 +227,7 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
-              <Timer timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
+              <Timer limitTime={20} timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
 
               <div style={{marginTop:20}}>
                   <Card>

@@ -42,7 +42,20 @@ const sessionData = {
       time: 'inf',
     },
     {
+      type: AWAIT,
+      time: 'inf',
+    },
+    {
       type: SIMILARITIES,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+    {
+      type: AWAIT,
+      time: 'inf',
+    },
+    {
+      type: FAVOURITES,
       payload: 'altObjectTask',
       time: 'inf',
     },

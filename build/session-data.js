@@ -35,7 +35,17 @@ var sessionData = {
     payload: 'altObjectTask',
     time: 'inf'
   }, {
+    type: _surveyTypes.AWAIT,
+    time: 'inf'
+  }, {
     type: _surveyTypes.SIMILARITIES,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }, {
+    type: _surveyTypes.AWAIT,
+    time: 'inf'
+  }, {
+    type: _surveyTypes.FAVOURITES,
     payload: 'altObjectTask',
     time: 'inf'
   }, {
