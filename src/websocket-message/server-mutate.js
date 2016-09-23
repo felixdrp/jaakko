@@ -55,7 +55,13 @@ import { createAccount } from '../modules/account/create-account'
 import { loginAccount } from '../modules/account/login-account'
 
 // Get an url from an survey-type
-import { resolveSurveyURL } from '../components/survey/survey-types'
+import {
+  resolveSurveyURL,
+
+  SIMILARITIES,
+  FAVOURITES,
+  RESULTS,
+} from '../components/survey/survey-types'
 
 import WebSocketSimple from './websocket-simple'
 
@@ -75,7 +81,9 @@ import WebSocketSimple from './websocket-simple'
 export default async function mutate({ action, payload, ws, store }, clientsSocket) {
   let payloadResponse,
       result,
-      account
+      account,
+      temp
+
   function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
     let tempAccount
     // Register the user in the server store.
@@ -424,17 +432,49 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
       }
 
       result = store.getState()
-
+      temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer
       // Add survey info to the redux store and to the database.
       store.dispatch(
         storeSurveInfo({
-          surveyId: result.accounts[payload.accountId].surveyPointer,
-          ...payload
+          surveyId: temp.accountSurveyPointer,
+          ...payload,
         })
       )
 
       // After that move to the next survey step.
       nextStep( payload.accountId )
+
+      result = store.getState()
+
+      temp.numActiveAccounts = result.groups.list.reduce(
+        (prev, groupID) => {
+          return prev + groups[groupID].accountList.length
+        },
+        0
+      )
+
+      temp.numActualSurveysRecived = result.results.surveyInfo.reduce.reduce(
+        (prev, survey) => {
+          if (survey.surveyId == temp.accountSurveyPointer) {
+            return prev + 1
+          }
+          return prev
+        },
+        0
+      )
+
+      // If information need processing after the last account have being submited:
+      // EX: SIMILARITIES, FAVOURITES & RESULTS
+      if ( temp.numActiveAccounts == temp.numActualSurveysRecived ) {
+        switch (result.session.surveyPath[temp.accountSurveyPointer].type) {
+          case SIMILARITIES:
+            
+            break;
+
+          default:
+
+        }
+      }
 
       return true
 

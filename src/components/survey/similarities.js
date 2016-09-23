@@ -51,7 +51,7 @@ class Similarities extends Component {
   }
 
 
-  componentWillMount() {
+  componentWillMount() { 
     // this.setState({data : [ { group: 1474585598573,
     //    groupType: 0,
     //    id: 'cnAxNDc0NTg1NjAyLjExMw==',

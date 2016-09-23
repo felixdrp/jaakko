@@ -2,12 +2,12 @@ import {
   AWAIT,
   QUESTION,
   INSTRUCTIONS,
-  MATH_CHALLENGE,
   ALT_OBJECT_TASK,
   SIMILARITIES,
   FAVOURITES,
-  MATH_RESULTS,
   RESULTS,
+  MATH_CHALLENGE,
+  MATH_RESULTS,
 } from './components/survey/survey-types'
 
 // import {

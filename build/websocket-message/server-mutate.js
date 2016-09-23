@@ -72,7 +72,7 @@ exports.default = function () {
     var ws = _ref2.ws;
     var store = _ref2.store;
 
-    var payloadResponse, result, account, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, _ret;
+    var payloadResponse, result, account, temp, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, _ret;
 
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
@@ -149,7 +149,7 @@ exports.default = function () {
               console.log('>>>>>state');
             };
 
-            payloadResponse = void 0, result = void 0, account = void 0;
+            payloadResponse = void 0, result = void 0, account = void 0, temp = void 0;
             return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
               var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, random, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _acc;
 
@@ -158,7 +158,7 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 126 : 129;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 135 : 138;
                       break;
 
                     case 3:
@@ -576,20 +576,49 @@ exports.default = function () {
                     case 122:
 
                       result = store.getState();
-
+                      temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer;
                       // Add survey info to the redux store and to the database.
                       store.dispatch((0, _actions.storeSurveInfo)((0, _extends3.default)({
-                        surveyId: result.accounts[payload.accountId].surveyPointer
+                        surveyId: temp.accountSurveyPointer
                       }, payload)));
 
                       // After that move to the next survey step.
                       nextStep(payload.accountId);
 
+                      result = store.getState();
+
+                      temp.numActiveAccounts = result.groups.list.reduce(function (prev, groupID) {
+                        return prev + groups[groupID].accountList.length;
+                      }, 0);
+
+                      temp.numActualSurveysRecived = result.results.surveyInfo.reduce.reduce(function (prev, survey) {
+                        if (survey.surveyId == temp.accountSurveyPointer) {
+                          return prev + 1;
+                        }
+                        return prev;
+                      }, 0);
+
+                      // If information need processing after the last account have being submited:
+                      // EX: SIMILARITIES, FAVOURITES & RESULTS
+
+                      if (!(temp.numActiveAccounts == temp.numActualSurveysRecived)) {
+                        _context.next = 134;
+                        break;
+                      }
+
+                      _context.t3 = result.session.surveyPath[temp.accountSurveyPointer].type;
+                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 133 : 134;
+                      break;
+
+                    case 133:
+                      return _context.abrupt('break', 134);
+
+                    case 134:
                       return _context.abrupt('return', {
                         v: true
                       });
 
-                    case 126:
+                    case 135:
                       result = store.getState();
 
                       store.dispatch((0, _actions.taskIdeaAdd)((0, _extends3.default)({
@@ -601,7 +630,7 @@ exports.default = function () {
                         v: true
                       });
 
-                    case 129:
+                    case 138:
                     case 'end':
                       return _context.stop();
                   }
