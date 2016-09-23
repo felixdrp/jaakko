@@ -9,12 +9,16 @@ export default function processSimilarities(data) {
 
     for ( var e in data ){
       var entry = data[e]
-      for ( var s in entry.similarTo){
-        var similar = entry.similarTo[s];
-        simStore = registerSimilarity(simStore,entry.id,similar)
+      if ( entry.similarTo.length > 0){
+        for ( var s in entry.similarTo){
+          var similar = entry.similarTo[s];
+          simStore = registerSimilarity(simStore,entry.id,similar)
+        }
+      } else {
+        simStore[entry.id] = [];
       }
     }
-
+    debugger;
     return filterSimilars(data, simStore);
   }
 
