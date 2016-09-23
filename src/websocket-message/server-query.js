@@ -74,6 +74,7 @@ export default async function query({ action, payload, ws, store }) {
 
     case SURVEY_STATE_GET:
       // Send initial values to the surveys if needed
+      temp = {}
       result = store.getState()
       account = payload
 

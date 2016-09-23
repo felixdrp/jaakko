@@ -151,7 +151,7 @@ exports.default = function () {
               console.log('>>>>>state');
             };
 
-            payloadResponse = void 0, result = void 0, account = void 0, temp = void 0;
+            payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
               var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, random, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _acc;
 
@@ -160,7 +160,7 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 139 : 142;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 140 : 143;
                       break;
 
                     case 3:
@@ -576,7 +576,7 @@ exports.default = function () {
                       });
 
                     case 122:
-
+                      temp = {};
                       result = store.getState();
                       temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer;
                       // Add survey info to the redux store and to the database.
@@ -590,7 +590,7 @@ exports.default = function () {
                       result = store.getState();
 
                       temp.numActiveAccounts = result.groups.list.reduce(function (prev, groupID) {
-                        return prev + groups[groupID].accountList.length;
+                        return prev + result.groups[groupID].accountList.length;
                       }, 0);
 
                       temp.numActualSurveysRecived = result.results.surveyInfo.reduce(function (prev, survey) {
@@ -603,35 +603,35 @@ exports.default = function () {
                       // If information need processing after the last account have being submited:
                       // EX: SIMILARITIES, FAVOURITES & RESULTS
 
-                      if (!(temp.numActiveAccounts == temp.numActualSurveysRecived)) {
-                        _context.next = 138;
+                      if (!(temp.numActiveAccounts > 0 && temp.numActiveAccounts == temp.numActualSurveysRecived)) {
+                        _context.next = 139;
                         break;
                       }
 
                       _context.t3 = result.session.surveyPath[temp.accountSurveyPointer].type;
-                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 133 : _context.t3 === _surveyTypes.RESULTS ? 136 : 138;
+                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 134 : _context.t3 === _surveyTypes.RESULTS ? 137 : 139;
                       break;
 
-                    case 133:
+                    case 134:
                       // Get the all SIMILARITIES survey results.
                       temp.dataSimilarities = result.results.surveyInfo.filter(function (element) {
                         return element.surveyId == temp.accountSurveyPointer;
                       });
                       // Process SIMILARITIES and store in task.similarList
                       store.dispatch((0, _actions.taskAddAllSimilarities)((0, _similarity2.default)(temp.dataSimilarities)));
-                      return _context.abrupt('break', 138);
+                      return _context.abrupt('break', 139);
 
-                    case 136:
+                    case 137:
 
                       store.dispatch((0, _actions.taskIncreasePointer)());
-                      return _context.abrupt('break', 138);
+                      return _context.abrupt('break', 139);
 
-                    case 138:
+                    case 139:
                       return _context.abrupt('return', {
                         v: true
                       });
 
-                    case 139:
+                    case 140:
                       result = store.getState();
 
                       store.dispatch((0, _actions.taskIdeaAdd)((0, _extends3.default)({
@@ -643,7 +643,7 @@ exports.default = function () {
                         v: true
                       });
 
-                    case 142:
+                    case 143:
                     case 'end':
                       return _context.stop();
                   }

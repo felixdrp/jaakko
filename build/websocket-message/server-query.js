@@ -54,7 +54,7 @@ exports.default = function () {
           case 0:
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             _context.t0 = action;
-            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 31;
+            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 32;
             break;
 
           case 4:
@@ -66,26 +66,27 @@ exports.default = function () {
 
           case 7:
             // Send initial values to the surveys if needed
+            temp = {};
             result = store.getState();
             account = payload;
 
             if (result.accounts.list.includes(account)) {
-              _context.next = 12;
+              _context.next = 13;
               break;
             }
 
             console.log(_queryActions.SURVEY_STATE_GET + ': Account not found');
             return _context.abrupt('return', false);
 
-          case 12:
+          case 13:
             temp.account = result.accounts[account];
             temp.type = result.session.surveyPath[temp.account.surveyPointer].type;
 
             _context.t1 = temp.type;
-            _context.next = _context.t1 === _surveyTypes.SIMILARITIES ? 17 : _context.t1 === _surveyTypes.FAVOURITES ? 22 : _context.t1 === _surveyTypes.RESULTS ? 27 : 29;
+            _context.next = _context.t1 === _surveyTypes.SIMILARITIES ? 18 : _context.t1 === _surveyTypes.FAVOURITES ? 23 : _context.t1 === _surveyTypes.RESULTS ? 28 : 30;
             break;
 
-          case 17:
+          case 18:
             // debugger
             if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
               temp.payload = {
@@ -113,7 +114,7 @@ exports.default = function () {
 
             return _context.abrupt('return');
 
-          case 22:
+          case 23:
             if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
               temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
               temp.payload = {
@@ -141,17 +142,17 @@ exports.default = function () {
 
             return _context.abrupt('return');
 
-          case 27:
+          case 28:
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
 
             return _context.abrupt('return');
 
-          case 29:
+          case 30:
 
             console.log('SESSION_STATE_GET return!!!');
             return _context.abrupt('return');
 
-          case 31:
+          case 32:
           case 'end':
             return _context.stop();
         }

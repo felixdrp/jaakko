@@ -86,7 +86,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
   let payloadResponse,
       result,
       account,
-      temp
+      temp = {}
 
   function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
     let tempAccount
@@ -434,9 +434,9 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
         console.log('SUBMIT_SURVEY_INFO: No valid accountId')
         return false
       }
-
+      temp = {}
       result = store.getState()
-      temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer
+      temp.accountSurveyPointer = result.accounts[ payload.accountId ].surveyPointer
       // Add survey info to the redux store and to the database.
       store.dispatch(
         storeSurveInfo({
@@ -452,7 +452,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
 
       temp.numActiveAccounts = result.groups.list.reduce(
         (prev, groupID) => {
-          return prev + groups[groupID].accountList.length
+          return prev + result.groups[groupID].accountList.length
         },
         0
       )
@@ -469,7 +469,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
 
       // If information need processing after the last account have being submited:
       // EX: SIMILARITIES, FAVOURITES & RESULTS
-      if ( temp.numActiveAccounts == temp.numActualSurveysRecived ) {
+      if ( temp.numActiveAccounts > 0 && temp.numActiveAccounts == temp.numActualSurveysRecived ) {
         switch (result.session.surveyPath[temp.accountSurveyPointer].type) {
           case SIMILARITIES:
             // Get the all SIMILARITIES survey results.
