@@ -159,7 +159,11 @@ export function task(
       return temp
 
     case TASK_INCREASE_POINTER:
-      return { ...state, taskPointer: state.taskPointer + 1 }
+      temp = { ...state, taskPointer: state.taskPointer + 1 }
+      temp.taskList.push( [] )
+      temp.similarList.push( [] )
+      temp.favouritList.push( [] )
+      return temp
     default:
       return state
   }

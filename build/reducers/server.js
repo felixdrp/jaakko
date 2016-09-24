@@ -168,7 +168,11 @@ function task() {
       return temp;
 
     case _actions.TASK_INCREASE_POINTER:
-      return (0, _extends3.default)({}, state, { taskPointer: state.taskPointer + 1 });
+      temp = (0, _extends3.default)({}, state, { taskPointer: state.taskPointer + 1 });
+      temp.taskList.push([]);
+      temp.similarList.push([]);
+      temp.favouritList.push([]);
+      return temp;
     default:
       return state;
   }
