@@ -60,10 +60,23 @@ const sessionData = {
       time: 'inf',
     },
     {
-      type: QUESTION,
-      payload: 'entry',
+      type: AWAIT,
       time: 'inf',
     },
+    {
+      type: RESULTS,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+    // {
+    //   type: AWAIT,
+    //   time: 'inf',
+    // },
+    // {
+    //   type: QUESTION,
+    //   payload: 'entry',
+    //   time: 'inf',
+    // },
 
     //first round
     {

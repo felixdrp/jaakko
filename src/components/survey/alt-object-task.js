@@ -137,6 +137,7 @@ class AltObjectTask extends Component {
       rating : [],
       timeSubmitted : null,
       similarTo : [],
+      similarityHide : false,
     };
 
     this.setState({currentEntry : newEntry});
@@ -318,8 +319,8 @@ const mapStateToProps = (state, ownProps = {}) => {
   return {
     firstName : state.account.firstName,
     account: state.account,
-    tasks: state.task.tasks,
-    taskLength: state.task.tasks.length,
+    tasks: state.task.tasks || [],
+    taskLength:  state.task.tasks ? state.task.tasks.length : 0,
   }
 }
 

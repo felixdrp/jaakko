@@ -8,6 +8,14 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _getIterator2 = require('babel-runtime/core-js/get-iterator');
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
@@ -74,7 +82,7 @@ exports.default = function () {
     var ws = _ref2.ws;
     var store = _ref2.store;
 
-    var payloadResponse, result, account, temp, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, _ret;
+    var payloadResponse, result, account, temp, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, aggregated, found, entry, f, e, _ret;
 
     return _regenerator2.default.wrap(function _callee2$(_context2) {
       while (1) {
@@ -151,7 +159,7 @@ exports.default = function () {
               console.log('>>>>>state');
             };
 
-            payloadResponse = void 0, result = void 0, account = void 0, temp = void 0;
+            payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
               var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, random, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _acc;
 
@@ -160,14 +168,14 @@ exports.default = function () {
                   switch (_context.prev = _context.next) {
                     case 0:
                       _context.t0 = action;
-                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 139 : 142;
+                      _context.next = _context.t0 === _serverActions.REGISTER_ACCOUNT ? 3 : _context.t0 === _serverActions.LOGIN_ACCOUNT ? 15 : _context.t0 === _actions.GROUPS_ADD ? 31 : _context.t0 === _actions.GROUPS_REMOVE ? 33 : _context.t0 === _actions.GROUPS_ADD_ACCOUNT ? 36 : _context.t0 === _actions.GROUPS_REMOVE_ACCOUNT ? 37 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_TO_GROUP ? 38 : _context.t0 === _actions.GROUPS_SELECTED_ACCOUNTS_UNASSIGN ? 41 : _context.t0 === _actions.GROUPS_ACCOUNTS_UNASSIGN ? 44 : _context.t0 === _actions.GROUPS_AUTOMATE_CREATION ? 47 : _context.t0 === _actions.SURVEY_STEP_ALL ? 117 : _context.t0 === _actions.SUBMIT_SURVEY_INFO ? 119 : _context.t0 === _serverActions.TASK_IDEA_ADD ? 173 : 176;
                       break;
 
                     case 3:
                       _context.next = 5;
                       return (0, _createAccount.createAccount)({
                         firstName: payload.firstName,
-                        surename: payload.surename,
+                        surname: payload.surname,
                         email: payload.email,
                         password: payload.password,
                         reEnterPassword: payload.password
@@ -212,7 +220,7 @@ exports.default = function () {
                       account = {
                         email: payload.email,
                         firstName: payload.firstName,
-                        surename: payload.surename,
+                        surname: payload.surname,
                         token: result,
                         ws: ws
                       };
@@ -267,7 +275,7 @@ exports.default = function () {
                       account = {
                         email: payload.email,
                         firstName: result.firstName,
-                        surename: result.surename,
+                        surname: result.surname,
                         token: result.token,
                         ws: ws
                       };
@@ -576,7 +584,7 @@ exports.default = function () {
                       });
 
                     case 122:
-
+                      temp = {};
                       result = store.getState();
                       temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer;
                       // Add survey info to the redux store and to the database.
@@ -590,7 +598,7 @@ exports.default = function () {
                       result = store.getState();
 
                       temp.numActiveAccounts = result.groups.list.reduce(function (prev, groupID) {
-                        return prev + groups[groupID].accountList.length;
+                        return prev + result.groups[groupID].accountList.length;
                       }, 0);
 
                       temp.numActualSurveysRecived = result.results.surveyInfo.reduce(function (prev, survey) {
@@ -603,35 +611,123 @@ exports.default = function () {
                       // If information need processing after the last account have being submited:
                       // EX: SIMILARITIES, FAVOURITES & RESULTS
 
-                      if (!(temp.numActiveAccounts == temp.numActualSurveysRecived)) {
-                        _context.next = 138;
+                      if (!(temp.numActiveAccounts > 0 && temp.numActiveAccounts == temp.numActualSurveysRecived)) {
+                        _context.next = 172;
                         break;
                       }
 
                       _context.t3 = result.session.surveyPath[temp.accountSurveyPointer].type;
-                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 133 : _context.t3 === _surveyTypes.RESULTS ? 136 : 138;
+                      _context.next = _context.t3 === _surveyTypes.SIMILARITIES ? 134 : _context.t3 === _surveyTypes.FAVOURITES ? 138 : _context.t3 === _surveyTypes.RESULTS ? 170 : 172;
                       break;
 
-                    case 133:
+                    case 134:
                       // Get the all SIMILARITIES survey results.
                       temp.dataSimilarities = result.results.surveyInfo.filter(function (element) {
                         return element.surveyId == temp.accountSurveyPointer;
                       });
+                      temp.dataSimilarities = temp.dataSimilarities.reduce(function (prev, survey) {
+                        return prev = [].concat((0, _toConsumableArray3.default)(prev), (0, _toConsumableArray3.default)(survey.surveyData));
+                      }, []);
                       // Process SIMILARITIES and store in task.similarList
                       store.dispatch((0, _actions.taskAddAllSimilarities)((0, _similarity2.default)(temp.dataSimilarities)));
-                      return _context.abrupt('break', 138);
-
-                    case 136:
-
-                      store.dispatch((0, _actions.taskIncreasePointer)());
-                      return _context.abrupt('break', 138);
+                      return _context.abrupt('break', 172);
 
                     case 138:
+                      // Process the FAVOURITES
+                      console.log('FAVOURITES PRIMEro ANTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+                      _context.prev = 139;
+
+                      temp.dataFavourites = result.results.surveyInfo.filter(function (element) {
+                        return element.surveyId == temp.accountSurveyPointer;
+                      });
+
+                      temp.dataFavourites = temp.dataFavourites.reduce(function (prev, survey) {
+                        return prev = [].concat((0, _toConsumableArray3.default)(prev), (0, _toConsumableArray3.default)(survey.surveyData.data));
+                      }, []);
+
+                      console.log("ESTODEAKI: " + (0, _stringify2.default)(temp.dataFavourites));
+                      aggregated = [];
+                      _context.t4 = _regenerator2.default.keys(temp.dataFavourites);
+
+                    case 145:
+                      if ((_context.t5 = _context.t4()).done) {
+                        _context.next = 160;
+                        break;
+                      }
+
+                      f = _context.t5.value;
+
+                      found = false;
+
+                      _context.t6 = _regenerator2.default.keys(aggregated);
+
+                    case 149:
+                      if ((_context.t7 = _context.t6()).done) {
+                        _context.next = 157;
+                        break;
+                      }
+
+                      e = _context.t7.value;
+
+                      if (!(temp.dataFavourites[f].id == aggregated[e].id)) {
+                        _context.next = 155;
+                        break;
+                      }
+
+                      aggregated[e].rating.push(temp.dataFavourites[f].rating);
+                      found = true;
+                      return _context.abrupt('break', 157);
+
+                    case 155:
+                      _context.next = 149;
+                      break;
+
+                    case 157:
+
+                      if (!found) {
+                        entry = temp.dataFavourites[f];
+                        if (entry.rating) {
+                          if (!(entry.rating instanceof Array)) {
+                            entry.rating = [entry.rating];
+                          }
+                        } else {
+                          entry.rating = [];
+                        }
+                        aggregated.push(entry);
+                      }
+
+                      _context.next = 145;
+                      break;
+
+                    case 160:
+                      _context.next = 165;
+                      break;
+
+                    case 162:
+                      _context.prev = 162;
+                      _context.t8 = _context['catch'](139);
+
+                      console.log(_context.t8);
+
+                    case 165:
+                      console.log('FAVOURITES PRIMEro>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+                      console.log("DATOS::::::> " + (0, _stringify2.default)(aggregated));
+                      //console.log( processSimilarities( temp.dataSimilarities ) )
+                      console.log('FAVOURITES SEGUNDO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+                      store.dispatch((0, _actions.taskAddAllFavourites)(aggregated));
+                      return _context.abrupt('break', 172);
+
+                    case 170:
+
+                      store.dispatch((0, _actions.taskIncreasePointer)());
+                      return _context.abrupt('break', 172);
+
+                    case 172:
                       return _context.abrupt('return', {
                         v: true
                       });
 
-                    case 139:
+                    case 173:
                       result = store.getState();
 
                       store.dispatch((0, _actions.taskIdeaAdd)((0, _extends3.default)({
@@ -643,12 +739,12 @@ exports.default = function () {
                         v: true
                       });
 
-                    case 142:
+                    case 176:
                     case 'end':
                       return _context.stop();
                   }
                 }
-              }, _callee, _this, [[64, 68, 72, 80], [73,, 75, 79], [86, 98, 102, 110], [103,, 105, 109]]);
+              }, _callee, _this, [[64, 68, 72, 80], [73,, 75, 79], [86, 98, 102, 110], [103,, 105, 109], [139, 162]]);
             })(), 't0', 7);
 
           case 7:

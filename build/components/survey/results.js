@@ -38,6 +38,10 @@ var _FlatButton = require('material-ui/FlatButton');
 
 var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
 var _SelectField = require('material-ui/SelectField');
 
 var _SelectField2 = _interopRequireDefault(_SelectField);
@@ -62,7 +66,7 @@ var _svgIcons = require('material-ui/svg-icons');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var currentUserEmail = 'melacome3@gmail.com'; // need to set the current user email here for the attribution variable. (type 0 and 2)
+// need to set the current user email here for the attribution variable. (type 0 and 2)
 
 var Results = function (_Component) {
   (0, _inherits3.default)(Results, _Component);
@@ -71,6 +75,73 @@ var Results = function (_Component) {
     (0, _classCallCheck3.default)(this, Results);
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (Results.__proto__ || (0, _getPrototypeOf2.default)(Results)).call(this, props));
+
+    _this.processIncomingData = function (data, accounts) {
+
+      if (data == null) {
+        return;
+      }
+
+      var results = data.reduce(function (prev, current) {
+        var account = accounts[current.creator];
+        var currentEntry = { account: { email: current.creator, firstname: account.firstName, surname: account.surname }, stars: [0, 0, 0, 0, 0], lastTimeSubmitted: current.timeSubmitted };
+        var index = (current.rating[0] || 0) - 1;
+        if (index > -1) currentEntry.stars[index] = 1;
+        var isThereIndex = prev.findIndex(function (element, index, array) {
+          return element.account.email == currentEntry.account.email;
+        });
+        if (isThereIndex > -1) {
+
+          for (var i in currentEntry.stars) {
+            prev[isThereIndex].stars[i] = prev[isThereIndex].stars[i] + currentEntry.stars[i];
+          }
+
+          if (prev[isThereIndex].lastTimeSubmitted < currentEntry.lastTimeSubmitted) {
+            prev[isThereIndex].lastTimeSubmitted = currentEntry.lastTimeSubmitted;
+          }
+        } else {
+          prev.push(currentEntry);
+        }
+        return prev;
+      }, []);
+
+      var data = results;
+      _this.computeRanking(data);
+
+      data.sort(function (a, b) {
+        if (b.score - a.score == 0) {
+          if (b.stars[4] - a.stars[4] == 0) {
+            if (b.stars[3] - a.stars[3] == 0) {
+              if (b.stars[2] - a.stars[2] == 0) {
+                if (b.stars[1] - a.stars[1] == 0) {
+                  if (b.stars[0] - a.stars[0] == 0) {
+                    return a.lastTimeSubmitted - b.lastTimeSubmitted;
+                  } else {
+                    return b.stars[0] - a.stars[0];
+                  }
+                } else {
+                  return b.stars[1] - a.stars[1];
+                }
+              } else {
+                return b.stars[2] - a.stars[2];
+              }
+            } else {
+              return b.stars[3] - a.stars[3];
+            }
+          } else {
+            return b.stars[4] - a.stars[4];
+          }
+        } else {
+          return b.score - a.score;
+        }
+      });
+
+      data.map(function (item, i) {
+        item.rank = i + 1;item.pay = _this.getPay(i + 1);
+      });
+
+      return data;
+    };
 
     _this.getPay = function (i) {
       switch (i) {
@@ -224,59 +295,29 @@ var Results = function (_Component) {
       );
 
       if (_this.state.groupType == 0 || _this.state.groupType == 2) {
-        if (currentUserEmail == participant.account.email) {
+        if (_this.state.currentUserEmail == participant.account.email) {
           return participantLine;
         }
       } else {
-
         return participantLine;
       }
     };
 
-    _this.state = {};
+    _this.state = { data: null, groupType: -1, currentUserEmail: '', accounts: {} };
     return _this;
   }
 
   (0, _createClass3.default)(Results, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var _this2 = this;
-
-      var data = [{ account: { email: 'melacomeNot@gmail.com', firstname: 'paco', surname: 'perez caballero' }, stars: [2, 4, 7, 2, 1] }, { account: { email: 'melacome@gmail.com', firstname: 'iker', surname: 'jimenez' }, stars: [2, 4, 3, 2, 1] }, { account: { email: 'melacome3@gmail.com', firstname: 'carmen', surname: 'porter' }, stars: [2, 2, 7, 2, 1] }, { account: { email: 'melacome2@gmail.com', firstname: 'el maestro', surname: 'enrique de vicente' }, stars: [2, 1, 1, 2, 0] }, { account: { email: 'melacome@gmail.com', firstname: 'doctor', surname: 'gaona' }, stars: [1, 1, 1, 1, 1] }];
-
-      this.computeRanking(data);
-
-      this.setState({ groupType: 0 });
-
-      data.sort(function (a, b) {
-        if (b.score - a.score == 0) {
-          if (b.stars[4] - a.stars[4] == 0) {
-            if (b.stars[3] - a.stars[3] == 0) {
-              if (b.stars[2] - a.stars[2] == 0) {
-                if (b.stars[1] - a.stars[1] == 0) {
-                  return b.stars[0] - a.stars[0];
-                } else {
-                  return b.stars[1] - a.stars[1];
-                }
-              } else {
-                return b.stars[2] - a.stars[2];
-              }
-            } else {
-              return b.stars[3] - a.stars[3];
-            }
-          } else {
-            return b.stars[4] - a.stars[4];
-          }
-        } else {
-          return b.score - a.score;
-        }
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      console.log("nextProps vienen pa ca");
+      console.log(nextProps);
+      this.setState({
+        groupType: nextProps.groupType,
+        currentUserEmail: nextProps.account.email,
+        accounts: nextProps.accounts,
+        data: this.processIncomingData(nextProps.ideas, nextProps.accounts) || []
       });
-
-      data.map(function (item, i) {
-        item.rank = i + 1;item.pay = _this2.getPay(i + 1);
-      });
-
-      this.setState({ data: data });
     }
 
     // Function to compute the ranking of each participant and add to the object.
@@ -294,7 +335,7 @@ var Results = function (_Component) {
 
     //'_marker'
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var textColor = this.context.muiTheme.palette.textColor;
 
@@ -302,6 +343,10 @@ var Results = function (_Component) {
       var title = 'Results Summary';
       var text = 'Here you can see you performance with respect to ther other participants within your group:';
       var data = this.state.data;
+
+      if (data == null) {
+        return _react2.default.createElement('div', null);
+      }
 
       return _react2.default.createElement(
         'div',
@@ -379,8 +424,20 @@ var Results = function (_Component) {
             ),
             data.map(function (participant, i) {
 
-              return _this3.getParticipantLine(participant, i);
-            })
+              return _this2.getParticipantLine(participant, i);
+            }),
+            _react2.default.createElement(
+              _RaisedButton2.default,
+              {
+                id: 'submitAnswers',
+                style: { color: 'rgb(124, 234, 127)', marginTop: 20, textAlign: 'center' },
+                type: 'submit',
+                onClick: function onClick() {
+                  return _this2.props.submit(_this2.state.data);
+                }
+              },
+              'Continue'
+            )
           )
         )
       );
@@ -404,7 +461,10 @@ Results.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    account: state.account,
+    accounts: state.task.payload.accounts,
+    groupType: state.task.payload.groupType,
+    ideas: state.task.payload ? state.task.payload.ideas : []
   };
 };
 

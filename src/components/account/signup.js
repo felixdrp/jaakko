@@ -48,7 +48,7 @@ class LoginSignUp extends React.Component {
     this.state = {
       // Input fields
       firstName: { error: '', name: 'First name' },
-      surename: { error: '', name: 'Surename' },
+      surname: { error: '', name: 'surname' },
 
       // userError: { error: '', name: 'First name' },
       email: { error: '', name: 'Email' },
@@ -125,14 +125,14 @@ class LoginSignUp extends React.Component {
     //       username = input.username.getValue(),
     //       password = input.password.getValue();
     const firstName = input.firstName.getValue() || '',
-          surename = input.surename.getValue() || '',
+          surname = input.surname.getValue() || '',
           email = input.email.getValue() || '',
           password = input.password.getValue() || '',
           reEnterPassword = input.reEnterPassword.getValue() || '';
 
     const fields = {
       firstName,
-      surename,
+      surname,
       email,
       password,
       reEnterPassword,
@@ -165,7 +165,7 @@ class LoginSignUp extends React.Component {
       result = this.context.websocket.send(
         registerAccount({
           firstName,
-          surename,
+          surname,
           email,
           password,
           reEnterPassword,
@@ -300,7 +300,7 @@ class LoginSignUp extends React.Component {
             method="POST"
           >
             {this.textField( 'firstName' )}
-            {this.textField( 'surename' )}
+            {this.textField( 'surname' )}
             <br />
             <br />
             {this.textField( 'email' )}

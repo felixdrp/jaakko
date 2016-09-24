@@ -296,7 +296,7 @@ class Similarities extends Component {
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
               <br />
-              <Timer limitTime={15} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
+              <Timer limitTime={5} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
               {
                 data.map( (entry,i) => {

@@ -14,6 +14,7 @@ import {
 
   TASK_ADD_IDEA,
   TASK_ADD_ALL_SIMILARITIES,
+  TASK_ADD_ALL_FAVOURITES,
   TASK_INCREASE_POINTER,
 } from '../actions/actions'
 
@@ -131,7 +132,15 @@ export function results(state = { surveyInfo: [] }, action) {
   }
 }
 
-export function task(state = { taskPointer: 0, taskList: [ [] ], similarList: [ [] ] }, action) {
+export function task(
+  state = {
+    taskPointer: 0,
+    taskList: [ [] ],
+    similarList: [ [] ],
+    favouritList: [ [] ],
+  },
+  action
+) {
   let payload = action.payload || ''
   let temp
   switch (action.type) {
@@ -142,6 +151,11 @@ export function task(state = { taskPointer: 0, taskList: [ [] ], similarList: [ 
     case TASK_ADD_ALL_SIMILARITIES:
       temp = { ...state }
       temp.similarList[ state.taskPointer ] = payload
+      return temp
+
+    case TASK_ADD_ALL_FAVOURITES:
+      temp = { ...state }
+      temp.favouritList[ state.taskPointer ] = payload
       return temp
 
     case TASK_INCREASE_POINTER:

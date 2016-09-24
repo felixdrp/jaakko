@@ -25,7 +25,7 @@ describe('Create account function:', () => {
         deepMessage: 'Input fields is not an object type.',
       });
     });
-    // Check with first name and surename
+    // Check with first name and surname
 
     // Minimum length: 1 characters
     // Maximum length: 15 characters
@@ -50,29 +50,29 @@ describe('Create account function:', () => {
       })
     });
 
-    describe('Surename', () => {
+    describe('surname', () => {
       it('Length less than min', async () => {
-        let result = await createAccount({firstName: 'lucas', surename: 'George'}, { surename: {min: 10} })
+        let result = await createAccount({firstName: 'lucas', surname: 'George'}, { surname: {min: 10} })
         expect(result.deepMessage).to.equal( 'The field is too short' );
-        expect(result.message).to.equal( 'The input field surename not valid' );
+        expect(result.message).to.equal( 'The input field surname not valid' );
       })
       it('Length more than max', async () => {
-        let result = await createAccount({firstName: 'lucas', surename: 'George'}, { surename: {max: 3} })
+        let result = await createAccount({firstName: 'lucas', surname: 'George'}, { surname: {max: 3} })
         expect(result.deepMessage).to.equal( 'The field is too long' );
-        expect(result.message).to.equal( 'The input field surename not valid' );
+        expect(result.message).to.equal( 'The input field surname not valid' );
       })
       it('It have a no valid character', async () => {
         // It have a no valid character
-        let result = await createAccount({firstName: 'lucas', surename: 'Geor$e'}, { surename: {type: 'alphanumeric'} })
-        expect(result.deepMessage).to.equal( 'The field surename constains a not valid character' );
-        expect(result.message).to.equal( 'The input field surename not valid' );
+        let result = await createAccount({firstName: 'lucas', surname: 'Geor$e'}, { surname: {type: 'alphanumeric'} })
+        expect(result.deepMessage).to.equal( 'The field surname constains a not valid character' );
+        expect(result.message).to.equal( 'The input field surname not valid' );
       })
     });
 
     describe('Email', () => {
       let fields = {
         firstName: 'lucas',
-        surename: 'George',
+        surname: 'George',
         password: 'GeorgeLuc@as1',
         reEnterPassword: 'GeorgeL',
       }
@@ -101,7 +101,7 @@ describe('Create account function:', () => {
     describe('Password', () => {
       let fields = {
         firstName: 'lucas',
-        surename: 'George',
+        surname: 'George',
         email: "lucas@sky.wl",
         reEnterPassword: 'GeorgeLuc@as222',
       }
@@ -129,7 +129,7 @@ describe('Create account function:', () => {
       it('password and reEnterPassword are equal', async () => {
         let fields = {
           firstName: 'lucas',
-          surename: 'George',
+          surname: 'George',
           email: "lucas@sky.wl",
           password: 'GeorgeLuc@as1',
           reEnterPassword: 'GeorgeLuc@as222',
@@ -144,7 +144,7 @@ describe('Create account function:', () => {
     describe('Token and option mustHave', () => {
       let fields = {
         firstName: 'lucas',
-        surename: 'George',
+        surname: 'George',
         password: 'GeorgeLuc@as1',
         reEnterPassword: 'GeorgeLuc@as1',
         email: 'lucas@sky.wl',
@@ -214,7 +214,7 @@ describe('Create account function:', () => {
     it('The email is not already taken', async () => {
       let fields = {
         firstName: 'lucas1',
-        surename: 'George1',
+        surname: 'George1',
         email: "lucas1@sky.wl",
         password: 'GeorgeLuc@as1',
         reEnterPassword: 'GeorgeLuc@as1',
@@ -225,7 +225,7 @@ describe('Create account function:', () => {
     it('An account is created and removed.(register uses bcryt... takes time)', async () => {
       let fields = {
         firstName: 'lucas2',
-        surename: 'George2',
+        surname: 'George2',
         email: 'lucas2@sky.wl',
         password: 'GeorgeLuc@as1',
         reEnterPassword: 'GeorgeLuc@as1',

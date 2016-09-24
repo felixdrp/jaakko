@@ -4,7 +4,7 @@ import AccountPage from './page-object'
 
 const account = {
         firstName: 'lucas',
-        surename: 'George',
+        surname: 'George',
         email: "@sky.wl",
         password: '1234',
         reEnterPassword: '1234',
@@ -38,7 +38,7 @@ function login() {
       accPag.navigate(urlLogin)
       driver.wait(until.elementLocated(By.id('submitLoginAccount')), 2000)
       await accPag.loginAccount({
-        email: account.firstName + i + '.' + account.surename + account.email,
+        email: account.firstName + i + '.' + account.surname + account.email,
         password: account.password,
       })
       // await driver.quit()

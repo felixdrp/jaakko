@@ -56,10 +56,6 @@ var _Slider2 = _interopRequireDefault(_Slider);
 
 var _RadioButton = require('material-ui/RadioButton');
 
-var _similarity = require('../../modules/similarity');
-
-var _similarity2 = _interopRequireDefault(_similarity);
-
 var _reactRedux = require('react-redux');
 
 var _timer = require('./timer');
@@ -128,157 +124,16 @@ var Favourites = function (_Component) {
       alert('boom');
     };
 
-    _this.state = {};
+    _this.state = { favourites: new Array(6) };
     return _this;
   }
 
   (0, _createClass3.default)(Favourites, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var data = [{ group: 1474585598573,
-        groupType: 0,
-        id: '1',
-        title: 'gfdgdfs',
-        description: 'gfdgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 10,
-        similarTo: ['2', '7'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '2',
-        title: '432432',
-        description: 'gfdsgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 100,
-        similarTo: ['1', '3'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '3',
-        title: '543gfdgfds63',
-        description: 'hgdfsdf4',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 50,
-        similarTo: ['2'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '1',
-        title: 'gfdgdfs',
-        description: 'gfdgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 10,
-        similarTo: ['2'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '2',
-        title: '432432',
-        description: 'gfdsgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 100,
-        similarTo: ['1', '3'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '3',
-        title: '543gfdgfds63',
-        description: 'hgdfsdf4',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 50,
-        similarTo: ['2'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '7',
-        title: 'erhrhgf',
-        description: 'hgfhgffhdg',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 1474585612141,
-        similarTo: ['1'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '4',
-        title: 'erhrhgf',
-        description: 'hgfhgffhdg',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 1474585612141,
-        similarTo: [],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '5',
-        title: '654546',
-        description: 'hghgfhgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 200,
-        similarTo: ['6'],
-        similarityHide: false
-      }, { group: 1474585598573,
-        groupType: 0,
-        id: '6',
-        title: 'hgfghf',
-        description: 'gfdfgds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 600,
-        similarTo: ['5'],
-        similarityHide: false }, { group: 1474585598573,
-        groupType: 0,
-        id: '10',
-        title: 'hgfghf',
-        description: 'gfdfgds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 600,
-        similarTo: [],
-        similarityHide: false }, { group: 1474585598573,
-        groupType: 0,
-        id: '10',
-        title: 'hgfghf',
-        description: 'gfdfgds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 600,
-        similarTo: [],
-        similarityHide: false }, { group: 1474585598573,
-        groupType: 0,
-        id: '10',
-        title: 'hgfghf',
-        description: 'gfdfgds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 600,
-        similarTo: [],
-        similarityHide: false }, { group: 1474585598573,
-        groupType: 0,
-        id: '10',
-        title: 'hgfghf',
-        description: 'gfdfgds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 600,
-        similarTo: [],
-        similarityHide: false }];
-
-      this.setState({ data: data });
-
-      // var data = processSimilarities(data);
-      //
-      // console.log("finiquitao: "+JSON.stringify(data));
-
-      this.setState({ favourites: new Array(6) });
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.setState({
+        data: nextProps.ideas || []
+      });
     }
   }, {
     key: 'handleSave',
@@ -298,8 +153,8 @@ var Favourites = function (_Component) {
       var title = 'Favourites task';
       var text = 'Rate the following works, and show which ones are your favourites:';
 
-      var data = this.state.data;
-      var raters = new Array(data.lenght);
+      var data = this.state.data || [];
+      var raters = new Array(data.length);
 
       return _react2.default.createElement(
         'div',
@@ -336,7 +191,7 @@ var Favourites = function (_Component) {
             })
           ),
           _react2.default.createElement('br', null),
-          _react2.default.createElement(_timer2.default, { limitTime: 1000, timerCallback: function timerCallback() {
+          _react2.default.createElement(_timer2.default, { limitTime: 10, timerCallback: function timerCallback() {
               return _this2.props.submit(_this2.gatherData());
             } }),
           data.map(function (entry, i) {
@@ -399,7 +254,9 @@ Favourites.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    firstName: state.account.firstName,
+    ideas: state.task.payload ? state.task.payload.ideas : []
+
   };
 };
 

@@ -377,7 +377,8 @@ var _initialiseProps = function _initialiseProps() {
       creator: accountId,
       rating: [],
       timeSubmitted: null,
-      similarTo: []
+      similarTo: [],
+      similarityHide: false
     };
 
     _this3.setState({ currentEntry: newEntry });
@@ -408,8 +409,8 @@ AltObjectTask.propTypes = {}
   return {
     firstName: state.account.firstName,
     account: state.account,
-    tasks: state.task.tasks,
-    taskLength: state.task.tasks.length
+    tasks: state.task.tasks || [],
+    taskLength: state.task.tasks ? state.task.tasks.length : 0
   };
 };
 

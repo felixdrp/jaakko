@@ -74,6 +74,7 @@ export default async function query({ action, payload, ws, store }) {
 
     case SURVEY_STATE_GET:
       // Send initial values to the surveys if needed
+      temp = {}
       result = store.getState()
       account = payload
 
@@ -144,16 +145,33 @@ export default async function query({ action, payload, ws, store }) {
           ws.send(
             swSetSurveyInitials( temp.payload )
           )
-
           return
 
         case RESULTS:
+        try {
+
+          console.log('PRE PRE RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS')
+          result = storeStateWithoutWebSocket( result )
+          temp.payload = {
+            group: temp.account.group,
+            groupType: result.groups[ temp.account.group ].type,
+            accounts: result.accounts,
+            ideas: result.task.favouritList[ result.task.taskPointer ].filter(
+              element => temp.account.group == element.group
+            ),
+          }
+
+          console.log('RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS')
+          console.log(temp.payload)
+
           ws.send(
             swSetSurveyInitials( temp.payload )
           )
-
           return
 
+        } catch (e ) {
+          console.log("CAGADA: "+e)
+        }
         default:
 
       }

@@ -49,10 +49,22 @@ var sessionData = {
     payload: 'altObjectTask',
     time: 'inf'
   }, {
-    type: _surveyTypes.QUESTION,
-    payload: 'entry',
+    type: _surveyTypes.AWAIT,
+    time: 'inf'
+  }, {
+    type: _surveyTypes.RESULTS,
+    payload: 'altObjectTask',
     time: 'inf'
   },
+  // {
+  //   type: AWAIT,
+  //   time: 'inf',
+  // },
+  // {
+  //   type: QUESTION,
+  //   payload: 'entry',
+  //   time: 'inf',
+  // },
 
   //first round
   {

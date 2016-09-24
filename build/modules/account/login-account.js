@@ -139,7 +139,7 @@ var loginAccount = exports.loginAccount = function () {
             return _context.abrupt('return', {
               email: user.email,
               firstName: user.firstName,
-              surename: user.surename,
+              surname: user.surname,
               token: user.token
             });
 

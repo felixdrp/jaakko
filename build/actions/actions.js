@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CONTINUE = exports.WAIT = exports.TASK_INCREASE_POINTER = exports.TASK_ADD_ALL_SIMILARITIES = exports.TASK_ADD_IDEA = exports.STORE_SURVEY_INFO = exports.SUBMIT_SURVEY_INFO = exports.SURVEY_STEP_ALL = exports.SESSION_DATA_ADD = exports.SEND_ACCOUNT_MESSAGE = exports.SEND_GROUP_MESSAGE = exports.SEND_ALL_MESSAGE = exports.GROUPS_AUTOMATE_CREATION = exports.GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_TO_GROUP = exports.GROUPS_REMOVE_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = exports.GROUPS_REMOVE = exports.GROUPS_ADD = exports.ACCOUNTS_REMOVE = exports.ACCOUNTS_UPDATE = exports.ACCOUNTS_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = undefined;
+exports.CONTINUE = exports.WAIT = exports.TASK_INCREASE_POINTER = exports.TASK_ADD_ALL_FAVOURITES = exports.TASK_ADD_ALL_SIMILARITIES = exports.TASK_ADD_IDEA = exports.STORE_SURVEY_INFO = exports.SUBMIT_SURVEY_INFO = exports.SURVEY_STEP_ALL = exports.SESSION_DATA_ADD = exports.SEND_ACCOUNT_MESSAGE = exports.SEND_GROUP_MESSAGE = exports.SEND_ALL_MESSAGE = exports.GROUPS_AUTOMATE_CREATION = exports.GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_UNASSIGN = exports.GROUPS_SELECTED_ACCOUNTS_TO_GROUP = exports.GROUPS_REMOVE_ACCOUNT = exports.GROUPS_ADD_ACCOUNT = exports.GROUPS_REMOVE = exports.GROUPS_ADD = exports.ACCOUNTS_REMOVE = exports.ACCOUNTS_UPDATE = exports.ACCOUNTS_ADD = exports.LOGIN_ACCOUNT = exports.REGISTER_ACCOUNT = undefined;
 
 var _extends2 = require('babel-runtime/helpers/extends');
 
@@ -24,6 +24,7 @@ exports.sessionDataAdd = sessionDataAdd;
 exports.storeSurveInfo = storeSurveInfo;
 exports.taskIdeaAdd = taskIdeaAdd;
 exports.taskAddAllSimilarities = taskAddAllSimilarities;
+exports.taskAddAllFavourites = taskAddAllFavourites;
 exports.taskIncreasePointer = taskIncreasePointer;
 exports.synchronize = synchronize;
 
@@ -182,6 +183,12 @@ var TASK_ADD_ALL_SIMILARITIES = exports.TASK_ADD_ALL_SIMILARITIES = 'TASK_ADD_AL
 
 function taskAddAllSimilarities(similarities) {
   return { type: TASK_ADD_ALL_SIMILARITIES, payload: similarities };
+}
+
+var TASK_ADD_ALL_FAVOURITES = exports.TASK_ADD_ALL_FAVOURITES = 'TASK_ADD_ALL_FAVOURITES';
+
+function taskAddAllFavourites(favourites) {
+  return { type: TASK_ADD_ALL_FAVOURITES, payload: favourites };
 }
 
 var TASK_INCREASE_POINTER = exports.TASK_INCREASE_POINTER = 'TASK_INCREASE_POINTER';

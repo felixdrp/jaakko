@@ -41,6 +41,7 @@ import {
   storeSurveInfo,
   taskIdeaAdd,
   taskAddAllSimilarities,
+  taskAddAllFavourites,
   taskIncreasePointer,
 } from '../actions/actions'
 
@@ -86,7 +87,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
   let payloadResponse,
       result,
       account,
-      temp
+      temp = {}
 
   function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
     let tempAccount
@@ -165,7 +166,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
       result = await createAccount(
         {
           firstName: payload.firstName,
-          surename: payload.surename,
+          surname: payload.surname,
           email: payload.email,
           password: payload.password,
           reEnterPassword: payload.password,
@@ -211,7 +212,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
       account = {
         email: payload.email,
         firstName: payload.firstName,
-        surename: payload.surename,
+        surname: payload.surname,
         token: result,
         ws,
       }
@@ -262,7 +263,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
       account = {
         email: payload.email,
         firstName: result.firstName,
-        surename: result.surename,
+        surname: result.surname,
         token: result.token,
         ws: ws,
       }
@@ -434,9 +435,9 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
         console.log('SUBMIT_SURVEY_INFO: No valid accountId')
         return false
       }
-
+      temp = {}
       result = store.getState()
-      temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer
+      temp.accountSurveyPointer = result.accounts[ payload.accountId ].surveyPointer
       // Add survey info to the redux store and to the database.
       store.dispatch(
         storeSurveInfo({
@@ -452,7 +453,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
 
       temp.numActiveAccounts = result.groups.list.reduce(
         (prev, groupID) => {
-          return prev + groups[groupID].accountList.length
+          return prev + result.groups[groupID].accountList.length
         },
         0
       )
@@ -469,12 +470,18 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
 
       // If information need processing after the last account have being submited:
       // EX: SIMILARITIES, FAVOURITES & RESULTS
-      if ( temp.numActiveAccounts == temp.numActualSurveysRecived ) {
+      if ( temp.numActiveAccounts > 0 && temp.numActiveAccounts == temp.numActualSurveysRecived ) {
         switch (result.session.surveyPath[temp.accountSurveyPointer].type) {
           case SIMILARITIES:
             // Get the all SIMILARITIES survey results.
             temp.dataSimilarities = result.results.surveyInfo.filter(
               element => element.surveyId == temp.accountSurveyPointer
+            )
+            temp.dataSimilarities = temp.dataSimilarities.reduce(
+              (prev, survey) => {
+                return prev = [ ...prev, ...survey.surveyData ]
+              },
+              []
             )
             // Process SIMILARITIES and store in task.similarList
             store.dispatch(
@@ -483,6 +490,65 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
               )
             )
             break;
+
+          case FAVOURITES:
+            // Process the FAVOURITES
+            console.log('FAVOURITES PRIMEro ANTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+            try{
+              temp.dataFavourites = result.results.surveyInfo.filter(
+                element => element.surveyId == temp.accountSurveyPointer
+              )
+
+              temp.dataFavourites = temp.dataFavourites.reduce(
+                (prev, survey) => {
+                  return prev = [ ...prev, ...survey.surveyData.data ]
+                },
+                []
+              )
+
+              console.log("ESTODEAKI: "+ JSON.stringify(temp.dataFavourites))
+              var aggregated = []
+              var found;
+              var entry;
+
+                for ( var f in temp.dataFavourites){
+                found = false;
+
+                  for ( var e in aggregated){
+                    if (temp.dataFavourites[f].id == aggregated[e].id){
+                      aggregated[e].rating.push(temp.dataFavourites[f].rating)
+                      found = true;
+                      break;
+                    }
+                  }
+
+                  if ( !found ) {
+                    entry = temp.dataFavourites[f]
+                    if ( entry.rating ){
+                      if (! (entry.rating instanceof Array) ){
+                        entry.rating = [entry.rating]
+                      }
+                    } else {
+                      entry.rating = []
+                    }
+                    aggregated.push(entry)
+                  }
+
+                }
+              } catch (e){
+                console.log(e)
+
+
+              }
+            console.log('FAVOURITES PRIMEro>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+            console.log("DATOS::::::> "+JSON.stringify(aggregated))
+            //console.log( processSimilarities( temp.dataSimilarities ) )
+            console.log('FAVOURITES SEGUNDO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<')
+            store.dispatch(
+              taskAddAllFavourites( aggregated )
+            )
+            break;
+
           case RESULTS:
 
             store.dispatch( taskIncreasePointer() )

@@ -25,7 +25,7 @@ export async function createAccount(input, options) {
 
   let fields = {
     firstName: '',
-    surename: '',
+    surname: '',
     email: '',
     password: '',
     reEnterPassword: '',
@@ -89,7 +89,7 @@ export async function createAccount(input, options) {
     res = await db.collection('User').insertOne({
       _id: newUserID,
       firstName: fields.firstName,
-      surename: fields.surename,
+      surname: fields.surname,
       email: fields.email,
       // uploadAsPrivate: true,
       token,

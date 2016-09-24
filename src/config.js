@@ -17,7 +17,7 @@ export const graphQLServerOptions = {
 
 
 // Input Fields Options
-const nameAndSurenameOptions = {
+const nameAndsurnameOptions = {
   type: 'alphanumeric',
   min: 1,
   max: 50,
@@ -35,8 +35,8 @@ const passwordOptions = {
 }
 
 export let fieldsOptions = {
-  firstName : {...nameAndSurenameOptions},
-  surename : {...nameAndSurenameOptions},
+  firstName : {...nameAndsurnameOptions},
+  surname : {...nameAndsurnameOptions},
   email: {type: 'email', min: 8, max: 50, mustHave: true},
   password: {...passwordOptions},
   reEnterPassword: {...passwordOptions},

@@ -9,7 +9,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import processSimilarities from '../../modules/similarity'
 
 import { connect } from 'react-redux'
 
@@ -33,7 +32,7 @@ class Favourites extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {};
+     this.state = {favourites : new Array(6)};
   }
 
   static contextTypes = {
@@ -43,168 +42,11 @@ class Favourites extends Component {
   };
 
 
-  componentWillMount() {
-    var data = [
-      { group: 1474585598573,
-       groupType: 0,
-       id: '1',
-       title: 'gfdgdfs',
-       description: 'gfdgfds',
-       creator: 'rpsoft@gmail.com',
-       rating: [],
-       timeSubmitted: 10,
-       similarTo: ['2','7'],
-       similarityHide : false,
-     },
-     { group: 1474585598573,
-       groupType: 0,
-       id: '2',
-       title: '432432',
-       description: 'gfdsgfds',
-       creator: 'rpsoft@gmail.com',
-       rating: [],
-       timeSubmitted: 100,
-       similarTo: ['1','3'],
-       similarityHide : false,
-     },
-     { group: 1474585598573,
-       groupType: 0,
-       id: '3',
-       title: '543gfdgfds63',
-       description: 'hgdfsdf4',
-       creator: 'rpsoft@gmail.com',
-       rating: [],
-       timeSubmitted: 50,
-       similarTo: ['2'],
-       similarityHide : false,
-     },
-     { group: 1474585598573,
-        groupType: 0,
-        id: '1',
-        title: 'gfdgdfs',
-        description: 'gfdgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 10,
-        similarTo: ['2'],
-        similarityHide : false,
-      },
-      { group: 1474585598573,
-        groupType: 0,
-        id: '2',
-        title: '432432',
-        description: 'gfdsgfds',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 100,
-        similarTo: ['1','3'],
-        similarityHide : false,
-       },
-      { group: 1474585598573,
-        groupType: 0,
-        id: '3',
-        title: '543gfdgfds63',
-        description: 'hgdfsdf4',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 50,
-        similarTo: ['2'],
-        similarityHide : false,
-      },
-      { group: 1474585598573,
-        groupType: 0,
-        id: '7',
-        title: 'erhrhgf',
-        description: 'hgfhgffhdg',
-        creator: 'rpsoft@gmail.com',
-        rating: [],
-        timeSubmitted: 1474585612141,
-        similarTo: ['1'],
-        similarityHide : false,
-      },
-     { group: 1474585598573,
-       groupType: 0,
-       id: '4',
-       title: 'erhrhgf',
-       description: 'hgfhgffhdg',
-       creator: 'rpsoft@gmail.com',
-       rating: [],
-       timeSubmitted: 1474585612141,
-       similarTo: [],
-       similarityHide : false,
-     },
-     { group: 1474585598573,
-       groupType: 0,
-       id: '5',
-       title: '654546',
-       description: 'hghgfhgfds',
-       creator: 'rpsoft@gmail.com',
-       rating: [],
-       timeSubmitted: 200,
-       similarTo: ['6'],
-       similarityHide : false,
-     },
-     { group: 1474585598573,
-       groupType: 0,
-       id: '6',
-       title: 'hgfghf',
-       description: 'gfdfgds',
-       creator: 'rpsoft@gmail.com',
-       rating: [],
-       timeSubmitted: 600,
-       similarTo: ['5'],
-       similarityHide : false, },
-
-    { group: 1474585598573,
-         groupType: 0,
-         id: '10',
-         title: 'hgfghf',
-         description: 'gfdfgds',
-         creator: 'rpsoft@gmail.com',
-         rating: [],
-         timeSubmitted: 600,
-         similarTo: [],
-         similarityHide : false, },
-     { group: 1474585598573,
-          groupType: 0,
-          id: '10',
-          title: 'hgfghf',
-          description: 'gfdfgds',
-          creator: 'rpsoft@gmail.com',
-          rating: [],
-          timeSubmitted: 600,
-          similarTo: [],
-          similarityHide : false, },
-      { group: 1474585598573,
-           groupType: 0,
-           id: '10',
-           title: 'hgfghf',
-           description: 'gfdfgds',
-           creator: 'rpsoft@gmail.com',
-           rating: [],
-           timeSubmitted: 600,
-           similarTo: [],
-           similarityHide : false, },
-       { group: 1474585598573,
-            groupType: 0,
-            id: '10',
-            title: 'hgfghf',
-            description: 'gfdfgds',
-            creator: 'rpsoft@gmail.com',
-            rating: [],
-            timeSubmitted: 600,
-            similarTo: [],
-            similarityHide : false, }, ];
-
-      this.setState({data});
-
-      // var data = processSimilarities(data);
-      //
-      // console.log("finiquitao: "+JSON.stringify(data));
-
-      this.setState({favourites : new Array(6)})
-
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data : nextProps.ideas || []
+    });
+  }
 
 
   handleSave(text) {
@@ -266,8 +108,8 @@ class Favourites extends Component {
     let title = 'Favourites task';
     let text = 'Rate the following works, and show which ones are your favourites:';
 
-    let data = this.state.data;
-    let raters = new Array(data.lenght);
+    let data = this.state.data || [];
+    let raters = new Array(data.length);
 
     return (
       <div>
@@ -304,7 +146,7 @@ class Favourites extends Component {
 
 
             <br />
-            <Timer limitTime={1000} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
+            <Timer limitTime={10} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
             {
               data.map( (entry,i) => {
@@ -343,6 +185,7 @@ class Favourites extends Component {
   }
 }
 
+
 Favourites.propTypes = {
   // addTodo: PropTypes.func.isRequired
 }
@@ -351,7 +194,9 @@ Favourites.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    firstName : state.account.firstName,
+    ideas: (state.task.payload) ? state.task.payload.ideas: [],
+
   }
 }
 

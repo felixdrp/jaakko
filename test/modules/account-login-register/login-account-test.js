@@ -30,7 +30,7 @@ describe('Login account:', () => {
     it('Account not found', async () => {
       let fields = {
         firstName: 'lucaslogin',
-        surename: 'Georgetest',
+        surname: 'Georgetest',
         email: "lucaslogin1@sky.wl",
         password: 'GeorgeLuc@as1',
         reEnterPassword: 'GeorgeLuc@as1',
@@ -50,7 +50,7 @@ describe('Login account:', () => {
     it('Account was found. Error in password.(register uses bcryt... takes time)', async () => {
       let fields = {
         firstName: 'lucaslogin2',
-        surename: 'Georgetest2',
+        surname: 'Georgetest2',
         email: "lucaslogin2@sky.wl",
         password: 'GeorgeLuc@as2',
         reEnterPassword: 'GeorgeLuc@as2',
@@ -82,7 +82,7 @@ describe('Login account:', () => {
     it('Account was found. Valid password.(register uses bcryt... takes time)', async () => {
       let fields = {
         firstName: 'lucaslogin2',
-        surename: 'Georgetest2',
+        surname: 'Georgetest2',
         email: "lucaslogin2@sky.wl",
         password: 'GeorgeLuc@as2',
         reEnterPassword: 'GeorgeLuc@as2',

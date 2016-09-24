@@ -103,11 +103,12 @@ var SurveyContainer = function (_Component) {
     key: 'submitInfo',
     value: function submitInfo(infoObject) {
       var props = this.props;
-      this.context.websocket.send((0, _serverActions.wsSubmitSurveyInfo)((0, _extends3.default)({
+      this.context.websocket.send((0, _serverActions.wsSubmitSurveyInfo)({
         accountId: 'account' in props ? props.account.email || 'unassigned' : '',
         startTimestamp: this.state.start,
-        endTimestamp: Date.now()
-      }, infoObject)));
+        endTimestamp: Date.now(),
+        surveyData: infoObject
+      }));
     }
   }, {
     key: 'render',

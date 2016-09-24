@@ -74,7 +74,7 @@ class SurveyContainer extends Component {
           accountId: 'account' in props? props.account.email || 'unassigned': '',
           startTimestamp: this.state.start,
           endTimestamp: Date.now(),
-          ...infoObject,
+          surveyData: infoObject,
         }
       )
     )

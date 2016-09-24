@@ -138,7 +138,7 @@ function login20Accounts() {
 // setTimeout( () => login20Accounts(), 1000)
 
 
-// {"firstName":"Jesus","surename":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
+// {"firstName":"Jesus","surname":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
 // Move the client to a web page...
 // setTimeout( () => store.dispatch(push('/modules/example')), 3000)
 

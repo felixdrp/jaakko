@@ -142,7 +142,12 @@ function results() {
 }
 
 function task() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { taskPointer: 0, taskList: [[]], similarList: [[]] } : arguments[0];
+  var state = arguments.length <= 0 || arguments[0] === undefined ? {
+    taskPointer: 0,
+    taskList: [[]],
+    similarList: [[]],
+    favouritList: [[]]
+  } : arguments[0];
   var action = arguments[1];
 
   var payload = action.payload || '';
@@ -155,6 +160,11 @@ function task() {
     case _actions.TASK_ADD_ALL_SIMILARITIES:
       temp = (0, _extends3.default)({}, state);
       temp.similarList[state.taskPointer] = payload;
+      return temp;
+
+    case _actions.TASK_ADD_ALL_FAVOURITES:
+      temp = (0, _extends3.default)({}, state);
+      temp.favouritList[state.taskPointer] = payload;
       return temp;
 
     case _actions.TASK_INCREASE_POINTER:

@@ -50,7 +50,7 @@ var createAccount = exports.createAccount = function () {
             error = {};
             fields = (0, _extends3.default)({
               firstName: '',
-              surename: '',
+              surname: '',
               email: '',
               password: '',
               reEnterPassword: ''
@@ -132,7 +132,7 @@ var createAccount = exports.createAccount = function () {
             return db.collection('User').insertOne({
               _id: newUserID,
               firstName: fields.firstName,
-              surename: fields.surename,
+              surname: fields.surname,
               email: fields.email,
               // uploadAsPrivate: true,
               token: token

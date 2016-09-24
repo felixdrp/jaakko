@@ -16,7 +16,7 @@ const driver = new webdriver.Builder()
 
 const account = {
         firstName: 'lucas',
-        surename: 'George',
+        surname: 'George',
         email: "@sky.wl",
         password: '1234',
         reEnterPassword: '1234',
@@ -62,7 +62,7 @@ describe('Account:', () => {
         await accPag.navigate( urlSignup )
         await accPag.registerAccount({
           ...account,
-          email: account.firstName + i + '.' + account.surename + account.email
+          email: account.firstName + i + '.' + account.surname + account.email
         })
       }
 

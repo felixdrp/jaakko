@@ -13,7 +13,7 @@ const driver = new webdriver.Builder()
 
 const account = {
         firstName: 'lucas',
-        surename: 'George1',
+        surname: 'George1',
         email: "e2elucas1@sky.wl",
         password: 'GeorgeLuc@as1',
         reEnterPassword: 'GeorgeLuc@as1',

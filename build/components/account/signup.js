@@ -83,7 +83,7 @@ var LoginSignUp = function (_React$Component) {
     _this.state = {
       // Input fields
       firstName: { error: '', name: 'First name' },
-      surename: { error: '', name: 'Surename' },
+      surname: { error: '', name: 'surname' },
 
       // userError: { error: '', name: 'First name' },
       email: { error: '', name: 'Email' },
@@ -164,14 +164,14 @@ var LoginSignUp = function (_React$Component) {
       //       username = input.username.getValue(),
       //       password = input.password.getValue();
       var firstName = input.firstName.getValue() || '',
-          surename = input.surename.getValue() || '',
+          surname = input.surname.getValue() || '',
           email = input.email.getValue() || '',
           password = input.password.getValue() || '',
           reEnterPassword = input.reEnterPassword.getValue() || '';
 
       var fields = {
         firstName: firstName,
-        surename: surename,
+        surname: surname,
         email: email,
         password: password,
         reEnterPassword: reEnterPassword
@@ -203,7 +203,7 @@ var LoginSignUp = function (_React$Component) {
         console.log(this.context.websocket);
         result = this.context.websocket.send((0, _serverActions.registerAccount)({
           firstName: firstName,
-          surename: surename,
+          surname: surname,
           email: email,
           password: password,
           reEnterPassword: reEnterPassword
@@ -359,7 +359,7 @@ var LoginSignUp = function (_React$Component) {
               method: 'POST'
             },
             this.textField('firstName'),
-            this.textField('surename'),
+            this.textField('surname'),
             _react2.default.createElement('br', null),
             _react2.default.createElement('br', null),
             this.textField('email'),

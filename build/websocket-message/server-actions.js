@@ -44,7 +44,7 @@ var REGISTER_ACCOUNT = exports.REGISTER_ACCOUNT = 'REGISTER_ACCOUNT';
 // Register using socket action creator
 function registerAccount(_ref) {
   var firstName = _ref.firstName;
-  var surename = _ref.surename;
+  var surname = _ref.surname;
   var email = _ref.email;
   var password = _ref.password;
   var reEnterPassword = _ref.reEnterPassword;
@@ -54,7 +54,7 @@ function registerAccount(_ref) {
     action: REGISTER_ACCOUNT,
     payload: {
       firstName: firstName,
-      surename: surename,
+      surname: surname,
       email: email,
       password: password,
       reEnterPassword: reEnterPassword
@@ -83,7 +83,7 @@ function loginAccount(_ref2) {
 function wsLogAccount(_ref3) {
   var email = _ref3.email;
   var firstName = _ref3.firstName;
-  var surename = _ref3.surename;
+  var surname = _ref3.surname;
   var token = _ref3.token;
 
   return {
@@ -92,7 +92,7 @@ function wsLogAccount(_ref3) {
     payload: {
       email: email,
       firstName: firstName,
-      surename: surename,
+      surname: surname,
       token: token
     }
   };

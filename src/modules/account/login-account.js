@@ -94,7 +94,7 @@ export async function loginAccount(input, options) {
     return {
       email: user.email,
       firstName: user.firstName,
-      surename: user.surename,
+      surname: user.surname,
       token: user.token,
     }
 

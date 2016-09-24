@@ -40,7 +40,7 @@ export const REGISTER_ACCOUNT = 'REGISTER_ACCOUNT'
 // Register using socket action creator
 export function registerAccount({
   firstName,
-  surename,
+  surname,
   email,
   password,
   reEnterPassword
@@ -50,7 +50,7 @@ export function registerAccount({
     action: REGISTER_ACCOUNT,
     payload: {
       firstName,
-      surename,
+      surname,
       email,
       password,
       reEnterPassword,
@@ -73,14 +73,14 @@ export function loginAccount({email, password}) {
 }
 
 // Log the account in the client redux store
-export function wsLogAccount({email, firstName, surename, token}) {
+export function wsLogAccount({email, firstName, surname, token}) {
   return {
     type: ACTION,
     action: ACCOUNT_LOG_USER,
     payload: {
       email,
       firstName,
-      surename,
+      surname,
       token,
     }
   }

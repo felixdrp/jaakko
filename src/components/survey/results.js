@@ -5,6 +5,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
@@ -28,13 +29,13 @@ import {
 } from 'material-ui/svg-icons';
 
 
-var currentUserEmail = 'melacome3@gmail.com'; // need to set the current user email here for the attribution variable. (type 0 and 2)
+ // need to set the current user email here for the attribution variable. (type 0 and 2)
 
 class Results extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {};
+     this.state = {data : null, groupType: -1, currentUserEmail: '', accounts : {}};
   }
 
   static contextTypes = {
@@ -43,39 +44,76 @@ class Results extends Component {
     websocket: React.PropTypes.object,
   };
 
-  componentWillMount() {
 
-
-
-    var data = [{ account : {email:'melacomeNot@gmail.com', firstname:'paco', surname:'perez caballero'}, stars: [2,4,7,2,1]},
-               { account : {email:'melacome@gmail.com', firstname:'iker', surname:'jimenez'}, stars: [2,4,3,2,1]},
-               { account : {email:'melacome3@gmail.com', firstname:'carmen', surname:'porter'}, stars: [2,2,7,2,1]},
-               { account : {email:'melacome2@gmail.com', firstname:'el maestro', surname:'enrique de vicente'}, stars: [2,1,1,2,0]},
-               { account : {email:'melacome@gmail.com', firstname:'doctor', surname:'gaona'}, stars: [1,1,1,1,1]}
-             ];
-
-    this.computeRanking(data);
-
-    this.setState({groupType: 0});
-
-    data.sort(function(a, b){
-      if ( b.score-a.score == 0){
-        if ( b.stars[4]-a.stars[4] == 0){
-          if ( b.stars[3]-a.stars[3] == 0){
-            if ( b.stars[2]-a.stars[2] == 0){
-              if ( b.stars[1]-a.stars[1] == 0){
-                  return b.stars[0]-a.stars[0]
-              } else { return b.stars[1]-a.stars[1] }
-            } else { return b.stars[2]-a.stars[2] }
-          } else { return b.stars[3]-a.stars[3] }
-        } else { return b.stars[4]-a.stars[4] }
-      } else { return b.score-a.score }
+  componentWillReceiveProps(nextProps) {
+    console.log("nextProps vienen pa ca")
+    console.log(nextProps)
+    this.setState({
+      groupType: nextProps.groupType,
+      currentUserEmail : nextProps.account.email,
+      accounts : nextProps.accounts,
+      data : this.processIncomingData(nextProps.ideas, nextProps.accounts) || []
     });
 
-    data.map((item,i) => {item.rank = (i+1); item.pay = this.getPay(i+1);});
+  }
 
-    this.setState({data});
+  processIncomingData = (data, accounts) =>{
 
+
+        if( data == null ){
+          return
+        }
+
+        var results = data.reduce(
+          (prev, current) => {
+                let account = accounts[current.creator]
+                var currentEntry = { account : {email: current.creator, firstname: account.firstName, surname: account.surname }, stars: [0,0,0,0,0], lastTimeSubmitted: current.timeSubmitted }
+                var index = (current.rating[0] || 0) -1
+                if ( index > -1 )
+                    currentEntry.stars[index] = 1;
+                    var isThereIndex = prev.findIndex( (element, index, array)=>{ return element.account.email == currentEntry.account.email})
+                if ( isThereIndex > -1 ){
+
+                    for ( var i in currentEntry.stars ){
+                      prev[isThereIndex].stars[i] = prev[isThereIndex].stars[i] + currentEntry.stars[i]
+                    }
+
+                    if ( prev[isThereIndex].lastTimeSubmitted < currentEntry.lastTimeSubmitted ){
+                        prev[isThereIndex].lastTimeSubmitted = currentEntry.lastTimeSubmitted;
+                    }
+
+                } else {
+                  prev.push(currentEntry);
+                }
+                return prev;
+          },
+          []
+        );
+
+        var data = results;
+        this.computeRanking(data);
+
+
+
+        data.sort(function(a, b){
+          if ( b.score-a.score == 0){
+            if ( b.stars[4]-a.stars[4] == 0){
+              if ( b.stars[3]-a.stars[3] == 0){
+                if ( b.stars[2]-a.stars[2] == 0){
+                  if ( b.stars[1]-a.stars[1] == 0){
+                    if ( b.stars[0]-a.stars[0] == 0){
+                      return a.lastTimeSubmitted - b.lastTimeSubmitted;
+                    }else { return b.stars[0]-a.stars[0] }
+                  } else { return b.stars[1]-a.stars[1] }
+                } else { return b.stars[2]-a.stars[2] }
+              } else { return b.stars[3]-a.stars[3] }
+            } else { return b.stars[4]-a.stars[4] }
+          } else { return b.score-a.score }
+        });
+
+        data.map((item,i) => {item.rank = (i+1); item.pay = this.getPay(i+1);});
+
+      return data;
   }
 
   getPay = (i) => {
@@ -173,13 +211,11 @@ class Results extends Component {
            </div>
 
     if ( this.state.groupType == 0 || this.state.groupType == 2 ){
-      if ( currentUserEmail == participant.account.email ){
+      if ( this.state.currentUserEmail == participant.account.email ){
         return participantLine;
       }
     }else {
-
         return participantLine;
-
     }
 
   }
@@ -192,6 +228,10 @@ class Results extends Component {
     let title = 'Results Summary';
     let text = 'Here you can see you performance with respect to ther other participants within your group:';
     let data = this.state.data;
+
+    if( data == null ){
+      return (<div></div>)
+    }
 
     return (
       <div>
@@ -240,9 +280,19 @@ class Results extends Component {
 
                 }
 
+                <RaisedButton
+                  id="submitAnswers"
+                  style={{color: 'rgb(124, 234, 127)',marginTop: 20, textAlign:'center'}}
+                  type="submit"
+                  onClick= { () => this.props.submit( this.state.data ) }
+                >
+                  Continue
+                </RaisedButton>
 
 
             </CardText>
+
+
 
           </Card>
 
@@ -259,7 +309,10 @@ Results.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    account : state.account,
+    accounts : state.task.payload.accounts,
+    groupType : state.task.payload.groupType,
+    ideas: (state.task.payload) ? state.task.payload.ideas: [],
   }
 }
 

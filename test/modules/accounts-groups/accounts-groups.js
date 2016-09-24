@@ -30,7 +30,7 @@ const store = createStore(
 
 var accountTest1 = {
   firstName: 'lucaslogin',
-  surename: 'Georgetest',
+  surname: 'Georgetest',
   email: "lucaslogin1@sky.wl",
   token: 'fe1fef9b42879e9d0c415e69bf68b2bd',
   group: 'unassigned',
@@ -38,7 +38,7 @@ var accountTest1 = {
 
 var accountTest2 = {
   firstName: 'Sherlock',
-  surename: 'Holmes',
+  surname: 'Holmes',
   email: "Sherlock@Baker.Street.co.uk",
   token: 'ae1fef9b42879e9d0c415e69bf68b2bd',
   group: 'unassigned',
@@ -52,7 +52,7 @@ describe('Redux register accounts in the server', () => {
       store.getState().accounts[accountTest1.email]
     ).toEqual({
       firstName: 'lucaslogin',
-      surename: 'Georgetest',
+      surname: 'Georgetest',
       email: "lucaslogin1@sky.wl",
       token: 'fe1fef9b42879e9d0c415e69bf68b2bd',
       group: 'unassigned',
@@ -66,7 +66,7 @@ describe('Redux register accounts in the server', () => {
       store.getState().accounts[accountTest2.email]
     ).toEqual({
       firstName: 'Sherlock',
-      surename: 'Holmes',
+      surname: 'Holmes',
       email: "Sherlock@Baker.Street.co.uk",
       token: 'ae1fef9b42879e9d0c415e69bf68b2bd',
       group: 'unassigned',
@@ -90,10 +90,10 @@ describe('Redux register accounts in the server', () => {
   })
 
   it('Update an account', () => {
-    let algo = store.dispatch( accountsUpdate({ ...accountTest1, surename: 'George' }) )
+    let algo = store.dispatch( accountsUpdate({ ...accountTest1, surname: 'George' }) )
 
     expect(
-      store.getState().accounts[accountTest1.email].surename
+      store.getState().accounts[accountTest1.email].surname
     ).toEqual( 'George' )
   })
 })
@@ -139,13 +139,13 @@ describe('Redux register groups in the server', () => {
   })
 
   // it('Update an account', () => {
-  //   let algo = store.dispatch( accountsUpdate({ ...accountTest1, surename: 'George' }) )
+  //   let algo = store.dispatch( accountsUpdate({ ...accountTest1, surname: 'George' }) )
   //   // console.log('XXXXX>>>>>>>>>>>')
   //   // console.log(store.getState())
   //   // console.log(store.getState().constructor.name)
   //   // console.log(JSON.stringify(store.getState()))
   //   expect(
-  //     store.getState().accounts[accountTest1.email].surename
+  //     store.getState().accounts[accountTest1.email].surname
   //   ).toEqual( 'George' )
   // })
 })

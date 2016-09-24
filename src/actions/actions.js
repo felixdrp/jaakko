@@ -148,6 +148,12 @@ export function taskAddAllSimilarities( similarities ) {
   return { type: TASK_ADD_ALL_SIMILARITIES, payload: similarities }
 }
 
+export const TASK_ADD_ALL_FAVOURITES = 'TASK_ADD_ALL_FAVOURITES'
+
+export function taskAddAllFavourites( favourites ) {
+  return { type: TASK_ADD_ALL_FAVOURITES, payload: favourites }
+}
+
 export const TASK_INCREASE_POINTER = 'TASK_INCREASE_POINTER'
 
 export function taskIncreasePointer() {

@@ -29,7 +29,7 @@ var graphQLServerOptions = exports.graphQLServerOptions = {
 };
 
 // Input Fields Options
-var nameAndSurenameOptions = {
+var nameAndsurnameOptions = {
   type: 'alphanumeric',
   min: 1,
   max: 50,
@@ -44,8 +44,8 @@ var passwordOptions = {
 };
 
 var fieldsOptions = exports.fieldsOptions = {
-  firstName: (0, _extends3.default)({}, nameAndSurenameOptions),
-  surename: (0, _extends3.default)({}, nameAndSurenameOptions),
+  firstName: (0, _extends3.default)({}, nameAndsurnameOptions),
+  surname: (0, _extends3.default)({}, nameAndsurnameOptions),
   email: { type: 'email', min: 8, max: 50, mustHave: true },
   password: (0, _extends3.default)({}, passwordOptions),
   reEnterPassword: (0, _extends3.default)({}, passwordOptions),
