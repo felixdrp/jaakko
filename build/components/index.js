@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Wait = exports.Results = exports.Similarities = exports.Favourites = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathResults = exports.MathChallenge = exports.Example = exports.SurveyContainer = exports.CommonViewContainer = exports.AppContainer = exports.SessionManager = exports.GroupManager = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
+exports.Wait = exports.Results = exports.Similarities = exports.Favourites = exports.Instructions = exports.Question = exports.AltObjectTask = exports.MathResults = exports.MathChallenge = exports.Example = exports.SurveyContainer = exports.CommonViewContainer = exports.AppContainer = exports.ResultsManager = exports.SessionManager = exports.GroupManager = exports.ControlRoom = exports.AccountSignUp = exports.AccountSignIn = undefined;
 
 var _signin = require('./account/signin');
 
@@ -24,6 +24,10 @@ var _groupManager2 = _interopRequireDefault(_groupManager);
 var _sessionManager = require('./admin/session/session-manager');
 
 var _sessionManager2 = _interopRequireDefault(_sessionManager);
+
+var _resultsManager = require('./admin/results/results-manager');
+
+var _resultsManager2 = _interopRequireDefault(_resultsManager);
 
 var _appContainer = require('./app-container');
 
@@ -93,6 +97,7 @@ exports.AccountSignUp = _signup2.default;
 exports.ControlRoom = _controlRoom2.default;
 exports.GroupManager = _groupManager2.default;
 exports.SessionManager = _sessionManager2.default;
+exports.ResultsManager = _resultsManager2.default;
 
 // Generic
 

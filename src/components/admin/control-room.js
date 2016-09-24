@@ -9,7 +9,7 @@ import Memory from 'material-ui/svg-icons/hardware/memory';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Group from 'material-ui/svg-icons/social/group';
 import Class from 'material-ui/svg-icons/action/class';
-
+import ShowChart from 'material-ui/svg-icons/editor/show-chart';
 
 import { Link } from 'react-router'
 
@@ -173,15 +173,12 @@ class ControlRoom extends React.Component {
             </MenuItem>
           </Link>
 
-          <Link to={`/survey/altObjectTask`} style={{ textDecoration: 'none' }}>
+          <Link to={`/controlRoom/results`} style={{ textDecoration: 'none' }}>
             <MenuItem onTouchTap={this.handleClose}>
-              /survey/altObjectTask
-            </MenuItem>
-          </Link>
-
-          <Link to={`/survey/waitSync`} style={{ textDecoration: 'none' }}>
-            <MenuItem onTouchTap={this.handleClose}>
-              /survey/waitSync
+              <span style={style.gray}>
+                <ShowChart style={style.iconGray} />
+                Result manager
+              </span>
             </MenuItem>
           </Link>
         </Drawer>

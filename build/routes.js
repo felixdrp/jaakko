@@ -38,7 +38,8 @@ var routes = function routes(history) {
         { path: 'controlRoom', component: _components.ControlRoom },
         _react2.default.createElement(_reactRouter.IndexRoute, { component: _components.GroupManager }),
         _react2.default.createElement(_reactRouter.Route, { path: 'groups', component: _components.GroupManager }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'sessionControl', component: _components.SessionManager })
+        _react2.default.createElement(_reactRouter.Route, { path: 'sessionControl', component: _components.SessionManager }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'results', component: _components.ResultsManager })
       ),
       _react2.default.createElement(
         _reactRouter.Route,

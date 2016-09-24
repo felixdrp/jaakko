@@ -76,6 +76,10 @@ var _class = require('material-ui/svg-icons/action/class');
 
 var _class2 = _interopRequireDefault(_class);
 
+var _showChart = require('material-ui/svg-icons/editor/show-chart');
+
+var _showChart2 = _interopRequireDefault(_showChart);
+
 var _reactRouter = require('react-router');
 
 var _websocketSimple = require('../../websocket-message/websocket-simple');
@@ -291,20 +295,16 @@ var ControlRoom = function (_React$Component) {
           ),
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/survey/altObjectTask', style: { textDecoration: 'none' } },
+            { to: '/controlRoom/results', style: { textDecoration: 'none' } },
             _react2.default.createElement(
               _MenuItem2.default,
               { onTouchTap: this.handleClose },
-              '/survey/altObjectTask'
-            )
-          ),
-          _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/survey/waitSync', style: { textDecoration: 'none' } },
-            _react2.default.createElement(
-              _MenuItem2.default,
-              { onTouchTap: this.handleClose },
-              '/survey/waitSync'
+              _react2.default.createElement(
+                'span',
+                { style: style.gray },
+                _react2.default.createElement(_showChart2.default, { style: style.iconGray }),
+                'Result manager'
+              )
             )
           )
         ),

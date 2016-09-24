@@ -13,6 +13,7 @@ export AccountSignUp from './account/signup'
 export ControlRoom from './admin/control-room'
 export GroupManager from './admin/groups/group-manager';
 export SessionManager from './admin/session/session-manager';
+export ResultsManager from './admin/results/results-manager';
 
 // Generic
 

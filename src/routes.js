@@ -27,6 +27,7 @@ import {
   ControlRoom,
   GroupManager,
   SessionManager,
+  ResultsManager,
 
   // Survey
   SurveyContainer,
@@ -61,6 +62,7 @@ var routes = (history) => (
         <IndexRoute component={GroupManager} />
         <Route path="groups" component={GroupManager} />
         <Route path="sessionControl" component={SessionManager} />
+        <Route path="results" component={ResultsManager} />
       </Route>
 
       <Route path="survey" component={SurveyContainer} >
