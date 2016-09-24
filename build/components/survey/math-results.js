@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -71,6 +75,36 @@ var MathResults = function (_Component) {
     (0, _classCallCheck3.default)(this, MathResults);
 
     var _this = (0, _possibleConstructorReturn3.default)(this, (MathResults.__proto__ || (0, _getPrototypeOf2.default)(MathResults)).call(this, props));
+
+    _this.processMathResults = function (data, accounts) {
+
+      if (data == null) {
+        return;
+      }
+
+      var results = data.reduce(function (prev, current) {
+        var account = accounts[current.accountId];
+        var currentEntry = { account: { email: current.accountId, firstname: account.firstName, surname: account.surname }, mathScore: 0, lastTimeSubmitted: current.endTimestamp };
+
+        var res = current.surveyData.numbers.reduce(function (prev, currentNumbers) {
+          if (currentNumbers.solution) {
+            if ((currentNumbers.solution + '').trim() == (currentNumbers.sum + '').trim()) {
+              prev.total++;
+              prev.lastTimeSubmitted = currentNumbers.timeSubmitted > prev.lastTimeSubmitted ? currentNumbers.timeSubmitted : prev.lastTimeSubmitted;
+            }
+          }
+          return prev;
+        }, { total: 0, lastTimeSubmitted: 0 });
+
+        currentEntry.mathScore = res.total;
+        currentEntry.lastTimeSubmitted = res.lastTimeSubmitted;
+
+        prev.push(currentEntry);
+        return prev;
+      }, []);
+
+      return results;
+    };
 
     _this.getPay = function (i) {
       switch (i) {
@@ -220,7 +254,28 @@ var MathResults = function (_Component) {
 
       var data = [{ account: { email: 'melacomeNot@gmail.com', firstname: 'paco', surname: 'perez caballero' }, mathScore: 23 }, { account: { email: 'melacome@gmail.com', firstname: 'iker', surname: 'jimenez' }, mathScore: 34 }, { account: { email: 'melacome3@gmail.com', firstname: 'carmen', surname: 'porter' }, mathScore: 34 }, { account: { email: 'melacome2@gmail.com', firstname: 'el maestro', surname: 'enrique de vicente' }, mathScore: 5 }, { account: { email: 'melacome@gmail.com', firstname: 'doctor', surname: 'gaona' }, mathScore: 7 }];
 
-      var data2 = [{ "accountId": "felixdrp@gmail.com", "startTimestamp": 1474741488092, "endTimestamp": 1474741508190, "surveyData": { "numbers": [{ "numbers": [30, 45, 5, 93, 77], "sum": 250, "solution": "3245", "timeSubmitted": 1474741493550 }, { "numbers": [99, 2, 61, 18, 66], "sum": 246, "solution": "3455", "timeSubmitted": 1474741495764 }, { "numbers": [43, 72, 54, 49, 84], "sum": 302 }, { "numbers": [12, 81, 48, 47, 36], "sum": 224 }, { "numbers": [28, 64, 7, 4, 3], "sum": 106 }, { "numbers": [50, 82, 43, 53, 47], "sum": 275 }, { "numbers": [75, 6, 50, 28, 8], "sum": 167 }, { "numbers": [71, 64, 3, 6, 19], "sum": 163 }, { "numbers": [24, 65, 60, 31, 83], "sum": 263 }, { "numbers": [88, 73, 65, 55, 48], "sum": 329 }, { "numbers": [39, 72, 94, 8, 24], "sum": 237 }, { "numbers": [23, 5, 64, 61, 6], "sum": 159 }, { "numbers": [39, 2, 19, 54, 74], "sum": 188 }, { "numbers": [27, 82, 68, 89, 39], "sum": 305 }, { "numbers": [3, 33, 90, 68, 31], "sum": 225 }, { "numbers": [11, 27, 83, 4, 60], "sum": 185 }, { "numbers": [62, 49, 85, 72, 92], "sum": 360 }, { "numbers": [94, 89, 74, 68, 6], "sum": 331 }, { "numbers": [56, 20, 76, 18, 68], "sum": 238 }, { "numbers": [13, 1, 81, 83, 47], "sum": 225 }, { "numbers": [37, 23, 33, 21, 69], "sum": 183 }, { "numbers": [98, 98, 37, 12, 40], "sum": 285 }, { "numbers": [75, 73, 31, 90, 16], "sum": 285 }, { "numbers": [2, 26, 63, 72, 45], "sum": 208 }, { "numbers": [33, 73, 52, 61, 10], "sum": 229 }, { "numbers": [17, 34, 22, 6, 81], "sum": 160 }, { "numbers": [46, 99, 67, 94, 58], "sum": 364 }, { "numbers": [67, 11, 16, 4, 6], "sum": 104 }, { "numbers": [27, 48, 73, 32, 5], "sum": 185 }, { "numbers": [45, 44, 98, 84, 72], "sum": 343 }] }, "surveyId": 39 }, { "accountId": "rpsoft@gmail.com", "startTimestamp": 1474741488475, "endTimestamp": 1474741508627, "surveyData": { "numbers": [{ "numbers": [85, 51, 84, 75, 60], "sum": 355, "solution": "kj", "timeSubmitted": 1474741498819 }, { "numbers": [39, 37, 51, 2, 93], "sum": 222, "solution": "y498yy98", "timeSubmitted": 1474741493779 }, { "numbers": [6, 63, 42, 70, 45], "sum": 226, "solution": "jlhl", "timeSubmitted": 1474741494300 }, { "numbers": [74, 37, 83, 28, 80], "sum": 302, "solution": "kkl", "timeSubmitted": 1474741494549 }, { "numbers": [57, 52, 89, 19, 78], "sum": 295, "solution": "kjl", "timeSubmitted": 1474741494809 }, { "numbers": [24, 12, 18, 4, 72], "sum": 130, "solution": "kjl", "timeSubmitted": 1474741495010 }, { "numbers": [55, 87, 80, 91, 51], "sum": 364, "solution": "klj", "timeSubmitted": 1474741495198 }, { "numbers": [30, 87, 65, 65, 16], "sum": 263, "solution": "kl", "timeSubmitted": 1474741495301 }, { "numbers": [59, 40, 63, 40, 2], "sum": 204, "solution": "jl", "timeSubmitted": 1474741495448 }, { "numbers": [68, 34, 52, 94, 99], "sum": 347, "solution": "ggj", "timeSubmitted": 1474741495624 }, { "numbers": [20, 70, 2, 6, 29], "sum": 127, "solution": "k", "timeSubmitted": 1474741495675 }, { "numbers": [87, 40, 26, 54, 69], "sum": 276, "solution": "ghk", "timeSubmitted": 1474741495823 }, { "numbers": [38, 25, 96, 34, 16], "sum": 209, "solution": "gkh", "timeSubmitted": 1474741495977 }, { "numbers": [47, 67, 49, 78, 83], "sum": 324, "solution": "gkj", "timeSubmitted": 1474741496130 }, { "numbers": [80, 87, 100, 93, 67], "sum": 427, "solution": "jgk", "timeSubmitted": 1474741496279 }, { "numbers": [38, 31, 92, 42, 21], "sum": 224, "solution": "j", "timeSubmitted": 1474741496353 }, { "numbers": [61, 34, 10, 31, 26], "sum": 162, "solution": "j", "timeSubmitted": 1474741496508 }, { "numbers": [96, 44, 33, 41, 10], "sum": 224, "solution": "kgj", "timeSubmitted": 1474741496754 }, { "numbers": [36, 65, 50, 17, 66], "sum": 234, "solution": "gjk", "timeSubmitted": 1474741496901 }, { "numbers": [87, 7, 24, 42, 92], "sum": 252, "solution": "kjg", "timeSubmitted": 1474741497049 }, { "numbers": [97, 66, 9, 7, 1], "sum": 180, "solution": "kj", "timeSubmitted": 1474741497151 }, { "numbers": [7, 99, 43, 40, 1], "sum": 190, "solution": "jk", "timeSubmitted": 1474741497294 }, { "numbers": [5, 95, 64, 79, 71], "sum": 314, "solution": "gkj", "timeSubmitted": 1474741497489 }, { "numbers": [7, 35, 80, 84, 66], "sum": 272, "solution": "jbk", "timeSubmitted": 1474741497646 }, { "numbers": [30, 6, 60, 22, 9], "sum": 127, "solution": "j", "timeSubmitted": 1474741497704 }, { "numbers": [11, 37, 11, 41, 76], "sum": 176, "solution": "jk", "timeSubmitted": 1474741497891 }, { "numbers": [98, 91, 55, 33, 89], "sum": 366, "solution": "jk", "timeSubmitted": 1474741498040 }, { "numbers": [36, 41, 26, 86, 54], "sum": 243, "solution": "jl", "timeSubmitted": 1474741498218 }, { "numbers": [67, 77, 39, 4, 21], "sum": 208, "solution": "lh", "timeSubmitted": 1474741498363 }, { "numbers": [40, 86, 75, 61, 36], "sum": 298 }] }, "surveyId": 39 }];
+      var data2 = [{ "accountId": "felixdrp@gmail.com", "startTimestamp": 1474741488092, "endTimestamp": 1474741508190, "surveyData": { "numbers": [{ "numbers": [30, 45, 5, 93, 77], "sum": 250, "solution": "250  ", "timeSubmitted": 1474741493550 }, { "numbers": [99, 2, 61, 18, 66], "sum": 246, "solution": "3455", "timeSubmitted": 1474741495764 }, { "numbers": [43, 72, 54, 49, 84], "sum": 302 }, { "numbers": [12, 81, 48, 47, 36], "sum": 224 }, { "numbers": [28, 64, 7, 4, 3], "sum": 106 }, { "numbers": [50, 82, 43, 53, 47], "sum": 275 }, { "numbers": [75, 6, 50, 28, 8], "sum": 167 }, { "numbers": [71, 64, 3, 6, 19], "sum": 163 }, { "numbers": [24, 65, 60, 31, 83], "sum": 263 }, { "numbers": [88, 73, 65, 55, 48], "sum": 329 }, { "numbers": [39, 72, 94, 8, 24], "sum": 237 }, { "numbers": [23, 5, 64, 61, 6], "sum": 159 }, { "numbers": [39, 2, 19, 54, 74], "sum": 188 }, { "numbers": [27, 82, 68, 89, 39], "sum": 305 }, { "numbers": [3, 33, 90, 68, 31], "sum": 225 }, { "numbers": [11, 27, 83, 4, 60], "sum": 185 }, { "numbers": [62, 49, 85, 72, 92], "sum": 360 }, { "numbers": [94, 89, 74, 68, 6], "sum": 331 }, { "numbers": [56, 20, 76, 18, 68], "sum": 238 }, { "numbers": [13, 1, 81, 83, 47], "sum": 225 }, { "numbers": [37, 23, 33, 21, 69], "sum": 183 }, { "numbers": [98, 98, 37, 12, 40], "sum": 285 }, { "numbers": [75, 73, 31, 90, 16], "sum": 285 }, { "numbers": [2, 26, 63, 72, 45], "sum": 208 }, { "numbers": [33, 73, 52, 61, 10], "sum": 229 }, { "numbers": [17, 34, 22, 6, 81], "sum": 160 }, { "numbers": [46, 99, 67, 94, 58], "sum": 364 }, { "numbers": [67, 11, 16, 4, 6], "sum": 104 }, { "numbers": [27, 48, 73, 32, 5], "sum": 185 }, { "numbers": [45, 44, 98, 84, 72], "sum": 343 }] }, "surveyId": 39 }, { "accountId": "rpsoft@gmail.com", "startTimestamp": 1474741488475, "endTimestamp": 1474741508627, "surveyData": { "numbers": [{ "numbers": [85, 51, 84, 75, 60], "sum": 355, "solution": 355, "timeSubmitted": 1474741498819 }, { "numbers": [39, 37, 51, 2, 93], "sum": 222, "solution": "y498yy98", "timeSubmitted": 1474741493779 }, { "numbers": [6, 63, 42, 70, 45], "sum": 226, "solution": "226", "timeSubmitted": 1474741494300 }, { "numbers": [74, 37, 83, 28, 80], "sum": 302, "solution": "kkl", "timeSubmitted": 1474741494549 }, { "numbers": [57, 52, 89, 19, 78], "sum": 295, "solution": "kjl", "timeSubmitted": 1474741494809 }, { "numbers": [24, 12, 18, 4, 72], "sum": 130, "solution": "kjl", "timeSubmitted": 1474741495010 }, { "numbers": [55, 87, 80, 91, 51], "sum": 364, "solution": "klj", "timeSubmitted": 1474741495198 }, { "numbers": [30, 87, 65, 65, 16], "sum": 263, "solution": "kl", "timeSubmitted": 1474741495301 }, { "numbers": [59, 40, 63, 40, 2], "sum": 204, "solution": "jl", "timeSubmitted": 1474741495448 }, { "numbers": [68, 34, 52, 94, 99], "sum": 347, "solution": "ggj", "timeSubmitted": 1474741495624 }, { "numbers": [20, 70, 2, 6, 29], "sum": 127, "solution": "k", "timeSubmitted": 1474741495675 }, { "numbers": [87, 40, 26, 54, 69], "sum": 276, "solution": "ghk", "timeSubmitted": 1474741495823 }, { "numbers": [38, 25, 96, 34, 16], "sum": 209, "solution": "gkh", "timeSubmitted": 1474741495977 }, { "numbers": [47, 67, 49, 78, 83], "sum": 324, "solution": "gkj", "timeSubmitted": 1474741496130 }, { "numbers": [80, 87, 100, 93, 67], "sum": 427, "solution": "jgk", "timeSubmitted": 1474741496279 }, { "numbers": [38, 31, 92, 42, 21], "sum": 224, "solution": "j", "timeSubmitted": 1474741496353 }, { "numbers": [61, 34, 10, 31, 26], "sum": 162, "solution": "j", "timeSubmitted": 1474741496508 }, { "numbers": [96, 44, 33, 41, 10], "sum": 224, "solution": "kgj", "timeSubmitted": 1474741496754 }, { "numbers": [36, 65, 50, 17, 66], "sum": 234, "solution": "gjk", "timeSubmitted": 1474741496901 }, { "numbers": [87, 7, 24, 42, 92], "sum": 252, "solution": "kjg", "timeSubmitted": 1474741497049 }, { "numbers": [97, 66, 9, 7, 1], "sum": 180, "solution": "kj", "timeSubmitted": 1474741497151 }, { "numbers": [7, 99, 43, 40, 1], "sum": 190, "solution": "jk", "timeSubmitted": 1474741497294 }, { "numbers": [5, 95, 64, 79, 71], "sum": 314, "solution": "gkj", "timeSubmitted": 1474741497489 }, { "numbers": [7, 35, 80, 84, 66], "sum": 272, "solution": "jbk", "timeSubmitted": 1474741497646 }, { "numbers": [30, 6, 60, 22, 9], "sum": 127, "solution": "j", "timeSubmitted": 1474741497704 }, { "numbers": [11, 37, 11, 41, 76], "sum": 176, "solution": "jk", "timeSubmitted": 1474741497891 }, { "numbers": [98, 91, 55, 33, 89], "sum": 366, "solution": "jk", "timeSubmitted": 1474741498040 }, { "numbers": [36, 41, 26, 86, 54], "sum": 243, "solution": "jl", "timeSubmitted": 1474741498218 }, { "numbers": [67, 77, 39, 4, 21], "sum": 208, "solution": "lh", "timeSubmitted": 1474741498363 }, { "numbers": [40, 86, 75, 61, 36], "sum": 298 }] }, "surveyId": 39 }];
+      var accounts = { list: ['rpsoft@gmail.com', 'felixdrp@gmail.com'],
+        'rpsoft@gmail.com': { email: 'rpsoft@gmail.com',
+          firstName: 'suso',
+          surname: 'rodriguez',
+          token: '44e192de26457248f81c6609d2ecfc49',
+          group: 1474740410598,
+          surveyPointer: 9 },
+        'felixdrp@gmail.com': { email: 'felixdrp@gmail.com',
+          firstName: 'Felix',
+          surname: 'RP',
+          token: 'fc6bf88664ba58fd1f461cb1e4314a82',
+          group: 1474740410589,
+          surveyPointer: 9 } };
+
+      var a = this.processMathResults(data2, accounts);
+
+      console.log((0, _stringify2.default)(a));
+
+      data = a;
+      //debugger;
+
 
       this.setState({ groupType: 3 });
 
