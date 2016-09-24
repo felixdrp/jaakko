@@ -148,30 +148,61 @@ export default async function query({ action, payload, ws, store }) {
           return
 
         case RESULTS:
-        try {
+          try {
 
-          console.log('PRE PRE RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS')
-          result = storeStateWithoutWebSocket( result )
-          temp.payload = {
-            group: temp.account.group,
-            groupType: result.groups[ temp.account.group ].type,
-            accounts: result.accounts,
-            ideas: result.task.favouritList[ result.task.taskPointer ].filter(
-              element => temp.account.group == element.group
-            ),
+            console.log('PRE PRE RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS')
+            result = storeStateWithoutWebSocket( result )
+            temp.payload = {
+              group: temp.account.group,
+              groupType: result.groups[ temp.account.group ].type,
+              accounts: result.accounts,
+              ideas: result.task.favouritList[ result.task.taskPointer ].filter(
+                element => temp.account.group == element.group
+              ),
+            }
+
+            console.log('RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS')
+            console.log(temp.payload)
+
+            ws.send(
+              swSetSurveyInitials( temp.payload )
+            )
+            return
+
+          } catch (e ) {
+            console.log("CAGADA: "+e)
           }
-
-          console.log('RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS')
-          console.log(temp.payload)
-
-          ws.send(
-            swSetSurveyInitials( temp.payload )
-          )
           return
 
-        } catch (e ) {
-          console.log("CAGADA: "+e)
-        }
+        case MATH_RESULTS:
+          try {
+            console.log('PRE PRE MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS')
+            result = storeStateWithoutWebSocket( result )
+            temp.mathPointer = result.session.surveyPath.findIndex(
+              element => element.type == MATH_CHALLENGE
+            )
+
+            temp.payload = {
+              group: temp.account.group,
+              groupType: result.groups[ temp.account.group ].type,
+              accounts: result.accounts,
+              mathResults: result.results.surveyInfo.filter(
+                element => (temp.mathPointer == element.surveyId) && (temp.account.group == element.groupId)
+              ),
+            }
+
+            console.log('MATH_RESULTS MATH_RESULTS MATH_RESULTS MATH_RESULTS MATH_RESULTS MATH_RESULTS')
+            console.log(temp.payload)
+
+            ws.send(
+              swSetSurveyInitials( temp.payload )
+            )
+            return
+
+          } catch (e ) {
+            console.log("CAGADA: "+e)
+          }
+          return
         default:
 
       }

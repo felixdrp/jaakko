@@ -443,6 +443,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
         storeSurveInfo({
           ...payload,
           surveyId: temp.accountSurveyPointer,
+          groupId: result.accounts[ payload.accountId ].group,
         })
       )
 

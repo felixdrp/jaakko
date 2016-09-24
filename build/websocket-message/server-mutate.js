@@ -589,7 +589,8 @@ exports.default = function () {
                       temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer;
                       // Add survey info to the redux store and to the database.
                       store.dispatch((0, _actions.storeSurveInfo)((0, _extends3.default)({}, payload, {
-                        surveyId: temp.accountSurveyPointer
+                        surveyId: temp.accountSurveyPointer,
+                        groupId: result.accounts[payload.accountId].group
                       })));
 
                       // After that move to the next survey step.

@@ -144,14 +144,6 @@ class MathChallenge extends Component {
             </div>
           <br />
 
-          <RaisedButton
-            id="submitAnswers"
-            style={{backgroundColor: 'grey',}}
-            type="submit"
-
-          >
-            Submit
-          </RaisedButton>
 
         </CardText>
 

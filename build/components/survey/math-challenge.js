@@ -210,17 +210,7 @@ var MathChallenge = function (_Component) {
                 );
               })
             ),
-            _react2.default.createElement('br', null),
-            _react2.default.createElement(
-              _RaisedButton2.default,
-              {
-                id: 'submitAnswers',
-                style: { backgroundColor: 'grey' },
-                type: 'submit'
-
-              },
-              'Submit'
-            )
+            _react2.default.createElement('br', null)
           )
         )
       );

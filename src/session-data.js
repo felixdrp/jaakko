@@ -37,6 +37,20 @@ const sessionData = {
       time: 'inf',
     },
     {
+      type: MATH_CHALLENGE,
+      payload: '',
+      time: 'inf',
+    },
+    {
+      type: AWAIT,
+      time: 'inf',
+    },
+    {
+      type: MATH_RESULTS,
+      payload: '',
+      time: 'inf',
+    },
+    {
       type: ALT_OBJECT_TASK,
       payload: 'altObjectTask',
       time: 'inf',
