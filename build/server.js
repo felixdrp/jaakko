@@ -131,7 +131,7 @@ var updateControlRooms = function updateControlRooms(store) {
 
       if (action.type == _actions.STORE_SURVEY_INFO) {
         // Write state to a file only when STORE_SURVEY_INFO action
-        stream.write((0, _stringify2.default)(payload));
+        stream.write((0, _stringify2.default)(payload) + "\n");
       }
 
       // If new idea added transmit to the same group

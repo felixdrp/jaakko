@@ -106,7 +106,7 @@ const updateControlRooms = store => next => action => {
 
   if (action.type == STORE_SURVEY_INFO) {
     // Write state to a file only when STORE_SURVEY_INFO action
-    stream.write( JSON.stringify(payload) )
+    stream.write( JSON.stringify(payload) + "\n" )
   }
 
   // If new idea added transmit to the same group
