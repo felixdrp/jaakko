@@ -399,8 +399,20 @@ var Question = function (_Component) {
     value: function render() {
       var _this2 = this;
 
+      if ((0, _stringify2.default)(this.props.type) == "{}") {
+        return _react2.default.createElement('span', null);
+      }
+
+      var tasktype = this.props.type || '';
+
+      var possibleTasks = ['entry', 'exit'];
+      console.log("QUESITON TYPE: " + tasktype);
+      if (possibleTasks.indexOf(tasktype) < 0) {
+        return _react2.default.createElement('div', null);
+      }
+
       // let message = this.props.message? this.props.message : 'Question'
-      var questionnaire = this.state.questionnaire == 'entry' ? entryQuestionnarie : exitQuestionnaire;
+      var questionnaire = this.props.type == 'entry' ? entryQuestionnarie : exitQuestionnaire;
       var message = 'Question';
 
       var textColor = this.context.muiTheme.palette.textColor;
@@ -719,7 +731,7 @@ Question.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    type: state.task.payload
   };
 };
 

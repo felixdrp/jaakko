@@ -19,18 +19,6 @@ var sessionData = {
   },
 
   surveyPath: [wait(), {
-    type: _surveyTypes.ALT_OBJECT_TASK,
-    payload: 'altObjectTask',
-    time: 'inf'
-  }, wait(), {
-    type: _surveyTypes.INSTRUCTIONS,
-    payload: 'similarities',
-    time: 'inf'
-  }, wait(), {
-    type: _surveyTypes.SIMILARITIES,
-    payload: 'altObjectTask',
-    time: 'inf'
-  }, wait(), {
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'
@@ -38,7 +26,7 @@ var sessionData = {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'math',
     time: 'inf'
-  }, {
+  }, wait(), {
     type: _surveyTypes.MATH_CHALLENGE,
     payload: '',
     time: 'inf'

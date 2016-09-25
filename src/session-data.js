@@ -18,24 +18,6 @@ const sessionData = {
   },
 
   surveyPath: [
-    wait(),
-    {
-      type: ALT_OBJECT_TASK,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    wait(),
-    {
-      type: INSTRUCTIONS,
-      payload: 'similarities',
-      time: 'inf',
-    },
-    wait(),
-    {
-      type: SIMILARITIES,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
 
     wait(),
 
@@ -44,7 +26,6 @@ const sessionData = {
       payload: 'entry',
       time: 'inf',
     },
-
     ...task(),
 
     wait(),
@@ -58,6 +39,8 @@ const sessionData = {
       payload: 'math',
       time: 'inf',
     },
+
+    wait(),
 
     {
       type: MATH_CHALLENGE,

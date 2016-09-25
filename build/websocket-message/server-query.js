@@ -54,7 +54,7 @@ exports.default = function () {
           case 0:
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             _context.t0 = action;
-            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 62;
+            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 65;
             break;
 
           case 4:
@@ -83,7 +83,7 @@ exports.default = function () {
             temp.type = result.session.surveyPath[temp.account.surveyPointer].type;
 
             _context.t1 = temp.type;
-            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.SIMILARITIES ? 21 : _context.t1 === _surveyTypes.FAVOURITES ? 26 : _context.t1 === _surveyTypes.RESULTS ? 31 : _context.t1 === _surveyTypes.MATH_RESULTS ? 45 : 60;
+            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.QUESTION ? 21 : _context.t1 === _surveyTypes.SIMILARITIES ? 24 : _context.t1 === _surveyTypes.FAVOURITES ? 29 : _context.t1 === _surveyTypes.RESULTS ? 34 : _context.t1 === _surveyTypes.MATH_RESULTS ? 48 : 63;
             break;
 
           case 18:
@@ -94,6 +94,13 @@ exports.default = function () {
             return _context.abrupt('return');
 
           case 21:
+            temp.payload = result.session.surveyPath[temp.account.surveyPointer].payload;
+
+            ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
+
+            return _context.abrupt('return');
+
+          case 24:
             // debugger
             if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
               temp.payload = {
@@ -121,7 +128,7 @@ exports.default = function () {
 
             return _context.abrupt('return');
 
-          case 26:
+          case 29:
             if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
               temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
               temp.payload = {
@@ -148,8 +155,8 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 31:
-            _context.prev = 31;
+          case 34:
+            _context.prev = 34;
 
 
             console.log('PRE PRE RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS');
@@ -169,17 +176,17 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 41:
-            _context.prev = 41;
-            _context.t2 = _context['catch'](31);
+          case 44:
+            _context.prev = 44;
+            _context.t2 = _context['catch'](34);
 
             console.log("CAGADA: " + _context.t2);
 
-          case 44:
+          case 47:
             return _context.abrupt('return');
 
-          case 45:
-            _context.prev = 45;
+          case 48:
+            _context.prev = 48;
 
             console.log('PRE PRE MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS');
             result = (0, _actions.storeStateWithoutWebSocket)(result);
@@ -202,26 +209,26 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 56:
-            _context.prev = 56;
-            _context.t3 = _context['catch'](45);
+          case 59:
+            _context.prev = 59;
+            _context.t3 = _context['catch'](48);
 
             console.log("CAGADA: " + _context.t3);
 
-          case 59:
+          case 62:
             return _context.abrupt('return');
 
-          case 60:
+          case 63:
 
             console.log('SESSION_STATE_GET return!!!');
             return _context.abrupt('return');
 
-          case 62:
+          case 65:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[31, 41], [45, 56]]);
+    }, _callee, this, [[34, 44], [48, 59]]);
   }));
 
   function query(_x) {

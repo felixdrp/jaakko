@@ -408,8 +408,22 @@ class Question extends Component {
 
 //'_marker'
   render() {
+
+    if ( JSON.stringify(this.props.type) == "{}" ) {
+      return <span></span>
+    }
+
+    let tasktype = this.props.type || '';
+
+    let possibleTasks = ['entry','exit']
+    console.log("QUESITON TYPE: "+tasktype)
+    if ( possibleTasks.indexOf(tasktype) < 0 ){
+      return <div></div>
+    }
+
+
     // let message = this.props.message? this.props.message : 'Question'
-    let questionnaire = (this.state.questionnaire == 'entry') ? entryQuestionnarie : exitQuestionnaire
+    let questionnaire = (this.props.type == 'entry') ? entryQuestionnarie : exitQuestionnaire
     let message =  'Question'
 
     const { textColor } = this.context.muiTheme.palette;
@@ -672,7 +686,7 @@ Question.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    type : state.task.payload
   }
 }
 

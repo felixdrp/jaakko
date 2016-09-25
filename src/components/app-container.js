@@ -26,12 +26,30 @@ injectTapEventPlugin();
  * ```
  */
 
-const AppContainer = (props) => (
- <div id="maincontainer">
-   <MuiThemeProvider muiTheme={ muiTheme }>
-     {props.children}
-  </MuiThemeProvider>
- </div>
-);
+var AppContainer = React.createClass({
+  beforeunload(ev) {
+    return ev.returnValue = 'My reason';
+  },
+
+// Uncomment to prevent leave message
+  componentDidMount() {
+    // debugger
+    window.addEventListener('beforeunload', this.beforeunload)
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.beforeunload)
+  },
+
+  render() {
+    return (
+     <div id="maincontainer">
+       <MuiThemeProvider muiTheme={ muiTheme }>
+         {this.props.children}
+      </MuiThemeProvider>
+     </div>
+    );
+  }
+})
 
 export default AppContainer

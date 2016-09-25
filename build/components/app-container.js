@@ -47,17 +47,33 @@ var muiTheme = (0, _getMuiTheme2.default)(_muiLMSTheme2.default);
  * ```
  */
 
-var AppContainer = function AppContainer(props) {
-  return _react2.default.createElement(
-    'div',
-    { id: 'maincontainer' },
-    _react2.default.createElement(
-      _MuiThemeProvider2.default,
-      { muiTheme: muiTheme },
-      props.children
-    )
-  );
-};
+var AppContainer = _react2.default.createClass({
+  displayName: 'AppContainer',
+  beforeunload: function beforeunload(ev) {
+    return ev.returnValue = 'My reason';
+  },
+
+
+  // Uncomment to prevent leave message
+  componentDidMount: function componentDidMount() {
+    // debugger
+    window.addEventListener('beforeunload', this.beforeunload);
+  },
+  componentWillUnmount: function componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.beforeunload);
+  },
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { id: 'maincontainer' },
+      _react2.default.createElement(
+        _MuiThemeProvider2.default,
+        { muiTheme: muiTheme },
+        this.props.children
+      )
+    );
+  }
+});
 
 exports.default = AppContainer;
 //# sourceMappingURL=app-container.js.map
