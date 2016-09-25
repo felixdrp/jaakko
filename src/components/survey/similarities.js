@@ -46,7 +46,7 @@ class Similarities extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      data : nextProps.ideas || []
+      data : JSON.stringify(this.props.type) != "{}"? nextProps.ideas : []
     });
   }
 
@@ -262,7 +262,9 @@ class Similarities extends Component {
     let text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:';
 
     let data = this.state.data;
-
+    if ( !data ){
+      return <div></div>
+    }
 
     return (
       <div>

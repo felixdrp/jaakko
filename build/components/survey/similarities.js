@@ -166,7 +166,7 @@ var Similarities = function (_Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState({
-        data: nextProps.ideas || []
+        data: (0, _stringify2.default)(this.props.type) != "{}" ? nextProps.ideas : []
       });
     }
   }, {
@@ -302,6 +302,9 @@ var Similarities = function (_Component) {
       var text = 'The task is to come up with as many alternative objects for a given object. \n\n For example:';
 
       var data = this.state.data;
+      if (!data) {
+        return _react2.default.createElement('div', null);
+      }
 
       return _react2.default.createElement(
         'div',

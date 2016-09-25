@@ -52,6 +52,7 @@ var Timer = function (_Component) {
   function Timer(props) {
     (0, _classCallCheck3.default)(this, Timer);
 
+    // this.state = {elapsed:0, totalSeconds: props.limitTime || 40 };
     var _this = (0, _possibleConstructorReturn3.default)(this, (Timer.__proto__ || (0, _getPrototypeOf2.default)(Timer)).call(this, props));
 
     _this.setTimer = function (totalSeconds) {
@@ -84,7 +85,7 @@ var Timer = function (_Component) {
       _this.setState({ elapsed: new Date() - _this.state.startt });
     };
 
-    _this.state = { elapsed: 0, totalSeconds: props.limitTime || 20 };
+    _this.state = { elapsed: 0, totalSeconds: 10 };
     return _this;
   }
 

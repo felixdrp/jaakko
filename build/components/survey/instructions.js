@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -51,6 +55,10 @@ var _Slider = require('material-ui/Slider');
 var _Slider2 = _interopRequireDefault(_Slider);
 
 var _RadioButton = require('material-ui/RadioButton');
+
+var _rater = require('./rater');
+
+var _rater2 = _interopRequireDefault(_rater);
 
 var _reactRedux = require('react-redux');
 
@@ -233,25 +241,38 @@ var Instructions = function (_Component) {
         case 'favourites':
           return _react2.default.createElement(
             'div',
-            { style: { marginTop: 20 } },
+            { style: { marginTop: 20, display: 'flex' } },
+            _react2.default.createElement(
+              _Card.Card,
+              { style: { paddingTop: '0%', fontWeight: 800 } },
+              _react2.default.createElement(
+                _Card.CardText,
+                { style: { padding: 8 } },
+                1 + '.'
+              )
+            ),
+            _react2.default.createElement(
+              _Card.Card,
+              { style: { width: 460 } },
+              _react2.default.createElement(
+                _Card.CardHeader,
+                { style: { padding: 8 } },
+                'Reset button pressing tool'
+              ),
+              _react2.default.createElement(
+                _Card.CardText,
+                { style: { padding: 8 } },
+                'A tool that can be used to press reset buttons which cannot be pressed with your fingers'
+              )
+            ),
             _react2.default.createElement(
               _Card.Card,
               null,
               _react2.default.createElement(
                 _Card.CardText,
-                null,
-                'Title: ',
-                _react2.default.createElement(_TextField2.default, { id: 'dummy', value: 'Reset button pressing tool', style: { marginLeft: 10
-                  } }),
-                _react2.default.createElement('br', null),
-                'Description: ',
-                _react2.default.createElement(_TextField2.default, {
-                  id: 'dummy2',
-                  multiLine: true,
-                  rows: 1,
-                  rowsMax: 10,
-                  value: 'A tool that can be used to press reset buttons which cannot be pressed with your fingers.',
-                  style: { marginLeft: 20, width: '80%'
+                { style: { padding: 20 } },
+                _react2.default.createElement(_rater2.default, { entryIndex: 0, currentRating: 3, raterCallback: function raterCallback() {
+                    alert('This is how you assign a rating');
                   } })
               )
             )
@@ -294,9 +315,6 @@ var Instructions = function (_Component) {
   }
 
   (0, _createClass3.default)(Instructions, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {}
-  }, {
     key: 'handleSave',
     value: function handleSave(text) {
       if (text.length !== 0) {
@@ -311,13 +329,20 @@ var Instructions = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      if (!this.props.payload) {
+      if ((0, _stringify2.default)(this.props.type) == "{}") {
         return _react2.default.createElement('span', null);
       }
 
       var textColor = this.context.muiTheme.palette.textColor;
 
-      var tasktype = 'math';
+      var tasktype = this.props.type || '';
+
+      var possibleTasks = ['favourites', 'math', 'similarities', 'alternativeObject'];
+      console.log("TASK TYPE: " + tasktype);
+      if (possibleTasks.indexOf(tasktype) < 0) {
+        return _react2.default.createElement('div', null);
+      }
+
       var title = instructionsData[tasktype].title;
       var text = instructionsData[tasktype].text;
       var example = this.getTaskExample(tasktype);
@@ -393,7 +418,7 @@ Instructions.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    firstName: state.account.firstName
+    type: state.task.payload
   };
 };
 

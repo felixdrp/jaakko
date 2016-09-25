@@ -54,7 +54,7 @@ exports.default = function () {
           case 0:
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             _context.t0 = action;
-            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 59;
+            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 62;
             break;
 
           case 4:
@@ -83,10 +83,17 @@ exports.default = function () {
             temp.type = result.session.surveyPath[temp.account.surveyPointer].type;
 
             _context.t1 = temp.type;
-            _context.next = _context.t1 === _surveyTypes.SIMILARITIES ? 18 : _context.t1 === _surveyTypes.FAVOURITES ? 23 : _context.t1 === _surveyTypes.RESULTS ? 28 : _context.t1 === _surveyTypes.MATH_RESULTS ? 42 : 57;
+            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.SIMILARITIES ? 21 : _context.t1 === _surveyTypes.FAVOURITES ? 26 : _context.t1 === _surveyTypes.RESULTS ? 31 : _context.t1 === _surveyTypes.MATH_RESULTS ? 45 : 60;
             break;
 
           case 18:
+            temp.payload = result.session.surveyPath[temp.account.surveyPointer].payload;
+
+            ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
+
+            return _context.abrupt('return');
+
+          case 21:
             // debugger
             if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
               temp.payload = {
@@ -114,7 +121,7 @@ exports.default = function () {
 
             return _context.abrupt('return');
 
-          case 23:
+          case 26:
             if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
               temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
               temp.payload = {
@@ -141,8 +148,8 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 28:
-            _context.prev = 28;
+          case 31:
+            _context.prev = 31;
 
 
             console.log('PRE PRE RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS');
@@ -162,17 +169,17 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 38:
-            _context.prev = 38;
-            _context.t2 = _context['catch'](28);
+          case 41:
+            _context.prev = 41;
+            _context.t2 = _context['catch'](31);
 
             console.log("CAGADA: " + _context.t2);
 
-          case 41:
+          case 44:
             return _context.abrupt('return');
 
-          case 42:
-            _context.prev = 42;
+          case 45:
+            _context.prev = 45;
 
             console.log('PRE PRE MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS');
             result = (0, _actions.storeStateWithoutWebSocket)(result);
@@ -195,26 +202,26 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 53:
-            _context.prev = 53;
-            _context.t3 = _context['catch'](42);
+          case 56:
+            _context.prev = 56;
+            _context.t3 = _context['catch'](45);
 
             console.log("CAGADA: " + _context.t3);
 
-          case 56:
+          case 59:
             return _context.abrupt('return');
 
-          case 57:
+          case 60:
 
             console.log('SESSION_STATE_GET return!!!');
             return _context.abrupt('return');
 
-          case 59:
+          case 62:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[28, 38], [42, 53]]);
+    }, _callee, this, [[31, 41], [45, 56]]);
   }));
 
   function query(_x) {

@@ -88,6 +88,16 @@ export default async function query({ action, payload, ws, store }) {
       ].type
 
       switch (temp.type) {
+        case INSTRUCTIONS:
+          temp.payload = result.session.surveyPath[
+            temp.account.surveyPointer
+          ].payload
+
+          ws.send(
+            swSetSurveyInitials( temp.payload )
+          )
+
+          return
         case SIMILARITIES:
           // debugger
           if ( result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length ) {

@@ -10,6 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
+import Rater from './rater'
 
 import { connect } from 'react-redux'
 
@@ -87,10 +88,6 @@ class Instructions extends Component {
     router: React.PropTypes.object.isRequired,
     websocket: React.PropTypes.object,
   };
-
-  componentWillMount() {
-
-  }
 
   handleSave(text) {
     if (text.length !== 0) {
@@ -186,22 +183,28 @@ class Instructions extends Component {
               </div>
               </div>
           case 'favourites':
-            return <div style={{marginTop:20}}>
-                <Card>
-                <CardText>
-                    Title: <TextField id={'dummy'} value='Reset button pressing tool' style={{marginLeft:10,
-                    }} /><br/>
-                    Description: <TextField
-                                  id={'dummy2'}
-                                  multiLine={true}
-                                  rows={1}
-                                  rowsMax={10}
-                                  value='A tool that can be used to press reset buttons which cannot be pressed with your fingers.'
-                                  style={{ marginLeft:20, width: '80%',
-                       }} />
-                </CardText>
-               </Card>
-            </div>
+            return <div style={{marginTop:20,display:'flex'}}>
+                      <Card style={{paddingTop: '0%',fontWeight: 800,}}>
+                        <CardText style={{padding:8}}>
+                          {1+'.'}
+                        </CardText>
+                      </Card>
+
+                      <Card style={{width:460}}>
+                        <CardHeader style={{padding:8}}>
+                            Reset button pressing tool
+                        </CardHeader>
+                        <CardText style={{padding:8}}>
+                          A tool that can be used to press reset buttons which cannot be pressed with your fingers
+                        </CardText>
+                      </Card>
+
+                      <Card>
+                          <CardText style={{padding:20}}>
+                            <Rater entryIndex={0} currentRating={3} raterCallback={ () => {alert('This is how you assign a rating')}} />
+                          </CardText>
+                      </Card>
+                  </div>
           case 'math':
               return <div style={{marginTop:20}}>
                   <Card>
@@ -227,15 +230,24 @@ class Instructions extends Component {
 
 //'_marker'
   render() {
-    if (!this.props.payload) {
+    if ( JSON.stringify(this.props.type) == "{}" ) {
       return <span></span>
     }
 
     const { textColor } = this.context.muiTheme.palette;
-    let tasktype = 'math';
+    let tasktype = this.props.type || '';
+
+
+    let possibleTasks = ['favourites','math','similarities','alternativeObject']
+    console.log("TASK TYPE: "+tasktype)
+    if ( possibleTasks.indexOf(tasktype) < 0 ){
+      return <div></div>
+    }
+
     let title = instructionsData[tasktype].title;
     let text = instructionsData[tasktype].text;
     let example = this.getTaskExample(tasktype);
+
 
 
     return (
@@ -299,7 +311,7 @@ Instructions.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    firstName : state.account.firstName
+    type : state.task.payload
   }
 }
 

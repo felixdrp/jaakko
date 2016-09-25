@@ -10,254 +10,159 @@ import {
   MATH_RESULTS,
 } from './components/survey/survey-types'
 
-// import {
-//   question1,
-// } from './survey-data/survey-questions'
-
-
-// export const AWAIT = 'AWAIT'
-// export const QUESTION = 'QUESTION'
-// export const INSTRUCTIONS = 'INSTRUCTIONS'
-// export const EXAMPLE = 'EXAMPLE'
-// export const MATH_CHALLENGE = 'MATH_CHALLENGE'
-// export const ALT_OBJECT_TASK = 'ALT_OBJECT_TASK'
-// export const SIMILARITIES = 'SIMILARITIES'
-// export const FAVOURITES = 'FAVOURITES'
-// export const MATH_RESULTS = 'MATH_RESULTS'
-// export const RESULTS = 'RESULTS'
 
 const sessionData = {
   sessionInfo: {
     nickName: 'Primera',
     date: '20/9/2016',
   },
+
   surveyPath: [
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: MATH_CHALLENGE,
-      payload: '',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: MATH_RESULTS,
-      payload: '',
-      time: 'inf',
-    },
+    wait(),
     {
       type: ALT_OBJECT_TASK,
       payload: 'altObjectTask',
       time: 'inf',
     },
+    wait(),
     {
-      type: AWAIT,
+      type: INSTRUCTIONS,
+      payload: 'similarities',
       time: 'inf',
     },
+    wait(),
     {
       type: SIMILARITIES,
       payload: 'altObjectTask',
       time: 'inf',
     },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: FAVOURITES,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: RESULTS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    // {
-    //   type: AWAIT,
-    //   time: 'inf',
-    // },
-    // {
-    //   type: QUESTION,
-    //   payload: 'entry',
-    //   time: 'inf',
-    // },
 
-    //first round
+    wait(),
+
     {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: INSTRUCTIONS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: ALT_OBJECT_TASK,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: INSTRUCTIONS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: SIMILARITIES,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: INSTRUCTIONS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: FAVOURITES,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: RESULTS,
-      payload: 'altObjectTask',
+      type: QUESTION,
+      payload: 'entry',
       time: 'inf',
     },
 
-    //Second round
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: INSTRUCTIONS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: ALT_OBJECT_TASK,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: INSTRUCTIONS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: SIMILARITIES,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: INSTRUCTIONS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: FAVOURITES,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
-    {
-      type: RESULTS,
-      payload: 'altObjectTask',
-      time: 'inf',
-    },
+    ...task(),
 
+    wait(),
 
-    //End
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
+    ...task(),
+
+    wait(),
+
     {
       type: INSTRUCTIONS,
       payload: 'math',
       time: 'inf',
     },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
+
     {
       type: MATH_CHALLENGE,
       payload: '',
       time: 'inf',
     },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
+
+    wait(),
+
     {
       type: MATH_RESULTS,
       payload: '',
       time: 'inf',
     },
-    {
-      type: AWAIT,
-      time: 'inf',
-    },
+
+    wait(),
+
     {
       type: QUESTION,
       payload: 'exit',
+      time: 'inf',
+    },
+
+    wait(),
+  ]
+}
+
+
+function wait(time) {
+  return {
+    type: AWAIT,
+    time: time || 'inf',
+  }
+}
+
+function task( type ) {
+  return [
+    {
+      type: INSTRUCTIONS,
+      payload: 'alternativeObject',
+      time: 'inf',
+    },
+
+    wait(),
+    {
+      type: ALT_OBJECT_TASK,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+
+    wait(),
+    {
+      type: INSTRUCTIONS,
+      payload: 'similarities',
+      time: 'inf',
+    },
+    wait(),
+    {
+      type: SIMILARITIES,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+
+    wait(),
+    {
+      type: INSTRUCTIONS,
+      payload: 'favourites',
+      time: 'inf',
+    },
+    wait(),
+    {
+      type: FAVOURITES,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+
+    wait(),
+    {
+      type: RESULTS,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+  ]
+}
+
+function testIntructions() {
+  return [
+    {
+      type: INSTRUCTIONS,
+      payload: 'alternativeObject',
+      time: 'inf',
+    },
+    {
+      type: INSTRUCTIONS,
+      payload: 'similarities',
+      time: 'inf',
+    },
+    {
+      type: INSTRUCTIONS,
+      payload: 'favourites',
+      time: 'inf',
+    },
+    {
+      type: INSTRUCTIONS,
+      payload: 'math',
       time: 'inf',
     },
   ]
