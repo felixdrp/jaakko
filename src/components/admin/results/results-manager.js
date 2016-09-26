@@ -27,12 +27,7 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 
 import {
-  wsGroupAdd,
-  wsGroupRemove,
-  wsAssignSelectedAccountsToGroup,
-  wsUnassignSelectedAccounts,
-  wsUnassignAccount,
-  wsAutomateGroupsCreation,
+
 } from '../../../websocket-message/server-actions'
 
 class ResultsManager extends Component {
@@ -43,114 +38,39 @@ class ResultsManager extends Component {
 
   static contextTypes = {
     muiTheme: PropTypes.object.isRequired,
-    // wsSession: PropTypes.object,
-    // websocket: PropTypes.object,
   };
 
   constructor() {
     super()
     this.state = {
-      accounts: { },
-      groups: { },
-      selectedAccounts: [],
+
     };
 
     // Used to store references.
     this._input = {};
   }
 
-  // Add or remove a selection
-  // if maintainPrevSelection == true it will maintain the previus selection
-  selectAccount = ( accountId, maintainPrevSelection ) => {
-    let prevSelected = this.state.selectedAccounts
-    let selected = []
-    if (maintainPrevSelection.ctrlKey) {
-      // Alredy in the list? then remove
-      if (prevSelected.includes(accountId)) {
-        selected = prevSelected
-        selected.splice( selected.indexOf(accountId), 1 )
-      } else {
-        selected = this.state.selectedAccounts.concat(accountId)
-      }
-    } else {
-      // If not selected select
-      if (!prevSelected.includes(accountId)) {
-        selected = [ accountId ]
-      }
-    }
-
-    this.setState({ selectedAccounts: selected })
-    // debugger
-    // console.log('select an account!!! > ' + accountId)
-
-  }
-
-  // Free an account from group
-  unassignAccount = (accountId) => {
-    // console.log('unassign an account!!! > ' + accountId)
-    // console.log(this.props)
-    this.props.wsSession.send(
-      wsUnassignAccount( accountId )
-    )
-  }
-
-  // Free the selected accounts from groups
-  unassignSelectedAccounts = () => {
-    // console.log('unassign!!!')
-    this.props.wsSession.send(
-      wsUnassignSelectedAccounts( this.state.selectedAccounts )
-    )
-    this.setState({ selectedAccounts: [] })
-  }
-
-  // Free the selected accounts from groups
-  assignSelectedAccountsToGroup = (event, groupId) => {
-    if (event.nativeEvent.defaultPrevented) {
-      return
-    }
-
-    let selected = this.state.selectedAccounts
-
-    // send selection and groupid to server
-    this.props.wsSession.send(
-      wsAssignSelectedAccountsToGroup( groupId, selected )
-    )
-
-    this.setState({ selectedAccounts: [] })
-    // console.log('assign to group !!! > ' + groupId)
-  }
-
-  addGroup = (name) => {
-    // send WsAddGroup
-    this.props.wsSession.send(
-      wsGroupAdd()
-    )
-    // console.log('addgroup!!!')
-    // console.log(this.props)
-
-  }
-
-  removeGroup = (groupId) => {
-    // send WsAddGroup
-    this.props.wsSession.send(
-      wsGroupRemove(groupId)
-    )
-  }
-
-  automateGroupCreation = (numberOfGroups) => {
-    // send WsAddGroup
-    this.props.wsSession.send(
-      wsAutomateGroupsCreation(numberOfGroups)
-    )
-  }
-
   render() {
-    console.log(this.context)
+    let surveyIndexMonetary = this.props.storeSession.session.surveyPath.reduce(
+      (prev, element, index) => {
+        // The survey have a monetary value?
+        if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
+          prev.push( index )
+          return prev
+        }
+        return prev
+      },
+      []
+    )
+
+    let result = 
+
     const style = {
       gray: {
         color: '#565555'
       }
     }
+
     return (
       <Card
         style={{
