@@ -20,19 +20,19 @@ const sessionData = {
   surveyPath: [
 
     wait(),
-    // {
-    //   type: INSTRUCTIONS,
-    //   payload: 'experimentStructure',
-    //   time: 'inf',
-    // },
-    //
-    // wait(),
-    //
-    // {
-    //   type: QUESTION,
-    //   payload: 'entry',
-    //   time: 'inf',
-    // },
+    {
+      type: INSTRUCTIONS,
+      payload: 'experimentStructure',
+      time: 'inf',
+    },
+
+    wait(),
+
+    {
+      type: QUESTION,
+      payload: 'entry',
+      time: 'inf',
+    },
     ...task(),
 
     wait(),
