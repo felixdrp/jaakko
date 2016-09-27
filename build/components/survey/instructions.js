@@ -562,8 +562,8 @@ Instructions.propTypes = {}
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
-    type: state.task.payload.taskType,
-    groupType: state.task.payload.groupType
+    type: state.task.payload != undefined ? state.task.payload.taskType : null,
+    groupType: state.task.payload != undefined ? state.task.payload.groupType : null
   };
 };
 

@@ -21,18 +21,21 @@ const sessionData = {
 
     wait(),
     {
-      type: INSTRUCTIONS,
-      payload: 'experimentStructure',
+      type: QUESTION,
+      payload: 'entry',
       time: 'inf',
     },
 
     wait(),
 
     {
-      type: QUESTION,
-      payload: 'entry',
+      type: INSTRUCTIONS,
+      payload: 'experimentStructure',
       time: 'inf',
     },
+
+    wait(),
+    
     ...task(),
 
     wait(),
