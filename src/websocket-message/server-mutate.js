@@ -564,6 +564,7 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
 
     case TASK_IDEA_ADD:
       result = store.getState()
+      temp.creator = result.accounts[payload.creator]
 
       store.dispatch(
         taskIdeaAdd({
@@ -571,6 +572,8 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
           groupType: result.groups[
             result.accounts[payload.creator].group
           ].type,
+          firstName: temp.creator.firstName,
+          surname: temp.creator.surname,
           ...payload,
         })
       )

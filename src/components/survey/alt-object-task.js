@@ -291,6 +291,7 @@ class AltObjectTask extends Component {
                   return <div key={i} style={{padding:5}}>
                                 <Card>
                                   <CardHeader style={{padding:8}}>
+                                    { [1, 3].includes(entry.group)? `${entry.firstName} ${entry.surname} > `: '' }
                                     {entry.title}
                                   </CardHeader>
                                   <CardText style={{padding:8}}>

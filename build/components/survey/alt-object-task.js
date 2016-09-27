@@ -317,6 +317,7 @@ var AltObjectTask = function (_Component) {
                   _react2.default.createElement(
                     _Card.CardHeader,
                     { style: { padding: 8 } },
+                    [1, 3].includes(entry.group) ? entry.firstName + ' ' + entry.surname + ' > ' : '',
                     entry.title
                   ),
                   _react2.default.createElement(
