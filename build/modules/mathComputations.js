@@ -48,7 +48,7 @@ function processMathResults(data, accounts) {
 function getPay(i) {
   switch (i) {
     case 1:
-      return 4;
+      return 5;
     case 2:
       return 2;
     case 3:
@@ -56,7 +56,7 @@ function getPay(i) {
     case 4:
       return 0.5;
     case 5:
-      return 0.5;
+      return 0;
     default:
       return 0;
   }

@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
 var _stringify = require('babel-runtime/core-js/json/stringify');
 
 var _stringify2 = _interopRequireDefault(_stringify);
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
@@ -111,7 +111,8 @@ function likertScaleIntro(text) {
       }
     },
     text,
-    'Please use the following scale to answer the given questions.',
+    ' ',
+    'Please use the following scale to answer the given questions. Confidence (0-100)',
     _react2.default.createElement(
       'div',
       {
@@ -145,19 +146,6 @@ function likertScaleIntro(text) {
           t
         );
       })
-    ),
-    _react2.default.createElement(
-      'div',
-      { style: {
-          display: 'flex',
-          justifyContent: 'flex-end',
-          marginTop: 20
-        } },
-      _react2.default.createElement(
-        'span',
-        null,
-        'Confidence (0-100)'
-      )
     )
   );
 }
@@ -239,33 +227,73 @@ var entryQuestionnarie = {
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
+    name: 'makingMoney',
+    text: '5. Do you think you could make more money in the long run if you chose a field outside of the arts (for example, student of non-arts or an alternative career) compared to a career in the arts (painter, musician, etc).',
+    type: LIST_FIELD_TYPE,
+    typeVars: { opts: ['yes', 'no'] }
+  }, {
+    name: 'makingMoneyHowmuch',
+    text: '5b. If yes how much more do you think you could earn per year?',
+    type: TEXT_FIELD_TYPE,
+    typeVars: {}
+  }, {
+    name: 'makingMoney',
+    text: '6. If you had to pick only one option would you rather be rich as a result of art you created or famous as a result of the art you created?',
+    type: LIST_FIELD_TYPE,
+    typeVars: { opts: ['Rich', 'Famous'] }
+  }, {
+    name: 'howCreativeComparedToOthers80',
+    text: '7. Are you more creative than 80% of fellow students the room?',
+    type: LIST_FIELD_TYPE,
+    typeVars: { opts: ['Yes', 'No'] }
+  }, {
+    name: 'howCreativeComparedToOthers50',
+    text: '8. Are you more creative than 50% of fellow students the room?',
+    type: LIST_FIELD_TYPE,
+    typeVars: { opts: ['Yes', 'No'] }
+  }, {
+    name: 'gamble5050',
+    text: '9. If you were presented with the opportunity to choose between the 6 gambles below, if you only could choose one which one would you choose? There is a 50% chance of the “low” outcome and a 50% chance of the “high” outcome in all 6 gambles. ',
+    type: RADIO_FIELD_TYPE,
+    typeVars: { opts: ['Gamble #1. Have a 50% chance of receiving £28 and a 50% chance of receiving £28', 'Gamble #2. Have a 50% chance of receiving £24 and a 50% chance of receiving £36', 'Gamble #3. Have a 50% chance of receiving £20 and a 50% chance of receiving £44', 'Gamble #4. Have a 50% chance of receiving £16 and a 50% chance of receiving £52', 'Gamble #5. Have a 50% chance of receiving £12 and a 50% chance of receiving £60', 'Gamble #6. Have a 50% chance of receiving £2 and a 50% chance of receiving £70'] }
+  }, {
+    name: '',
+    text: likertScaleIntro('10. Assume you are seeking a job outside the arts, for example, accountant, teacher, shop assistant (not including shops, such as, a camera store, art supplies, or a similar arts related establishment). Please use the following scale to indicate your confidence from 0 to 100 in relation to each question. '),
+    type: COMMENT_TYPE,
+    typeVars: {}
+  }, {
+    name: 'otherJobConfidence',
+    text: ['Requesting a job application form', 'Completing a job application form', 'Producing a curriculum vitae (CV)', 'General interview skills', 'Oral self-presentation at the interview', 'Meeting new people', 'Contributing to a work related meeting or discussion', 'Working with a team', 'Working on your own', 'Career progression'],
+    type: ARRAY_SLIDER_FIELD_TYPE,
+    typeVars: {}
+  }, {
     name: 'hobbies',
-    text: '5. What are your hobbies (For example a club or clubs you belong to)?',
+    text: '11. What are your hobbies (for example a sport or club or society you belong to)?',
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
     name: '',
-    text: likertScaleIntro('6. '),
+    text: likertScaleIntro('12. '),
     type: COMMENT_TYPE,
     typeVars: {}
   }, {
-    name: 'jobConfidence',
+    name: 'mathTestConfidence',
     text: ['I’m confident that I can do an excellent job on my math tests.', 'I’m Certain I can understand the most difficult material presented in math texts', 'I am confident I can do an excellent job on my math assignments.', 'I am certain I can master the skills being taught in my math class.', 'I’m confident I can understand the most difficult material presented by my math teacher.'],
     type: ARRAY_SLIDER_FIELD_TYPE,
     typeVars: {}
   }, {
     name: '',
-    text: likertScaleIntro('7. '),
+    text: likertScaleIntro('13. '),
     type: COMMENT_TYPE,
     typeVars: {}
   }, {
-    name: 'jobNovelty',
-    text: ['I feel that I am good at generating novel ideas.', 'I have confidence in my ability to solve problems.', 'I Have a knack for further developing the ideas of others.', 'I am good at Finding creative ways to solve problems'],
+    name: 'jobNoveltySkills',
+    text: ['I feel that I am good at generating novel ideas.', 'I am good at finding creative ways to solve problems.', 'I have confidence in my ability to solve problems.', 'I Have a knack for further developing the ideas of others.', 'I am good at Finding creative ways to solve problems', 'I feel that I am more creative than others on my course'],
     type: ARRAY_SLIDER_FIELD_TYPE,
     typeVars: {}
   }, {
     name: '',
-    text: fillGapIntro('8. '),
+    text: fillGapIntro('14. '),
     type: COMMENT_TYPE,
     typeVars: {}
   }, {
@@ -340,6 +368,11 @@ var exitQuestionnaire = {
     text: '12. How fair did you find the rewards in the experiment?',
     type: LIST_FIELD_TYPE,
     typeVars: { opts: ['a. Highly unfair', 'b. Unfair', 'c. Quite unfair', 'd. Quite fair', 'e. Fair', 'f. Very fair'] }
+  }, {
+    name: 'wouldYouTradeplaces',
+    text: '13. Would you change places with any other participant in the experiment assuming you would put in the same effort as they did for the pay they received?',
+    type: TEXT_FIELD_TYPE,
+    typeVars: {}
   }]
 };
 
@@ -354,11 +387,13 @@ var Question = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (Question.__proto__ || (0, _getPrototypeOf2.default)(Question)).call(this, props));
 
     _this.gatherData = function () {
-
-      console.log((0, _stringify2.default)(_this.state));
-      return _this.state;
+      if (!_this.isSubmitted) {
+        _this.props.submit(_this.state);
+        _this.isSubmitted = true;
+      }
     };
 
+    _this.isSubmitted = false;
     _this.state = { questionnaire: 'entry' };
     return _this;
   }
@@ -406,13 +441,16 @@ var Question = function (_Component) {
       var tasktype = this.props.type || '';
 
       var possibleTasks = ['entry', 'exit'];
-      console.log("QUESITON TYPE: " + tasktype);
+      console.log("QUESTION TYPE: " + tasktype);
       if (possibleTasks.indexOf(tasktype) < 0) {
         return _react2.default.createElement('div', null);
       }
 
       // let message = this.props.message? this.props.message : 'Question'
+
+      //Uncommeting this
       var questionnaire = this.props.type == 'entry' ? entryQuestionnarie : exitQuestionnaire;
+
       var message = 'Question';
 
       var textColor = this.context.muiTheme.palette.textColor;
@@ -702,9 +740,7 @@ var Question = function (_Component) {
                 id: 'submitAnswers',
                 style: { color: 'white' },
                 type: 'submit',
-                onClick: function onClick() {
-                  return _this2.props.submit(_this2.gatherData());
-                }
+                onClick: this.gatherData
               },
               'Submit'
             )

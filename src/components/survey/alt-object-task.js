@@ -228,6 +228,11 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
+              <img style={{
+                maxWidth: 300,
+                minWidth: 250,
+              }} src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"> </img>
+
               <Timer limitTime={20} timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
 
               <div style={{marginTop:20}}>

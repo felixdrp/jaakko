@@ -19,10 +19,14 @@ var sessionData = {
   },
 
   surveyPath: [wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'experimentStructure',
+    time: 'inf'
+  }, wait(), {
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'
-  }].concat((0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task()), [wait(), {
+  }].concat((0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'math',
     time: 'inf'
@@ -80,20 +84,60 @@ function task(type) {
   }];
 }
 
-function testIntructions() {
+function task2(type) {
   return [{
     type: _surveyTypes.INSTRUCTIONS,
-    payload: 'alternativeObject',
+    payload: 'alternativeObjectFigural',
     time: 'inf'
-  }, {
+  }, wait(), {
+    type: _surveyTypes.ALT_OBJECT_TASK,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }, wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'similarities',
     time: 'inf'
-  }, {
+  }, wait(), {
+    type: _surveyTypes.SIMILARITIES,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }, wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'favourites',
     time: 'inf'
-  }, {
+  }, wait(), {
+    type: _surveyTypes.FAVOURITES,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }, wait(), {
+    type: _surveyTypes.RESULTS,
+    payload: 'altObjectTask',
+    time: 'inf'
+  }];
+}
+
+function testIntructions() {
+  return [{
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'experimentStructure',
+    time: 'inf'
+  }, wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'alternativeObject',
+    time: 'inf'
+  }, wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'alternativeObjectFigural',
+    time: 'inf'
+  }, wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'similarities',
+    time: 'inf'
+  }, wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'favourites',
+    time: 'inf'
+  }, wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'math',
     time: 'inf'

@@ -35,7 +35,8 @@ class Results extends Component {
 
   constructor(props) {
     super(props);
-     this.state = {data : null, groupType: -1, currentUserEmail: '', accounts : {}};
+    this.isSubmitted = false;
+    this.state = {data : null, groupType: -1, currentUserEmail: '', accounts : {}};
   }
 
   static contextTypes = {
@@ -119,7 +120,7 @@ class Results extends Component {
   getPay = (i) => {
     switch (i) {
       case 1:
-        return 4;
+        return 5;
       case 2:
         return 2;
       case 3:
@@ -127,7 +128,7 @@ class Results extends Component {
       case 4:
         return 0.5;
       case 5:
-        return 0.5;
+        return 0;
       default:
         return 0;
     }
@@ -220,6 +221,13 @@ class Results extends Component {
 
   }
 
+  gatherData = () => {
+    if ( !this.isSubmitted ){
+      this.props.submit( this.state )
+      this.isSubmitted = true;
+    }
+  }
+
 //'_marker'
   render() {
 
@@ -284,7 +292,7 @@ class Results extends Component {
                   id="submitAnswers"
                   style={{color: 'rgb(124, 234, 127)',marginTop: 20, textAlign:'center'}}
                   type="submit"
-                  onClick= { () => this.props.submit( this.state.data ) }
+                  onClick= { this.gatherData }
                 >
                   Continue
                 </RaisedButton>

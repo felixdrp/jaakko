@@ -62,8 +62,8 @@ class ResultsManager extends Component {
       },
       []
     )
-
-    let result = 
+    // 
+    // let result =
 
     const style = {
       gray: {

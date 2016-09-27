@@ -232,6 +232,14 @@ var AltObjectTask = function (_Component) {
                 item
               );
             }),
+            _react2.default.createElement(
+              'img',
+              { style: {
+                  maxWidth: 300,
+                  minWidth: 250
+                }, src: 'http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg' },
+              ' '
+            ),
             _react2.default.createElement(_timer2.default, { limitTime: 20, timerCallback: function timerCallback() {
                 return _this2.props.submit(_this2.gatherData());
               } }),

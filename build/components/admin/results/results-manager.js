@@ -109,7 +109,7 @@ var ResultsManager = function (_Component) {
   (0, _createClass3.default)(ResultsManager, [{
     key: 'render',
     value: function render() {
-      var a = data.session.surveyPath.reduce(function (prev, element, index) {
+      var surveyIndexMonetary = this.props.storeSession.session.surveyPath.reduce(function (prev, element, index) {
         // The survey have a monetary value?
         if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
           prev.push(index);
@@ -117,6 +117,8 @@ var ResultsManager = function (_Component) {
         }
         return prev;
       }, []);
+      // 
+      // let result =
 
       var style = {
         gray: {
