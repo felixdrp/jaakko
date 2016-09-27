@@ -147,7 +147,6 @@ var ResultsManager = function (_Component) {
 
       // let result =
 
-
       var style = {
         gray: {
           color: '#565555'

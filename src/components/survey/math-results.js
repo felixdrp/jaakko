@@ -37,6 +37,7 @@ class MathResults extends Component {
 
   constructor(props) {
     super(props);
+    this.isSubmitted = false;
      this.state = {
        groupType: -1,
        currentUserEmail : "",
@@ -122,6 +123,13 @@ class MathResults extends Component {
 
   }
 
+  gatherData = () => {
+    if ( !this.isSubmitted ){
+      this.props.submit( this.state )
+      this.isSubmitted = true;
+    }
+  }
+
 //'_marker'
   render() {
 
@@ -181,7 +189,7 @@ class MathResults extends Component {
                   id="submitAnswers"
                   style={{color: 'rgb(124, 234, 127)',marginTop: 20, textAlign:'center'}}
                   type="submit"
-                  onClick= { () => this.props.submit( this.state.data ) }
+                  onClick= { this.gatherData }
                 >
                   Continue
                 </RaisedButton>

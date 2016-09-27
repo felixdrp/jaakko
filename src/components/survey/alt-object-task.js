@@ -228,6 +228,14 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
+              <img
+                style={{
+                  maxWidth: 300,
+                  minWidth: 250,
+                }}
+                src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"
+              />
+
               <Timer limitTime={20} timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
 
               <div style={{marginTop:20}}>
@@ -291,8 +299,8 @@ class AltObjectTask extends Component {
                   return <div key={i} style={{padding:5}}>
                                 <Card>
                                   <CardHeader style={{padding:8}}>
-                                    { [1, 3].includes(entry.group)? `${entry.firstName} ${entry.surname} > `: '' }
-                                    {entry.title}
+                                    { [1, 3].includes(entry.groupType)? `Author: ${entry.firstName} ${entry.surname} > `: '' }
+                                    { entry.title }
                                   </CardHeader>
                                   <CardText style={{padding:8}}>
                                     {entry.description}

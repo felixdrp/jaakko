@@ -89,7 +89,7 @@ exports.default = function () {
           case 18:
             temp.payload = result.session.surveyPath[temp.account.surveyPointer].payload;
 
-            ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
+            ws.send((0, _serverActions.swSetSurveyInitials)({ groupType: result.groups[temp.account.group].type, taskType: temp.payload }));
 
             return _context.abrupt('return');
 

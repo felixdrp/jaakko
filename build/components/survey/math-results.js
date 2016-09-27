@@ -134,6 +134,14 @@ var MathResults = function (_Component) {
       }
     };
 
+    _this.gatherData = function () {
+      if (!_this.isSubmitted) {
+        _this.props.submit(_this.state);
+        _this.isSubmitted = true;
+      }
+    };
+
+    _this.isSubmitted = false;
     _this.state = {
       groupType: -1,
       currentUserEmail: "",
@@ -286,9 +294,7 @@ var MathResults = function (_Component) {
                 id: 'submitAnswers',
                 style: { color: 'rgb(124, 234, 127)', marginTop: 20, textAlign: 'center' },
                 type: 'submit',
-                onClick: function onClick() {
-                  return _this2.props.submit(_this2.state.data);
-                }
+                onClick: this.gatherData
               },
               'Continue'
             )

@@ -146,7 +146,7 @@ var Results = function (_Component) {
     _this.getPay = function (i) {
       switch (i) {
         case 1:
-          return 4;
+          return 5;
         case 2:
           return 2;
         case 3:
@@ -154,7 +154,7 @@ var Results = function (_Component) {
         case 4:
           return 0.5;
         case 5:
-          return 0.5;
+          return 0;
         default:
           return 0;
       }
@@ -303,6 +303,14 @@ var Results = function (_Component) {
       }
     };
 
+    _this.gatherData = function () {
+      if (!_this.isSubmitted) {
+        _this.props.submit(_this.state);
+        _this.isSubmitted = true;
+      }
+    };
+
+    _this.isSubmitted = false;
     _this.state = { data: null, groupType: -1, currentUserEmail: '', accounts: {} };
     return _this;
   }
@@ -432,9 +440,7 @@ var Results = function (_Component) {
                 id: 'submitAnswers',
                 style: { color: 'rgb(124, 234, 127)', marginTop: 20, textAlign: 'center' },
                 type: 'submit',
-                onClick: function onClick() {
-                  return _this2.props.submit(_this2.state.data);
-                }
+                onClick: this.gatherData
               },
               'Continue'
             )

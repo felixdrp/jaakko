@@ -94,7 +94,7 @@ export default async function query({ action, payload, ws, store }) {
           ].payload
 
           ws.send(
-            swSetSurveyInitials( temp.payload )
+            swSetSurveyInitials( { groupType: result.groups[ temp.account.group ].type, taskType: temp.payload } )
           )
 
           return

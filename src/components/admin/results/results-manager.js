@@ -89,8 +89,6 @@ class ResultsManager extends Component {
 
     // let result =
 
-
-
     const style = {
       gray: {
         color: '#565555'

@@ -20,17 +20,24 @@ const sessionData = {
   surveyPath: [
 
     wait(),
-
-    {
-      type: QUESTION,
-      payload: 'entry',
-      time: 'inf',
-    },
+    // {
+    //   type: INSTRUCTIONS,
+    //   payload: 'experimentStructure',
+    //   time: 'inf',
+    // },
+    //
+    // wait(),
+    //
+    // {
+    //   type: QUESTION,
+    //   payload: 'entry',
+    //   time: 'inf',
+    // },
     ...task(),
 
     wait(),
 
-    ...task(),
+    ...task2(),
 
     wait(),
 
@@ -126,23 +133,88 @@ function task( type ) {
   ]
 }
 
-function testIntructions() {
+function task2( type ) {
   return [
     {
       type: INSTRUCTIONS,
-      payload: 'alternativeObject',
+      payload: 'alternativeObjectFigural',
       time: 'inf',
     },
+
+    wait(),
+    {
+      type: ALT_OBJECT_TASK,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+
+    wait(),
     {
       type: INSTRUCTIONS,
       payload: 'similarities',
       time: 'inf',
     },
+    wait(),
+    {
+      type: SIMILARITIES,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+
+    wait(),
     {
       type: INSTRUCTIONS,
       payload: 'favourites',
       time: 'inf',
     },
+    wait(),
+    {
+      type: FAVOURITES,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+
+    wait(),
+    {
+      type: RESULTS,
+      payload: 'altObjectTask',
+      time: 'inf',
+    },
+  ]
+}
+
+function testIntructions() {
+  return [
+    {
+      type: INSTRUCTIONS,
+      payload: 'experimentStructure',
+      time: 'inf',
+    },
+      wait(),
+    {
+      type: INSTRUCTIONS,
+      payload: 'alternativeObject',
+      time: 'inf',
+    },
+      wait(),
+    {
+      type: INSTRUCTIONS,
+      payload: 'alternativeObjectFigural',
+      time: 'inf',
+    },
+      wait(),
+    {
+      type: INSTRUCTIONS,
+      payload: 'similarities',
+      time: 'inf',
+    },
+      wait(),
+    {
+      type: INSTRUCTIONS,
+      payload: 'favourites',
+      time: 'inf',
+    },
+      wait(),
     {
       type: INSTRUCTIONS,
       payload: 'math',

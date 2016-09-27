@@ -48,6 +48,8 @@ const ARRAY_LIST_FIELD_TYPE = 'arrayListFieldType'
 const ARRAY_SLIDER_FIELD_TYPE = 'arraySliderFieldType'
 
 
+
+
 function likertScaleIntro(text){
 
   return  <div style={{
@@ -60,7 +62,7 @@ function likertScaleIntro(text){
       paddingLeft: 5,
       }}
     >
-      {text}Please use the following scale to answer the given questions.
+      {text} {'Please use the following scale to answer the given questions. Confidence (0-100)'}
 
     <div
       style={{
@@ -89,16 +91,16 @@ function likertScaleIntro(text){
     }
 
     </div>
-
-    <div  style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        marginTop : 20,
-      }}>
-
-      <span>Confidence (0-100)</span>
-    </div>
-
+{
+    // <div  style={{
+    //     display: 'flex',
+    //     justifyContent: 'flex-end',
+    //     marginTop : 20,
+    //   }}>
+    //
+    //   <span>Confidence (0-100)</span>
+    // </div>
+}
 
     </div>
 
@@ -179,19 +181,94 @@ var entryQuestionnarie = {
       typeVars : {}
     },
     {
-      name : 'hobbies',
-      text : '5. What are your hobbies (For example a club or clubs you belong to)?',
+      name : 'makingMoney',
+      text : '5. Do you think you could make more money in the long run if you chose a field outside of the arts (for example, student of non-arts or an alternative career) compared to a career in the arts (painter, musician, etc).',
+      type : LIST_FIELD_TYPE,
+      typeVars : {opts:['yes',
+                        'no']}
+    },
+    {
+      name : 'makingMoneyHowmuch',
+      text : '5b. If yes how much more do you think you could earn per year?',
       type : TEXT_FIELD_TYPE,
       typeVars : {}
     },
     {
+      name : 'makingMoney',
+      text : '6. If you had to pick only one option would you rather be rich as a result of art you created or famous as a result of the art you created?',
+      type : LIST_FIELD_TYPE,
+      typeVars : {opts:['Rich',
+                        'Famous']}
+    },
+
+    {
+      name : 'howCreativeComparedToOthers80',
+      text : '7. Are you more creative than 80% of fellow students the room?',
+      type : LIST_FIELD_TYPE,
+      typeVars : {opts:['Yes',
+                        'No']}
+    },
+    {
+      name : 'howCreativeComparedToOthers50',
+      text : '8. Are you more creative than 50% of fellow students the room?',
+      type : LIST_FIELD_TYPE,
+      typeVars : {opts:['Yes',
+                        'No']}
+    },
+
+    {
+      name : 'gamble5050',
+      text : '9. If you were presented with the opportunity to choose between the 6 gambles below, if you only could choose one which one would you choose? There is a 50% chance of the “low” outcome and a 50% chance of the “high” outcome in all 6 gambles. ',
+      type : RADIO_FIELD_TYPE,
+      typeVars : {opts:[
+                        'Gamble #1. Have a 50% chance of receiving £28 and a 50% chance of receiving £28',
+                        'Gamble #2. Have a 50% chance of receiving £24 and a 50% chance of receiving £36',
+                        'Gamble #3. Have a 50% chance of receiving £20 and a 50% chance of receiving £44',
+                        'Gamble #4. Have a 50% chance of receiving £16 and a 50% chance of receiving £52',
+                        'Gamble #5. Have a 50% chance of receiving £12 and a 50% chance of receiving £60',
+                        'Gamble #6. Have a 50% chance of receiving £2 and a 50% chance of receiving £70',]}
+    },
+
+    {
       name : '',
-      text : likertScaleIntro('6. '),
+      text : likertScaleIntro('10. Assume you are seeking a job outside the arts, for example, accountant, teacher, shop assistant (not including shops, such as, a camera store, art supplies, or a similar arts related establishment). Please use the following scale to indicate your confidence from 0 to 100 in relation to each question. '),
+      type : COMMENT_TYPE,
+      typeVars : {},
+    },
+
+    {
+      name : 'otherJobConfidence',
+      text : ['Requesting a job application form',
+              'Completing a job application form',
+              'Producing a curriculum vitae (CV)',
+              'General interview skills',
+              'Oral self-presentation at the interview',
+              'Meeting new people',
+              'Contributing to a work related meeting or discussion',
+              'Working with a team',
+              'Working on your own',
+              'Career progression',
+            ],
+      type : ARRAY_SLIDER_FIELD_TYPE,
+      typeVars : {}
+    },
+
+    {
+      name : 'hobbies',
+      text : '11. What are your hobbies (for example a sport or club or society you belong to)?',
+      type : TEXT_FIELD_TYPE,
+      typeVars : {}
+    },
+
+
+    {
+      name : '',
+      text : likertScaleIntro('12. '),
       type : COMMENT_TYPE,
       typeVars : {},
     },
     {
-      name : 'jobConfidence',
+      name : 'mathTestConfidence',
       text : ['I’m confident that I can do an excellent job on my math tests.',
               'I’m Certain I can understand the most difficult material presented in math texts',
               'I am confident I can do an excellent job on my math assignments.',
@@ -202,22 +279,24 @@ var entryQuestionnarie = {
     },
     {
       name : '',
-      text : likertScaleIntro('7. '),
+      text : likertScaleIntro('13. '),
       type : COMMENT_TYPE,
       typeVars : {},
     },
     {
-      name : 'jobNovelty',
+      name : 'jobNoveltySkills',
       text : ['I feel that I am good at generating novel ideas.',
+              'I am good at finding creative ways to solve problems.',
               'I have confidence in my ability to solve problems.',
               'I Have a knack for further developing the ideas of others.',
-              'I am good at Finding creative ways to solve problems'],
+              'I am good at Finding creative ways to solve problems',
+            	'I feel that I am more creative than others on my course'],
       type : ARRAY_SLIDER_FIELD_TYPE,
       typeVars : {}
     },
     {
       name : '',
-      text : fillGapIntro('8. '),
+      text : fillGapIntro('14. '),
       type : COMMENT_TYPE,
       typeVars : {},
     },
@@ -352,6 +431,12 @@ var exitQuestionnaire = {
                         'e. Fair',
                         'f. Very fair']}
     },
+    {
+      name : 'wouldYouTradeplaces',
+      text : '13. Would you change places with any other participant in the experiment assuming you would put in the same effort as they did for the pay they received?',
+      type : TEXT_FIELD_TYPE,
+      typeVars : {}
+    },
   ],
 };
 
@@ -363,7 +448,7 @@ class Question extends Component {
 
   constructor(props) {
     super(props);
-
+    this.isSubmitted = false;
     this.state = {questionnaire : 'entry' };
   }
 
@@ -399,10 +484,10 @@ class Question extends Component {
 
 
   gatherData = () => {
-
-    console.log(JSON.stringify(this.state));
-    return this.state
-
+    if ( !this.isSubmitted ){
+      this.props.submit( this.state )
+      this.isSubmitted = true;
+    }
   }
 
 
@@ -415,15 +500,19 @@ class Question extends Component {
 
     let tasktype = this.props.type || '';
 
+
     let possibleTasks = ['entry','exit']
-    console.log("QUESITON TYPE: "+tasktype)
+    console.log("QUESTION TYPE: "+tasktype)
     if ( possibleTasks.indexOf(tasktype) < 0 ){
       return <div></div>
     }
 
 
     // let message = this.props.message? this.props.message : 'Question'
+
+    //Uncommeting this
     let questionnaire = (this.props.type == 'entry') ? entryQuestionnarie : exitQuestionnaire
+    
     let message =  'Question'
 
     const { textColor } = this.context.muiTheme.palette;
@@ -664,7 +753,7 @@ class Question extends Component {
                 id="submitAnswers"
                 style={{color: 'white',}}
                 type="submit"
-                onClick= { () => this.props.submit( this.gatherData() ) }
+                onClick= { this.gatherData }
               >
                 Submit
               </RaisedButton>
