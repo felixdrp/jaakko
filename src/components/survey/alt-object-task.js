@@ -330,6 +330,7 @@ const mapStateToProps = (state, ownProps = {}) => {
     account: state.account,
     tasks: state.task.tasks || [],
     taskLength:  state.task.tasks ? state.task.tasks.length : 0,
+    type :  state.task.payload ? state.task.payload.taskType: '',
   }
 }
 

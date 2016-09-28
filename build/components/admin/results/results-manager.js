@@ -109,18 +109,81 @@ var ResultsManager = function (_Component) {
   (0, _createClass3.default)(ResultsManager, [{
     key: 'render',
     value: function render() {
-      // let surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(
-      //   (prev, element, index) => {
-      //     // The survey have a monetary value?
-      //     if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
-      //       prev.push( index )
-      //       return prev
-      //     }
-      //     return prev
-      //   },
-      //   []
-      // )
-      //
+      var _this2 = this;
+
+      var surveyxMonetaryTypeIndex = [];
+      var accountsMonetary = [];
+
+      if (this.props.storeSession && 'session' in this.props.storeSession) {
+        surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(function (prev, element, index) {
+          // The survey have a monetary value?
+          if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
+            prev.push(index);
+            return prev;
+          }
+          return prev;
+        }, []);
+
+        accountsMonetary = this.props.storeSession.accounts.list.reduce(function (prev, accountId, index) {
+          var account = _this2.props.storeSession.accounts[accountId];
+          var accountComponent = [];
+
+          accountComponent.push(_react2.default.createElement(
+            'span',
+            { key: account.email + 0 },
+            ' ',
+            account.firstName,
+            ' ',
+            account.surname,
+            ' ',
+            account.email,
+            ' '
+          ));
+
+          var moneyData = _this2.props.storeSession.results.surveyInfo.filter(function (element) {
+            return element.accountId == accountId && surveyxMonetaryTypeIndex.includes(element.surveyId);
+          });
+
+          moneyData.forEach(function (current, index2) {
+            if (index2 < moneyData.length - 1) {
+              accountComponent.push(_react2.default.createElement(
+                'span',
+                { key: account.email + index2 + 1 },
+                ' pago ',
+                account.firstName,
+                ' ',
+                account.surname,
+                ' ',
+                account.email,
+                ' '
+              ));
+            } else {
+              accountComponent.push(_react2.default.createElement(
+                'span',
+                { key: account.email + index2 + 1 },
+                ' pago fin ',
+                account.firstName,
+                ' ',
+                account.surname,
+                ' ',
+                account.email,
+                ' '
+              ));
+            }
+          });
+
+          prev.push(_react2.default.createElement(
+            'div',
+            { key: index },
+            ' ',
+            accountComponent,
+            ' '
+          ));
+
+          return prev;
+        }, []);
+      }
+
       // let accounts = this.props.storeSession.accounts.list.map(
       //   ( account, index ) => {
       //     let accountComponent = []
@@ -177,7 +240,7 @@ var ResultsManager = function (_Component) {
             ' Results manager '
           )
         }),
-        accounts
+        accountsMonetary
       );
     }
   }]);

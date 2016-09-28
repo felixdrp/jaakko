@@ -51,18 +51,52 @@ class ResultsManager extends Component {
   }
 
   render() {
-    // let surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(
-    //   (prev, element, index) => {
-    //     // The survey have a monetary value?
-    //     if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
-    //       prev.push( index )
-    //       return prev
-    //     }
-    //     return prev
-    //   },
-    //   []
-    // )
-    //
+    let surveyxMonetaryTypeIndex = []
+    let accountsMonetary = []
+
+    if ( this.props.storeSession && 'session' in this.props.storeSession ) {
+      surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(
+        (prev, element, index) => {
+          // The survey have a monetary value?
+          if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
+            prev.push( index )
+            return prev
+          }
+          return prev
+        },
+        []
+      )
+
+      accountsMonetary = this.props.storeSession.accounts.list.reduce(
+        ( prev, accountId, index ) => {
+          let account = this.props.storeSession.accounts[ accountId ]
+          let accountComponent = []
+
+          accountComponent.push( <span key={ account.email + 0 }> {account.firstName} {account.surname} {account.email} </span> )
+
+          let moneyData = this.props.storeSession.results.surveyInfo.filter(
+            (element) => element.accountId == accountId && surveyxMonetaryTypeIndex.includes( element.surveyId )
+          )
+
+          moneyData.forEach(
+            (current, index2) => {
+              if ( index2 < moneyData.length - 1 ) {
+                accountComponent.push( <span key={ account.email + index2 + 1 }> pago {account.firstName} {account.surname} {account.email} </span> )
+              } else {
+                accountComponent.push( <span key={ account.email + index2 + 1 }> pago fin {account.firstName} {account.surname} {account.email} </span> )
+              }
+            }
+          )
+
+          prev.push( <div key={ index }> {accountComponent} </div> )
+
+          return prev
+        },
+        []
+      )
+    }
+
+
     // let accounts = this.props.storeSession.accounts.list.map(
     //   ( account, index ) => {
     //     let accountComponent = []
@@ -108,7 +142,7 @@ class ResultsManager extends Component {
         <CardHeader
           title={ <span><LocalAtm /> Results manager </span> }
         />
-        { accounts }
+        { accountsMonetary }
       </Card>
     )
   }

@@ -418,7 +418,8 @@ AltObjectTask.propTypes = {}
     firstName: state.account.firstName,
     account: state.account,
     tasks: state.task.tasks || [],
-    taskLength: state.task.tasks ? state.task.tasks.length : 0
+    taskLength: state.task.tasks ? state.task.tasks.length : 0,
+    type: state.task.payload ? state.task.payload.taskType : ''
   };
 };
 
