@@ -102,6 +102,7 @@ var AltObjectTask = function (_Component) {
       }
     };
 
+    _this.taskType = null;
     return _this;
   }
 
@@ -192,8 +193,15 @@ var AltObjectTask = function (_Component) {
       var textColor = this.context.muiTheme.palette.textColor;
 
 
-      var title = 'Alternative Objects Task';
-      var text = 'Come up with as many alternative objects for a stapler as possible. \n\tYou will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
+      if ((0, _stringify2.default)(this.props.type) == "{}" || this.props.type == null && !this.taskType) {
+        return _react2.default.createElement('span', null);
+      }
+
+      var tasktype = this.props.type || this.taskType;
+      this.taskType = tasktype;
+
+      var title = tasktype == 'alternativeObjectFigural' ? 'Alternative Objects Figural Task' : 'Alternative Objects Task';
+      var text = (tasktype == 'alternativeObjectFigural' ? 'Come up with as many alternative objects for the figure below as possible.' : 'Come up with as many alternative objects for a stapler as possible.') + ' \n	You will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
       var currentEntry = this.state.currentEntry;
 
       var groupTasks = this.props.tasks;
@@ -232,13 +240,13 @@ var AltObjectTask = function (_Component) {
                 item
               );
             }),
-            _react2.default.createElement('img', {
+            tasktype == 'alternativeObjectFigural' ? _react2.default.createElement('img', {
               style: {
                 maxWidth: 300,
                 minWidth: 250
               },
               src: 'http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg'
-            }),
+            }) : _react2.default.createElement('div', null),
             _react2.default.createElement(_timer2.default, { limitTime: 20, timerCallback: function timerCallback() {
                 return _this2.props.submit(_this2.gatherData());
               } }),
@@ -419,7 +427,7 @@ AltObjectTask.propTypes = {}
     account: state.account,
     tasks: state.task.tasks || [],
     taskLength: state.task.tasks ? state.task.tasks.length : 0,
-    type: state.task.payload ? state.task.payload.taskType : ''
+    type: state.task.payload != undefined ? state.task.payload.taskType : null
   };
 };
 

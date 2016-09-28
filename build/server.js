@@ -46,10 +46,6 @@ var _sessionData = require('./session-data');
 
 var _sessionData2 = _interopRequireDefault(_sessionData);
 
-var _prueba = require('../prueba.json');
-
-var _prueba2 = _interopRequireDefault(_prueba);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Usando servidor seguro:
@@ -79,6 +75,9 @@ app.use(compression());
 
 // Redux
 
+
+// Testing with Redux initial state
+// import testInitData from '../prueba2.json'
 
 var webTemplate = require('../web-template');
 
@@ -183,7 +182,9 @@ var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   // Results to the surveys
   results: _server.results,
   task: _server.task
-}), _prueba2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
+}),
+// testInitData,
+(0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
 
 // Add the survey questions data to the redux store
 store.dispatch((0, _actions.sessionDataAdd)(_sessionData2.default));

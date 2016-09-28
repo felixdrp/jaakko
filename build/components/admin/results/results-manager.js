@@ -112,6 +112,7 @@ var ResultsManager = function (_Component) {
       var _this2 = this;
 
       var surveyxMonetaryTypeIndex = [];
+      var surveyxMonetaryTypeIndexType = [];
       var accountsMonetary = [];
 
       if (this.props.storeSession && 'session' in this.props.storeSession) {
@@ -124,9 +125,16 @@ var ResultsManager = function (_Component) {
           return prev;
         }, []);
 
+        surveyxMonetaryTypeIndexType = surveyxMonetaryTypeIndex.map(function (surveyIndex) {
+          return _this2.props.storeSession.session.surveyPath[surveyIndex].type;
+        });
+
         accountsMonetary = this.props.storeSession.accounts.list.reduce(function (prev, accountId, index) {
           var account = _this2.props.storeSession.accounts[accountId];
           var accountComponent = [];
+          var moneyData = [];
+          var taskNumber = 0;
+          var total = 0;
 
           accountComponent.push(_react2.default.createElement(
             'span',
@@ -140,34 +148,59 @@ var ResultsManager = function (_Component) {
             ' '
           ));
 
-          var moneyData = _this2.props.storeSession.results.surveyInfo.filter(function (element) {
+          moneyData = _this2.props.storeSession.results.surveyInfo.filter(function (element) {
             return element.accountId == accountId && surveyxMonetaryTypeIndex.includes(element.surveyId);
           });
 
           moneyData.forEach(function (current, index2) {
-            if (index2 < moneyData.length - 1) {
+            var data = void 0;
+            if (current.surveyType == 'RESULTS') {
+              data = current.surveyData.data["0"];
               accountComponent.push(_react2.default.createElement(
                 'span',
-                { key: account.email + index2 + 1 },
-                ' pago ',
-                account.firstName,
-                ' ',
-                account.surname,
-                ' ',
-                account.email,
-                ' '
+                {
+                  key: account.email + index2 + 1,
+                  style: {
+                    marginLeft: 10
+                  }
+                },
+                'Task Round ',
+                taskNumber,
+                ' Rank ',
+                data.rank,
+                ' Score ',
+                data.score,
+                ' Pay ',
+                data.pay
               ));
+              taskNumber += 1;
+              total += data.pay;
             } else {
+              data = current.surveyData.data["0"];
               accountComponent.push(_react2.default.createElement(
                 'span',
-                { key: account.email + index2 + 1 },
-                ' pago fin ',
-                account.firstName,
-                ' ',
-                account.surname,
-                ' ',
-                account.email,
-                ' '
+                {
+                  key: account.email + index2 + 1,
+                  style: {
+                    marginLeft: 10
+                  }
+                },
+                'Math Round Rank ',
+                data.rank,
+                ' Score ',
+                data.mathScore,
+                ' Pay ',
+                data.pay,
+                _react2.default.createElement(
+                  'span',
+                  {
+                    style: {
+                      marginLeft: 10
+                    }
+                  },
+                  'Total pay: ',
+                  total + data.pay
+                )
               ));
             }
           });
@@ -183,32 +216,6 @@ var ResultsManager = function (_Component) {
           return prev;
         }, []);
       }
-
-      // let accounts = this.props.storeSession.accounts.list.map(
-      //   ( account, index ) => {
-      //     let accountComponent = []
-      //     accountComponent.push( <span key={account.email}> {account.firstName} {account.surname} {account.email} </span> )
-      //     let moneyData = this.props.storeSession.results.filter(
-      //       (element) => element.creator == account && surveyxMonetaryTypeIndex.includes( element. )
-      //     )
-      //     accountComponent = [
-      //       ...accountComponent,
-      //       ...this.props.storeSession.reduce(
-      //         (prev, current, index) => {
-      //           if (  ) {
-      //
-      //           } else {
-      //
-      //           }
-      //         },
-      //         []
-      //       )
-      //     ]
-      //     return <div key={index}> accountComponent </div>
-      //   }
-      // )
-
-      // let result =
 
       var style = {
         gray: {

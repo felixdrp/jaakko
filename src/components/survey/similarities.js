@@ -5,6 +5,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
@@ -33,7 +34,8 @@ class Similarities extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {data : this.props.ideas };
+    this.state = {data : this.props.ideas};
+    this.isSubmitted = false
 
   }
 
@@ -246,8 +248,13 @@ class Similarities extends Component {
 
       }
 
+      if ( !this.isSubmitted ){
+        this.props.submit( data )
+        this.isSubmitted = true;
+      }
+
     //  this.setState({data})
-      console.log(JSON.stringify(this.state));
+      //console.log(JSON.stringify(this.state));
       return data;
 
     }
@@ -298,7 +305,6 @@ class Similarities extends Component {
               {text.split('\n').map( (item,i) => <div key={i} style={{marginBottom:10}}>{item}</div>)}
 
               <br />
-              <Timer limitTime={5} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
               {
                 data.map( (entry,i) => {
@@ -361,6 +367,15 @@ class Similarities extends Component {
 
             </CardText>
 
+
+            <RaisedButton
+              id="submitAnswers"
+              style={{color: 'white',}}
+              type="submit"
+              onClick= { this.gatherData }
+            >
+              Submit
+            </RaisedButton>
           </Card>
 
       </div>

@@ -85,7 +85,7 @@ var Timer = function (_Component) {
       _this.setState({ elapsed: new Date() - _this.state.startt });
     };
 
-    _this.state = { elapsed: 0, totalSeconds: 120 };
+    _this.state = { elapsed: 0, totalSeconds: 7 * 60 };
     return _this;
   }
 

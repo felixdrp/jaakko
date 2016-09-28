@@ -52,6 +52,7 @@ class ResultsManager extends Component {
 
   render() {
     let surveyxMonetaryTypeIndex = []
+    let surveyxMonetaryTypeIndexType = []
     let accountsMonetary = []
 
     if ( this.props.storeSession && 'session' in this.props.storeSession ) {
@@ -67,23 +68,58 @@ class ResultsManager extends Component {
         []
       )
 
+      surveyxMonetaryTypeIndexType = surveyxMonetaryTypeIndex.map( surveyIndex => this.props.storeSession.session.surveyPath[surveyIndex].type )
+
       accountsMonetary = this.props.storeSession.accounts.list.reduce(
         ( prev, accountId, index ) => {
           let account = this.props.storeSession.accounts[ accountId ]
           let accountComponent = []
+          let moneyData = []
+          let taskNumber = 0
+          let total = 0
 
           accountComponent.push( <span key={ account.email + 0 }> {account.firstName} {account.surname} {account.email} </span> )
 
-          let moneyData = this.props.storeSession.results.surveyInfo.filter(
+          moneyData = this.props.storeSession.results.surveyInfo.filter(
             (element) => element.accountId == accountId && surveyxMonetaryTypeIndex.includes( element.surveyId )
           )
 
           moneyData.forEach(
             (current, index2) => {
-              if ( index2 < moneyData.length - 1 ) {
-                accountComponent.push( <span key={ account.email + index2 + 1 }> pago {account.firstName} {account.surname} {account.email} </span> )
+              let data
+              if ( current.surveyType == 'RESULTS' ) {
+                data = current.surveyData.data["0"]
+                accountComponent.push(
+                  <span
+                    key={ account.email + index2 + 1 }
+                    style={{
+                      marginLeft: 10,
+                    }}
+                  >
+                    Task Round {taskNumber} Rank {data.rank} Score {data.score} Pay {data.pay}
+                  </span>
+                )
+                taskNumber += 1
+                total += data.pay
               } else {
-                accountComponent.push( <span key={ account.email + index2 + 1 }> pago fin {account.firstName} {account.surname} {account.email} </span> )
+                data = current.surveyData.data["0"]
+                accountComponent.push(
+                  <span
+                    key={ account.email + index2 + 1 }
+                    style={{
+                      marginLeft: 10,
+                    }}
+                  >
+                    Math Round Rank {data.rank} Score {data.mathScore} Pay {data.pay}
+                    <span
+                      style={{
+                        marginLeft: 10,
+                      }}
+                    >
+                      Total pay: {total + data.pay}
+                    </span>
+                  </span>
+                )
               }
             }
           )
@@ -95,33 +131,6 @@ class ResultsManager extends Component {
         []
       )
     }
-
-
-    // let accounts = this.props.storeSession.accounts.list.map(
-    //   ( account, index ) => {
-    //     let accountComponent = []
-    //     accountComponent.push( <span key={account.email}> {account.firstName} {account.surname} {account.email} </span> )
-    //     let moneyData = this.props.storeSession.results.filter(
-    //       (element) => element.creator == account && surveyxMonetaryTypeIndex.includes( element. )
-    //     )
-    //     accountComponent = [
-    //       ...accountComponent,
-    //       ...this.props.storeSession.reduce(
-    //         (prev, current, index) => {
-    //           if (  ) {
-    //
-    //           } else {
-    //
-    //           }
-    //         },
-    //         []
-    //       )
-    //     ]
-    //     return <div key={index}> accountComponent </div>
-    //   }
-    // )
-
-    // let result =
 
     const style = {
       gray: {

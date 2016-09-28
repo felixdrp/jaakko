@@ -19,14 +19,14 @@ var sessionData = {
   },
 
   surveyPath: [wait(), {
-    type: _surveyTypes.INSTRUCTIONS,
-    payload: 'experimentStructure',
-    time: 'inf'
-  }, wait(), {
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'
-  }].concat((0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
+  }, wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
+    payload: 'experimentStructure',
+    time: 'inf'
+  }, wait()].concat((0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'math',
     time: 'inf'
@@ -91,7 +91,7 @@ function task2(type) {
     time: 'inf'
   }, wait(), {
     type: _surveyTypes.ALT_OBJECT_TASK,
-    payload: 'altObjectTask',
+    payload: 'alternativeObjectFigural',
     time: 'inf'
   }, wait(), {
     type: _surveyTypes.INSTRUCTIONS,

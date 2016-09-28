@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -41,6 +37,10 @@ var _TextField2 = _interopRequireDefault(_TextField);
 var _FlatButton = require('material-ui/FlatButton');
 
 var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+var _RaisedButton = require('material-ui/RaisedButton');
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
 var _SelectField = require('material-ui/SelectField');
 
@@ -115,9 +115,10 @@ var Favourites = function (_Component) {
     };
 
     _this.gatherData = function () {
-
-      console.log((0, _stringify2.default)(_this.state));
-      return _this.state;
+      if (!_this.isSubmitted) {
+        _this.props.submit(_this.state);
+        _this.isSubmitted = true;
+      }
     };
 
     _this.alerthing = function () {
@@ -125,6 +126,7 @@ var Favourites = function (_Component) {
     };
 
     _this.state = { favourites: new Array(6) };
+    _this.isSubmitted = false;
     return _this;
   }
 
@@ -203,9 +205,6 @@ var Favourites = function (_Component) {
             })
           ),
           _react2.default.createElement('br', null),
-          _react2.default.createElement(_timer2.default, { limitTime: 10, timerCallback: function timerCallback() {
-              return _this2.props.submit(_this2.gatherData());
-            } }),
           data.map(function (entry, i) {
             var lineToDraw = _react2.default.createElement(
               'div',
@@ -249,7 +248,17 @@ var Favourites = function (_Component) {
               { key: i },
               ' '
             );
-          })
+          }),
+          _react2.default.createElement(
+            _RaisedButton2.default,
+            {
+              id: 'submitAnswers',
+              style: { color: 'white' },
+              type: 'submit',
+              onClick: this.gatherData
+            },
+            'Submit'
+          )
         )
       );
     }

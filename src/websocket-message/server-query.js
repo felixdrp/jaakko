@@ -89,6 +89,7 @@ export default async function query({ action, payload, ws, store }) {
 
       switch (temp.type) {
         case INSTRUCTIONS:
+        case ALT_OBJECT_TASK:
           temp.payload = result.session.surveyPath[
             temp.account.surveyPointer
           ].payload

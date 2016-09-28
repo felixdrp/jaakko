@@ -53,6 +53,7 @@ class AltObjectTask extends Component {
      }
     };
 
+    this.taskType = null
   }
 
   static contextTypes = {
@@ -195,8 +196,16 @@ class AltObjectTask extends Component {
 
     const { textColor } = this.context.muiTheme.palette;
 
-    let title = 'Alternative Objects Task';
-    let text = `Come up with as many alternative objects for a stapler as possible. \n	You will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button`;
+    if ( JSON.stringify(this.props.type) == "{}" || (this.props.type == null && !this.taskType) ) {
+      return <span></span>
+    }
+
+    let tasktype = this.props.type || this.taskType
+    this.taskType = tasktype
+
+
+    let title =  ( tasktype == 'alternativeObjectFigural' ) ?  'Alternative Objects Figural Task' : 'Alternative Objects Task';
+    let text = (( tasktype == 'alternativeObjectFigural' ) ?  'Come up with as many alternative objects for the figure below as possible.' : 'Come up with as many alternative objects for a stapler as possible.')+' \n	You will have 7 minutes to complete the task. \n \n You can add a new entry by clicking on the new entry button';
     let currentEntry = this.state.currentEntry;
 
     let groupTasks = this.props.tasks;
@@ -228,14 +237,17 @@ class AltObjectTask extends Component {
                 text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
               }
 
-              <img
-                style={{
-                  maxWidth: 300,
-                  minWidth: 250,
-                }}
-                src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"
-              />
-
+              {
+                tasktype == 'alternativeObjectFigural' ?
+                                            <img
+                                              style={{
+                                                maxWidth: 300,
+                                                minWidth: 250,
+                                              }}
+                                              src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"
+                                            /> :
+                                            <div></div>
+              }
               <Timer limitTime={20} timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
 
               <div style={{marginTop:20}}>
@@ -330,7 +342,7 @@ const mapStateToProps = (state, ownProps = {}) => {
     account: state.account,
     tasks: state.task.tasks || [],
     taskLength:  state.task.tasks ? state.task.tasks.length : 0,
-    type :  state.task.payload ? state.task.payload.taskType: '',
+    type : state.task.payload != undefined? state.task.payload.taskType: null,
   }
 }
 

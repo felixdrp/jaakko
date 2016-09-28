@@ -20,6 +20,15 @@ const sessionData = {
   surveyPath: [
 
     wait(),
+
+    {
+      type: QUESTION,
+      payload: 'entry',
+      time: 'inf',
+    },
+
+    wait(),
+
     {
       type: INSTRUCTIONS,
       payload: 'experimentStructure',
@@ -28,11 +37,6 @@ const sessionData = {
 
     wait(),
 
-    {
-      type: QUESTION,
-      payload: 'entry',
-      time: 'inf',
-    },
     ...task(),
 
     wait(),
@@ -144,7 +148,7 @@ function task2( type ) {
     wait(),
     {
       type: ALT_OBJECT_TASK,
-      payload: 'altObjectTask',
+      payload: 'alternativeObjectFigural',
       time: 'inf',
     },
 

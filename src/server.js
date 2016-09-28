@@ -51,7 +51,9 @@ import {
 import { port } from './config'
 
 import sessionData from './session-data'
-import testInitData from '../prueba.json'
+
+// Testing with Redux initial state
+// import testInitData from '../prueba2.json'
 
 var webTemplate = require('../web-template');
 
@@ -163,7 +165,7 @@ const store = createStore(
     results,
     task,
   }),
-  testInitData,
+  // testInitData,
   applyMiddleware(
     thunk,
     updateControlRooms

@@ -83,7 +83,7 @@ exports.default = function () {
             temp.type = result.session.surveyPath[temp.account.surveyPointer].type;
 
             _context.t1 = temp.type;
-            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.QUESTION ? 21 : _context.t1 === _surveyTypes.SIMILARITIES ? 24 : _context.t1 === _surveyTypes.FAVOURITES ? 29 : _context.t1 === _surveyTypes.RESULTS ? 34 : _context.t1 === _surveyTypes.MATH_RESULTS ? 48 : 63;
+            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.ALT_OBJECT_TASK ? 18 : _context.t1 === _surveyTypes.QUESTION ? 21 : _context.t1 === _surveyTypes.SIMILARITIES ? 24 : _context.t1 === _surveyTypes.FAVOURITES ? 29 : _context.t1 === _surveyTypes.RESULTS ? 34 : _context.t1 === _surveyTypes.MATH_RESULTS ? 48 : 63;
             break;
 
           case 18:

@@ -5,6 +5,7 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Slider from 'material-ui/Slider';
@@ -33,6 +34,7 @@ class Favourites extends Component {
   constructor(props) {
     super(props);
      this.state = {favourites : new Array(6)};
+     this.isSubmitted = false;
   }
 
   static contextTypes = {
@@ -100,12 +102,13 @@ class Favourites extends Component {
 
   }
 
-  gatherData = () => {
 
-    console.log(JSON.stringify(this.state));
-    return this.state
-
-  }
+    gatherData = () => {
+      if ( !this.isSubmitted ){
+        this.props.submit( this.state )
+        this.isSubmitted = true;
+      }
+    }
 
   alerthing = () => {
     alert('boom');
@@ -156,7 +159,6 @@ class Favourites extends Component {
 
 
             <br />
-            <Timer limitTime={10} timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
 
             {
               data.map( (entry,i) => {
@@ -189,7 +191,14 @@ class Favourites extends Component {
               } )
             }
 
-
+            <RaisedButton
+              id="submitAnswers"
+              style={{color: 'white',}}
+              type="submit"
+              onClick= { this.gatherData }
+            >
+              Submit
+            </RaisedButton>
           </Card>
 
       </div>
