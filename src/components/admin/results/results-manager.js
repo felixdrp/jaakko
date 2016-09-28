@@ -2,6 +2,9 @@ import React, { PropTypes, Component } from 'react'
 
 // groups
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+
 // import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
@@ -54,6 +57,9 @@ class ResultsManager extends Component {
     let surveyxMonetaryTypeIndex = []
     let surveyxMonetaryTypeIndexType = []
     let accountsMonetary = []
+    let accountsMonetaryTable = []
+
+    let columnWidthStyle = '40%'
 
     if ( this.props.storeSession && 'session' in this.props.storeSession ) {
       surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(
@@ -68,7 +74,9 @@ class ResultsManager extends Component {
         []
       )
 
+
       surveyxMonetaryTypeIndexType = surveyxMonetaryTypeIndex.map( surveyIndex => this.props.storeSession.session.surveyPath[surveyIndex].type )
+
 
       accountsMonetary = this.props.storeSession.accounts.list.reduce(
         ( prev, accountId, index ) => {
@@ -78,7 +86,7 @@ class ResultsManager extends Component {
           let taskNumber = 0
           let total = 0
 
-          accountComponent.push( <span key={ account.email + 0 }> {account.firstName} {account.surname} {account.email} </span> )
+          accountComponent.push( <span key={ account.email + 0 }> {account.firstName} {account.surname} {account.email} Group {account.group} Type {this.props.storeSession.groups[account.group].type} </span> )
 
           moneyData = this.props.storeSession.results.surveyInfo.filter(
             (element) => element.accountId == accountId && surveyxMonetaryTypeIndex.includes( element.surveyId )
@@ -130,6 +138,103 @@ class ResultsManager extends Component {
         },
         []
       )
+
+      accountsMonetaryTable = this.props.storeSession.accounts.list.reduce(
+        ( prev, accountId, index ) => {
+          let account = this.props.storeSession.accounts[ accountId ]
+          let accountComponent = []
+          let moneyData = []
+          let taskNumber = 0
+          let total = 0
+
+          accountComponent.push(
+            <TableRowColumn key={ account.email + 0 } style={{ width: columnWidthStyle }}>
+              {account.firstName} {account.surname} {account.email} Group {account.group} Type {this.props.storeSession.groups[account.group].type}
+            </TableRowColumn>
+          )
+
+          moneyData = this.props.storeSession.results.surveyInfo.filter(
+            (element) => element.accountId == accountId && surveyxMonetaryTypeIndex.includes( element.surveyId )
+          )
+
+          moneyData.forEach(
+            (current, index2) => {
+              let data
+              if ( current.surveyType == 'RESULTS' ) {
+                data = current.surveyData.data["0"]
+                accountComponent.push(
+                  <TableRowColumn
+                    key={ account.email + index2 + 1 }
+                    style={{
+                      marginLeft: 10,
+                    }}
+                    // Task Round {taskNumber}
+                  >
+                    Rank {data.rank} Score {data.score} Pay {data.pay}
+                  </TableRowColumn>
+                )
+                taskNumber += 1
+                total += data.pay
+              } else {
+                data = current.surveyData.data["0"]
+                accountComponent.push(
+                  <TableRowColumn
+                    key={ account.email + index2 + 1 }
+                    style={{
+                      marginLeft: 10,
+                    }}
+                    // Math Round
+                  >
+                    Rank {data.rank} Score {data.mathScore} Pay {data.pay}
+                  </TableRowColumn>
+                )
+                accountComponent.push(
+                  <TableRowColumn
+                    key={ account.email + index2 + 2 }
+                    style={{
+                      marginLeft: 10,
+                    }}
+                  >
+                    {total + data.pay}
+                  </TableRowColumn>
+                )
+              }
+            }
+          )
+
+          prev.push( <TableRow key={ index }> {accountComponent} </TableRow> )
+
+          return prev
+        },
+        []
+      )
+
+      accountsMonetaryTable = (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn style={{ width: columnWidthStyle }}>Account Info</TableHeaderColumn>
+              {
+                surveyxMonetaryTypeIndexType.map(
+                  (type, index) => {
+                    if ( type == 'RESULTS' ) {
+                      return <TableHeaderColumn key={ 'task' + index }>Task Round { index }</TableHeaderColumn>
+                    } else {
+                      return <TableHeaderColumn key={ 'math' + index }>Math Round { index }</TableHeaderColumn>
+                    }
+                  }
+                )
+              }
+              <TableHeaderColumn>Total</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {
+              accountsMonetaryTable
+            }
+          </TableBody>
+        </Table>
+      )
     }
 
     const style = {
@@ -151,7 +256,10 @@ class ResultsManager extends Component {
         <CardHeader
           title={ <span><LocalAtm /> Results manager </span> }
         />
-        { accountsMonetary }
+        {
+          // accountsMonetary 
+        }
+        { accountsMonetaryTable }
       </Card>
     )
   }

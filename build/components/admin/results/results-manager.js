@@ -30,6 +30,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Card = require('material-ui/Card');
 
+var _Table = require('material-ui/Table');
+
 var _RaisedButton = require('material-ui/RaisedButton');
 
 var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
@@ -90,7 +92,6 @@ require('../../../websocket-message/server-actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// groups
 var ResultsManager = function (_Component) {
   (0, _inherits3.default)(ResultsManager, _Component);
 
@@ -114,6 +115,9 @@ var ResultsManager = function (_Component) {
       var surveyxMonetaryTypeIndex = [];
       var surveyxMonetaryTypeIndexType = [];
       var accountsMonetary = [];
+      var accountsMonetaryTable = [];
+
+      var columnWidthStyle = '40%';
 
       if (this.props.storeSession && 'session' in this.props.storeSession) {
         surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(function (prev, element, index) {
@@ -145,6 +149,10 @@ var ResultsManager = function (_Component) {
             account.surname,
             ' ',
             account.email,
+            ' Group ',
+            account.group,
+            ' Type ',
+            _this2.props.storeSession.groups[account.group].type,
             ' '
           ));
 
@@ -215,6 +223,140 @@ var ResultsManager = function (_Component) {
 
           return prev;
         }, []);
+
+        accountsMonetaryTable = this.props.storeSession.accounts.list.reduce(function (prev, accountId, index) {
+          var account = _this2.props.storeSession.accounts[accountId];
+          var accountComponent = [];
+          var moneyData = [];
+          var taskNumber = 0;
+          var total = 0;
+
+          accountComponent.push(_react2.default.createElement(
+            _Table.TableRowColumn,
+            { key: account.email + 0, style: { width: columnWidthStyle } },
+            account.firstName,
+            ' ',
+            account.surname,
+            ' ',
+            account.email,
+            ' Group ',
+            account.group,
+            ' Type ',
+            _this2.props.storeSession.groups[account.group].type
+          ));
+
+          moneyData = _this2.props.storeSession.results.surveyInfo.filter(function (element) {
+            return element.accountId == accountId && surveyxMonetaryTypeIndex.includes(element.surveyId);
+          });
+
+          moneyData.forEach(function (current, index2) {
+            var data = void 0;
+            if (current.surveyType == 'RESULTS') {
+              data = current.surveyData.data["0"];
+              accountComponent.push(_react2.default.createElement(
+                _Table.TableRowColumn,
+                {
+                  key: account.email + index2 + 1,
+                  style: {
+                    marginLeft: 10
+                  }
+                  // Task Round {taskNumber}
+                },
+                'Rank ',
+                data.rank,
+                ' Score ',
+                data.score,
+                ' Pay ',
+                data.pay
+              ));
+              taskNumber += 1;
+              total += data.pay;
+            } else {
+              data = current.surveyData.data["0"];
+              accountComponent.push(_react2.default.createElement(
+                _Table.TableRowColumn,
+                {
+                  key: account.email + index2 + 1,
+                  style: {
+                    marginLeft: 10
+                  }
+                  // Math Round
+                },
+                'Rank ',
+                data.rank,
+                ' Score ',
+                data.mathScore,
+                ' Pay ',
+                data.pay
+              ));
+              accountComponent.push(_react2.default.createElement(
+                _Table.TableRowColumn,
+                {
+                  key: account.email + index2 + 2,
+                  style: {
+                    marginLeft: 10
+                  }
+                },
+                total + data.pay
+              ));
+            }
+          });
+
+          prev.push(_react2.default.createElement(
+            _Table.TableRow,
+            { key: index },
+            ' ',
+            accountComponent,
+            ' '
+          ));
+
+          return prev;
+        }, []);
+
+        accountsMonetaryTable = _react2.default.createElement(
+          _Table.Table,
+          null,
+          _react2.default.createElement(
+            _Table.TableHeader,
+            null,
+            _react2.default.createElement(
+              _Table.TableRow,
+              null,
+              _react2.default.createElement(
+                _Table.TableHeaderColumn,
+                { style: { width: columnWidthStyle } },
+                'Account Info'
+              ),
+              surveyxMonetaryTypeIndexType.map(function (type, index) {
+                if (type == 'RESULTS') {
+                  return _react2.default.createElement(
+                    _Table.TableHeaderColumn,
+                    { key: 'task' + index },
+                    'Task Round ',
+                    index
+                  );
+                } else {
+                  return _react2.default.createElement(
+                    _Table.TableHeaderColumn,
+                    { key: 'math' + index },
+                    'Math Round ',
+                    index
+                  );
+                }
+              }),
+              _react2.default.createElement(
+                _Table.TableHeaderColumn,
+                null,
+                'Total'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            _Table.TableBody,
+            null,
+            accountsMonetaryTable
+          )
+        );
       }
 
       var style = {
@@ -247,7 +389,7 @@ var ResultsManager = function (_Component) {
             ' Results manager '
           )
         }),
-        accountsMonetary
+        accountsMonetaryTable
       );
     }
   }]);
@@ -261,6 +403,9 @@ var ResultsManager = function (_Component) {
 // Icons
 
 // import FlatButton from 'material-ui/FlatButton';
+
+
+// groups
 
 
 ResultsManager.propTypes = {
