@@ -152,12 +152,18 @@ var Similarities = function (_Component) {
         }
       }
 
+      if (!_this.isSubmitted) {
+        _this.props.submit(data);
+        _this.isSubmitted = true;
+      }
+
       //  this.setState({data})
-      console.log((0, _stringify2.default)(_this.state));
+      //console.log(JSON.stringify(this.state));
       return data;
     };
 
     _this.state = { data: _this.props.ideas };
+    _this.isSubmitted = false;
 
     return _this;
   }
@@ -340,9 +346,6 @@ var Similarities = function (_Component) {
               );
             }),
             _react2.default.createElement('br', null),
-            _react2.default.createElement(_timer2.default, { limitTime: 5, timerCallback: function timerCallback() {
-                return _this2.props.submit(_this2.gatherData());
-              } }),
             data.map(function (entry, i) {
               return _react2.default.createElement(
                 'div',
@@ -421,6 +424,16 @@ var Similarities = function (_Component) {
                 )
               );
             })
+          ),
+          _react2.default.createElement(
+            RaisedButton,
+            {
+              id: 'submitAnswers',
+              style: { color: 'white' },
+              type: 'submit',
+              onClick: this.gatherData
+            },
+            'Submit'
           )
         )
       );
