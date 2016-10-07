@@ -28,6 +28,13 @@ export function accounts(state = { list: [] }, action) {
     case ACCOUNTS_ADD:
       // Check if account is already in list
       if (state[payload.email]) {
+        // Then update the account
+        // Maintain the older surveyPointer and group
+        state[payload.email] = {
+          ...payload,
+          group: state[payload.email].group,
+          surveyPointer: state[payload.email].surveyPointer,
+        }
         return state
       }
       // Add to the list

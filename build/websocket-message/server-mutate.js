@@ -32,6 +32,10 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
+var _immutable = require('immutable');
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
 var _serverActions = require('./server-actions');
 
 var _actions = require('../actions/actions');
@@ -73,6 +77,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 // Redux server actions
+// WebSocket communications types
+// look doc/server-websocket-message-system.md
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2, clientsSocket) {
     var _this = this;
@@ -145,9 +151,12 @@ exports.default = function () {
               console.log('>>>>>state');
 
               // Log the account in the Client
-              tempAccount = (0, _extends3.default)({}, account, { ws: undefined });
-              delete tempAccount.ws;
-              ws.send((0, _serverActions.wsLogAccount)(account));
+              tempAccount = _immutable2.default.fromJS(account);
+              // Remove the websocket from the object
+              tempAccount = tempAccount.delete('ws');
+              tempAccount = tempAccount.toJS();
+
+              ws.send((0, _serverActions.wsLogAccount)(tempAccount));
               console.log('>>>>>state');
 
               // // Go to WaitSync to start session
@@ -160,6 +169,12 @@ exports.default = function () {
             };
 
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
+
+            /*
+            * Function that moves the account to the next survey.
+            * It increases the account survey pointer and move this survey pointer number.
+            */
+
             return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
               var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, random, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _acc;
 
@@ -781,6 +796,4 @@ exports.default = function () {
 
 
 // Redux client actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
 //# sourceMappingURL=server-mutate.js.map

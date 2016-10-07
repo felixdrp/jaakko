@@ -1,5 +1,7 @@
 // WebSocket communications types
 // look doc/server-websocket-message-system.md
+import Immutable from 'immutable'
+
 import {
   MUTATE,
   QUERY,
@@ -96,9 +98,12 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
     console.log('>>>>>state')
 
     // Log the account in the Client
-    tempAccount = {...account, ws: undefined}
-    delete tempAccount.ws
-    ws.send(  wsLogAccount(account) )
+    tempAccount = Immutable.fromJS( account )
+    // Remove the websocket from the object
+    tempAccount = tempAccount.delete('ws')
+    tempAccount = tempAccount.toJS()
+
+    ws.send(  wsLogAccount( tempAccount ) )
     console.log('>>>>>state')
 
     // // Go to WaitSync to start session
@@ -136,6 +141,10 @@ export default async function mutate({ action, payload, ws, store }, clientsSock
     }
   }
 
+  /*
+  * Function that moves the account to the next survey.
+  * It increases the account survey pointer and move this survey pointer number.
+  */
   function nextStep(accountId) {
     let tempWs = ''
     let index = clientsSocket.clients.findIndex( wsElement => wsElement.accountCode == accountId )

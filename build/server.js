@@ -46,6 +46,10 @@ var _sessionData = require('./session-data');
 
 var _sessionData2 = _interopRequireDefault(_sessionData);
 
+var _linea = require('../linea.json');
+
+var _linea2 = _interopRequireDefault(_linea);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Usando servidor seguro:
@@ -54,6 +58,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // var exweb = new WebSocket("wss://localhost:8008")
 // Imprimir mensajes del servidor:
 // exweb.onmessage = (a) => console.log(a)
+// open server to debug on browser
+// node --inspect=9222 ./build/server.js
 var fs = require('fs');
 var privateKey = fs.readFileSync(__dirname + '/../sslcert/key.pem', 'utf8');
 var certificate = fs.readFileSync(__dirname + '/../sslcert/cert.pem', 'utf8');
@@ -78,6 +84,7 @@ app.use(compression());
 
 // Testing with Redux initial state
 // import testInitData from '../prueba2.json'
+
 
 var webTemplate = require('../web-template');
 
@@ -110,8 +117,10 @@ app.use('/', function (req, res) {
 webServer.listen(portWeb, function () {
   return console.log('server running at https://localhost:' + portWeb);
 });
+
 // File to maintain a hard copy of the state
 var stream = fs.createWriteStream('resultsBackup.txt', { flags: 'w', autoClose: true });
+
 // middleware to send store updates to the admins
 var updateControlRooms = function updateControlRooms(store) {
   return function (next) {
@@ -139,13 +148,27 @@ var updateControlRooms = function updateControlRooms(store) {
 
       // If new idea added transmit to the same group
       if (action.type == _actions.TASK_ADD_IDEA) {
-        store.getState().groups[action.payload.group].accountList.forEach(function (client) {
-          var state = store.getState();
-          state.accounts[client].ws.send((0, _serverActions.wsTaskUpdateGroupIdeas)(state.task.taskList[state.task.taskPointer].filter(function (element) {
-            return state.accounts[client].group == element.group;
-          })));
-          console.log('send to group friends > ' + client);
-        });
+        try {
+          new _promise2.default(function (resolve, reject) {
+            var accountGroup = action.payload.group;
+            store.getState().groups[accountGroup].accountList.forEach(function (client) {
+              var state = store.getState();
+
+              if (state.accounts[client].ws != undefined) {
+                state.accounts[client].ws.send((0, _serverActions.wsTaskUpdateGroupIdeas)(state.task.taskList[state.task.taskPointer].filter(
+                // Filter the ideas of the same group.
+                function (element) {
+                  return state.accounts[client].group == element.group;
+                })));
+              }
+
+              console.log('send to group friends > ' + client);
+            });
+            resolve('transfer OK');
+          });
+        } catch (e) {
+          console.log(e);
+        }
       }
 
       // transfer asynchronously to all the admins
@@ -182,9 +205,7 @@ var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   // Results to the surveys
   results: _server.results,
   task: _server.task
-}),
-// testInitData,
-(0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
+}), _linea2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
 
 // Add the survey questions data to the redux store
 store.dispatch((0, _actions.sessionDataAdd)(_sessionData2.default));

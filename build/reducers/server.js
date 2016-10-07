@@ -31,6 +31,12 @@ function accounts() {
     case _actions.ACCOUNTS_ADD:
       // Check if account is already in list
       if (state[payload.email]) {
+        // Then update the account
+        // Maintain the older surveyPointer and group
+        state[payload.email] = (0, _extends3.default)({}, payload, {
+          group: state[payload.email].group,
+          surveyPointer: state[payload.email].surveyPointer
+        });
         return state;
       }
       // Add to the list

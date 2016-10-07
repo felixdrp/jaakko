@@ -4,6 +4,8 @@
 // var exweb = new WebSocket("wss://localhost:8008")
 // Imprimir mensajes del servidor:
 // exweb.onmessage = (a) => console.log(a)
+// open server to debug on browser
+// node --inspect=9222 ./build/server.js
 var fs = require('fs');
 var privateKey  = fs.readFileSync(__dirname + '/../sslcert/key.pem', 'utf8');
 var certificate = fs.readFileSync(__dirname + '/../sslcert/cert.pem', 'utf8');
@@ -54,6 +56,7 @@ import sessionData from './session-data'
 
 // Testing with Redux initial state
 // import testInitData from '../prueba2.json'
+import testInitData from '../linea.json'
 
 var webTemplate = require('../web-template');
 
@@ -87,8 +90,10 @@ app.use('/', function (req, res) {
 });
 
 webServer.listen( portWeb, () => console.log('server running at https://localhost:' + portWeb) );
+
 // File to maintain a hard copy of the state
 var stream = fs.createWriteStream('resultsBackup.txt', {flags: 'w', autoClose: true});
+
 // middleware to send store updates to the admins
 const updateControlRooms = store => next => action => {
   let vervose = true
@@ -114,19 +119,32 @@ const updateControlRooms = store => next => action => {
 
   // If new idea added transmit to the same group
   if (action.type == TASK_ADD_IDEA) {
-    store.getState().groups[ action.payload.group ].accountList.forEach(
-      client => {
-        let state = store.getState()
-        state.accounts[ client ].ws.send(
-          wsTaskUpdateGroupIdeas(
-            state.task.taskList[ state.task.taskPointer ].filter(
-              element => state.accounts[ client ].group == element.group
-            )
-          )
+    try {
+      new Promise((resolve, reject) => {
+        let accountGroup = action.payload.group
+        store.getState().groups[ accountGroup ].accountList.forEach(
+          client => {
+            let state = store.getState()
+
+            if (state.accounts[ client ].ws != undefined) {
+              state.accounts[ client ].ws.send(
+                wsTaskUpdateGroupIdeas(
+                  state.task.taskList[ state.task.taskPointer ].filter(
+                    // Filter the ideas of the same group.
+                    element => state.accounts[ client ].group == element.group
+                  )
+                )
+              )
+            }
+
+            console.log('send to group friends > ' + client)
+          }
         )
-        console.log('send to group friends > ' + client)
-      }
-    )
+        resolve('transfer OK')
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   // transfer asynchronously to all the admins
@@ -165,7 +183,7 @@ const store = createStore(
     results,
     task,
   }),
-  // testInitData,
+  testInitData,
   applyMiddleware(
     thunk,
     updateControlRooms
