@@ -56,7 +56,7 @@ import sessionData from './session-data'
 
 // Testing with Redux initial state
 // import testInitData from '../prueba2.json'
-import testInitData from '../linea.json'
+// import testInitData from '../linea.json'
 
 var webTemplate = require('../web-template');
 
@@ -183,7 +183,7 @@ const store = createStore(
     results,
     task,
   }),
-  testInitData,
+  // testInitData,
   applyMiddleware(
     thunk,
     updateControlRooms

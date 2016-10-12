@@ -33,7 +33,8 @@ export function accounts(state = { list: [] }, action) {
         state[payload.email] = {
           ...payload,
           group: state[payload.email].group,
-          surveyPointer: state[payload.email].surveyPointer,
+          // Remove 1, function nextStep will add 1 to stay same place.
+          surveyPointer: state[payload.email].surveyPointer - 1,
         }
         return state
       }
