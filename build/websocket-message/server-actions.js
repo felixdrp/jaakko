@@ -137,7 +137,7 @@ function wsGroupRemove(groupId) {
 
 // Register selected accounts to a group socket action creator
 function wsAssignSelectedAccountsToGroup(groupId) {
-  var selected = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+  var selected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
   return {
     type: MUTATE,
@@ -150,7 +150,7 @@ function wsAssignSelectedAccountsToGroup(groupId) {
 }
 
 function wsUnassignSelectedAccounts() {
-  var selected = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+  var selected = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
   return {
     type: MUTATE,

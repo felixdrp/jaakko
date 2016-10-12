@@ -286,7 +286,7 @@ var instructionsData = {
                 +'\n1. If the entry is not original and is largely expressed in an existing entry.'
                 +'\n2. If the entry is an exact copy of an existing entry '
                 +'\n\nExample:'
-                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.',
+                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.'
                 +'\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”'
                 +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
                 +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
@@ -302,7 +302,7 @@ var instructionsData = {
                 +'\n1. If the entry is not original and is largely expressed in an existing entry.'
                 +'\n2. If the entry is an exact copy of an existing entry '
                 +'\n\nExample:'
-                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.',
+                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.'
                 +'\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”'
                 +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
                 +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
@@ -318,7 +318,7 @@ var instructionsData = {
                 +'\n1. If the entry is not original and is largely expressed in an existing entry.'
                 +'\n2. If the entry is an exact copy of an existing entry '
                 +'\n\nExample:'
-                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.',
+                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.'
                 +'\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”'
                 +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
                 +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
@@ -335,7 +335,7 @@ var instructionsData = {
                 +'\n1. If the entry is not original and is largely expressed in an existing entry.'
                 +'\n2. If the entry is an exact copy of an existing entry '
                 +'\n\nExample:'
-                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.',
+                +'\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.'
                 +'\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”'
                 +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
                 +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
