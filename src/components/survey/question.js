@@ -194,7 +194,7 @@ var entryQuestionnarie = {
       typeVars : {}
     },
     {
-      name : 'makingMoney',
+      name : 'richOrFamous',
       text : '6. If you had to pick only one option would you rather be rich as a result of art you created or famous as a result of the art you created?',
       type : LIST_FIELD_TYPE,
       typeVars : {opts:['Rich',
@@ -512,7 +512,7 @@ class Question extends Component {
 
     //Uncommeting this
     let questionnaire = (this.props.type == 'entry') ? entryQuestionnarie : exitQuestionnaire
-    
+
     let message =  'Question'
 
     const { textColor } = this.context.muiTheme.palette;

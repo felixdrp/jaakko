@@ -21,6 +21,8 @@ const sessionData = {
 
     wait(),
 
+    ...testIntructions(),
+
     {
       type: QUESTION,
       payload: 'entry',
@@ -191,6 +193,12 @@ function testIntructions() {
   return [
     {
       type: INSTRUCTIONS,
+      payload: 'similarities',
+      time: 'inf',
+    },
+      wait(),
+    {
+      type: INSTRUCTIONS,
       payload: 'experimentStructure',
       time: 'inf',
     },
@@ -204,12 +212,6 @@ function testIntructions() {
     {
       type: INSTRUCTIONS,
       payload: 'alternativeObjectFigural',
-      time: 'inf',
-    },
-      wait(),
-    {
-      type: INSTRUCTIONS,
-      payload: 'similarities',
       time: 'inf',
     },
       wait(),

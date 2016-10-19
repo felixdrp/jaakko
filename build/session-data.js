@@ -18,7 +18,7 @@ var sessionData = {
     date: '20/9/2016'
   },
 
-  surveyPath: [wait(), {
+  surveyPath: [wait()].concat((0, _toConsumableArray3.default)(testIntructions()), [{
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'
@@ -26,7 +26,7 @@ var sessionData = {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'experimentStructure',
     time: 'inf'
-  }, wait()].concat((0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
+  }, wait()], (0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'math',
     time: 'inf'
@@ -119,6 +119,10 @@ function task2(type) {
 function testIntructions() {
   return [{
     type: _surveyTypes.INSTRUCTIONS,
+    payload: 'similarities',
+    time: 'inf'
+  }, wait(), {
+    type: _surveyTypes.INSTRUCTIONS,
     payload: 'experimentStructure',
     time: 'inf'
   }, wait(), {
@@ -128,10 +132,6 @@ function testIntructions() {
   }, wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'alternativeObjectFigural',
-    time: 'inf'
-  }, wait(), {
-    type: _surveyTypes.INSTRUCTIONS,
-    payload: 'similarities',
     time: 'inf'
   }, wait(), {
     type: _surveyTypes.INSTRUCTIONS,

@@ -237,7 +237,7 @@ var entryQuestionnarie = {
     type: TEXT_FIELD_TYPE,
     typeVars: {}
   }, {
-    name: 'makingMoney',
+    name: 'richOrFamous',
     text: '6. If you had to pick only one option would you rather be rich as a result of art you created or famous as a result of the art you created?',
     type: LIST_FIELD_TYPE,
     typeVars: { opts: ['Rich', 'Famous'] }

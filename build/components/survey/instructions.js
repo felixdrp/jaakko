@@ -73,39 +73,42 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var instructionsData = {
   experimentStructure: {
     0: {
-      title: 'Explanation of Experimental Structure',
-      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it. ' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – the Task Completion stage, the Similarity stage, and the Favourites stage. The third task has one stage which you complete individually.' + '\nTask Completion Stage: You are asked to generate ideas based on the instructions provided. All your entries (i.e. ideas) are shared in the group. At the end of this task/stage your ranking will be.' + '\nSimilarities Stage: Your group’s ideas are then sent to another group at random to be ranked and you will receive another group’s entries. You are asked to identify any of that group’s entries you think are similar to each other. ' + '\nAn example of how similarity can be judged is provided, but it is up to you to decide whether or not entries are similar.' + '\nThose entries found to be similar to any already existing entry by at least 2 people in your group will be excluded from the Favourites stage. ' + '\nFavourites Stage: You are asked to give starts to your 5 favourite entries from the Similarities stage. The person awarded the most stars is judged to have performed the best, and the person whose was given the least stars is judged to have performed the worst.' + '\nFinal Task: You are asked to answer a series of questions and you will be given a score based on the number of correct answers. Your rank depends on the number of correct answers. If there are two people with the same score the person with the fastest time will be awarded the higher rank.' + '\nTask 1 & 2 = Task Completion, Similarities stage, and Favourites stage' + '\nFinal Task = Individual Task Only' + '\n\nPay:' + '\nYour pay will not depend on your performance in this game. You will be paid a fixed sum at the end of the experiment.'
+      title: 'Experiment Structure',
+      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it.' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – In the order shown below. The final task will be completed individually.' + '\n[b]1.Task Completion Stage:[/b] You are asked to generate ideas based on the instructions provided.' + '\n[b]2.Similarities Stage:[/b] At this stage you will evaluate whether the entries from another group are similar. Likewise yours will be evaluated by another group.' + '\n[b]3.Favourites Stage:[/b] You are asked to rate the ideas produced by another group. The pay each participant receives depends on the number of stars received. Most stars → highest rank → highest pay.' + '\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.' + '\n[b]Attribution:[/b] Your ideas will remain anonymous to everyone' + '\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+
     },
     1: {
-      title: 'Explanation of Experimental Structure',
-      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it. ' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – the Task Completion stage, the Similarity stage, and the Favourites stage. The third task has one stage which you complete individually.' + '\nTask Completion Stage: You are asked to generate ideas based on the instructions provided. All your entries (i.e. ideas) are shared in the group identifying you as the creator. At the end of this task/stage your ranking will be.' + '\nSimilarities Stage: Your group’s ideas are then sent to another group at random to be ranked and you will receive another group’s entries. You are asked to identify any of that group’s entries you think are similar to each other. ' + '\nAn example of how similarity can be judged is provided, but it is up to you to decide whether or not entries are similar.' + '\nThose entries found to be similar to any already existing entry by at least 2 people in your group will be excluded from the Favourites stage. ' + '\nFavourites Stage: You are asked to give starts to your 5 favourite entries from the Similarities stage. The person awarded the most stars is judged to have performed the best, and the person whose was given the least stars is judged to have performed the worst.' + '\nFinal Task: You are asked to answer a series of questions and you will be given a score based on the number of correct answers. Your rank depends on the number of correct answers. If there are two people with the same score the person with the fastest time will be awarded the higher rank.' + '\nTask 1 & 2 = Task Completion, Similarities stage, and Favourites stage' + '\nFinal Task = Individual Task Only' + '\n\nPay:' + '\nYour pay will not depend on your performance in this game. You will be paid a fixed sum at the end of the experiment.'
+      title: 'Experiment Structure',
+      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it.' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – In the order shown below. The final task will be completed individually.' + '\n[b]1.Task Completion Stage:[/b] You are asked to generate ideas based on the instructions provided.' + '\n[b]2.Similarities Stage:[/b] At this stage you will evaluate whether the entries from another group are similar. Likewise yours will be evaluated by another group.' + '\n[b]3.Favourites Stage:[/b] You are asked to rate the ideas produced by another group. The pay each participant receives depends on the number of stars received. Most stars → highest rank → highest pay.' + '\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.' + '\n[b]Attribution:[/b] Your name will appear next to your ideas' + '\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+
     },
     2: {
-      title: 'Explanation of Experimental Structure',
-      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it. ' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – the Task Completion stage, the Similarity stage, and the Favourites stage. The third task has one stage which you complete individually.' + '\nTask Completion Stage: You are asked to generate ideas based on the instructions provided. All your entries (i.e. ideas) are shared in the group. At the end of this task/stage your ranking will be.' + '\nSimilarities Stage: Your group’s ideas are then sent to another group at random to be ranked and you will receive another group’s entries. You are asked to identify any of that group’s entries you think are similar to each other. ' + '\nAn example of how similarity can be judged is provided, but it is up to you to decide whether or not entries are similar.' + '\nThose entries found to be similar to any already existing entry by at least 2 people in your group will be excluded from the Favourites stage. ' + '\nFavourites Stage: You are asked to give starts to your 5 favourite entries from the Similarities stage. The person awarded the most stars is judged to have performed the best, and the person whose was given the least stars is judged to have performed the worst.' + '\nFinal Task: You are asked to answer a series of questions and you will be given a score based on the number of correct answers. Your rank depends on the number of correct answers. If there are two people with the same score the person with the fastest time will be awarded the higher rank. Pay is based on the relative performance and is shown below.' + '\nTask 1 & 2 = Task Completion, Similarities stage, and Favourites stage' + '\nFinal Task = Individual Task Only' + '\n\nPay:' + '\nHow much you are paid depends on how many “stars” you receive compared to others in your group in the first two tasks; the more you have, the better your chances of earning more money. Your pay depends on your individual performance in each task relative to that of the others in your group, as explained above. The amounts are shown below. The participant who performed the best in a task earns £5 (1) and the participant who performed the worst earns £0 (5). The below amounts are what participants can earn in actual pound sterling (£) for all possible ranks in all three tasks. ' + '\n' + '\n1. £5' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0'
+      title: 'Experiment Structure',
+      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it.' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – In the order shown below. The final task will be completed individually.' + '\n[b]1.Task Completion Stage:[/b] You are asked to generate ideas based on the instructions provided.' + '\n[b]2.Similarities Stage:[/b] At this stage you will evaluate whether the entries from another group are similar. Likewise yours will be evaluated by another group.' + '\n[b]3.Favourites Stage:[/b] You are asked to rate the ideas produced by another group. The pay each participant receives depends on the number of stars received. Most stars → highest rank → highest pay.' + '\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.' + '\n[b]Attribution:[/b] Your ideas will remain anonymous to everyone' + '\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5 – Highest ranking participant' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
+
     },
     3: {
-      title: 'Explanation of Experimental Structure',
-      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it. ' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – the Task Completion stage, the Similarity stage, and the Favourites stage. The third task has one stage which you complete individually.' + '\nTask Completion Stage: You are asked to generate ideas based on the instructions provided. All your entries (i.e. ideas) are shared in the group identifying you as the creator. At the end of this task/stage your ranking will be.' + '\nSimilarities Stage: Your group’s ideas are then sent to another group at random to be ranked and you will receive another group’s entries. You are asked to identify any of that group’s entries you think are similar to each other. ' + '\nAn example of how similarity can be judged is provided, but it is up to you to decide whether or not entries are similar.' + '\nThose entries found to be similar to any already existing entry by at least 2 people in your group will be excluded from the Favourites stage. ' + '\nFavourites Stage: You are asked to give starts to your 5 favourite entries from the Similarities stage. The person awarded the most stars is judged to have performed the best, and the person whose was given the least stars is judged to have performed the worst.' + '\nFinal Task: You are asked to answer a series of questions and you will be given a score based on the number of correct answers. Your rank depends on the number of correct answers. If there are two people with the same score the person with the fastest time will be awarded the higher rank. Pay is based on the relative performance and is shown below.' + '\nTask 1 & 2 = Task Completion, Similarities stage, and Favourites stage' + '\nFinal Task = Individual Task Only' + '\n\nPay:' + '\nHow much you are paid depends on how many “stars” you receive compared to others in your group in the first two tasks; the more you have, the better your chances of earning more money. Your pay depends on your individual performance in each task relative to that of the others in your group, as explained above. The amounts are shown below. The participant who performed the best in a task earns £5 (1) and the participant who performed the worst earns £0 (5). The below amounts are what participants can earn in actual pound sterling (£) for all possible ranks in all three tasks. ' + '\n' + '\n1. £5' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0'
-      // +'\nThe way the points are scored depends on whether the game is a group game or an individual game. In the group game the more votes or favourites your entry receives the better you perform. If you have the most total favourites over all of your entries you will be judged to have performed the best out of everyone in the group and receive £5. The final game will be completed individually but your performance will be compared to other participants in your group. Perform better than others in your group and you will be awarded £5 if you perform second best you will be rewarded £2 and so on. Performance more information about how performance will be measured will be told to you before the task begins.'
+      title: 'Experiment Structure',
+      text: 'Welcome to the experiment. The following lays out the structure of the experiment and the basis on which you are to be paid for taking part in it.' + '\nThe experiment will consist of 3 tasks. The first two tasks are ‘idea generation’ tasks undertaken in groups of 5 people: each task consists of 3 stages – In the order shown below. The final task will be completed individually.' + '\n[b]1.Task Completion Stage:[/b] You are asked to generate ideas based on the instructions provided.' + '\n[b]2.Similarities Stage:[/b] At this stage you will evaluate whether the entries from another group are similar. Likewise yours will be evaluated by another group.' + '\n[b]3.Favourites Stage:[/b] You are asked to rate the ideas produced by another group. The pay each participant receives depends on the number of stars received. Most stars → highest rank → highest pay.' + '\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.' + '\n[b]Attribution:[/b] Your name will appear next to your ideas' + '\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5 – Highest ranking participant' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
+
     }
   },
   alternativeObjectFigural: {
     0: {
       title: 'Line Meanings',
-      text: 'The Task:\n\n' + '\nThere will be a line shown at the start. Based on this line you will be asked to come up with as many things the line reminds you of. You will be given 5 minutes to complete the task.' + '\n	Example:\n\n' + '\nIf the line give is a horizontal line, such as, “__________” (simply a horizontal line) then an example of a submission is…\n' + '\nFigure = Flag ' + '\nDescription = The line could be a side of a flag.' + '\nThe line/figure will not be as simple and so the description will become more important in these cases.' + '\nAll of the answers which have been submitted in your group can be seen on the right side of your screen.' + '\n\n	Output:\n\n' + '\nShow example* (have flag and box example in the group entries bar)' + '\nImportant note:\n\n' + '\nThere are no restrictions on what the line can and can’t be a part of but what figure the line is a part of must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\nPayment\n\n' + '\nYour pay will not depend on your performance in this game. You will be paid a fixed sum at the end of the experiment.' + '\n\nThe previous example would look like this…'
+      text: 'There will be a line shown at the start. Come up with as many things the line reminds you of or could be a part of. Remember you have to use the whole line. You will be given 5 minutes to complete the task.' + '\n\n[b]Important note:[/b]' + '\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
     },
     1: {
       title: 'Line Meanings',
-      text: 'The Task:\n\n' + '\nThere will be a line shown at the start. Based on this line you will be asked to come up with as many things the line reminds you of. You will be given 5 minutes to complete the task.' + '\n	Example:\n\n' + '\nIf the line give is a horizontal line, such as, “__________” (simply a horizontal line) then an example of a submission is…\n' + '\nFigure = Flag ' + '\nDescription = The line could be a side of a flag.' + '\nThe line/figure will not be as simple and so the description will become more important in these cases.' + '\nAll of the answers which have been submitted in your group can be seen on the right side of your screen along with the names of the participants who submitted the expression.' + '\n\n	Output:\n\n' + '\nShow example* (have flag and box example in the group entries bar)' + '\nImportant note:\n\n' + '\nThere are no restrictions on what the line can and can’t be a part of but what figure the line is a part of must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\nPayment\n\n' + '\nYour pay will not depend on your performance in this game. You will be paid a fixed sum at the end of the experiment.' + '\n\nThe previous example would look like this…'
+      text: 'There will be a line shown at the start. Come up with as many things the line reminds you of or could be a part of. Remember you have to use the whole line. You will be given 5 minutes to complete the task.' + '\n\n[b]Important note:[/b]' + '\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\n\n[b]Attribution:[/b] Your ideas will be seen by your group together with your name' + '\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
     },
     2: {
       title: 'Line Meanings',
-      text: 'The Task:\n\n' + '\nThere will be a line shown at the start. Based on this line you will be asked to come up with as many things the line reminds you of. You will be given 5 minutes to complete the task.' + '\n	Example:\n\n' + '\nIf the line give is a horizontal line, such as, “__________” (simply a horizontal line) then an example of a submission is…\n' + '\nFigure = Flag ' + '\nDescription = The line could be a side of a flag.' + '\nThe line/figure will not be as simple and so the description will become more important in these cases.' + '\nAll of the answers which have been submitted in your group can be seen on the right side of your screen' + '\n\n	Output:\n\n' + '\nShow example* (have flag and box example in the group entries bar)' + '\nImportant note:\n\n' + '\nThere are no restrictions on what the line can and can’t be a part of but what figure the line is a part of must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\nPayment\n\n' + '\nHow many stars you receive by members of other groups will determine your ranking and your ranking will determine your performance and how much you earn.' + '\na. First Place: Person with the most stars in a group receives £5.' + '\nb. Second Place: £2.' + '\nc. Third Place: £1.' + '\nd. Fourth Place: £0.5' + '\ne. Fifth Place: £0' + '\n\nThe previous example would look like this…'
+      text: 'There will be a line shown at the start. Come up with as many things the line reminds you of or could be a part of. Remember you have to use the whole line. You will be given 5 minutes to complete the task.' + '\n\n[b]Important note:[/b]' + '\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5 – Highest ranking participant' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
     },
     3: {
       title: 'Line Meanings',
-      text: 'The Task:\n\n' + '\nThere will be a line shown at the start. Based on this line you will be asked to come up with as many things the line reminds you of. You will be given 5 minutes to complete the task.' + '\n	Example:\n\n' + '\nIf the line give is a horizontal line, such as, “__________” (simply a horizontal line) then an example of a submission is…\n' + '\nFigure = Flag ' + '\nDescription = The line could be a side of a flag.' + '\nThe line/figure will not be as simple and so the description will become more important in these cases.' + '\nAll of the answers which have been submitted in your group can be seen on the right side of your screen along with the names of the participants who submitted the expression.' + '\n\n	Output:\n\n' + '\nShow example* (have flag and box example in the group entries bar)' + '\nImportant note:\n\n' + '\nThere are no restrictions on what the line can and can’t be a part of but what figure the line is a part of must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\nPayment\n\n' + '\nHow many stars you receive by members of other groups will determine your ranking and your ranking will determine your performance and how much you earn.' + '\na. First Place: Person with the most stars in a group receives £5.' + '\nb. Second Place: £2.' + '\nc. Third Place: £1.' + '\nd. Fourth Place: £0.5' + '\ne. Fifth Place: £0' + '\n\nThe previous example would look like this…'
+      text: 'There will be a line shown at the start. Come up with as many things the line reminds you of or could be a part of. Remember you have to use the whole line. You will be given 5 minutes to complete the task.' + '\n\n[b]Important note:[/b]' + '\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.' + '\n\n[b]Attribution:[/b] Your ideas will be seen by your group together with your name' + '\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5 – Highest ranking participant' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
     }
 
   },
@@ -113,82 +116,104 @@ var instructionsData = {
   alternativeObject: {
     0: {
       title: 'Objects Task',
-      text: 'The Task:\n\n' + '\n	The task is to come up with as many alternative objects for a given object in the time given.' + '\nFor example:' + '\nIf the object given is a Coat Hanger this is how you would complete the task.' + '\n		Completion\n\n' + '\n1. First you will enter the name of the object in the “object name” field. For example, the alternative object could be a “back scratcher”. There is no limit to how many entries you can submit.' + '\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be “a tool that can be used to scratch your back.' + '\n3. When you are finished you can press the “submit button” to submit the entry.' + '\n4. Your name will not be shown next to your entries and you will be able to see the entries of everyone in your group’s at all times during the task.' + '\nThe previous example would look like this…' + '\nObject name: Back Scratcher' + '\nDescription: A tool that can be used to scratch your back.' + '\nPayment\n\n' + '\nYour pay will not depend on your performance in this game. You will be paid a fixed sum at the end of the experiment.' + '\n\nThe previous example would look like this…'
+      text: 'The task is to come up with as many ideas for what a given object could be in the 5 minutes given.' + '\n[b]Completion[/b]' + '\nConsider the object given is a Coat Hanger:' + '\n • First enter the title for the object in the “title” field. For example, the alternative object could be a “back scratcher”. ' + '\n • Then fill the description field with additional information. A description is always required. A possible description could be “a tool that can be used to scratch your back”.' + '\n • Press the submit button to submit your idea' + '\nThere is no limit to how many ideas you can submit.' + '\nAll submitted entries can be seen by your group.' + '\n\nThe previous example would look like this…' + '\n[EXAMPLE]' + '\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
     },
     1: {
       title: 'Objects Task',
-      text: 'The Task:\n\n' + '\n	The task is to come up with as many alternative objects for a given object in the time given.' + '\nFor example:' + '\nIf the object given is a Coat Hanger this is how you would complete the task.' + '\n		Completion\n\n' + '\n1. First you will enter the name of the object in the “object name” field. For example, the alternative object could be a “back scratcher”. There is no limit to how many entries you can submit.' + '\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be “a tool that can be used to scratch your back.' + '\n3. When you are finished you can press the “submit button” to submit the entry.' + '\n4. Your name will be shown next to your entries and you will be able to see the entries of everyone in your group’s at all times during the task.'
-      // +'\n5. All of the entries which have been submitted in your group can be seen on your screen and the participant’s name who submitted the entry will be shown.'
-      + '\nThe previous example would look like this…' + '\nObject name: Back Scratcher' + '\nDescription: A tool that can be used to scratch your back.' + '\nPayment\n\n' + '\nYour pay will not depend on your performance in this game. You will be paid a fixed sum at the end of the experiment.' + '\n\nThe previous example would look like this…'
+      text: 'The task is to come up with as many ideas for what a given object could be in the 5 minutes given.' + '\n[b]Completion[/b]' + '\nConsider the object given is a Coat Hanger:' + '\n • First enter the title for the object in the “title” field. For example, the alternative object could be a “back scratcher”. ' + '\n • Then fill the description field with additional information. A description is always required. A possible description could be “a tool that can be used to scratch your back”.' + '\n • Press the submit button to submit your idea' + '\nThere is no limit to how many ideas you can submit.' + ' All submitted entries can be seen by your group together with your name.' + '\n\nThe previous example would look like this…' + '\n[EXAMPLE]' + '\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
     },
     2: {
       title: 'Objects Task',
-      text: 'The Task:\n\n' + '\n	The task is to come up with as many alternative objects for a given object in the time given.' + '\nFor example:' + '\nIf the object given is a Coat Hanger this is how you would complete the task.' + '\n		Completion\n\n' + '\n1. First you will enter the name of the object in the “object name” field. For example, the alternative object could be a “back scratcher”. There is no limit to how many entries you can submit.' + '\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be “a tool that can be used to scratch your back.' + '\n3. When you are finished you can press the “submit button” to submit the entry.' + '\n4. Your name will not be shown next to your entries and you will be able to see the entries of everyone in your group’s at all times during the task.'
-      // +'\n5. All of the entries which have been submitted in your group can be seen on your screen and the participant’s name who submitted the entry will be shown.'
-      + '\nThe previous example would look like this…' + '\nObject name: Back Scratcher' + '\nDescription: A tool that can be used to scratch your back.' + '\nPayment\n\n' + '\nThe payment will depend on popularity of submissions i.e. how many favourites your entries received compared to the others in your group.' + '\na. First Place: Person with the most stars in a group receives £5.' + '\nb. Second Place: £2.' + '\nc. Third Place: £1.' + '\nd. Fourth Place: £0.5' + '\ne. Fifth Place: £0' + '\n\nThe previous example would look like this…'
+      text: 'The task is to come up with as many ideas for what a given object could be in the 5 minutes given.' + '\n[b]Completion[/b]' + '\nConsider the object given is a Coat Hanger:' + '\n • First enter the title for the object in the “title” field. For example, the alternative object could be a “back scratcher”. ' + '\n • Then fill the description field with additional information. A description is always required. A possible description could be “a tool that can be used to scratch your back”.' + '\n • Press the submit button to submit your idea' + '\nThere is no limit to how many ideas you can submit.' + '\nAll submitted entries can be seen by your group.' + '\n\nThe previous example would look like this…' + '\n[EXAMPLE]' + '\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5 – Highest ranking participant' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
+
     },
     3: {
       title: 'Objects Task',
-      text: 'The Task:\n\n' + '\n	The task is to come up with as many alternative objects for a given object in the time given.' + '\nFor example:' + '\nIf the object given is a Coat Hanger this is how you would complete the task.' + '\n		Completion\n\n' + '\n1. First you will enter the name of the object in the “object name” field. For example, the alternative object could be a “back scratcher”. There is no limit to how many entries you can submit.' + '\n2. Then a description must be filled in to give more information, this is especially important if the object is uncommon. Using the example above the “description” could be “a tool that can be used to scratch your back.' + '\n3. When you are finished you can press the “submit button” to submit the entry.' + '\n4. Your name will be shown next to your entries and you will be able to see the entries of everyone in your group’s at all times during the task.'
-      // +'\n5. All of the entries which have been submitted in your group can be seen on your screen and the participant’s name who submitted the entry will be shown.'
-      + '\nThe previous example would look like this…' + '\nObject name: Back Scratcher' + '\nDescription: A tool that can be used to scratch your back.' + '\nPayment\n\n' + '\nThe payment will depend on popularity of submissions i.e. how many favourites your entries received compared to the others in your group.' + '\na. First Place: Person with the most stars in a group receives £5.' + '\nb. Second Place: £2.' + '\nc. Third Place: £1.' + '\nd. Fourth Place: £0.5' + '\ne. Fifth Place: £0' + '\n\nThe previous example would look like this…'
+      text: 'The task is to come up with as many ideas for what a given object could be in the 5 minutes given.' + '\n[b]Completion[/b]' + '\nConsider the object given is a Coat Hanger:' + '\n • First enter the title for the object in the “title” field. For example, the alternative object could be a “back scratcher”. ' + '\n • Then fill the description field with additional information. A description is always required. A possible description could be “a tool that can be used to scratch your back”.' + '\n • Press the submit button to submit your idea' + '\nThere is no limit to how many ideas you can submit.' + ' All submitted entries can be seen by your group together with your name.' + '\n\nThe previous example would look like this…' + '\n[EXAMPLE]'
+      //  +'\nObject name: Back Scratcher'
+      //  +'\nDescription: A tool that can be used to scratch your back'
+      //  +'\n			(might be able to show using screen shot)'
+      + '\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5 – Highest ranking participant' + '\n2. £2' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
+
     }
   },
 
   similarities: {
     0: {
       title: 'Instructions for Similarity rounds',
-      text: 'How you judge another group’s entries to be similar will not affect your pay or the way others judge your entries. This round is completely anonymous.' + '\nPlease look through the group’s answers and judge if any 2 answers are similar. If two people decide that the same two entries are similar to each other, then the entry that was created second will be disallowed.' + '\nSome guidelines for what might be “similar” ' + '\n1. If the entry is not original and is largely expressed in an existing entry.' + '\n2. If the entry is an exact copy of an existing entry ' + '\n\nExample:' + '\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.' + '\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”' + '\n1. Object: Back Scratcher, Description: Bent to scratch the back' + '\n2. Object: Leg Scratcher, Description: Bent to scratch the leg' + '\n3. Object: Reaching tool, Description: Moulded in order to reach high places.' + '\n\n(Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.' + '\n\nRemember that the entries you are judging are from another group and will not affect your performance in the task.' + '\n\nIf two entries are flagged similar then the later entry will be eliminated from the favouriting round.' },
+      text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
+      + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //+'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
+    },
     1: {
       title: 'Instructions for Similarity rounds',
-      text: 'How you judge another group’s entries to be similar will not affect your pay or the way others judge your entries. This round is completely anonymous.' + '\nPlease look through the group’s answers and judge if any 2 answers are similar. If two people decide that the same two entries are similar to each other, then the entry that was created second will be disallowed.' + '\nSome guidelines for what might be “similar” ' + '\n1. If the entry is not original and is largely expressed in an existing entry.' + '\n2. If the entry is an exact copy of an existing entry ' + '\n\nExample:' + '\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.' + '\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”' + '\n1. Object: Back Scratcher, Description: Bent to scratch the back' + '\n2. Object: Leg Scratcher, Description: Bent to scratch the leg' + '\n3. Object: Reaching tool, Description: Moulded in order to reach high places.' + '\n\n(Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.' + '\n\nRemember that the entries you are judging are from another group and will not affect your performance in the task.' + '\n\nIf two entries are flagged similar then the later entry will be eliminated from the favouriting round.' },
+      text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
+      + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //+'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
+    },
     2: {
       title: 'Instructions for Similarity rounds',
-      text: 'How you judge another group’s entries to be similar will not affect your pay or the way others judge your entries. This round is completely anonymous.' + '\nPlease look through the group’s answers and judge if any 2 answers are similar. If two people decide that the same two entries are similar to each other, then the entry that was created second will be disallowed.' + '\nSome guidelines for what might be “similar” ' + '\n1. If the entry is not original and is largely expressed in an existing entry.' + '\n2. If the entry is an exact copy of an existing entry ' + '\n\nExample:' + '\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.' + '\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”' + '\n1. Object: Back Scratcher, Description: Bent to scratch the back' + '\n2. Object: Leg Scratcher, Description: Bent to scratch the leg' + '\n3. Object: Reaching tool, Description: Moulded in order to reach high places.' + '\n\n(Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.' + '\n\nRemember that the entries you are judging are from another group and will not affect your performance in the task.' + '\n\nIf two entries are flagged similar then the later entry will be eliminated from the favouriting round.'
+      text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
+      + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //  +'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
     },
     3: {
       title: 'Instructions for Similarity rounds',
-      text: 'How you judge another group’s entries to be similar will not affect your pay or the way others judge your entries. This round is completely anonymous.' + '\nPlease look through the group’s answers and judge if any 2 answers are similar. If two people decide that the same two entries are similar to each other, then the entry that was created second will be disallowed.' + '\nSome guidelines for what might be “similar” ' + '\n1. If the entry is not original and is largely expressed in an existing entry.' + '\n2. If the entry is an exact copy of an existing entry ' + '\n\nExample:' + '\n\nThe following is a guide to how similarities can be judged, but the final decision about what is similar is up to each to judge for themselves.' + '\n\nFor example: There are three entries below to the game “come up with alternative object for a coat hanger”' + '\n1. Object: Back Scratcher, Description: Bent to scratch the back' + '\n2. Object: Leg Scratcher, Description: Bent to scratch the leg' + '\n3. Object: Reaching tool, Description: Moulded in order to reach high places.' + '\n\n(Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.' + '\n\nRemember that the entries you are judging are from another group and will not affect your performance in the task.' + '\n\nIf two entries are flagged similar then the later entry will be eliminated from the favouriting round.'
+      text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
+      + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //+'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
     }
   },
   favourites: {
     0: {
-      title: 'Instructions for Favourites rounds',
-      text: 'You will be asked to name your 5 favourites entries from the list of entries that are presented to you and the entries will be from another group than yours. You will be completely anonymous when favouring.' + '\nEvery group’s entries will be given stars. Based on the total amount of stars an individual receives it will determine where they rank within their group.' + '\nYou are asked to rank the 5 favourite entries by giving them stars and no half stars can be given.' + '\n1. Favourite entry = 5 Stars' + '\n2. Second favourite entry = 4 Stars' + '\n3. Third favourite entry = 3 Stars' + '\n4. Fourth favourite entry = 2 Stars' + '\n5. Fifth favourite entry = 1 Star' + '\n\nHere we have an example of what you will see: '
+      title: 'Favourites rounds',
+      text: 'You will be asked to name your 5 favourites ideas by giving them stars.\n' + '\nYou will be completely anonymous when giving stars.\n' + '\nThe amount of stars an individual receives for his/her ideas will determine his/her rank within their group.' + '\n[EXAMPLE]'
     },
     1: {
-      title: 'Instructions for Favourites rounds',
-      text: 'You will be asked to name your 5 favourites entries from the list of entries that are presented to you and the entries will be from another group than yours. You will be completely anonymous when favouring.' + '\nEvery group’s entries will be given stars. Based on the total amount of stars an individual receives it will determine where they rank within their group.' + '\nYou are asked to rank the 5 favourite entries by giving them stars and no half stars can be given.' + '\n1. Favourite entry = 5 Stars' + '\n2. Second favourite entry = 4 Stars' + '\n3. Third favourite entry = 3 Stars' + '\n4. Fourth favourite entry = 2 Stars' + '\n5. Fifth favourite entry = 1 Star' + '\n\nHere we have an example of what you will see: '
+      title: 'Favourites rounds',
+      text: 'You will be asked to name your 5 favourites ideas by giving them stars.\n' + '\nYou will be completely anonymous when giving stars.\n' + '\nThe amount of stars an individual receives for his/her ideas will determine his/her rank within their group.' + '\n[EXAMPLE]'
     },
     2: {
-      title: 'Instructions for Favourites rounds',
-      text: 'You will be asked to name your 5 favourites entries from the list of entries that are presented to you and the entries will be from another group than yours. You will be completely anonymous when favouring.' + '\nEvery group’s entries will be given stars. Based on the total amount of stars an individual receives it will determine where they rank within their group.' + '\nYou are asked to rank the 5 favourite entries by giving them stars and no half stars can be given.' + '\n1. Favourite entry = 5 Stars' + '\n2. Second favourite entry = 4 Stars' + '\n3. Third favourite entry = 3 Stars' + '\n4. Fourth favourite entry = 2 Stars' + '\n5. Fifth favourite entry = 1 Star'
-      // +'\n\nOnly your 5 favourites will receive stars, you cannot give any other entry a star. No half stars can be given; they can only be given as shown above.'
-      + '\n\nHere we have an example of what you will see: '
+      title: 'Favourites rounds',
+      text: 'You will be asked to name your 5 favourites ideas by giving them stars.\n' + '\nYou will be completely anonymous when giving stars.\n' + '\nThe amount of stars an individual receives for his/her ideas will determine his/her rank within their group.' + '\n[EXAMPLE]'
     },
     3: {
-      title: 'Instructions for Favourites rounds',
-      text: 'You will be asked to name your 5 favourites entries from the list of entries that are presented to you and the entries will be from another group than yours. You will be completely anonymous when favouring.' + '\nEvery group’s entries will be given stars. Based on the total amount of stars an individual receives it will determine where they rank within their group.' + '\nYou are asked to rank the 5 favourite entries by giving them stars and no half stars can be given.' + '\n1. Favourite entry = 5 Stars' + '\n2. Second favourite entry = 4 Stars' + '\n3. Third favourite entry = 3 Stars' + '\n4. Fourth favourite entry = 2 Stars' + '\n5. Fifth favourite entry = 1 Star'
-      //  +'\n\nOnly your 5 favourites will receive stars, you cannot give any other entry a star. No half stars can be given; they can only be given as shown above.'
-      + '\n\nHere we have an example of what you will see: '
+      title: 'Favourites rounds',
+      text: 'You will be asked to name your 5 favourites ideas by giving them stars.\n' + '\nYou will be completely anonymous when giving stars.\n' + '\nThe amount of stars an individual receives for his/her ideas will determine his/her rank within their group.' + '\n[EXAMPLE]'
     }
   },
   math: {
     0: {
       title: 'Math Game Instructions',
-      text: 'For this game you will be asked to solve simple addition problems. For example you could be asked to solve the following “56+73+5+10+11” you would simply answer is “155” and move onto the next question. There will be multiple problems and you will be asked to solve as many as possible during the 5 minutes given. The number of correct answers will then be calculated and showed to you after the game is over.' + '\n5+43+89+93+4 = 			Correct = 234 ' + '\n63+7+83+23+14 = 			Correct = 187' + '\n35+7+26+73+64 = 			Correct = 215' + '\n25+17+7+82+35 = 			Correct = 166' + '\nPayment\n' + '\nYour pay will not depend on your performance in this task.'
+      text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]'
+      // +'\n[Math result screen example]'
     },
     1: {
       title: 'Math Game Instructions',
-      text: 'For this game you will be asked to solve simple addition problems. For example you could be asked to solve the following “56+73+5+10+11” you would simply answer is “155” and move onto the next question. There will be multiple problems and you will be asked to solve as many as possible during the 5 minutes given. The number of correct answers will then be calculated and showed to you after the game is over.' + '\n5+43+89+93+4 = 			Correct = 234 ' + '\n63+7+83+23+14 = 			Correct = 187' + '\n35+7+26+73+64 = 			Correct = 215' + '\n25+17+7+82+35 = 			Correct = 166' + '\nPayment\n' + '\nYour pay will not depend on your performance in this task.'
+      text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]'
+      // +'\n[Math result screen example]'
     },
     2: {
       title: 'Math Game Instructions',
-      text: 'For this game you will be asked to solve simple addition problems. For example you could be asked to solve the following “56+73+5+10+11” you would simply answer is “155” and move onto the next question. There will be multiple problems and you will be asked to solve as many as possible during the 5 minutes given. The number of correct answers will then be calculated and showed to you after the game is over.' + '\n5+43+89+93+4 = 			Correct = 234 ' + '\n63+7+83+23+14 = 			Correct = 187' + '\n35+7+26+73+64 = 			Correct = 215' + '\n25+17+7+82+35 = 			Correct = 166' + '\nPayment\n' + '\nYour pay will depend on your performance' + '\na. First: £5.' + '\nb. Second: £2.' + '\nc. Third: £1.' + '\nd. Fourth: £0.5' + '\ne. Fifth: £0'
+      text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]' + '\n[b]Pay:[/b] Your pay will depend on your performance relative to others in your group.'
+      // +'\n[Math result screen example]'
     },
     3: {
       title: 'Math Game Instructions',
-      text: 'For this game you will be asked to solve simple addition problems. For example you could be asked to solve the following “56+73+5+10+11” you would simply answer is “155” and move onto the next question. There will be multiple problems and you will be asked to solve as many as possible during the 5 minutes given. The number of correct answers will then be calculated and showed to you after the game is over.' + '\n5+43+89+93+4 = 			Correct = 234 ' + '\n63+7+83+23+14 = 			Correct = 187' + '\n35+7+26+73+64 = 			Correct = 215' + '\n25+17+7+82+35 = 			Correct = 166' + '\nPayment\n' + '\nYour pay will depend on your performance' + '\na. First: £5.' + '\nb. Second: £2.' + '\nc. Third: £1.' + '\nd. Fourth: £0.5' + '\ne. Fifth: £0'
+      text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]' + '\n[b]Pay:[/b] Your pay will depend on your performance relative to others in your group.'
+      // +'\n[Math result screen example]'
     }
   }
 };
@@ -214,7 +239,7 @@ var Instructions = function (_Component) {
                 _Card.CardText,
                 null,
                 'Title: ',
-                _react2.default.createElement(_TextField2.default, { id: 'dummy', value: 'Reset button pressing tool', style: { marginLeft: 10
+                _react2.default.createElement(_TextField2.default, { id: 'dummy', value: 'Back Scratcher', style: { marginLeft: 10
                   } }),
                 _react2.default.createElement('br', null),
                 'Description: ',
@@ -223,7 +248,7 @@ var Instructions = function (_Component) {
                   multiLine: true,
                   rows: 1,
                   rowsMax: 10,
-                  value: 'A tool that can be used to press reset buttons which cannot be pressed with your fingers.',
+                  value: 'A tool that can be used to scratch your back',
                   style: { marginLeft: 20, width: '80%'
                   } })
               )
@@ -269,7 +294,7 @@ var Instructions = function (_Component) {
                 _react2.default.createElement(
                   _Card.CardText,
                   { style: { padding: 8 } },
-                  '0.'
+                  '1.'
                 )
               ),
               _react2.default.createElement(
@@ -278,12 +303,12 @@ var Instructions = function (_Component) {
                 _react2.default.createElement(
                   _Card.CardHeader,
                   { style: { padding: 8 } },
-                  'Reset button pressing tool'
+                  'Back Scratcher'
                 ),
                 _react2.default.createElement(
                   _Card.CardText,
                   { style: { padding: 8 } },
-                  'A tool that can be used to press reset buttons which cannot be pressed with your fingers'
+                  'Bent to scratch the back'
                 )
               ),
               _react2.default.createElement(
@@ -293,6 +318,23 @@ var Instructions = function (_Component) {
                   _Card.CardText,
                   { style: { padding: 8, paddingTop: 28, fontWeight: 800 } },
                   'Similar to:'
+                )
+              ),
+              _react2.default.createElement(
+                _Card.Card,
+                null,
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  _react2.default.createElement(
+                    _SelectField2.default,
+                    { value: 2, onChange: function onChange() {
+                        alert('This will set the selected entries as similar');
+                      }, style: { width: 30 } },
+                    _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 1 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 2 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 3 })
+                  )
                 )
               ),
               _react2.default.createElement(
@@ -322,7 +364,7 @@ var Instructions = function (_Component) {
                 _react2.default.createElement(
                   _Card.CardText,
                   { style: { padding: 8 } },
-                  '1.'
+                  '2.'
                 )
               ),
               _react2.default.createElement(
@@ -331,12 +373,82 @@ var Instructions = function (_Component) {
                 _react2.default.createElement(
                   _Card.CardHeader,
                   { style: { padding: 8 } },
-                  'Reset button pressing tool'
+                  'Leg Scratcher'
                 ),
                 _react2.default.createElement(
                   _Card.CardText,
                   { style: { padding: 8 } },
-                  'A tool that can be used to press reset buttons which cannot be pressed with your fingers'
+                  'Bent to scratch the leg'
+                )
+              ),
+              _react2.default.createElement(
+                _Card.Card,
+                null,
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8, paddingTop: 28, fontWeight: 800 } },
+                  'Similar to:'
+                )
+              ),
+              _react2.default.createElement(
+                _Card.Card,
+                null,
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  _react2.default.createElement(
+                    _SelectField2.default,
+                    { value: 1, onChange: function onChange() {
+                        alert('This will set the selected entries as similar');
+                      }, style: { width: 30 } },
+                    _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 1 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 2 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 3 })
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                _Card.Card,
+                null,
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  _react2.default.createElement(
+                    _SelectField2.default,
+                    { value: -1, onChange: function onChange() {
+                        alert('This will set the selected entries as similar');
+                      }, style: { width: 30 } },
+                    _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 1 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 2 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 3 })
+                  )
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { style: { padding: 5, display: 'flex' } },
+              _react2.default.createElement(
+                _Card.Card,
+                { style: { paddingTop: '0%', fontWeight: 800 } },
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  '3.'
+                )
+              ),
+              _react2.default.createElement(
+                _Card.Card,
+                null,
+                _react2.default.createElement(
+                  _Card.CardHeader,
+                  { style: { padding: 8 } },
+                  'Reaching tool'
+                ),
+                _react2.default.createElement(
+                  _Card.CardText,
+                  { style: { padding: 8 } },
+                  'Moulded in order to reach high places'
                 )
               ),
               _react2.default.createElement(
@@ -359,9 +471,9 @@ var Instructions = function (_Component) {
                     { value: -1, onChange: function onChange() {
                         alert('This will set the selected entries as similar');
                       }, style: { width: 30 } },
-                    _react2.default.createElement(_MenuItem2.default, { value: 0, primaryText: 0 }),
                     _react2.default.createElement(_MenuItem2.default, { value: 1, primaryText: 1 }),
-                    _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 2 })
+                    _react2.default.createElement(_MenuItem2.default, { value: 2, primaryText: 2 }),
+                    _react2.default.createElement(_MenuItem2.default, { value: 3, primaryText: 3 })
                   )
                 )
               )
@@ -438,6 +550,26 @@ var Instructions = function (_Component) {
       }
     };
 
+    _this.formatIntructionItem = function (item, example) {
+      if (item.indexOf("[EXAMPLE]") > -1) {
+        return example;
+      } else if (item.indexOf('[b]') > -1) {
+        var splits = item.replace('[b]', '').split("[/b]");
+        return _react2.default.createElement(
+          'span',
+          null,
+          _react2.default.createElement(
+            'span',
+            { style: { fontWeight: 'bold', marginRight: 5 } },
+            splits[0]
+          ),
+          splits[1]
+        );
+      } else {
+        return item;
+      }
+    };
+
     _this.gatherData = function () {
       if (!_this.state.isSubmitted) {
         _this.props.submit(_this.state);
@@ -478,6 +610,8 @@ var Instructions = function (_Component) {
 
     //'_marker'
     value: function render() {
+      var _this2 = this;
+
       if ((0, _stringify2.default)(this.props.type) == "{}") {
         return _react2.default.createElement('span', null);
       }
@@ -533,10 +667,9 @@ var Instructions = function (_Component) {
               return _react2.default.createElement(
                 'div',
                 { key: i, style: { marginBottom: 10 } },
-                item
+                _this2.formatIntructionItem(item, example)
               );
             }),
-            example,
             _react2.default.createElement('br', null),
             _react2.default.createElement(
               _FlatButton2.default,
