@@ -18,7 +18,7 @@ var sessionData = {
     date: '20/9/2016'
   },
 
-  surveyPath: [wait()].concat((0, _toConsumableArray3.default)(testIntructions()), [{
+  surveyPath: [wait(), {
     type: _surveyTypes.QUESTION,
     payload: 'entry',
     time: 'inf'
@@ -26,7 +26,7 @@ var sessionData = {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'experimentStructure',
     time: 'inf'
-  }, wait()], (0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
+  }, wait()].concat((0, _toConsumableArray3.default)(task()), [wait()], (0, _toConsumableArray3.default)(task2()), [wait(), {
     type: _surveyTypes.INSTRUCTIONS,
     payload: 'math',
     time: 'inf'

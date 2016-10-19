@@ -21,8 +21,6 @@ const sessionData = {
 
     wait(),
 
-    ...testIntructions(),
-
     {
       type: QUESTION,
       payload: 'entry',
