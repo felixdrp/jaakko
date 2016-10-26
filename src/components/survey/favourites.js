@@ -88,7 +88,6 @@ class Favourites extends Component {
             favourites[f] = undefined;
             this.currentRating = 0;
             data[index].rating = 0;
-
           }
         }
         data[index].rating = rating;

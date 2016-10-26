@@ -17,7 +17,7 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     // this.state = {elapsed:0, totalSeconds: props.limitTime || 40 };
-    this.state = {elapsed:0, totalSeconds:  7 * 60 };
+    this.state = { elapsed:0, totalSeconds:  0.2 * 60 };
   }
 
   handleSave(text) {
@@ -40,29 +40,26 @@ class Timer extends Component {
   }
 
   startCountDown = () => {
-
-      // componentDidMount is called by react when the component
-      // has been rendered on the page. We can set the interval here:
-      this.setState({ startt: new Date(), timer : setInterval(this.tick, 50)});
+    // componentDidMount is called by react when the component
+    // has been rendered on the page. We can set the interval here:
+    this.setState({ startt: new Date(), timer : setInterval(this.tick, 50)});
   }
 
   stopCountDown = () => {
-
-      // This method is called immediately before the component is removed
-      // from the page and destroyed. We can clear the interval here:
-      // this.state.elapsed = new Date() - this.start);
-      clearInterval(this.state.timer);
+    // This method is called immediately before the component is removed
+    // from the page and destroyed. We can clear the interval here:
+    // this.state.elapsed = new Date() - this.start);
+    clearInterval(this.state.timer);
   }
 
   tick = () => {
-
-        // This function is called every 50 ms. It updates the
-        // elapsed counter. Calling setState causes the component to be re-rendered
-        if ((this.state.elapsed/1000) >= this.state.totalSeconds){
-          this.stopCountDown();
-          this.props.timerCallback();
-        }
-        this.setState({elapsed : new Date() - this.state.startt});
+    // This function is called every 50 ms. It updates the
+    // elapsed counter. Calling setState causes the component to be re-rendered
+    if ((this.state.elapsed/1000) >= this.state.totalSeconds){
+      this.stopCountDown();
+      this.props.timerCallback();
+    }
+    this.setState({elapsed : new Date() - this.state.startt});
   }
 
   render() {
@@ -74,17 +71,21 @@ class Timer extends Component {
 
     return (
 
-        <div style={{
-          display: 'inline',
-          border: '1px solid black',
-          backgroundColor: 'white',
-          padding: 7,
-          position: 'fixed',
-          top:4,
-          left:4,
-          fontWeight:'bolder',
-          fontSize:'large',
-        }}> Time Left: <div style={{  display: 'inline', color:'red',}}>{minutes}:{seconds}</div></div>
+        <div
+          style={{
+            display: 'inline',
+            border: '1px solid black',
+            backgroundColor: 'white',
+            padding: 7,
+            position: 'fixed',
+            top:4,
+            left:4,
+            fontWeight:'bolder',
+            fontSize:'large',
+          }}
+        >
+          Time Left: <div style={{  display: 'inline', color:'red',}}>{minutes}:{seconds}</div>
+        </div>
 
     )
   }

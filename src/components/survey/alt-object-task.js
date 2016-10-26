@@ -142,8 +142,6 @@ class AltObjectTask extends Component {
     };
 
     this.setState({currentEntry : newEntry});
-
-    this.gatherData();
   }
 
   // addGroupEntry = (entry) => {
@@ -158,18 +156,16 @@ class AltObjectTask extends Component {
 
   handleEntryChange(event, index, value, id) {
     //var entries  = this.state.entries.slice()
-      //
-      // var entryId = id.split(" ")[0]
-      //
-      var entryField = id.split(" ")[1];
-      //
-      // this.alterEntry (entries, entryId, entryField, value);
-      var currentEntry = this.state.currentEntry;
-      currentEntry[entryField] = value;
+    //
+    // var entryId = id.split(" ")[0]
+    //
+    var entryField = id.split(" ")[1];
+    //
+    // this.alterEntry (entries, entryId, entryField, value);
+    var currentEntry = this.state.currentEntry;
+    currentEntry[entryField] = value;
 
-      this.setState(currentEntry : currentEntry);
-
-
+    this.setState(currentEntry : currentEntry);
 
     //this.setState({entries : entries });
   }
@@ -186,15 +182,22 @@ class AltObjectTask extends Component {
 
 
   gatherData = () => {
-
-      console.log(JSON.stringify(this.state));
-      return this.state
+    console.log( JSON.stringify(this.state) );
+    this.setState({isSubmitted : true});
+    // debugger
+    this.props.submit();
   }
 
 //'_marker'
   render() {
 
     const { textColor } = this.context.muiTheme.palette;
+
+    if ( this.state.isSubmitted ) {
+
+      return ( <Wait/> )
+
+    }
 
     if ( JSON.stringify(this.props.type) == "{}" || (this.props.type == null && !this.taskType) ) {
       return <span></span>
@@ -245,10 +248,14 @@ class AltObjectTask extends Component {
                                                 minWidth: 250,
                                               }}
                                               src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"
-                                            /> :
+                                            />
+                                            :
                                             <div></div>
               }
-              <Timer limitTime={20} timerCallback={ () => this.props.submit( this.gatherData() ) }></Timer>
+              <Timer
+                limitTime={20}
+                timerCallback={ () => this.gatherData() }
+              ></Timer>
 
               <div style={{marginTop:20}}>
                   <Card>

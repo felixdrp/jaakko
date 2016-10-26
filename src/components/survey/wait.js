@@ -58,7 +58,7 @@ class Wait extends Component {
             }}
           >
         </CardText>
-        <div>{this.props.melacome} </div>
+        
       </Card>
       </div>
     )

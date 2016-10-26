@@ -60,14 +60,12 @@ var Timer = function (_Component) {
     };
 
     _this.startCountDown = function () {
-
       // componentDidMount is called by react when the component
       // has been rendered on the page. We can set the interval here:
       _this.setState({ startt: new Date(), timer: setInterval(_this.tick, 50) });
     };
 
     _this.stopCountDown = function () {
-
       // This method is called immediately before the component is removed
       // from the page and destroyed. We can clear the interval here:
       // this.state.elapsed = new Date() - this.start);
@@ -75,7 +73,6 @@ var Timer = function (_Component) {
     };
 
     _this.tick = function () {
-
       // This function is called every 50 ms. It updates the
       // elapsed counter. Calling setState causes the component to be re-rendered
       if (_this.state.elapsed / 1000 >= _this.state.totalSeconds) {
@@ -85,7 +82,7 @@ var Timer = function (_Component) {
       _this.setState({ elapsed: new Date() - _this.state.startt });
     };
 
-    _this.state = { elapsed: 0, totalSeconds: 7 * 60 };
+    _this.state = { elapsed: 0, totalSeconds: 0.2 * 60 };
     return _this;
   }
 
@@ -116,7 +113,8 @@ var Timer = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { style: {
+        {
+          style: {
             display: 'inline',
             border: '1px solid black',
             backgroundColor: 'white',
@@ -126,8 +124,9 @@ var Timer = function (_Component) {
             left: 4,
             fontWeight: 'bolder',
             fontSize: 'large'
-          } },
-        ' Time Left: ',
+          }
+        },
+        'Time Left: ',
         _react2.default.createElement(
           'div',
           { style: { display: 'inline', color: 'red' } },

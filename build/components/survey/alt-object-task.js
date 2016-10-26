@@ -193,6 +193,11 @@ var AltObjectTask = function (_Component) {
       var textColor = this.context.muiTheme.palette.textColor;
 
 
+      if (this.state.isSubmitted) {
+
+        return _react2.default.createElement(_wait2.default, null);
+      }
+
       if ((0, _stringify2.default)(this.props.type) == "{}" || this.props.type == null && !this.taskType) {
         return _react2.default.createElement('span', null);
       }
@@ -247,9 +252,12 @@ var AltObjectTask = function (_Component) {
               },
               src: 'http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg'
             }) : _react2.default.createElement('div', null),
-            _react2.default.createElement(_timer2.default, { limitTime: 20, timerCallback: function timerCallback() {
-                return _this2.props.submit(_this2.gatherData());
-              } }),
+            _react2.default.createElement(_timer2.default, {
+              limitTime: 20,
+              timerCallback: function timerCallback() {
+                return _this2.gatherData();
+              }
+            }),
             _react2.default.createElement(
               'div',
               { style: { marginTop: 20 } },
@@ -398,8 +406,6 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     _this3.setState({ currentEntry: newEntry });
-
-    _this3.gatherData();
   };
 
   this.alerthing = function () {
@@ -407,9 +413,10 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.gatherData = function () {
-
     console.log((0, _stringify2.default)(_this3.state));
-    return _this3.state;
+    _this3.setState({ isSubmitted: true });
+    // debugger
+    _this3.props.submit();
   };
 };
 

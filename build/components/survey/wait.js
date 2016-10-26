@@ -94,13 +94,7 @@ var Wait = function (_Component) {
             style: {
               paddingTop: 0
             }
-          }),
-          _react2.default.createElement(
-            'div',
-            null,
-            this.props.melacome,
-            ' '
-          )
+          })
         )
       );
     }

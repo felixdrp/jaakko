@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -68,7 +64,7 @@ function getNumbers(N, M) {
     var numbers = [];
     var sum = 0;
     for (var j = 0; j < M; j++) {
-      var number = Math.round(Math.random() * 100 + 1);
+      var number = Math.round(Math.random() * 15 + 1);
       sum += number;
       numbers.push(number);
     }
@@ -96,9 +92,10 @@ var MathChallenge = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (MathChallenge.__proto__ || (0, _getPrototypeOf2.default)(MathChallenge)).call(this, props));
 
     _this.gatherData = function () {
-
-      console.log((0, _stringify2.default)(_this.state));
-      return _this.state;
+      //console.log( JSON.stringify(this.state) );
+      _this.setState({ isSubmitted: true });
+      // debugger
+      _this.props.submit(_this.state);
     };
 
     _this.state = { numbers: getNumbers(30, 5)
@@ -110,6 +107,7 @@ var MathChallenge = function (_Component) {
   (0, _createClass3.default)(MathChallenge, [{
     key: 'handleSave',
     value: function handleSave(text) {
+      favourites;
       if (text.length !== 0) {
         this.props.addTodo(text);
       }
@@ -154,6 +152,11 @@ var MathChallenge = function (_Component) {
       var textColor = this.context.muiTheme.palette.textColor;
 
 
+      if (this.state.isSubmitted) {
+
+        return _react2.default.createElement(_wait2.default, null);
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -188,9 +191,12 @@ var MathChallenge = function (_Component) {
               );
             }),
             _react2.default.createElement('br', null),
-            _react2.default.createElement(_timer2.default, { timerCallback: function timerCallback() {
-                return _this2.props.submit(_this2.gatherData());
-              } }),
+            _react2.default.createElement(_timer2.default, {
+              limitTime: 20,
+              timerCallback: function timerCallback() {
+                return _this2.gatherData();
+              }
+            }),
             _react2.default.createElement(
               'div',
               null,

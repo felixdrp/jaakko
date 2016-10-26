@@ -22,7 +22,7 @@ function getNumbers(N,M){
     var numbers = [];
     var sum = 0;
     for (var j = 0; j < M; j++ ){
-      var number = Math.round((Math.random()*100)+1);
+      var number = Math.round((Math.random()*15)+1);
       sum += number;
       numbers.push(number);
     }
@@ -58,7 +58,7 @@ class MathChallenge extends Component {
 
 
 
-  handleSave(text) {
+  handleSave(text) {favourites
     if (text.length !== 0) {
       this.props.addTodo(text)
     }
@@ -88,11 +88,12 @@ class MathChallenge extends Component {
   }
 
 
+
   gatherData = () => {
-
-    console.log(JSON.stringify(this.state));
-    return this.state
-
+    //console.log( JSON.stringify(this.state) );
+    this.setState({isSubmitted : true});
+    // debugger
+    this.props.submit(this.state);
   }
 
   render() {
@@ -103,6 +104,12 @@ class MathChallenge extends Component {
     let seconds = (elapsed / 10).toFixed(1)
 
     const { textColor } = this.context.muiTheme.palette;
+
+    if ( this.state.isSubmitted ) {
+
+      return ( <Wait/>)
+
+    }
 
     return (
       <div>
@@ -129,7 +136,10 @@ class MathChallenge extends Component {
             instructions.split('\n').map( (item,i) => <div key={i} style={{marginBottom:20}}>{item}</div>)
           }
           <br />
-            <Timer timerCallback={() => this.props.submit( this.gatherData() )}></Timer>
+          <Timer
+            limitTime={20}
+            timerCallback={ () => this.gatherData() }
+          ></Timer>
             <div>
             {
                 this.state.numbers.map( (q,i) => <div key={i}>{formatNumbers(q.numbers)}

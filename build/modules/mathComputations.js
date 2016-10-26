@@ -39,7 +39,7 @@ function processMathResults(data, accounts) {
   });
 
   data.map(function (item, i) {
-    item.rank = i + 1;item.pay = getPay(i + 1);
+    item.rank = i + 1;item.pay = getPay(i + 1) + 1;
   });
 
   return data;

@@ -112,7 +112,7 @@ class Results extends Component {
           } else { return b.score-a.score }
         });
 
-        data.map((item,i) => {item.rank = (i+1); item.pay = this.getPay(i+1);});
+        data.map((item,i) => {item.rank = (i+1); item.pay = this.getPay(i+1)+1;});
 
       return data;
   }
