@@ -37,7 +37,7 @@ export default function processMathResults(data,accounts) {
             return b.mathScore-a.mathScore
           });
 
-          data.map((item,i) => {item.rank = (i+1); item.pay = getPay(i+1)+1;});
+          data.map((item,i) => {item.rank = (i+1); item.pay = getPay(i+1);});
 
           return data;
   }

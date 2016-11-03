@@ -54,7 +54,7 @@ exports.default = function () {
           case 0:
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
             _context.t0 = action;
-            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 65;
+            _context.next = _context.t0 === _queryActions.SESSION_STATE_GET ? 4 : _context.t0 === _queryActions.SURVEY_STATE_GET ? 7 : 70;
             break;
 
           case 4:
@@ -83,7 +83,7 @@ exports.default = function () {
             temp.type = result.session.surveyPath[temp.account.surveyPointer].type;
 
             _context.t1 = temp.type;
-            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.ALT_OBJECT_TASK ? 18 : _context.t1 === _surveyTypes.QUESTION ? 21 : _context.t1 === _surveyTypes.SIMILARITIES ? 24 : _context.t1 === _surveyTypes.FAVOURITES ? 29 : _context.t1 === _surveyTypes.RESULTS ? 34 : _context.t1 === _surveyTypes.MATH_RESULTS ? 48 : 63;
+            _context.next = _context.t1 === _surveyTypes.INSTRUCTIONS ? 18 : _context.t1 === _surveyTypes.ALT_OBJECT_TASK ? 18 : _context.t1 === _surveyTypes.QUESTION ? 21 : _context.t1 === _surveyTypes.SIMILARITIES ? 24 : _context.t1 === _surveyTypes.FAVOURITES ? 32 : _context.t1 === _surveyTypes.RESULTS ? 39 : _context.t1 === _surveyTypes.MATH_RESULTS ? 53 : 68;
             break;
 
           case 18:
@@ -101,25 +101,31 @@ exports.default = function () {
             return _context.abrupt('return');
 
           case 24:
-            // debugger
-            if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
-              temp.payload = {
-                group: result.groups.list[0],
-                groupType: result.groups[result.groups.list[0]].type,
-                ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
-                  return result.groups.list[0] == element.group;
-                })
-              };
+
+            temp.selectedGroup = 0;
+            console.log("this is the current group: " + temp.account.group);
+            //  debugger;
+            if (temp.account.surveyPointer > 17) {
+              if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
+                temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
+              } else {
+                temp.selectedGroup = result.groups.list[result.groups.list.indexOf(temp.account.group) - 1];
+              }
             } else {
-              temp.selectedGroup = result.groups.list[result.groups.list.indexOf(temp.account.group) + 1];
-              temp.payload = {
-                group: temp.selectedGroup,
-                groupType: result.groups[temp.selectedGroup].type,
-                ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
-                  return temp.selectedGroup == element.group;
-                })
-              };
+              if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
+                temp.selectedGroup = result.groups.list[0];
+              } else {
+                temp.selectedGroup = result.groups.list[result.groups.list.indexOf(temp.account.group) + 1];
+              }
             }
+
+            temp.payload = {
+              group: temp.selectedGroup,
+              groupType: result.groups[temp.selectedGroup].type,
+              ideas: result.task.taskList[result.task.taskPointer].filter(function (element) {
+                return temp.selectedGroup == element.group;
+              })
+            };
 
             console.log('SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES');
             console.log(temp.payload);
@@ -128,26 +134,50 @@ exports.default = function () {
 
             return _context.abrupt('return');
 
-          case 29:
-            if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
-              temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
-              temp.payload = {
-                group: temp.selectedGroup,
-                groupType: result.groups[temp.selectedGroup].type,
-                ideas: result.task.similarList[result.task.taskPointer].filter(function (element) {
-                  return temp.selectedGroup == element.group;
-                })
-              };
+          case 32:
+
+            temp.selectedGroup = 0;
+            //  debugger;
+            if (temp.account.surveyPointer > 17) {
+              if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
+                temp.selectedGroup = result.groups.list[0];
+              } else {
+                temp.selectedGroup = result.groups.list[result.groups.list.indexOf(temp.account.group) + 1];
+              }
             } else {
-              temp.selectedGroup = result.groups.list[result.groups.list.indexOf(temp.account.group) - 1];
-              temp.payload = {
-                group: temp.selectedGroup,
-                groupType: result.groups[temp.selectedGroup].type,
-                ideas: result.task.similarList[result.task.taskPointer].filter(function (element) {
-                  return temp.selectedGroup == element.group;
-                })
-              };
+              if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
+                temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
+              } else {
+                temp.selectedGroup = result.groups.list[result.groups.list.indexOf(temp.account.group) - 1];
+              }
             }
+
+            temp.payload = {
+              group: temp.selectedGroup,
+              groupType: result.groups[temp.selectedGroup].type,
+              ideas: result.task.similarList[result.task.taskPointer].filter(function (element) {
+                return temp.selectedGroup == element.group;
+              })
+            };
+            // if ( result.groups.list.indexOf(temp.account.group) - 1 < 0 ) {
+            //   temp.selectedGroup = result.groups.list[ result.groups.list.length - 1 ]
+            //   temp.payload = {
+            //     group: temp.selectedGroup,
+            //     groupType: result.groups[ temp.selectedGroup ].type,
+            //     ideas: result.task.similarList[ result.task.taskPointer ].filter(
+            //       element => temp.selectedGroup == element.group
+            //     ),
+            //   }
+            // } else {
+            //   temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) - 1 ]
+            //   temp.payload = {
+            //     group: temp.selectedGroup,
+            //     groupType: result.groups[ temp.selectedGroup ].type,
+            //     ideas: result.task.similarList[ result.task.taskPointer ].filter(
+            //       element => temp.selectedGroup == element.group
+            //     ),
+            //   }
+            // }
 
             console.log('FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES');
             console.log(temp.payload);
@@ -155,8 +185,8 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 34:
-            _context.prev = 34;
+          case 39:
+            _context.prev = 39;
 
 
             console.log('PRE PRE RESULTS RESULTS RESULTS RESULTS RESULTS RESULTS');
@@ -176,17 +206,17 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 44:
-            _context.prev = 44;
-            _context.t2 = _context['catch'](34);
+          case 49:
+            _context.prev = 49;
+            _context.t2 = _context['catch'](39);
 
             console.log("CAGADA: " + _context.t2);
 
-          case 47:
+          case 52:
             return _context.abrupt('return');
 
-          case 48:
-            _context.prev = 48;
+          case 53:
+            _context.prev = 53;
 
             console.log('PRE PRE MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS MATH_MATH_RESULTS');
             result = (0, _actions.storeStateWithoutWebSocket)(result);
@@ -209,26 +239,26 @@ exports.default = function () {
             ws.send((0, _serverActions.swSetSurveyInitials)(temp.payload));
             return _context.abrupt('return');
 
-          case 59:
-            _context.prev = 59;
-            _context.t3 = _context['catch'](48);
+          case 64:
+            _context.prev = 64;
+            _context.t3 = _context['catch'](53);
 
             console.log("CAGADA: " + _context.t3);
 
-          case 62:
+          case 67:
             return _context.abrupt('return');
 
-          case 63:
+          case 68:
 
             console.log('SESSION_STATE_GET return!!!');
             return _context.abrupt('return');
 
-          case 65:
+          case 70:
           case 'end':
             return _context.stop();
         }
       }
-    }, _callee, this, [[34, 44], [48, 59]]);
+    }, _callee, this, [[39, 49], [53, 64]]);
   }));
 
   function query(_x) {

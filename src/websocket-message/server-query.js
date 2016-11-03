@@ -110,24 +110,32 @@ export default async function query({ action, payload, ws, store }) {
 
             return
         case SIMILARITIES:
-          // debugger
-          if ( result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length ) {
-            temp.payload = {
-              group: result.groups.list[0],
-              groupType: result.groups[ result.groups.list[0] ].type,
-              ideas: result.task.taskList[ result.task.taskPointer ].filter(
-                element => result.groups.list[0] == element.group
-              ),
+
+          temp.selectedGroup = 0;
+          console.log("this is the current group: "+temp.account.group)
+        //  debugger;
+          if (temp.account.surveyPointer > 17 ){
+            if ( (result.groups.list.indexOf(temp.account.group) - 1) < 0  ) {
+              temp.selectedGroup = result.groups.list[ result.groups.list.length - 1 ]
+            } else {
+              temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) - 1 ]
             }
           } else {
-            temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) + 1 ]
-            temp.payload = {
-              group: temp.selectedGroup,
-              groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.taskList[ result.task.taskPointer ].filter(
-                element => temp.selectedGroup == element.group
-              ),
+            if ( (result.groups.list.indexOf(temp.account.group) + 1) >= result.groups.list.length ) {
+              temp.selectedGroup = result.groups.list[ 0 ]
+            } else {
+              temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) + 1 ]
             }
+          }
+
+
+
+          temp.payload = {
+            group: temp.selectedGroup,
+            groupType: result.groups[ temp.selectedGroup ].type,
+            ideas: result.task.taskList[ result.task.taskPointer ].filter(
+              element => temp.selectedGroup == element.group
+            ),
           }
 
           console.log('SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES SIMILARITIES')
@@ -140,25 +148,49 @@ export default async function query({ action, payload, ws, store }) {
           return
 
         case FAVOURITES:
-          if ( result.groups.list.indexOf(temp.account.group) - 1 < 0 ) {
+
+        temp.selectedGroup = 0;
+      //  debugger;
+        if (temp.account.surveyPointer > 17 ){
+          if ( (result.groups.list.indexOf(temp.account.group) + 1) >= result.groups.list.length ) {
+            temp.selectedGroup = result.groups.list[ 0 ]
+          } else {
+            temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) + 1 ]
+          }
+        } else {
+          if ( (result.groups.list.indexOf(temp.account.group) - 1) < 0  ) {
             temp.selectedGroup = result.groups.list[ result.groups.list.length - 1 ]
-            temp.payload = {
-              group: temp.selectedGroup,
-              groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.similarList[ result.task.taskPointer ].filter(
-                element => temp.selectedGroup == element.group
-              ),
-            }
           } else {
             temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) - 1 ]
-            temp.payload = {
-              group: temp.selectedGroup,
-              groupType: result.groups[ temp.selectedGroup ].type,
-              ideas: result.task.similarList[ result.task.taskPointer ].filter(
-                element => temp.selectedGroup == element.group
-              ),
-            }
           }
+        }
+
+        temp.payload = {
+          group: temp.selectedGroup,
+          groupType: result.groups[ temp.selectedGroup ].type,
+          ideas: result.task.similarList[ result.task.taskPointer ].filter(
+            element => temp.selectedGroup == element.group
+          ),
+        }
+          // if ( result.groups.list.indexOf(temp.account.group) - 1 < 0 ) {
+          //   temp.selectedGroup = result.groups.list[ result.groups.list.length - 1 ]
+          //   temp.payload = {
+          //     group: temp.selectedGroup,
+          //     groupType: result.groups[ temp.selectedGroup ].type,
+          //     ideas: result.task.similarList[ result.task.taskPointer ].filter(
+          //       element => temp.selectedGroup == element.group
+          //     ),
+          //   }
+          // } else {
+          //   temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) - 1 ]
+          //   temp.payload = {
+          //     group: temp.selectedGroup,
+          //     groupType: result.groups[ temp.selectedGroup ].type,
+          //     ideas: result.task.similarList[ result.task.taskPointer ].filter(
+          //       element => temp.selectedGroup == element.group
+          //     ),
+          //   }
+          // }
 
           console.log('FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES')
           console.log(temp.payload)
