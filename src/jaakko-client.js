@@ -10,7 +10,6 @@ import Routes from './routes';
 import { createHistory } from 'history';
 import WebSocketSimple from './websocket-message/websocket-simple'
 
-// console.log(Object.keys(reactRR))
 // *** Load store reducers ***
 import {
   account,
@@ -44,7 +43,7 @@ const store = createStore(
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store)
 
-console.log(store.getState())
+// console.log(store.getState())
 // Connection example: "wss://localhost:8008"
 var ws = new WebSocket( 'wss://' + location.host )
 // var websocket used to send data.

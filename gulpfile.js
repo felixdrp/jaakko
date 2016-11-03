@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 // var uglify = require('gulp-uglify');
+var strip = require('gulp-strip-comments');
 var less = require('gulp-less');
 var babel = require('gulp-babel');
 var sourcemaps = require("gulp-sourcemaps");
@@ -31,6 +32,38 @@ gulp.task('babel', function () {
         ))
         // .pipe(concat('../static/js/app.js'))
         .pipe(sourcemaps.write("."))
+        //.pipe(uglify())
+        .pipe(gulp.dest('./build/'));
+});
+
+gulp.task('deploy', function () {
+    gulp.src(['src/**/*.js','src/**/*.jsx'])
+        .pipe(babel(
+          {
+            presets: [
+              'react',
+              'es2015',
+              'stage-0'
+            ],
+            plugins: [
+              // http://babeljs.io/docs/plugins/transform-object-rest-spread/
+              "transform-object-rest-spread",
+
+              // export from ES6 to use ./src/components/core/index.js
+              "transform-export-extensions",
+
+              // async function foo() { await bar(); }
+              "transform-async-to-generator",
+              "transform-regenerator",
+              "transform-runtime"
+            ],
+            ignore: [
+                "src/components/core/upload/upload-shared-web-worker.js"
+            ]
+          }
+        ))
+        .pipe(strip())
+        // .pipe(concat('../static/js/app.js'))
         //.pipe(uglify())
         .pipe(gulp.dest('./build/'));
 });

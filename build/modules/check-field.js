@@ -16,22 +16,12 @@ var _error = require('./log/error');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Check the type of an object of fields (variables)
- *
- * @param {Object} fields An object with multiple fields to check type
- * @param {Object} fieldsOptions An object whose values correspond to different
- * params the input must validate.
- * @returns {null or Object error} Return null if the type is correct or
- * an object error
- */
 
 function checkAll(fields, fieldsOptions) {
   var field = void 0,
       error = void 0;
 
   for (field in fieldsOptions) {
-    // Check types
     if (fieldsOptions[field] && !((fields[field] === null || fields[field] === undefined || fields[field] === '') && fieldsOptions[field].mustHave === false)) {
       error = check(field, fields[field], fieldsOptions[field]);
       if (error !== null && (typeof error === 'undefined' ? 'undefined' : (0, _typeof3.default)(error)) === 'object' && error.type === 'error') {
@@ -39,7 +29,6 @@ function checkAll(fields, fieldsOptions) {
       }
     }
 
-    // Check must have
     if (fieldsOptions[field] && fieldsOptions[field].mustHave === true && (fields[field] === null || fields[field] === undefined || fields[field] === '')) {
       return (0, _error.reportError)('The input field ' + field + ' not valid', 'The field ' + field + ' must have a value.', 'FIELD_UNDEFINED', '7733f0f8-1d80-4c51-99e8-fa659cdd199f');
     }
@@ -47,33 +36,18 @@ function checkAll(fields, fieldsOptions) {
   return null;
 }
 
-/**
- * Check the type of a field (variable)
- *
- * @param {String} fieldName A String with the name of the input.
- * Used to return a meaningful error message.
- * @param {Mixed} input An field or var, to be checked the type.
- * @param {Object} options An object whose values correspond to different
- * params the input must validate.
- * @returns {true or Object error} Return true if the type is correct or
- * an object error
- */
 
 function check(fieldName, input, options) {
 
-  // Check min Length
   if (_validator2.default.isLength(input, { min: options.min }) === false) {
-    // console.log(input + ' >>>>>>> ' + JSON.stringify(input,null,2) )
 
     return (0, _error.reportError)('The input field ' + fieldName + ' not valid', 'The field is too short', 'FIELD_TOO_SHORT', '83527cac-4100-43e6-8ce9-8068c0bccf6a');
   }
 
-  // Check max Length
   if (_validator2.default.isLength(input, { max: options.max }) === false) {
     return (0, _error.reportError)('The input field ' + fieldName + ' not valid', 'The field is too long', 'FIELD_TOO_LONG', '4b7917ff-1dbe-495d-8ae6-1a9aac25fd9b');
   }
 
-  // Check type
   switch (options.type) {
     case 'alphanumeric':
       if (typeof input !== 'string') {
@@ -114,4 +88,3 @@ exports.default = {
   check: check,
   checkAll: checkAll
 };
-//# sourceMappingURL=check-field.js.map

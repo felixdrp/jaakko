@@ -81,11 +81,9 @@ var LoginSignUp = function (_React$Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (LoginSignUp.__proto__ || (0, _getPrototypeOf2.default)(LoginSignUp)).call(this));
 
     _this.state = {
-      // Input fields
       firstName: { error: '', name: 'First name' },
       surname: { error: '', name: 'surname' },
 
-      // userError: { error: '', name: 'First name' },
       email: { error: '', name: 'Email' },
       password: { error: '', name: 'Password' },
       reEnterPassword: { error: '', name: 'Re-enter Password' },
@@ -134,19 +132,15 @@ var LoginSignUp = function (_React$Component) {
       }
     };
 
-    // Used to store inputs references.
     _this._input = {};
     return _this;
   }
 
-  // To Speak with the server
 
 
   (0, _createClass3.default)(LoginSignUp, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      // Check if it was an error.
-      // Then pass the error from props to state.
       if (nextProps.registerStatus) {
         for (var _field in nextProps.registerStatus) {
           this.setState((0, _defineProperty3.default)({}, _field, (0, _extends3.default)({}, this.state[_field], {
@@ -160,9 +154,6 @@ var LoginSignUp = function (_React$Component) {
     value: function registerUser(e) {
       e.preventDefault();
       var input = this._input;
-      // const username = input.email.getValue(),
-      //       username = input.username.getValue(),
-      //       password = input.password.getValue();
       var firstName = input.firstName.getValue() || '',
           surname = input.surname.getValue() || '',
           email = input.email.getValue() || '',
@@ -181,7 +172,6 @@ var LoginSignUp = function (_React$Component) {
           foundEmpty = false,
           field = void 0;
 
-      // Check all fields are not empty
       for (field in fields) {
         if (fields[field] === '') {
           this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], { error: 'Please fill field' })));
@@ -193,13 +183,11 @@ var LoginSignUp = function (_React$Component) {
         return 'Found some empty value';
       }
 
-      // Check Password and reEnterPassword are equal
       if (fields['password'] !== fields['reEnterPassword']) {
         return this.setState((0, _defineProperty3.default)({}, 'reEnterPassword', (0, _extends3.default)({}, this.state[reEnterPassword], { error: 'Password is not equal to Re-enter Password' })));
       }
 
       try {
-        // debugger
         console.log(this.context.websocket);
         result = this.context.websocket.send((0, _serverActions.registerAccount)({
           firstName: firstName,
@@ -208,12 +196,6 @@ var LoginSignUp = function (_React$Component) {
           password: password,
           reEnterPassword: reEnterPassword
         }));
-        // The response will come from websocket
-        // with a redux action.
-        // Even if it is an error.
-        // actions:
-        // Ok: setToken + setAccount info
-        // ERROR: setError
       } catch (error) {
         console.error(error);
       }
@@ -230,9 +212,6 @@ var LoginSignUp = function (_React$Component) {
     key: 'ifEmptyAskInfo',
     value: function ifEmptyAskInfo(e) {
       var input = e.target.id;
-      // console.log(e.target.id)
-      // console.log(JSON.stringify(this.state))
-      //
       if (this._input[input].getValue().length === 0) {
         this.setState((0, _defineProperty3.default)({}, input, (0, _extends3.default)({}, this.state[input], { error: this.state[input].name + ' is empty' })));
       }
@@ -289,13 +268,10 @@ var LoginSignUp = function (_React$Component) {
             return [ps + 'strong', underlineStyle.strong];
         }
         return [];
-      }();
-
-      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
-
-      var errorStrengthText = _ref2[0];
-      var underlineColor = _ref2[1];
-
+      }(),
+          _ref2 = (0, _slicedToArray3.default)(_ref, 2),
+          errorStrengthText = _ref2[0],
+          underlineColor = _ref2[1];
 
       return _react2.default.createElement(
         'div',
@@ -335,7 +311,6 @@ var LoginSignUp = function (_React$Component) {
         },
         _react2.default.createElement(_Card.CardHeader, {
           title: 'Register a new account:'
-          // title="Login to Your Account"
           , titleStyle: {
             fontSize: 24
           }
@@ -354,7 +329,6 @@ var LoginSignUp = function (_React$Component) {
               style: {
                 marginLeft: 30
               }
-              // action="http://mirtest.dcs.gla.ac.uk/api/auth/local/register"
               , action: 'https://marakei.dcs.gla.ac.uk//api/auth/local/register',
               method: 'POST'
             },
@@ -385,14 +359,10 @@ var LoginSignUp = function (_React$Component) {
   }]);
   return LoginSignUp;
 }(_react2.default.Component);
-// Check password strength
 
 
-// import { registerAccountClient } from '../../../data-handler-http/register-account-client'
 
 
-// import ReactMixin from 'react-mixin';
-// import Auth from '../services/AuthService'
 
 
 LoginSignUp.propTypes = {
@@ -411,4 +381,3 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(LoginSignUp);
-//# sourceMappingURL=signup.js.map

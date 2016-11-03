@@ -192,12 +192,12 @@ class SessionTrackerContainer extends Component {
                         <MenuItem
                           onClick={
                             ()=> {
-                              console.log('mlkkkk' + index);
+                              // console.log('mlkkkk' + index);
                               if (accountsPerSurvey[index] != undefined) {
                                 this.props.wsSession.send(
                                   wsSurveyStepAll( accountsPerSurvey[index] )
                                 )
-                                console.log(accountsPerSurvey[index]);
+                                // console.log(accountsPerSurvey[index]);
                               }
                               this.handleRequestClose(index);
                             }

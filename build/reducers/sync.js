@@ -8,7 +8,7 @@ exports.default = synchronize;
 var _actions = require('../actions/actions');
 
 function synchronize() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { wait: true } : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { wait: true };
   var action = arguments[1];
 
   switch (action.type) {
@@ -20,4 +20,3 @@ function synchronize() {
       return state;
   }
 }
-//# sourceMappingURL=sync.js.map

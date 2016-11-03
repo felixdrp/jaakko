@@ -17,7 +17,7 @@ var _crypto2 = _interopRequireDefault(_crypto);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createToken() {
-  var size = arguments.length <= 0 || arguments[0] === undefined ? 16 : arguments[0];
+  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 16;
 
   return new _promise2.default(function (resolve, reject) {
     _crypto2.default.randomBytes(size, function (err, buf) {
@@ -27,6 +27,4 @@ function createToken() {
       resolve(buf.toString('hex'));
     });
   });
-} // About token in nodejs
-// http://www.kdelemme.com/2014/08/16/token-based-authentication-with-nodejs-redis/
-//# sourceMappingURL=token-generator.js.map
+} 

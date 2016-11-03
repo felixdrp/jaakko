@@ -50,7 +50,7 @@ class ControlRoom extends React.Component {
   }
 
   componentWillMount() {
-    console.log('testing storeStateWithoutWebSocket' + storeStateWithoutWebSocket( {mlk: 'supermlk'} ))
+    // console.log('testing storeStateWithoutWebSocket' + storeStateWithoutWebSocket( {mlk: 'supermlk'} ))
     // Connection example: "wss://localhost:8008"
     let ws = new WebSocket( 'wss://' + location.hostname + ':' + (parseInt(location.port) + 1) )
 
@@ -58,14 +58,14 @@ class ControlRoom extends React.Component {
       // Check the query.
       // Process action.
       let message
-      console.log( '>>>' + event.data )
+      // console.log( '>>>' + event.data )
       if ( /^\{.*\}$/.test(event.data) ) {
         message = JSON.parse(event.data)
       } else {
-        console.log(event.data)
+        // console.log(event.data)
         return
       }
-      console.log( '>>>' + JSON.stringify(event.data) )
+      // console.log( '>>>' + JSON.stringify(event.data) )
 
       switch ( message.type ) {
         // Process message of type MUTATE
@@ -91,7 +91,7 @@ class ControlRoom extends React.Component {
 
           }
           // dispatch 'ACTIONS'
-          console.log(message.type + ' ' + message.payload || '')
+          // console.log(message.type + ' ' + message.payload || '')
           // store.dispatch( { type: message.action, payload: message.payload } )
       }
     }

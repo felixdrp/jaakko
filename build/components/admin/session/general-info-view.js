@@ -67,7 +67,6 @@ var GeneralInfoView = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (GeneralInfoView.__proto__ || (0, _getPrototypeOf2.default)(GeneralInfoView)).call(this));
 
     _this.handleTouchTap = function (event) {
-      // This prevents ghost click.
       event.preventDefault();
       var openMenus = _this.state.openMenus.slice();
       var anchorEl = _this.state.anchorEl.slice();
@@ -154,7 +153,6 @@ var GeneralInfoView = function (_Component) {
         _react2.default.createElement(
           'span',
           {
-            // Groups and accounts per group
             style: {
               marginLeft: 30
             }
@@ -238,11 +236,9 @@ var GeneralInfoView = function (_Component) {
   }]);
   return GeneralInfoView;
 }(_react.Component);
-// GeneralInfoView.contextTypes = {muiTheme: React.PropTypes.object};
 
 GeneralInfoView.propTypes = {};
 GeneralInfoView.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GeneralInfoView;
-//# sourceMappingURL=general-info-view.js.map

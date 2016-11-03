@@ -22,14 +22,11 @@ var _createClass3 = _interopRequireDefault(_createClass2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Facade object to use websocket
-// Check that we will send a string every time
 var WebSocketSimple = function () {
   function WebSocketSimple(initialWebsocket) {
     (0, _classCallCheck3.default)(this, WebSocketSimple);
 
     this.ws = initialWebsocket;
-    // console.log('Initiated ')
   }
 
   (0, _createClass3.default)(WebSocketSimple, [{
@@ -62,4 +59,3 @@ var WebSocketSimple = function () {
 }();
 
 exports.default = WebSocketSimple;
-//# sourceMappingURL=websocket-simple.js.map

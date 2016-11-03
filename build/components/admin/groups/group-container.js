@@ -30,7 +30,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _ = require('./');
 
-var _filterAccountsByGroup = require('./filter-accounts-by-group');
+var _filterAccountsByGroup = require('../../../modules/filter-accounts-by-group');
 
 var _filterAccountsByGroup2 = _interopRequireDefault(_filterAccountsByGroup);
 
@@ -50,7 +50,6 @@ var GroupContainer = function (_Component) {
       selection: []
     };
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -105,4 +104,3 @@ GroupContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GroupContainer;
-//# sourceMappingURL=group-container.js.map

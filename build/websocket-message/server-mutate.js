@@ -60,33 +60,19 @@ var _similarity2 = _interopRequireDefault(_similarity);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import filterAccountsByGroup from '../modules/filter-accounts-by-group'
 
 
-/**
- * Mutate will process an asynchronous message from a client send by a websocket
- *
- * @param {Object} An object whose values correspond to:
- *                    action: Async action to process
- *                    payload: The info to process
- *                    ws: websocket that trigger the message.
- * @returns {}
- */
-
-// Default Input fields type and options
 
 
-// Redux server actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
+
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2, clientsSocket) {
     var _this = this;
 
-    var action = _ref2.action;
-    var payload = _ref2.payload;
-    var ws = _ref2.ws;
-    var store = _ref2.store;
+    var action = _ref2.action,
+        payload = _ref2.payload,
+        ws = _ref2.ws,
+        store = _ref2.store;
 
     var payloadResponse, result, account, temp, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, aggregated, found, entry, f, e, _ret;
 
@@ -100,21 +86,16 @@ exports.default = function () {
                 return wsElement.accountCode == accountId;
               });
               if (index >= 0) {
-                // debugger
 
                 tempWs = new _websocketSimple2.default(clientsSocket.clients[index]);
               } else {
                 console.log('accountId not found. It looks like not connected > ' + accountId);
-                // console.error(Object.keys(mainSockets))
-                // throw Error('accountId not found')
                 return false;
               }
-              // Get the session survey
               var result = store.getState();
               var account = result.accounts[accountId];
               var accountSessionPointer = 'surveyPointer' in account ? account.surveyPointer + 1 : 0;
               store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, account, { surveyPointer: accountSessionPointer })));
-              // Go to WaitSync to start session
               tempWs.send((0, _serverActions.wsGotoPage)({ url: (0, _surveyTypes.resolveSurveyURL)(result.session.surveyPath[accountSessionPointer].type), options: {} }));
             };
 
@@ -130,9 +111,7 @@ exports.default = function () {
 
             removeAccountFromGroup = function removeAccountFromGroup(accountId, store) {
               var result = store.getState();
-              // remove account from group
               store.dispatch((0, _actions.groupsRemoveAccount)(result.accounts[accountId].group, accountId));
-              // account to 'unassigned'
               store.dispatch((0, _actions.accountsUpdate)((0, _extends3.default)({}, result.accounts[accountId], { group: 'unassigned' })));
             };
 
@@ -146,23 +125,16 @@ exports.default = function () {
 
             reduxStoreServerAndClientRegisterAccountAndGoToWait = function reduxStoreServerAndClientRegisterAccountAndGoToWait(account) {
               var tempAccount = void 0;
-              // Register the user in the server store.
               store.dispatch((0, _actions.accountsAdd)((0, _extends3.default)({}, account, { group: 'unassigned' })));
               console.log('>>>>>state');
 
-              // Log the account in the Client
               tempAccount = _immutable2.default.fromJS(account);
-              // Remove the websocket from the object
               tempAccount = tempAccount.delete('ws');
               tempAccount = tempAccount.toJS();
 
               ws.send((0, _serverActions.wsLogAccount)(tempAccount));
               console.log('>>>>>state');
 
-              // // Go to WaitSync to start session
-              // ws.send(
-              //   wsGotoPage({ url: '/survey/waitSync', options: {} })
-              // )
 
               nextStep(account.email);
               console.log('>>>>>state');
@@ -170,10 +142,6 @@ exports.default = function () {
 
             payloadResponse = void 0, result = void 0, account = void 0, temp = {};
 
-            /*
-            * Function that moves the account to the next survey.
-            * It increases the account survey pointer and move this survey pointer number.
-            */
 
             return _context2.delegateYield(_regenerator2.default.mark(function _callee() {
               var drawGroups, orderedGroupsAndAccounts, accountId, group, groupId, random, i, _i2, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, acc, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, _acc;
@@ -204,8 +172,6 @@ exports.default = function () {
                         break;
                       }
 
-                      // Error try register again.
-                      // Send message of error to the client.
                       console.error(result.message);
                       if (result.message === 'The input field email not valid' || result.message === 'The input field email is not a valid email') {
                         payloadResponse = { email: 'The email is not valid' };
@@ -214,7 +180,6 @@ exports.default = function () {
                       } else if (result.message === 'Email already used.') {
                         payloadResponse = { email: 'Please, choose another email.' };
                       }
-                      // Send email error
                       ws.send({
                         type: _serverActions.ACTION,
                         action: _clientActions.ACCOUNT_REGISTER_ERROR,
@@ -225,11 +190,6 @@ exports.default = function () {
                       });
 
                     case 11:
-                      // User registered!!
-                      //
-                      // To give websocket.accountCode the account email
-                      // Register the websocket 'ws.accountCode' with the email.
-                      // So we can identify the ws with the account email.
                       ws.accountCode = payload.email;
 
                       account = {
@@ -240,7 +200,6 @@ exports.default = function () {
                         ws: ws
                       };
                       reduxStoreServerAndClientRegisterAccountAndGoToWait(account);
-                      // Ready to asign to a group
                       return _context.abrupt('return', {
                         v: true
                       });
@@ -262,8 +221,6 @@ exports.default = function () {
                         break;
                       }
 
-                      // Error try login.
-                      // Send message of error to the client.
                       console.error(result.message);
                       if (result.message === 'The input field email not valid' || result.message === 'The input field email is not a valid email') {
                         payloadResponse = { email: 'The email is not valid' };
@@ -272,7 +229,6 @@ exports.default = function () {
                       } else if (result.message === 'Account Email not found.') {
                         payloadResponse = { email: 'Please, check email and password.' };
                       }
-                      // Send email error
                       ws.send({
                         type: _serverActions.ACTION,
                         action: _clientActions.ACCOUNT_LOGIN_ERROR,
@@ -283,8 +239,6 @@ exports.default = function () {
                       });
 
                     case 24:
-                      // Register the websocket 'ws.accountCode' with the email.
-                      // So we can identify the ws with the account email.
                       ws.accountCode = payload.email;
 
                       account = {
@@ -299,8 +253,6 @@ exports.default = function () {
                       reduxStoreServerAndClientRegisterAccountAndGoToWait(account);
                       console.log('>>>>>state');
                       console.log(store.getState());
-                      // console.log('send error login')
-                      // console.log(ws.name +' '+ message.type + ' ' + message.payload.email)
                       return _context.abrupt('return', {
                         v: true
                       });
@@ -317,17 +269,7 @@ exports.default = function () {
 
                     case 33:
                       result = store.getState();
-                      // console.log('>>>>> ' + GROUPS_REMOVE)
-                      // console.log(payload)
-                      // console.log(store.getState())
-                      // console.log('result.accounts[accountId]> ')
-                      // console.log(result.accounts[accountId])
-                      // Free all the accounts from group
                       removeGroup(payload.groupId, store);
-                      // result.groups[payload.groupId].map(
-                      //   (accountId) => store.dispatch( accountsUpdate({ ...result.accounts[accountId], group: 'unassigned' }) )
-                      // )
-                      // store.dispatch( groupsRemove( payload.groupId ) )
                       return _context.abrupt('return', {
                         v: true
                       });
@@ -372,23 +314,18 @@ exports.default = function () {
                     case 47:
                       result = store.getState();
 
-                      // Correct the number of groups
                       while (payload.numberOfGroups != result.groups.list.length) {
                         if (payload.numberOfGroups > result.groups.list.length) {
-                          // Add group
                           store.dispatch((0, _actions.groupsAdd)({
                             groupId: payload.name || Date.now(),
-                            // Assign a type from 0 - 3
                             type: payload.type || result.groups.list.length % 4,
                             list: payload.list || []
                           }));
                         } else {
-                          // Remove group
                           removeGroup(result.groups.list[result.groups.list.length - 1], store);
                         }
                       }
 
-                      // reapeted from class GroupAutomatic
 
                       drawGroups = function drawGroups(g, a) {
                         var baseA = Math.floor(a / g);
@@ -407,21 +344,17 @@ exports.default = function () {
 
                       orderedGroupsAndAccounts = drawGroups(payload.numberOfGroups, result.accounts.list.length);
                       accountId = void 0, group = void 0, groupId = void 0;
-                      // Make the gropus random
 
                       random = true;
 
-                      // remove accounts to excess groups
 
                       for (i = 0; i < payload.numberOfGroups; i++) {
                         group = result.groups[result.groups.list[i]];
                         while (group.accountList.length > orderedGroupsAndAccounts[i]) {
                           removeAccountFromGroup(
-                          // last account of the group
                           group.accountList[group.accountList.length - 1], store);
                         }
                       }
-                      // Add accounts to deficit groups
                       _i2 = 0;
 
                     case 55:
@@ -444,7 +377,6 @@ exports.default = function () {
                         break;
                       }
 
-                      // Find a free accountId
                       accountId = [];
                       _iteratorNormalCompletion = true;
                       _didIteratorError = false;
@@ -497,7 +429,6 @@ exports.default = function () {
                       break;
 
                     case 83:
-                      // Find a free accountId
                       _iteratorNormalCompletion2 = true;
                       _didIteratorError2 = false;
                       _iteratorError2 = undefined;
@@ -602,14 +533,12 @@ exports.default = function () {
                       temp = {};
                       result = store.getState();
                       temp.accountSurveyPointer = result.accounts[payload.accountId].surveyPointer;
-                      // Add survey info to the redux store and to the database.
                       store.dispatch((0, _actions.storeSurveInfo)((0, _extends3.default)({}, payload, {
                         surveyId: temp.accountSurveyPointer,
                         surveyType: result.session.surveyPath[temp.accountSurveyPointer].type,
                         groupId: result.accounts[payload.accountId].group
                       })));
 
-                      // After that move to the next survey step.
                       nextStep(payload.accountId);
 
                       result = store.getState();
@@ -625,8 +554,6 @@ exports.default = function () {
                         return prev;
                       }, 0);
 
-                      // If information need processing after the last account have being submited:
-                      // EX: SIMILARITIES, FAVOURITES & RESULTS
 
                       if (!(temp.numActiveAccounts > 0 && temp.numActiveAccounts == temp.numActualSurveysRecived)) {
                         _context.next = 172;
@@ -638,19 +565,16 @@ exports.default = function () {
                       break;
 
                     case 134:
-                      // Get the all SIMILARITIES survey results.
                       temp.dataSimilarities = result.results.surveyInfo.filter(function (element) {
                         return element.surveyId == temp.accountSurveyPointer;
                       });
                       temp.dataSimilarities = temp.dataSimilarities.reduce(function (prev, survey) {
                         return prev = [].concat((0, _toConsumableArray3.default)(prev), (0, _toConsumableArray3.default)(survey.surveyData));
                       }, []);
-                      // Process SIMILARITIES and store in task.similarList
                       store.dispatch((0, _actions.taskAddAllSimilarities)((0, _similarity2.default)(temp.dataSimilarities)));
                       return _context.abrupt('break', 172);
 
                     case 138:
-                      // Process the FAVOURITES
                       console.log('FAVOURITES PRIMEro ANTES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
                       _context.prev = 139;
 
@@ -729,7 +653,6 @@ exports.default = function () {
                     case 165:
                       console.log('FAVOURITES PRIMEro>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
                       console.log("DATOS::::::> " + (0, _stringify2.default)(aggregated));
-                      //console.log( processSimilarities( temp.dataSimilarities ) )
                       console.log('FAVOURITES SEGUNDO>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> processSimilarities <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
                       store.dispatch((0, _actions.taskAddAllFavourites)(aggregated));
                       return _context.abrupt('break', 172);
@@ -792,8 +715,5 @@ exports.default = function () {
   return mutate;
 }();
 
-// Get an url from an survey-type
 
 
-// Redux client actions
-//# sourceMappingURL=server-mutate.js.map

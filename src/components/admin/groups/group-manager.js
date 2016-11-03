@@ -139,7 +139,7 @@ class GroupManager extends Component {
   }
 
   render() {
-    console.log(this.context)
+    // console.log(this.context)
     const style = {
       gray: {
         color: '#565555'

@@ -18,7 +18,7 @@ var _serverActions = require('../websocket-message/server-actions');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function account() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { registerStatus: {}, loginStatus: {} } : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { registerStatus: {}, loginStatus: {} };
   var action = arguments[1];
 
   switch (action.type) {
@@ -35,7 +35,7 @@ function account() {
 }
 
 function task() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { tasks: [], payload: {} } : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { tasks: [], payload: {} };
   var action = arguments[1];
 
   switch (action.type) {
@@ -49,4 +49,3 @@ function task() {
       return state;
   }
 }
-//# sourceMappingURL=client-reducers.js.map

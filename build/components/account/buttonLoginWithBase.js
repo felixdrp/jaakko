@@ -10,14 +10,6 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Component that render a login with Facebook button.
- *
- * Example usage :
- * ```
- * <ButtonLoginWithBase width={200} brandLogo={ {JSX} } brandName="Acme Ltd." />
- * ```
- */
 
 var buttonLoginWithBase = function buttonLoginWithBase(props) {
   return _react2.default.createElement(
@@ -53,11 +45,9 @@ var buttonLoginWithBase = function buttonLoginWithBase(props) {
       'span',
       {
         style: {
-          // Remove link underline
           display: 'inline-block',
           fontFamily: 'roboto',
           fontSize: '12.6px',
-          // fontWeight: 'bold',
           color: '#4e4e4e',
           textShadow: '1px 1px #fff'
         }
@@ -69,4 +59,3 @@ var buttonLoginWithBase = function buttonLoginWithBase(props) {
 };
 
 exports.default = buttonLoginWithBase;
-//# sourceMappingURL=buttonLoginWithBase.js.map

@@ -110,83 +110,30 @@ var AltObjectTask = function (_Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {}
 
-    //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
 
 
-    // componentWillReceiveProps() {
-    //   console.log('componentWillReceiveProps')
-    // }
-    // shouldComponentUpdate() {
-    //   console.log('shouldComponentUpdate')
-    //   return true
-    // }
-
-    //   handleSave(text) {
-    //     if (text.length !== 0) {
-    //       this.props.addTodo(text)
-    //     }
-    //   }
-    //
-    //   handleChange(event, index, value, name) {
-    //     //debugger;
-    //     this.setState({[name] : value})
-    //   };
-    //
-    //   handleSliderChange(event, value, name) {
-    // //    debugger;
-    //     this.setState({[name] : value})
-    //   };
-    //
-    //   handleRadioChange(event, value, name) {
-    //
-    //     this.setState({[name] : value})
-    //   };
-
-    /**
-    * Just missing the account information.
-    */
 
 
-    // addGroupEntry = (entry) => {
-    //   var entries  = this.state.groupEntries.slice()
-    //   entries.push({id : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
-    //   this.setState({groupEntries : entries });
-    // }
+
+
 
   }, {
     key: 'handleEntryChange',
     value: function handleEntryChange(event, index, value, id) {
-      //var entries  = this.state.entries.slice()
-      //
-      // var entryId = id.split(" ")[0]
-      //
       var entryField = id.split(" ")[1];
-      //
-      // this.alterEntry (entries, entryId, entryField, value);
       var currentEntry = this.state.currentEntry;
       currentEntry[entryField] = value;
 
       this.setState(currentEntry);
 
-      //this.setState({entries : entries });
     }
 
-    // alterEntry  =  (entries, id, field, value) => {
-    //   for (var e in entries ){
-    //         var entry = entries[e]
-    //         if ( entry.id == id ){
-    //           entries[e][field] = value;
-    //           return entries;
-    //         }
-    //   }
-    // }
 
 
   }, {
     key: 'render',
 
 
-    //'_marker'
     value: function render() {
       var _this2 = this;
 
@@ -370,15 +317,6 @@ var _initialiseProps = function _initialiseProps() {
 
   this.addEntry = function (e) {
 
-    // var entries  = this.state.entries.slice()
-    // entries.push({  id : btoa(this.state.username.slice(0,2)+(Date.now()/1000)),
-    //                 title : '',
-    //                 description : '',
-    //                 creator : null,
-    //                 rating : [],
-    //                 timeSubmitted : null,
-    //                 similarTo : [],
-    //               });
 
     if (_this3.state.currentEntry.title == '' || _this3.state.currentEntry.description == '') {
       return;
@@ -390,9 +328,7 @@ var _initialiseProps = function _initialiseProps() {
 
     _this3.context.websocket.send((0, _serverActions.swTaskIdeaAdd)(o2));
 
-    // entries.push(o2);
 
-    // this.setState({entries : entries });
 
     var newEntry = {
       id: btoa(accountId.slice(0, 2) + Date.now() / 1000),
@@ -415,19 +351,16 @@ var _initialiseProps = function _initialiseProps() {
   this.gatherData = function () {
     console.log((0, _stringify2.default)(_this3.state));
     _this3.setState({ isSubmitted: true });
-    // debugger
     _this3.props.submit();
   };
 };
 
 AltObjectTask.propTypes = {}
-// addTodo: PropTypes.func.isRequired
 
 
-//export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
-  var ownProps = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var ownProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   return {
     firstName: state.account.firstName,
@@ -439,4 +372,3 @@ AltObjectTask.propTypes = {}
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AltObjectTask);
-//# sourceMappingURL=alt-object-task.js.map

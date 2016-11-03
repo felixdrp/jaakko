@@ -52,7 +52,6 @@ var Timer = function (_Component) {
   function Timer(props) {
     (0, _classCallCheck3.default)(this, Timer);
 
-    // this.state = {elapsed:0, totalSeconds: props.limitTime || 40 };
     var _this = (0, _possibleConstructorReturn3.default)(this, (Timer.__proto__ || (0, _getPrototypeOf2.default)(Timer)).call(this, props));
 
     _this.setTimer = function (totalSeconds) {
@@ -60,21 +59,14 @@ var Timer = function (_Component) {
     };
 
     _this.startCountDown = function () {
-      // componentDidMount is called by react when the component
-      // has been rendered on the page. We can set the interval here:
       _this.setState({ startt: new Date(), timer: setInterval(_this.tick, 50) });
     };
 
     _this.stopCountDown = function () {
-      // This method is called immediately before the component is removed
-      // from the page and destroyed. We can clear the interval here:
-      // this.state.elapsed = new Date() - this.start);
       clearInterval(_this.state.timer);
     };
 
     _this.tick = function () {
-      // This function is called every 50 ms. It updates the
-      // elapsed counter. Calling setState causes the component to be re-rendered
       if (_this.state.elapsed / 1000 >= _this.state.totalSeconds) {
         _this.stopCountDown();
         _this.props.timerCallback();
@@ -142,14 +134,11 @@ var Timer = function (_Component) {
 
 Timer.propTypes = {
 
-  // addTodo: PropTypes.func.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    //firstName : state.account.firstName
   };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Timer);
-//# sourceMappingURL=timer.js.map

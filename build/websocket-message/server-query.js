@@ -28,25 +28,13 @@ require('../actions/client-actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Query will process an asynchronous message from a client send by a websocket
- *
- * @param {Object} An object whose values correspond to:
- *                    action: Async action to process
- *                    payload: The info to process
- *                    ws: websocket that trigger the message.
- * @returns {}
- */
 
-// Redux server actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
-    var action = _ref2.action;
-    var payload = _ref2.payload;
-    var ws = _ref2.ws;
-    var store = _ref2.store;
+    var action = _ref2.action,
+        payload = _ref2.payload,
+        ws = _ref2.ws,
+        store = _ref2.store;
     var payloadResponse, result, account, temp;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {
@@ -58,14 +46,12 @@ exports.default = function () {
             break;
 
           case 4:
-            // update state in components ControlRoom socket action creator
             payloadResponse = (0, _actions.storeStateWithoutWebSocket)(store.getState());
 
             ws.send((0, _serverActions.swUpdateControlRoom)(payloadResponse));
             return _context.abrupt('return', true);
 
           case 7:
-            // Send initial values to the surveys if needed
             temp = {};
             result = store.getState();
             account = payload;
@@ -101,7 +87,6 @@ exports.default = function () {
             return _context.abrupt('return');
 
           case 24:
-            // debugger
             if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
               temp.payload = {
                 group: result.groups.list[0],
@@ -237,12 +222,5 @@ exports.default = function () {
 
   return query;
 }();
-// groupsAdd,
-// groupsRemove,
-// groupsAddAccount,
-// groupsRemoveAccount,
-// moveAccounFromGroup,
 
 
-// Redux client actions
-//# sourceMappingURL=server-query.js.map

@@ -74,7 +74,6 @@ var deleteAccount = exports.deleteAccount = function () {
             if (db) {
               db.close();
             }
-            // console.log('>>xxx>>' + Object.keys(error))
             if (db === null || _context.t0.constains('connect ECONNREFUSED')) {
               result = (0, _error.reportError)('Database connection error.', 'It was an error in the connection with the database.', 'DATA_BASE_CONNECTION_ERROR', 'a7c5bbb7-ee5c-45fe-af13-29e3c2cda683');
             }
@@ -99,4 +98,3 @@ var _mongodb = require('mongodb');
 var _config = require('../../config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-//# sourceMappingURL=delete-account.js.map

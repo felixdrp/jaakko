@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.resolveSurveyURL = resolveSurveyURL;
-// Survey types
 
 var AWAIT = exports.AWAIT = 'AWAIT';
 var QUESTION = exports.QUESTION = 'QUESTION';
@@ -17,7 +16,6 @@ var FAVOURITES = exports.FAVOURITES = 'FAVOURITES';
 var MATH_RESULTS = exports.MATH_RESULTS = 'MATH_RESULTS';
 var RESULTS = exports.RESULTS = 'RESULTS';
 
-// If routes change please change also this part
 function resolveSurveyURL(type) {
   var composeUrl = function composeUrl(parcialUrl) {
     return '/survey/' + parcialUrl;
@@ -55,4 +53,3 @@ function resolveSurveyURL(type) {
       return composeUrl('results');
   }
 }
-//# sourceMappingURL=survey-types.js.map

@@ -50,7 +50,6 @@ var UnassignedContainer = function (_Component) {
       selection: []
     };
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -94,4 +93,3 @@ UnassignedContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = UnassignedContainer;
-//# sourceMappingURL=unassigned-container.js.map

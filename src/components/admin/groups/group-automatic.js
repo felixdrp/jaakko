@@ -52,8 +52,8 @@ class GroupAutomatic extends Component {
   }
 
   drawGroups(g, a) {
-    console.log(a/g);
-    console.log(a%g);
+    // console.log(a/g);
+    // console.log(a%g);
 
     let baseA = Math.floor(a/g)
     let orderedGroupsAndAccounts = []

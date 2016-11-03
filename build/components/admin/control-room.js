@@ -12,10 +12,6 @@ var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
 
 var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -92,19 +88,10 @@ var _actions = require('../../actions/actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Perf from 'react-addons-perf'
-// window.Perf = Perf
 
 var ControlRoom = function (_React$Component) {
   (0, _inherits3.default)(ControlRoom, _React$Component);
 
-  // static childContextTypes = {
-  //   wsSession: React.PropTypes.object
-  // }
-  //
-  // async getChildContext() {
-  //   return { wsSession: this.state.wsSession };
-  // }
 
   function ControlRoom() {
     (0, _classCallCheck3.default)(this, ControlRoom);
@@ -120,9 +107,7 @@ var ControlRoom = function (_React$Component) {
     };
 
     _this.state = {
-      // WebSocket Session, used to create an admin connection.
       wsSession: {},
-      // storeSession. Estore the server session store.
       storeSession: {},
       openSideMenu: false
     };
@@ -134,38 +119,21 @@ var ControlRoom = function (_React$Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      console.log('testing storeStateWithoutWebSocket' + (0, _actions.storeStateWithoutWebSocket)({ mlk: 'supermlk' }));
-      // Connection example: "wss://localhost:8008"
       var ws = new WebSocket('wss://' + location.hostname + ':' + (parseInt(location.port) + 1));
 
       ws.onmessage = function (event) {
-        // Check the query.
-        // Process action.
         var message = void 0;
-        console.log('>>>' + event.data);
         if (/^\{.*\}$/.test(event.data)) {
           message = JSON.parse(event.data);
         } else {
-          console.log(event.data);
           return;
         }
-        console.log('>>>' + (0, _stringify2.default)(event.data));
 
         switch (message.type) {
-          // Process message of type MUTATE
           case 'MUTATE':
-            // mutate({
-            //   action: message.action,
-            //   payload: message.payload,
-            //   websocket,
-            //   store
-            // })
             break;
-          // Process message of type QUERY
           case 'QUERY':
-            // console.log(message.type + ' ' + message.payload.email || '')
             break;
-          // Process message of type ACTIONS
           default:
             switch (message.action) {
               case _queryActions.SESSION_STATE_GET:
@@ -174,15 +142,10 @@ var ControlRoom = function (_React$Component) {
               default:
 
             }
-            // dispatch 'ACTIONS'
-            console.log(message.type + ' ' + message.payload || '');
-          // store.dispatch( { type: message.action, payload: message.payload } )
         }
       };
       ws.onopen = function (e) {
-        // var websocket used to send data.
         var websocket = new _websocketSimple2.default(ws);
-        // Ask for the server state
         websocket.send((0, _queryActions.wsSessionStateGet)());
         _this2.setState({ wsSession: websocket });
       };
@@ -197,7 +160,6 @@ var ControlRoom = function (_React$Component) {
               case 0:
                 this.state.wsSession.ws.close();
                 this.setState({ wsSession: {} });
-                // debugger
 
               case 2:
               case 'end':
@@ -321,4 +283,3 @@ var ControlRoom = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = ControlRoom;
-//# sourceMappingURL=control-room.js.map

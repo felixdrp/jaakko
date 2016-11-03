@@ -96,7 +96,7 @@ class ResultsManager extends Component {
             (current, index2) => {
               let data
               if ( current.surveyType == 'RESULTS' ) {
-                data = current.surveyData.data["0"]
+                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
                 accountComponent.push(
                   <span
                     key={ account.email + index2 + 1 }
@@ -110,7 +110,7 @@ class ResultsManager extends Component {
                 taskNumber += 1
                 total += data.pay
               } else {
-                data = current.surveyData.data["0"]
+                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
                 accountComponent.push(
                   <span
                     key={ account.email + index2 + 1 }
@@ -257,7 +257,7 @@ class ResultsManager extends Component {
           title={ <span><LocalAtm /> Results manager </span> }
         />
         {
-          // accountsMonetary 
+          // accountsMonetary
         }
         { accountsMonetaryTable }
       </Card>

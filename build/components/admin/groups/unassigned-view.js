@@ -28,7 +28,6 @@ var UnassignedView = function UnassignedView(props, context) {
     null,
     _react2.default.createElement(
       _RaisedButton2.default
-      // Unassigned Accounts
       ,
       { onClick: props.unassignSelectedAccounts,
         backgroundColor: '#efefef',
@@ -65,7 +64,6 @@ var UnassignedView = function UnassignedView(props, context) {
     _react2.default.createElement(
       'div',
       {
-        // Unassigned Chips
         style: {
           display: 'flex',
           flexWrap: 'wrap',
@@ -108,4 +106,3 @@ var UnassignedView = function UnassignedView(props, context) {
 UnassignedView.contextTypes = { muiTheme: _react2.default.PropTypes.object };
 
 exports.default = UnassignedView;
-//# sourceMappingURL=unassigned-view.js.map
