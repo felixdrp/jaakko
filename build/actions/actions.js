@@ -73,10 +73,10 @@ var GROUPS_ACCOUNTS_UNASSIGN = exports.GROUPS_ACCOUNTS_UNASSIGN = 'GROUPS_ACCOUN
 var GROUPS_AUTOMATE_CREATION = exports.GROUPS_AUTOMATE_CREATION = 'GROUPS_AUTOMATE_CREATION';
 
 function groupsAdd(_ref) {
-  var groupId = _ref.groupId,
-      type = _ref.type,
-      _ref$list = _ref.list,
-      list = _ref$list === undefined ? [] : _ref$list;
+  var groupId = _ref.groupId;
+  var type = _ref.type;
+  var _ref$list = _ref.list;
+  var list = _ref$list === undefined ? [] : _ref$list;
 
   return { type: GROUPS_ADD, payload: { groupId: groupId, type: type, list: list } };
 }

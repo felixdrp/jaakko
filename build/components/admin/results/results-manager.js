@@ -117,7 +117,7 @@ var ResultsManager = function (_Component) {
       var accountsMonetary = [];
       var accountsMonetaryTable = [];
 
-      var columnWidthStyle = '40%';
+      var columnWidthStyle = '20%';
 
       if (this.props.storeSession && 'session' in this.props.storeSession) {
         surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(function (prev, element, index) {
@@ -133,101 +133,6 @@ var ResultsManager = function (_Component) {
           return _this2.props.storeSession.session.surveyPath[surveyIndex].type;
         });
 
-        accountsMonetary = this.props.storeSession.accounts.list.reduce(function (prev, accountId, index) {
-          var account = _this2.props.storeSession.accounts[accountId];
-          var accountComponent = [];
-          var moneyData = [];
-          var taskNumber = 0;
-          var total = 0;
-
-          accountComponent.push(_react2.default.createElement(
-            'span',
-            { key: account.email + 0 },
-            ' ',
-            account.firstName,
-            ' ',
-            account.surname,
-            ' ',
-            account.email,
-            ' Group ',
-            account.group,
-            ' Type ',
-            _this2.props.storeSession.groups[account.group].type,
-            ' '
-          ));
-
-          moneyData = _this2.props.storeSession.results.surveyInfo.filter(function (element) {
-            return element.accountId == accountId && surveyxMonetaryTypeIndex.includes(element.surveyId);
-          });
-
-          moneyData.forEach(function (current, index2) {
-            var data = void 0;
-            if (current.surveyType == 'RESULTS') {
-              data = current.surveyData.data.find(function (element) {
-                return element.account.email == current.surveyData.currentUserEmail;
-              });
-              accountComponent.push(_react2.default.createElement(
-                'span',
-                {
-                  key: account.email + index2 + 1,
-                  style: {
-                    marginLeft: 10
-                  }
-                },
-                'Task Round ',
-                taskNumber,
-                ' Rank ',
-                data.rank,
-                ' Score ',
-                data.score,
-                ' Pay ',
-                data.pay
-              ));
-              taskNumber += 1;
-              total += data.pay;
-            } else {
-              data = current.surveyData.data.find(function (element) {
-                return element.account.email == current.surveyData.currentUserEmail;
-              });
-              accountComponent.push(_react2.default.createElement(
-                'span',
-                {
-                  key: account.email + index2 + 1,
-                  style: {
-                    marginLeft: 10
-                  }
-                },
-                'Math Round Rank ',
-                data.rank,
-                ' Score ',
-                data.mathScore,
-                ' Pay ',
-                data.pay,
-                _react2.default.createElement(
-                  'span',
-                  {
-                    style: {
-                      marginLeft: 10
-                    }
-                  },
-                  'Total pay: ',
-                  total + data.pay
-                )
-              ));
-            }
-          });
-
-          prev.push(_react2.default.createElement(
-            'div',
-            { key: index },
-            ' ',
-            accountComponent,
-            ' '
-          ));
-
-          return prev;
-        }, []);
-
         accountsMonetaryTable = this.props.storeSession.accounts.list.reduce(function (prev, accountId, index) {
           var account = _this2.props.storeSession.accounts[accountId];
           var accountComponent = [];
@@ -241,11 +146,13 @@ var ResultsManager = function (_Component) {
             account.firstName,
             ' ',
             account.surname,
-            ' ',
-            account.email,
             ' Group ',
-            account.group,
-            ' Type ',
+            account.group
+          ));
+
+          accountComponent.push(_react2.default.createElement(
+            _Table.TableRowColumn,
+            { key: account.email + 1, style: { width: 20 } },
             _this2.props.storeSession.groups[account.group].type
           ));
 
@@ -256,7 +163,9 @@ var ResultsManager = function (_Component) {
           moneyData.forEach(function (current, index2) {
             var data = void 0;
             if (current.surveyType == 'RESULTS') {
-              data = current.surveyData.data["0"];
+              data = current.surveyData.data.find(function (element) {
+                return element.account.email == current.surveyData.currentUserEmail;
+              });
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -276,7 +185,9 @@ var ResultsManager = function (_Component) {
               taskNumber += 1;
               total += data.pay;
             } else {
-              data = current.surveyData.data["0"];
+              data = current.surveyData.data.find(function (element) {
+                return element.account.email == current.surveyData.currentUserEmail;
+              });
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -330,6 +241,11 @@ var ResultsManager = function (_Component) {
                 _Table.TableHeaderColumn,
                 { style: { width: columnWidthStyle } },
                 'Account Info'
+              ),
+              _react2.default.createElement(
+                _Table.TableHeaderColumn,
+                { style: { width: 20 } },
+                'Type'
               ),
               surveyxMonetaryTypeIndexType.map(function (type, index) {
                 if (type == 'RESULTS') {

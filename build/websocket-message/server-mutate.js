@@ -83,10 +83,10 @@ exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee2(_ref2, clientsSocket) {
     var _this = this;
 
-    var action = _ref2.action,
-        payload = _ref2.payload,
-        ws = _ref2.ws,
-        store = _ref2.store;
+    var action = _ref2.action;
+    var payload = _ref2.payload;
+    var ws = _ref2.ws;
+    var store = _ref2.store;
 
     var payloadResponse, result, account, temp, reduxStoreServerAndClientRegisterAccountAndGoToWait, removeGroup, removeAccountFromGroup, addAccountToGroup, nextStep, aggregated, found, entry, f, e, _ret;
 

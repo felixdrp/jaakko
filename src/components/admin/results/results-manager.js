@@ -59,7 +59,7 @@ class ResultsManager extends Component {
     let accountsMonetary = []
     let accountsMonetaryTable = []
 
-    let columnWidthStyle = '40%'
+    let columnWidthStyle = '20%'
 
     if ( this.props.storeSession && 'session' in this.props.storeSession ) {
       surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(
@@ -77,68 +77,6 @@ class ResultsManager extends Component {
 
       surveyxMonetaryTypeIndexType = surveyxMonetaryTypeIndex.map( surveyIndex => this.props.storeSession.session.surveyPath[surveyIndex].type )
 
-
-      accountsMonetary = this.props.storeSession.accounts.list.reduce(
-        ( prev, accountId, index ) => {
-          let account = this.props.storeSession.accounts[ accountId ]
-          let accountComponent = []
-          let moneyData = []
-          let taskNumber = 0
-          let total = 0
-
-          accountComponent.push( <span key={ account.email + 0 }> {account.firstName} {account.surname} {account.email} Group {account.group} Type {this.props.storeSession.groups[account.group].type} </span> )
-
-          moneyData = this.props.storeSession.results.surveyInfo.filter(
-            (element) => element.accountId == accountId && surveyxMonetaryTypeIndex.includes( element.surveyId )
-          )
-
-          moneyData.forEach(
-            (current, index2) => {
-              let data
-              if ( current.surveyType == 'RESULTS' ) {
-                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
-                accountComponent.push(
-                  <span
-                    key={ account.email + index2 + 1 }
-                    style={{
-                      marginLeft: 10,
-                    }}
-                  >
-                    Task Round {taskNumber} Rank {data.rank} Score {data.score} Pay {data.pay}
-                  </span>
-                )
-                taskNumber += 1
-                total += data.pay
-              } else {
-                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
-                accountComponent.push(
-                  <span
-                    key={ account.email + index2 + 1 }
-                    style={{
-                      marginLeft: 10,
-                    }}
-                  >
-                    Math Round Rank {data.rank} Score {data.mathScore} Pay {data.pay}
-                    <span
-                      style={{
-                        marginLeft: 10,
-                      }}
-                    >
-                      Total pay: {total + data.pay}
-                    </span>
-                  </span>
-                )
-              }
-            }
-          )
-
-          prev.push( <div key={ index }> {accountComponent} </div> )
-
-          return prev
-        },
-        []
-      )
-
       accountsMonetaryTable = this.props.storeSession.accounts.list.reduce(
         ( prev, accountId, index ) => {
           let account = this.props.storeSession.accounts[ accountId ]
@@ -149,9 +87,16 @@ class ResultsManager extends Component {
 
           accountComponent.push(
             <TableRowColumn key={ account.email + 0 } style={{ width: columnWidthStyle }}>
-              {account.firstName} {account.surname} {account.email} Group {account.group} Type {this.props.storeSession.groups[account.group].type}
+              {account.firstName} {account.surname} Group {account.group}
             </TableRowColumn>
           )
+
+          accountComponent.push(
+            <TableRowColumn key={ account.email + 1 } style={{ width: 20 }}>
+              {this.props.storeSession.groups[account.group].type}
+            </TableRowColumn>
+          )
+
 
           moneyData = this.props.storeSession.results.surveyInfo.filter(
             (element) => element.accountId == accountId && surveyxMonetaryTypeIndex.includes( element.surveyId )
@@ -161,7 +106,7 @@ class ResultsManager extends Component {
             (current, index2) => {
               let data
               if ( current.surveyType == 'RESULTS' ) {
-                data = current.surveyData.data["0"]
+                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
                 accountComponent.push(
                   <TableRowColumn
                     key={ account.email + index2 + 1 }
@@ -176,7 +121,7 @@ class ResultsManager extends Component {
                 taskNumber += 1
                 total += data.pay
               } else {
-                data = current.surveyData.data["0"]
+                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
                 accountComponent.push(
                   <TableRowColumn
                     key={ account.email + index2 + 1 }
@@ -214,6 +159,7 @@ class ResultsManager extends Component {
           <TableHeader>
             <TableRow>
               <TableHeaderColumn style={{ width: columnWidthStyle }}>Account Info</TableHeaderColumn>
+              <TableHeaderColumn style={{ width: 20 }}>Type</TableHeaderColumn>
               {
                 surveyxMonetaryTypeIndexType.map(
                   (type, index) => {

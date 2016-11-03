@@ -289,10 +289,13 @@ var LoginSignUp = function (_React$Component) {
             return [ps + 'strong', underlineStyle.strong];
         }
         return [];
-      }(),
-          _ref2 = (0, _slicedToArray3.default)(_ref, 2),
-          errorStrengthText = _ref2[0],
-          underlineColor = _ref2[1];
+      }();
+
+      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
+
+      var errorStrengthText = _ref2[0];
+      var underlineColor = _ref2[1];
+
 
       return _react2.default.createElement(
         'div',

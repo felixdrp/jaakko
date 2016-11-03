@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 */
 
 function filterAccountsByGroup(groupId, accounts) {
-  var selectedAccounts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  var selectedAccounts = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
 
   var filteredAccounts = {
     list: []
