@@ -30,9 +30,12 @@ exports.synchronize = synchronize;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// SErver actions
 
+// Register a new account in the db and add to the account list
 var REGISTER_ACCOUNT = exports.REGISTER_ACCOUNT = 'REGISTER_ACCOUNT';
 
+// Check the account and add to the account list
 var LOGIN_ACCOUNT = exports.LOGIN_ACCOUNT = 'LOGIN_ACCOUNT';
 
 function registerAccount(account) {
@@ -43,6 +46,7 @@ function loginAccount(login) {
   return { type: LOGIN_ACCOUNT, login: login };
 }
 
+// Redux: Admin accounts in the server
 var ACCOUNTS_ADD = exports.ACCOUNTS_ADD = 'ACCOUNTS_ADD';
 var ACCOUNTS_UPDATE = exports.ACCOUNTS_UPDATE = 'ACCOUNTS_UPDATE';
 var ACCOUNTS_REMOVE = exports.ACCOUNTS_REMOVE = 'ACCOUNTS_REMOVE';
@@ -57,6 +61,7 @@ function accountsRemove(account) {
   return { type: ACCOUNTS_REMOVE, payload: account };
 }
 
+// Create a group of accounts
 var GROUPS_ADD = exports.GROUPS_ADD = 'GROUPS_ADD';
 var GROUPS_REMOVE = exports.GROUPS_REMOVE = 'GROUPS_REMOVE';
 
@@ -82,12 +87,17 @@ function groupsRemove(groupId) {
 function groupsAddAccount(groupId, account) {
   return { type: GROUPS_ADD_ACCOUNT, payload: { groupId: groupId, account: account } };
 }
+// export function groupsUpdateAccount((groupId, account) {
+//   return { type: ACCOUNTS_UPDATE, payload: account }
+// }
 function groupsRemoveAccount(groupId, account) {
   return { type: GROUPS_REMOVE_ACCOUNT, payload: { groupId: groupId, account: account } };
 }
 
+// Thunk, to move an account betwen groups.
 function moveAccounFromGroup(accounId, toGroup) {
   return function (dispatch, getState) {
+    // cState = current state
     var cState = getState();
     if (!cState.accounts[accounId]) {
       console.log('Account not found');
@@ -97,9 +107,12 @@ function moveAccounFromGroup(accounId, toGroup) {
     }
 
     if (cState.accounts[accounId].group) {
+      // Remove account from it the actual group
       dispatch(groupsRemoveAccount(cState.accounts[accounId].group, accounId));
     }
+    // Add the group to the account
     dispatch(accountsUpdate((0, _extends3.default)({}, cState.accounts[accounId], { group: toGroup })));
+    // Add the account to the group
     dispatch(groupsAddAccount(toGroup, accounId));
   };
 }
@@ -108,6 +121,7 @@ var SEND_ALL_MESSAGE = exports.SEND_ALL_MESSAGE = 'SEND_GROUP_MESSAGE';
 var SEND_GROUP_MESSAGE = exports.SEND_GROUP_MESSAGE = 'SEND_GROUP_MESSAGE';
 var SEND_ACCOUNT_MESSAGE = exports.SEND_ACCOUNT_MESSAGE = 'SEND_ACCOUNT_MESSAGE';
 
+// Return a copy of the store without the cyclic web socket of the client
 function storeStateWithoutWebSocket(state) {
   var copyWithoutWS = {};
   var vervose = true;
@@ -123,6 +137,7 @@ function storeStateWithoutWebSocket(state) {
       state.accounts.list.forEach(function (id) {
         copyWithoutWS.accounts[id] = (0, _extends3.default)({}, state.accounts[id], { ws: null });
       });
+      // remove ws from accounts before send
       copyWithoutWS.accounts.list.forEach(function (id) {
         delete copyWithoutWS.accounts[id].ws;
       });
@@ -139,14 +154,17 @@ function storeStateWithoutWebSocket(state) {
   return copyWithoutWS;
 }
 
+// Add the session information to the store
 var SESSION_DATA_ADD = exports.SESSION_DATA_ADD = 'SESSION_DATA_ADD';
 
 function sessionDataAdd(sessionData) {
   return { type: SESSION_DATA_ADD, payload: sessionData };
 }
 
+// Take a step on the survey for all account in the array.
 var SURVEY_STEP_ALL = exports.SURVEY_STEP_ALL = 'SURVEY_STEP_ALL';
 
+// Submit the survey info to the server to process
 var SUBMIT_SURVEY_INFO = exports.SUBMIT_SURVEY_INFO = 'SUBMIT_SURVEY_INFO';
 
 var STORE_SURVEY_INFO = exports.STORE_SURVEY_INFO = 'STORE_SURVEY_INFO';
@@ -179,6 +197,9 @@ function taskIncreasePointer() {
   return { type: TASK_INCREASE_POINTER };
 }
 
+/*
+ * action creators
+ */
 
 var WAIT = exports.WAIT = 'WAIT';
 var CONTINUE = exports.CONTINUE = 'CONTINUE';
@@ -194,3 +215,4 @@ function synchronize(action) {
       return { type: WAIT };
   }
 }
+//# sourceMappingURL=actions.js.map

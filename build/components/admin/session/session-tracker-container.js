@@ -79,6 +79,7 @@ var SessionTrackerContainer = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (SessionTrackerContainer.__proto__ || (0, _getPrototypeOf2.default)(SessionTrackerContainer)).call(this));
 
     _this.handleTouchTap = function (event) {
+      // This prevents ghost click.
       event.preventDefault();
       var openMenus = _this.state.openMenus.slice();
       var anchorEl = _this.state.anchorEl.slice();
@@ -103,12 +104,15 @@ var SessionTrackerContainer = function (_Component) {
     };
 
     _this.state = {
+      // accounts: { },
+      // groups: { },
       selection: [],
 
       openMenus: [],
       anchorEl: []
     };
 
+    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -135,10 +139,12 @@ var SessionTrackerContainer = function (_Component) {
         if ((typeof groups === 'undefined' ? 'undefined' : (0, _typeof3.default)(groups)) == 'object' && 'list' in groups) {
           groupList = storeSession.groups;
         }
+        // Number of accounts
         accounts = groups.list.reduce(function (prev, groupID) {
           return prev + groups[groupID].accountList.length;
         }, 0);
 
+        // Link survey to account
         storeSession.accounts.list.forEach(function (account) {
           var acc = storeSession.accounts[account];
           if (accountsPerSurvey[acc.surveyPointer] == undefined) {
@@ -148,6 +154,7 @@ var SessionTrackerContainer = function (_Component) {
           accountsPerSurvey[acc.surveyPointer].push(acc.email);
         });
 
+        // Add type to the finished surveys.
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
         var _iteratorError = undefined;
@@ -189,6 +196,7 @@ var SessionTrackerContainer = function (_Component) {
             }
           }
 
+          // console.log(accountsPerSurvey)
         } catch (err) {
           _didIteratorError = true;
           _iteratorError = err;
@@ -260,8 +268,10 @@ var SessionTrackerContainer = function (_Component) {
                     _MenuItem2.default,
                     {
                       onClick: function onClick() {
+                        // console.log('mlkkkk' + index);
                         if (accountsPerSurvey[index] != undefined) {
                           _this2.props.wsSession.send((0, _serverActions.wsSurveyStepAll)(accountsPerSurvey[index]));
+                          // console.log(accountsPerSurvey[index]);
                         }
                         _this2.handleRequestClose(index);
                       }
@@ -288,8 +298,11 @@ var SessionTrackerContainer = function (_Component) {
 }(_react.Component);
 
 SessionTrackerContainer.propTypes = {
+  // groups: PropTypes.object,
+  // accounts: PropTypes.object,
 };
 SessionTrackerContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = SessionTrackerContainer;
+//# sourceMappingURL=session-tracker-container.js.map

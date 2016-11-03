@@ -54,6 +54,10 @@ var _wait2 = _interopRequireDefault(_wait);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+* N number of math questions with M numbers. (all additions, and solution included)
+*
+*/
 function getNumbers(N, M) {
   var results = [];
   for (var i = 0; i < N; i++) {
@@ -88,7 +92,9 @@ var MathChallenge = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (MathChallenge.__proto__ || (0, _getPrototypeOf2.default)(MathChallenge)).call(this, props));
 
     _this.gatherData = function () {
+      //console.log( JSON.stringify(this.state) );
       _this.setState({ isSubmitted: true });
+      // debugger
       _this.props.submit(_this.state);
     };
 
@@ -110,12 +116,17 @@ var MathChallenge = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
 
+      // componentDidMount is called by react when the component
+      // has been rendered on the page. We can set the interval here:
 
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
 
+      // This method is called immediately before the component is removed
+      // from the page and destroyed. We can clear the interval here:
+      // this.state.elapsed = new Date() - this.start);
       clearInterval(this.state.timer);
     }
   }, {
@@ -223,6 +234,7 @@ MathChallenge.contextTypes = {
 
 MathChallenge.propTypes = {
 
+  // addTodo: PropTypes.func.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -232,3 +244,4 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(MathChallenge);
+//# sourceMappingURL=math-challenge.js.map

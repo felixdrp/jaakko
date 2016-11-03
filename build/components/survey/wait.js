@@ -46,6 +46,7 @@ var Wait = function (_Component) {
     key: 'routerWillLeave',
     value: function routerWillLeave(location, callback) {
       console.log('mlk');
+      // if callback then go fordward
       callback();
     }
   }, {
@@ -56,6 +57,7 @@ var Wait = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      // this.context.router.unregisterTransitionHook(this.routerWillLeave);
     }
   }, {
     key: 'handleSave',
@@ -101,6 +103,7 @@ var Wait = function (_Component) {
 }(_react.Component);
 
 Wait.propTypes = {
+  // loginStatus: React.PropTypes.object,
 };
 Wait.contextTypes = {
   muiTheme: _react2.default.PropTypes.object.isRequired,
@@ -108,3 +111,4 @@ Wait.contextTypes = {
   websocket: _react2.default.PropTypes.object
 };
 exports.default = Wait;
+//# sourceMappingURL=wait.js.map

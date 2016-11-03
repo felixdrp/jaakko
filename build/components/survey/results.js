@@ -66,6 +66,7 @@ var _svgIcons = require('material-ui/svg-icons');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// need to set the current user email here for the attribution variable. (type 0 and 2)
 
 var Results = function (_Component) {
   (0, _inherits3.default)(Results, _Component);
@@ -136,7 +137,7 @@ var Results = function (_Component) {
       });
 
       data.map(function (item, i) {
-        item.rank = i + 1;item.pay = _this.getPay(i + 1) + 1;
+        item.rank = i + 1;item.pay = _this.getPay(i + 1);
       });
 
       return data;
@@ -327,6 +328,7 @@ var Results = function (_Component) {
       });
     }
 
+    // Function to compute the ranking of each participant and add to the object.
 
   }, {
     key: 'handleSave',
@@ -339,6 +341,7 @@ var Results = function (_Component) {
     key: 'render',
 
 
+    //'_marker'
     value: function render() {
       var _this2 = this;
 
@@ -457,8 +460,10 @@ Results.contextTypes = {
 
 
 Results.propTypes = {}
+// addTodo: PropTypes.func.isRequired
 
 
+//export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -470,3 +475,4 @@ Results.propTypes = {}
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Results);
+//# sourceMappingURL=results.js.map

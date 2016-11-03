@@ -52,6 +52,14 @@ var _data_oct_2 = _interopRequireDefault(_data_oct_);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Usando servidor seguro:
+// https://localhost:8000/
+// Open a websocket on the browser:
+// var exweb = new WebSocket("wss://localhost:8008")
+// Imprimir mensajes del servidor:
+// exweb.onmessage = (a) => console.log(a)
+// open server to debug on browser
+// node --inspect=9222 ./build/server.js
 var fs = require('fs');
 var privateKey = fs.readFileSync(__dirname + '/../sslcert/key.pem', 'utf8');
 var certificate = fs.readFileSync(__dirname + '/../sslcert/cert.pem', 'utf8');
@@ -65,22 +73,31 @@ var WebSocketServer = require('ws').Server;
 var express = require('express');
 var compression = require('compression');
 var app = express();
+// compress all requests
 app.use(compression());
 
+// function that process the messages of type mutate.
 
 
+// Redux
 
 
+// Testing with Redux initial state
 
+// import testInitData from '../prueba2.json'
+// import testInitData from '../linea.json'
 
 var webTemplate = require('../web-template');
 
 var portWeb = parseInt(process.env.PORT_WEB) || _config.port;
 var portSocket = parseInt(process.env.PORT_SOCKET) || '3000';
 
+// Create the web server linked with the express app
 var webServer = https.createServer(credentials, app);
 
+// Web server for websocket Admin connections
 var appWSAdmin = https.createServer({
+  // providing server with  SSL key/cert
   key: privateKey,
   cert: certificate
 }, function (req, res) {
@@ -88,8 +105,10 @@ var appWSAdmin = https.createServer({
   res.end("All glory to WebSockets!\n");
 }).listen(portWeb + 1);
 
+// Link the web server port to the socket server port
 var wss = new WebSocketServer({ server: webServer });
 var wssAdmin = new WebSocketServer({ server: appWSAdmin });
+// debugger
 app.use(express.static('public'));
 
 app.use('/', function (req, res) {
@@ -100,8 +119,10 @@ webServer.listen(portWeb, function () {
   return console.log('server running at https://localhost:' + portWeb);
 });
 
+// File to maintain a hard copy of the state
 var stream = fs.createWriteStream('resultsBackup.txt', { flags: 'w', autoClose: true });
 
+// middleware to send store updates to the admins
 var updateControlRooms = function updateControlRooms(store) {
   return function (next) {
     return function (action) {
@@ -115,14 +136,18 @@ var updateControlRooms = function updateControlRooms(store) {
       var payload = (0, _actions.storeStateWithoutWebSocket)(store.getState());
 
       if (vervose) {
+        // console.log('UPDATE ControlRoom state' + payload )
         console.log('MEMORY USAGE state' + (0, _stringify2.default)(process.memoryUsage()));
         console.log((0, _stringify2.default)(store.getState().task, null, 4));
+        // console.log('wssAdmin.clients.length> ' + wssAdmin.clients.length )
       }
 
       if (action.type == _actions.STORE_SURVEY_INFO) {
+        // Write state to a file only when STORE_SURVEY_INFO action
         stream.write((0, _stringify2.default)(payload) + "\n");
       }
 
+      // If new idea added transmit to the same group
       if (action.type == _actions.TASK_ADD_IDEA) {
         try {
           new _promise2.default(function (resolve, reject) {
@@ -132,6 +157,7 @@ var updateControlRooms = function updateControlRooms(store) {
 
               if (state.accounts[client].ws != undefined) {
                 state.accounts[client].ws.send((0, _serverActions.wsTaskUpdateGroupIdeas)(state.task.taskList[state.task.taskPointer].filter(
+                // Filter the ideas of the same group.
                 function (element) {
                   return state.accounts[client].group == element.group;
                 })));
@@ -146,13 +172,17 @@ var updateControlRooms = function updateControlRooms(store) {
         }
       }
 
+      // transfer asynchronously to all the admins
       new _promise2.default(function (resolve, reject) {
         wssAdmin.clients.forEach(function (wsControlRoom) {
+          // console.log('UPDATE ControlRoom state (promise) >' + payload)
+          // console.log('Stado del socket>> >' + wsControlRoom.readyState + ' < ID < ' + wsControlRoom.accountCode)
           if (wsControlRoom.readyState != 1) {
             return;
           }
           try {
             wsControlRoom.send((0, _stringify2.default)((0, _serverActions.swUpdateControlRoom)(payload)));
+            // console.log('Stado del socket>> >' + wsControlRoom.readyState + ' < ID < ' + wsControlRoom.accountCode)
 
             resolve('transfer OK');
           } catch (err) {
@@ -166,17 +196,25 @@ var updateControlRooms = function updateControlRooms(store) {
   };
 };
 
+// Note: this API requires redux@>=3.1.0
+// Create Redux store
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   accounts: _server.accounts,
   groups: _server.groups,
+  // Session survey questions
   session: _server.session,
+  // Results to the surveys
   results: _server.results,
   task: _server.task
 }), _data_oct_2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, updateControlRooms));
 
+// Add the survey questions data to the redux store
 store.dispatch((0, _actions.sessionDataAdd)(_sessionData2.default));
+// console.log('~~~~ session estas ahi?')
+// console.log(store.getState())
 
 wss.broadcast = function broadcast(data) {
+  // debugger
   wss.clients.forEach(function (client) {
     if (client.readyState != 1) {
       console.log('socket on state: ' + client.readyState + ' prevented send');
@@ -187,21 +225,44 @@ wss.broadcast = function broadcast(data) {
     client.send(data);
   });
 };
+//
+// setInterval( () => wss.broadcast('mensaje importante de '), 2000 )
+// setTimeout( () => {
+// // setInterval( () => {
+// debugger
+// console.log('broadcast')
+// wss.broadcast(
+//   JSON.stringify(
+//     { type: 'ACTION', action: 'ACCOUNT_REGISTER_ERROR', payload: 'cagada' }
+//   )
+// )
+// }, 8000)
 
 
 var websocketManager = function websocketManager(ws) {
   var name = 'temporal';
   console.log('started websocket client' + name);
+  // When user login will be the email
   ws.name = name;
   ws.accountCode = Date.now();
 
+  // Add the Websocket to the list
+  // queryWebSocketList.push(ws);
 
+  // console.log('wsocket list length: ' + queryWebSocketList.length);
 
   ws.send('Welcome!');
 
   ws.on('close', function () {
     console.log('stopping websocket client ' + ws.accountCode);
+    //  console.log('yo soy tu padre!!!!>>>  ' + parent.clients);
 
+    // Remove from
+    // console.log(queryWebSocketList.indexOf(ws));
+    // // Remove Websocket from queryWebSocketList
+    // queryWebSocketList.splice(queryWebSocketList.indexOf(ws), 1);
+    // console.log(ws.readyState);
+    // console.log('wsocket list length: ' + queryWebSocketList.length);
   });
 
   var ii = 0;
@@ -212,7 +273,11 @@ var websocketManager = function websocketManager(ws) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              // Check the query.
+              // Process action.
+              // debugger
               message = void 0;
+              // Check it is a JSON response
 
               if (!/^\{.*\}$/.test(event.data)) {
                 _context.next = 5;
@@ -229,6 +294,7 @@ var websocketManager = function websocketManager(ws) {
 
             case 7:
               console.log('>>>' + (0, _stringify2.default)(event.data));
+              // console.log( '>>>' + Object.keys(event) )
 
               if (!(typeof message == 'string')) {
                 _context.next = 10;
@@ -270,6 +336,7 @@ var websocketManager = function websocketManager(ws) {
               return _context.abrupt('break', 23);
 
             case 22:
+              // dispatch 'ACTIONS'
               store.dispatch(message.payload);
 
             case 23:
@@ -289,9 +356,11 @@ var websocketManager = function websocketManager(ws) {
   }();
 };
 
+// wss.on('connection', (ws) => websocketManager(ws));
 wss.on('connection', function (ws) {
   return websocketManager(ws);
 });
 wssAdmin.on('connection', function (ws) {
   return websocketManager(ws);
 });
+//# sourceMappingURL=server.js.map

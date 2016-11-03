@@ -89,6 +89,7 @@ var Rater = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (Rater.__proto__ || (0, _getPrototypeOf2.default)(Rater)).call(this, props));
 
     _this.setRating = function (rating) {
+      //this.setState({currentRating: rating});
       _this.props.raterCallback(_this.props.entryIndex, rating);
     };
 
@@ -169,8 +170,10 @@ Rater.contextTypes = {
 
 
 Rater.propTypes = {}
+// addTodo: PropTypes.func.isRequired
 
 
+//export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -179,3 +182,4 @@ Rater.propTypes = {}
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Rater);
+//# sourceMappingURL=rater.js.map

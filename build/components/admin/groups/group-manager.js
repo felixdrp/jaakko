@@ -80,7 +80,9 @@ var _serverActions = require('../../../websocket-message/server-actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Icons
 
+// import FlatButton from 'material-ui/FlatButton';
 var GroupManager = function (_Component) {
   (0, _inherits3.default)(GroupManager, _Component);
 
@@ -93,6 +95,7 @@ var GroupManager = function (_Component) {
       var prevSelected = _this.state.selectedAccounts;
       var selected = [];
       if (maintainPrevSelection.ctrlKey) {
+        // Alredy in the list? then remove
         if (prevSelected.includes(accountId)) {
           selected = prevSelected;
           selected.splice(selected.indexOf(accountId), 1);
@@ -100,19 +103,25 @@ var GroupManager = function (_Component) {
           selected = _this.state.selectedAccounts.concat(accountId);
         }
       } else {
+        // If not selected select
         if (!prevSelected.includes(accountId)) {
           selected = [accountId];
         }
       }
 
       _this.setState({ selectedAccounts: selected });
+      // debugger
+      // console.log('select an account!!! > ' + accountId)
     };
 
     _this.unassignAccount = function (accountId) {
+      // console.log('unassign an account!!! > ' + accountId)
+      // console.log(this.props)
       _this.props.wsSession.send((0, _serverActions.wsUnassignAccount)(accountId));
     };
 
     _this.unassignSelectedAccounts = function () {
+      // console.log('unassign!!!')
       _this.props.wsSession.send((0, _serverActions.wsUnassignSelectedAccounts)(_this.state.selectedAccounts));
       _this.setState({ selectedAccounts: [] });
     };
@@ -124,20 +133,27 @@ var GroupManager = function (_Component) {
 
       var selected = _this.state.selectedAccounts;
 
+      // send selection and groupid to server
       _this.props.wsSession.send((0, _serverActions.wsAssignSelectedAccountsToGroup)(groupId, selected));
 
       _this.setState({ selectedAccounts: [] });
+      // console.log('assign to group !!! > ' + groupId)
     };
 
     _this.addGroup = function (name) {
+      // send WsAddGroup
       _this.props.wsSession.send((0, _serverActions.wsGroupAdd)());
+      // console.log('addgroup!!!')
+      // console.log(this.props)
     };
 
     _this.removeGroup = function (groupId) {
+      // send WsAddGroup
       _this.props.wsSession.send((0, _serverActions.wsGroupRemove)(groupId));
     };
 
     _this.automateGroupCreation = function (numberOfGroups) {
+      // send WsAddGroup
       _this.props.wsSession.send((0, _serverActions.wsAutomateGroupsCreation)(numberOfGroups));
     };
 
@@ -147,21 +163,28 @@ var GroupManager = function (_Component) {
       selectedAccounts: []
     };
 
+    // Used to store references.
     _this._input = {};
     return _this;
   }
 
+  // Add or remove a selection
+  // if maintainPrevSelection == true it will maintain the previus selection
 
 
+  // Free an account from group
 
 
+  // Free the selected accounts from groups
 
 
+  // Free the selected accounts from groups
 
 
   (0, _createClass3.default)(GroupManager, [{
     key: 'render',
     value: function render() {
+      // console.log(this.context)
       var style = {
         gray: {
           color: '#565555'
@@ -182,6 +205,7 @@ var GroupManager = function (_Component) {
             ' Groups manager '
           ),
           subtitle: 'Groups manager'
+          // avatar="images/jsa-128.jpg"
         }),
         _react2.default.createElement(_Card.CardTitle, {
           title: _react2.default.createElement(
@@ -220,6 +244,8 @@ var GroupManager = function (_Component) {
         _react2.default.createElement(
           'div',
           {
+            // Assign Groups
+            // Groups Chips
             style: {
               minWidth: '95%',
               margin: '2.5%',
@@ -228,11 +254,13 @@ var GroupManager = function (_Component) {
           },
           _react2.default.createElement(
             _RaisedButton2.default
+            // Add group button
             ,
             { onClick: this.addGroup,
               backgroundColor: '#ddffb1',
               style: {
                 height: 36,
+                // minWidth: '95%',
                 marginBottom: 20
               }
             },
@@ -268,6 +296,7 @@ var GroupManager = function (_Component) {
   return GroupManager;
 }(_react.Component);
 
+// groups
 
 
 GroupManager.propTypes = {
@@ -278,3 +307,4 @@ GroupManager.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GroupManager;
+//# sourceMappingURL=group-manager.js.map

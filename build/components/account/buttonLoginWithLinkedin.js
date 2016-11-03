@@ -14,6 +14,14 @@ var _buttonLoginWithBase2 = _interopRequireDefault(_buttonLoginWithBase);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Component that render a login with Facebook button.
+ *
+ * Example usage :
+ * ```
+ * <ButtonLoginWithLinkedin />
+ * ```
+ */
 
 var buttonLoginWithLinkedin = function buttonLoginWithLinkedin(props) {
   return _react2.default.createElement(_buttonLoginWithBase2.default, {
@@ -38,6 +46,7 @@ var buttonLoginWithLinkedin = function buttonLoginWithLinkedin(props) {
         className: 'fa fa-linkedin',
         style: {
           position: 'relative',
+          // bottom: -2,
           left: 2,
           fontSize: 16.4
         }
@@ -47,3 +56,4 @@ var buttonLoginWithLinkedin = function buttonLoginWithLinkedin(props) {
 };
 
 exports.default = buttonLoginWithLinkedin;
+//# sourceMappingURL=buttonLoginWithLinkedin.js.map
