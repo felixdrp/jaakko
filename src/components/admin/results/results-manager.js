@@ -105,8 +105,15 @@ class ResultsManager extends Component {
           moneyData.forEach(
             (current, index2) => {
               let data
+              let rank, score, pay, mathScore
+
+              data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
+
               if ( current.surveyType == 'RESULTS' ) {
-                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
+                rank = 'rank' in data? data.rank: '_'
+                score = 'score' in data? data.score: '_'
+                pay = 'pay' in data? data.pay: 0
+
                 accountComponent.push(
                   <TableRowColumn
                     key={ account.email + index2 + 1 }
@@ -115,13 +122,17 @@ class ResultsManager extends Component {
                     }}
                     // Task Round {taskNumber}
                   >
-                    Rank {data.rank} Score {data.score} Pay {data.pay}
+                    Rank {rank} Score {score} Pay {pay}
                   </TableRowColumn>
                 )
                 taskNumber += 1
-                total += data.pay
+                total += pay
               } else {
-                data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
+                rank = 'rank' in data? data.rank: '_'
+                mathScore = 'mathScore' in data? data.mathScore: '_'
+                pay = 'pay' in data? data.pay: 0
+
+                // Math result
                 accountComponent.push(
                   <TableRowColumn
                     key={ account.email + index2 + 1 }
@@ -130,9 +141,11 @@ class ResultsManager extends Component {
                     }}
                     // Math Round
                   >
-                    Rank {data.rank} Score {data.mathScore} Pay {data.pay}
+                    Rank {rank} Score {mathScore} Pay {pay}
                   </TableRowColumn>
                 )
+
+                // Total survey result
                 accountComponent.push(
                   <TableRowColumn
                     key={ account.email + index2 + 2 }
@@ -140,7 +153,7 @@ class ResultsManager extends Component {
                       marginLeft: 10,
                     }}
                   >
-                    {total + data.pay}
+                    {total + pay}
                   </TableRowColumn>
                 )
               }

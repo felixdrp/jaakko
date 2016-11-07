@@ -43,10 +43,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // look doc/server-websocket-message-system.md
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
-    var action = _ref2.action;
-    var payload = _ref2.payload;
-    var ws = _ref2.ws;
-    var store = _ref2.store;
+    var action = _ref2.action,
+        payload = _ref2.payload,
+        ws = _ref2.ws,
+        store = _ref2.store;
     var payloadResponse, result, account, temp;
     return _regenerator2.default.wrap(function _callee$(_context) {
       while (1) {

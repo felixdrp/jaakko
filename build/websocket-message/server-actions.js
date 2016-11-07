@@ -43,11 +43,11 @@ var ACTION = exports.ACTION = 'ACTION';
 var REGISTER_ACCOUNT = exports.REGISTER_ACCOUNT = 'REGISTER_ACCOUNT';
 // Register using socket action creator
 function registerAccount(_ref) {
-  var firstName = _ref.firstName;
-  var surname = _ref.surname;
-  var email = _ref.email;
-  var password = _ref.password;
-  var reEnterPassword = _ref.reEnterPassword;
+  var firstName = _ref.firstName,
+      surname = _ref.surname,
+      email = _ref.email,
+      password = _ref.password,
+      reEnterPassword = _ref.reEnterPassword;
 
   return {
     type: MUTATE,
@@ -66,8 +66,8 @@ function registerAccount(_ref) {
 var LOGIN_ACCOUNT = exports.LOGIN_ACCOUNT = 'LOGIN_ACCOUNT';
 // Register using socket action creator
 function loginAccount(_ref2) {
-  var email = _ref2.email;
-  var password = _ref2.password;
+  var email = _ref2.email,
+      password = _ref2.password;
 
   return {
     type: MUTATE,
@@ -81,10 +81,10 @@ function loginAccount(_ref2) {
 
 // Log the account in the client redux store
 function wsLogAccount(_ref3) {
-  var email = _ref3.email;
-  var firstName = _ref3.firstName;
-  var surname = _ref3.surname;
-  var token = _ref3.token;
+  var email = _ref3.email,
+      firstName = _ref3.firstName,
+      surname = _ref3.surname,
+      token = _ref3.token;
 
   return {
     type: ACTION,
@@ -100,9 +100,9 @@ function wsLogAccount(_ref3) {
 
 // Goto page
 function wsGotoPage(_ref4) {
-  var url = _ref4.url;
-  var _ref4$options = _ref4.options;
-  var options = _ref4$options === undefined ? {} : _ref4$options;
+  var url = _ref4.url,
+      _ref4$options = _ref4.options,
+      options = _ref4$options === undefined ? {} : _ref4$options;
 
   var routerAction = (0, _reactRouterRedux.push)(url);
   return {
@@ -137,7 +137,7 @@ function wsGroupRemove(groupId) {
 
 // Register selected accounts to a group socket action creator
 function wsAssignSelectedAccountsToGroup(groupId) {
-  var selected = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+  var selected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
   return {
     type: MUTATE,
@@ -150,7 +150,7 @@ function wsAssignSelectedAccountsToGroup(groupId) {
 }
 
 function wsUnassignSelectedAccounts() {
-  var selected = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+  var selected = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
   return {
     type: MUTATE,

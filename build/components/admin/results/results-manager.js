@@ -162,10 +162,20 @@ var ResultsManager = function (_Component) {
 
           moneyData.forEach(function (current, index2) {
             var data = void 0;
+            var rank = void 0,
+                score = void 0,
+                pay = void 0,
+                mathScore = void 0;
+
+            data = current.surveyData.data.find(function (element) {
+              return element.account.email == current.surveyData.currentUserEmail;
+            });
+
             if (current.surveyType == 'RESULTS') {
-              data = current.surveyData.data.find(function (element) {
-                return element.account.email == current.surveyData.currentUserEmail;
-              });
+              rank = 'rank' in data ? data.rank : '_';
+              score = 'score' in data ? data.score : '_';
+              pay = 'pay' in data ? data.pay : 0;
+
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -176,18 +186,20 @@ var ResultsManager = function (_Component) {
                   // Task Round {taskNumber}
                 },
                 'Rank ',
-                data.rank,
+                rank,
                 ' Score ',
-                data.score,
+                score,
                 ' Pay ',
-                data.pay
+                pay
               ));
               taskNumber += 1;
-              total += data.pay;
+              total += pay;
             } else {
-              data = current.surveyData.data.find(function (element) {
-                return element.account.email == current.surveyData.currentUserEmail;
-              });
+              rank = 'rank' in data ? data.rank : '_';
+              mathScore = 'mathScore' in data ? data.mathScore : '_';
+              pay = 'pay' in data ? data.pay : 0;
+
+              // Math result
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -198,12 +210,14 @@ var ResultsManager = function (_Component) {
                   // Math Round
                 },
                 'Rank ',
-                data.rank,
+                rank,
                 ' Score ',
-                data.mathScore,
+                mathScore,
                 ' Pay ',
-                data.pay
+                pay
               ));
+
+              // Total survey result
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -212,7 +226,7 @@ var ResultsManager = function (_Component) {
                     marginLeft: 10
                   }
                 },
-                total + data.pay
+                total + pay
               ));
             }
           });

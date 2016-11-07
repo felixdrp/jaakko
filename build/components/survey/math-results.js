@@ -118,7 +118,7 @@ var MathResults = function (_Component) {
           _react2.default.createElement(
             _Card.CardText,
             { style: { fontSize: 'large', textAlign: 'center' } },
-            '£',
+            '\xA3',
             participant.pay
           )
         ) : ''

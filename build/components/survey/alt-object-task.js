@@ -427,7 +427,7 @@ AltObjectTask.propTypes = {}
 //export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
-  var ownProps = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var ownProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   return {
     firstName: state.account.firstName,

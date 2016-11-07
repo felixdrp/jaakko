@@ -23,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 function accounts() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { list: [] } : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { list: [] };
   var action = arguments[1];
 
   var payload = action.payload || '';
@@ -68,7 +68,7 @@ function accounts() {
 }
 
 function groups() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { list: [] } : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { list: [] };
   var action = arguments[1];
 
   // let payload = !!action && action.payload || ''
@@ -119,7 +119,7 @@ function groups() {
 }
 
 function session() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   var payload = action.payload || '';
@@ -134,7 +134,7 @@ function session() {
 }
 
 function results() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? { surveyInfo: [] } : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { surveyInfo: [] };
   var action = arguments[1];
 
   var payload = action.payload || '';
@@ -149,12 +149,12 @@ function results() {
 }
 
 function task() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     taskPointer: 0,
     taskList: [[]],
     similarList: [[]],
     favouritList: [[]]
-  } : arguments[0];
+  };
   var action = arguments[1];
 
   var payload = action.payload || '';
