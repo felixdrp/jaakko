@@ -28,19 +28,7 @@ require('../actions/client-actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * Query will process an asynchronous message from a client send by a websocket
- *
- * @param {Object} An object whose values correspond to:
- *                    action: Async action to process
- *                    payload: The info to process
- *                    ws: websocket that trigger the message.
- * @returns {}
- */
 
-// Redux server actions
-// WebSocket communications types
-// look doc/server-websocket-message-system.md
 exports.default = function () {
   var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(_ref2) {
     var action = _ref2.action,
@@ -58,14 +46,12 @@ exports.default = function () {
             break;
 
           case 4:
-            // update state in components ControlRoom socket action creator
             payloadResponse = (0, _actions.storeStateWithoutWebSocket)(store.getState());
 
             ws.send((0, _serverActions.swUpdateControlRoom)(payloadResponse));
             return _context.abrupt('return', true);
 
           case 7:
-            // Send initial values to the surveys if needed
             temp = {};
             result = store.getState();
             account = payload;
@@ -104,7 +90,6 @@ exports.default = function () {
 
             temp.selectedGroup = 0;
             console.log("this is the current group: " + temp.account.group);
-            //  debugger;
             if (temp.account.surveyPointer > 17) {
               if (result.groups.list.indexOf(temp.account.group) - 1 < 0) {
                 temp.selectedGroup = result.groups.list[result.groups.list.length - 1];
@@ -137,7 +122,6 @@ exports.default = function () {
           case 32:
 
             temp.selectedGroup = 0;
-            //  debugger;
             if (temp.account.surveyPointer > 17) {
               if (result.groups.list.indexOf(temp.account.group) + 1 >= result.groups.list.length) {
                 temp.selectedGroup = result.groups.list[0];
@@ -159,25 +143,6 @@ exports.default = function () {
                 return temp.selectedGroup == element.group;
               })
             };
-            // if ( result.groups.list.indexOf(temp.account.group) - 1 < 0 ) {
-            //   temp.selectedGroup = result.groups.list[ result.groups.list.length - 1 ]
-            //   temp.payload = {
-            //     group: temp.selectedGroup,
-            //     groupType: result.groups[ temp.selectedGroup ].type,
-            //     ideas: result.task.similarList[ result.task.taskPointer ].filter(
-            //       element => temp.selectedGroup == element.group
-            //     ),
-            //   }
-            // } else {
-            //   temp.selectedGroup = result.groups.list[ result.groups.list.indexOf(temp.account.group) - 1 ]
-            //   temp.payload = {
-            //     group: temp.selectedGroup,
-            //     groupType: result.groups[ temp.selectedGroup ].type,
-            //     ideas: result.task.similarList[ result.task.taskPointer ].filter(
-            //       element => temp.selectedGroup == element.group
-            //     ),
-            //   }
-            // }
 
             console.log('FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES FAVOURITES');
             console.log(temp.payload);
@@ -267,12 +232,5 @@ exports.default = function () {
 
   return query;
 }();
-// groupsAdd,
-// groupsRemove,
-// groupsAddAccount,
-// groupsRemoveAccount,
-// moveAccounFromGroup,
 
 
-// Redux client actions
-//# sourceMappingURL=server-query.js.map

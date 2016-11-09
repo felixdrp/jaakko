@@ -50,7 +50,6 @@ var GroupContainer = function (_Component) {
       selection: []
     };
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -105,4 +104,3 @@ GroupContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GroupContainer;
-//# sourceMappingURL=group-container.js.map

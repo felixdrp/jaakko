@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon ./server.js",
+    "start": "NODE_ENV=\"production\" node ./build/server.js",
     "build": "NODE_ENV=\"production\" ./deploy.sh",
     "test": "mocha --compilers js:babel-core/register --require babel-polyfill --recursive \"test/modules/**/*test.js\"",
     "test:watch": "mocha --watch --compilers js:babel-core/register --require babel-polyfill --timeout 5000 \"test/modules/**/*test.js\"",

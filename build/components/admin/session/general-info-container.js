@@ -52,7 +52,6 @@ var GeneralInfoContainer = function (_Component) {
       selection: []
     };
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -92,12 +91,6 @@ var GeneralInfoContainer = function (_Component) {
           accounts: accounts,
           groups: groups,
           groupList: groupList
-          // accountsNumber={props.groups[groupId].accountList.length}
-          // groupType={props.groups[groupId].type}
-          // assignToGroup={ (event) => props.assignSelectedAccountsToGroup( event, groupId ) }
-          // removeGroup={ () => {props.removeGroup(groupId)} }
-          // selectionHandler={props.selectionHandler}
-          // unassignAccount={props.unassignAccount}
         })
       );
     }
@@ -106,11 +99,8 @@ var GeneralInfoContainer = function (_Component) {
 }(_react.Component);
 
 GeneralInfoContainer.propTypes = {
-  // groups: PropTypes.object,
-  // accounts: PropTypes.object,
 };
 GeneralInfoContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GeneralInfoContainer;
-//# sourceMappingURL=general-info-container.js.map

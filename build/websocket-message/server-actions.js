@@ -29,19 +29,13 @@ var _actions = require('../actions/actions');
 
 var _queryActions = require('./query-actions');
 
-// Server socket actions
-// Socket action types:
 
-// Send the user to a new page
 var MUTATE = exports.MUTATE = 'MUTATE';
 
-// Redux client actions
 var QUERY = exports.QUERY = 'QUERY';
 var ACTION = exports.ACTION = 'ACTION';
 
-// Register a new account in the db and add to the account list
 var REGISTER_ACCOUNT = exports.REGISTER_ACCOUNT = 'REGISTER_ACCOUNT';
-// Register using socket action creator
 function registerAccount(_ref) {
   var firstName = _ref.firstName,
       surname = _ref.surname,
@@ -62,9 +56,7 @@ function registerAccount(_ref) {
   };
 }
 
-// Check the account and add to the account list
 var LOGIN_ACCOUNT = exports.LOGIN_ACCOUNT = 'LOGIN_ACCOUNT';
-// Register using socket action creator
 function loginAccount(_ref2) {
   var email = _ref2.email,
       password = _ref2.password;
@@ -79,7 +71,6 @@ function loginAccount(_ref2) {
   };
 }
 
-// Log the account in the client redux store
 function wsLogAccount(_ref3) {
   var email = _ref3.email,
       firstName = _ref3.firstName,
@@ -98,7 +89,6 @@ function wsLogAccount(_ref3) {
   };
 }
 
-// Goto page
 function wsGotoPage(_ref4) {
   var url = _ref4.url,
       _ref4$options = _ref4.options,
@@ -112,7 +102,6 @@ function wsGotoPage(_ref4) {
   };
 }
 
-// Register a group socket action creator
 function wsGroupAdd(obj) {
   var name = obj && 'name' in obj ? obj.name : '';
   return {
@@ -124,7 +113,6 @@ function wsGroupAdd(obj) {
   };
 }
 
-// Remove a group socket action creator
 function wsGroupRemove(groupId) {
   return {
     type: MUTATE,
@@ -135,7 +123,6 @@ function wsGroupRemove(groupId) {
   };
 }
 
-// Register selected accounts to a group socket action creator
 function wsAssignSelectedAccountsToGroup(groupId) {
   var selected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
@@ -181,7 +168,6 @@ function wsAutomateGroupsCreation(numberOfGroups) {
   };
 }
 
-// update state in components ControlRoom socket action creator
 function swUpdateControlRoom(state) {
   return {
     type: ACTION,
@@ -190,7 +176,6 @@ function swUpdateControlRoom(state) {
   };
 }
 
-// update state in components ControlRoom socket action creator
 function wsSurveyStepAll(accountList) {
   return {
     type: MUTATE,
@@ -199,7 +184,6 @@ function wsSurveyStepAll(accountList) {
   };
 }
 
-// update redux state with info from survey
 function wsSubmitSurveyInfo(info) {
   return {
     type: MUTATE,
@@ -208,7 +192,6 @@ function wsSubmitSurveyInfo(info) {
   };
 }
 
-// Add ideas to de redux
 var TASK_IDEA_ADD = exports.TASK_IDEA_ADD = 'TASK_IDEA_ADD';
 
 function swTaskIdeaAdd(idea) {
@@ -219,7 +202,6 @@ function swTaskIdeaAdd(idea) {
   };
 }
 
-// Share idea with the group
 var TASK_UPDATE_GROUP_IDEAS = exports.TASK_UPDATE_GROUP_IDEAS = 'TASK_UPDATE_GROUP_IDEAS';
 
 function wsTaskUpdateGroupIdeas(bunchIdeas) {
@@ -230,7 +212,6 @@ function wsTaskUpdateGroupIdeas(bunchIdeas) {
   };
 }
 
-// Share idea with the group
 var SET_SURVEY_INITIALS = exports.SET_SURVEY_INITIALS = 'SET_SURVEY_INITIALS';
 
 function swSetSurveyInitials(payload) {
@@ -240,4 +221,3 @@ function swSetSurveyInitials(payload) {
     payload: payload
   };
 }
-//# sourceMappingURL=server-actions.js.map

@@ -27,6 +27,4 @@ function createToken() {
       resolve(buf.toString('hex'));
     });
   });
-} // About token in nodejs
-// http://www.kdelemme.com/2014/08/16/token-based-authentication-with-nodejs-redis/
-//# sourceMappingURL=token-generator.js.map
+} 

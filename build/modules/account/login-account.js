@@ -51,7 +51,6 @@ var loginAccount = exports.loginAccount = function () {
               newfieldsOptions = (0, _extends3.default)({}, _config.fieldsOptions);
             }
 
-            // Remove options don't used by loginAccount
             _context.t0 = _regenerator2.default.keys(newfieldsOptions);
 
           case 7:
@@ -76,9 +75,7 @@ var loginAccount = exports.loginAccount = function () {
             break;
 
           case 16:
-            // console.log('LLL> ' + Object.keys(newfieldsOptions))
 
-            // Check fields with its options
             error = _checkField2.default.checkAll(fields, newfieldsOptions);
 
             if (!(error !== null)) {
@@ -90,7 +87,6 @@ var loginAccount = exports.loginAccount = function () {
 
           case 19:
 
-            // Check login
             db = null, colUser = null, res = null, token = null, passport = null, user = null;
             _context.prev = 20;
             _context.next = 23;
@@ -99,7 +95,6 @@ var loginAccount = exports.loginAccount = function () {
           case 23:
             db = _context.sent;
 
-            // Check the user/email is not taken
             colUser = db.collection('User');
             _context.next = 27;
             return colUser.findOne({ email: fields.email });
@@ -123,7 +118,6 @@ var loginAccount = exports.loginAccount = function () {
             passport = _context.sent;
 
             res = _bcryptjs2.default.compareSync(fields.password, passport.password);
-            // If res = false then password not valid
 
             if (!(res === false)) {
               _context.next = 38;
@@ -201,4 +195,3 @@ var _bcryptjs = require('bcryptjs');
 var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-//# sourceMappingURL=login-account.js.map

@@ -59,7 +59,6 @@ var AccountsPerGroupView = function (_Component) {
     var _this = (0, _possibleConstructorReturn3.default)(this, (AccountsPerGroupView.__proto__ || (0, _getPrototypeOf2.default)(AccountsPerGroupView)).call(this));
 
     _this.handleTouchTap = function (event) {
-      // This prevents ghost click.
       event.preventDefault();
       var openMenus = _this.state.openMenus.slice();
       var anchorEl = _this.state.anchorEl.slice();
@@ -179,4 +178,3 @@ AccountsPerGroupView.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = AccountsPerGroupView;
-//# sourceMappingURL=accounts-per-group-view.js.map

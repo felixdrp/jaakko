@@ -22,13 +22,7 @@ var _qs2 = _interopRequireDefault(_qs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import TopHeaderMenuContainer from './top-header-menu-container'
-// import SearchCompact from './search-compact'
 
-/**
- * Component that renders the common view. The top header and the bottom foot.
- *
- */
 
 var CommonViewContainer = _react2.default.createClass({
   displayName: 'CommonViewContainer',
@@ -45,14 +39,6 @@ var CommonViewContainer = _react2.default.createClass({
   },
 
 
-  // Uncomment to prevent leave message
-  // componentDidMount() {
-  //   window.addEventListener('beforeunload', this.beforeunload)
-  // },
-  //
-  // componentWillUnmount() {
-  //   window.removeEventListener('beforeunload', this.beforeunload)
-  // },
 
 
   render: function render() {
@@ -70,9 +56,6 @@ var CommonViewContainer = _react2.default.createClass({
         {
           className: 'container',
           style: {
-            // paddingTop: 80,
-            // paddingBottom: 30,
-            // maxWidth: 700,
           }
         },
         props.children
@@ -83,10 +66,8 @@ var CommonViewContainer = _react2.default.createClass({
 
 function mapStateToProps(state, ownProps) {
   return {
-    // if route contains params
     params: ownProps.params,
     location: ownProps.location
   };
 }
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(CommonViewContainer);
-//# sourceMappingURL=common-view-container.js.map

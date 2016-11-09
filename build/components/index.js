@@ -83,28 +83,21 @@ var _wait2 = _interopRequireDefault(_wait);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.AccountSignIn = _signin2.default; /**
-                                           * Module to export the components needed by react-router (please look ./src/routes.js)
-                                           *
-                                           */
+exports.AccountSignIn = _signin2.default; 
 
-// Account
 
 exports.AccountSignUp = _signup2.default;
 
-// Admin Page
 
 exports.ControlRoom = _controlRoom2.default;
 exports.GroupManager = _groupManager2.default;
 exports.SessionManager = _sessionManager2.default;
 exports.ResultsManager = _resultsManager2.default;
 
-// Generic
 
 exports.AppContainer = _appContainer2.default;
 exports.CommonViewContainer = _commonViewContainer2.default;
 
-// Survey
 
 exports.SurveyContainer = _surveyContainer2.default;
 exports.Example = _example2.default;
@@ -117,4 +110,3 @@ exports.Favourites = _favourites2.default;
 exports.Similarities = _similarities2.default;
 exports.Results = _results2.default;
 exports.Wait = _wait2.default;
-//# sourceMappingURL=index.js.map

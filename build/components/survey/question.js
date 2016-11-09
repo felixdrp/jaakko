@@ -74,19 +74,6 @@ var _svgIcons = require('material-ui/svg-icons');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-// var entryQuestionnarie = {
-//   introText : "",
-//
-//   questions : [
-//     {
-//       name : "",
-//       text : "",
-//       type : "",
-//       typeVars : {}
-//     },
-//   ],
-// };
 var TEXT_FIELD_TYPE = 'textField';
 var LIST_FIELD_TYPE = 'listField';
 var SLIDER_FIELD_TYPE = 'sliderField';
@@ -366,7 +353,6 @@ var exitQuestionnaire = {
   }]
 };
 
-// '0	10	20	30	40	50	60	70	80	90	100','Cannot			Moderately				highly certain 	   ','do at all			Can do					can do']
 
 var Question = function (_Component) {
   (0, _inherits3.default)(Question, _Component);
@@ -401,13 +387,11 @@ var Question = function (_Component) {
   }, {
     key: 'handleChange',
     value: function handleChange(event, index, value, name) {
-      //  debugger;
       this.setState((0, _defineProperty3.default)({}, name, value));
     }
   }, {
     key: 'handleSliderChange',
     value: function handleSliderChange(event, value, name) {
-      //    debugger;
       this.setState((0, _defineProperty3.default)({}, name, value));
     }
   }, {
@@ -420,7 +404,6 @@ var Question = function (_Component) {
     key: 'render',
 
 
-    //'_marker'
     value: function render() {
       var _this2 = this;
 
@@ -436,9 +419,7 @@ var Question = function (_Component) {
         return _react2.default.createElement('div', null);
       }
 
-      // let message = this.props.message? this.props.message : 'Question'
 
-      //Uncommeting this
       var questionnaire = this.props.type == 'entry' ? entryQuestionnarie : exitQuestionnaire;
 
       var message = 'Question';
@@ -458,7 +439,7 @@ var Question = function (_Component) {
               q.text,
               _react2.default.createElement(_TextField2.default, { id: q.name, style: {
                   paddingLeft: 10
-                } //       handleChange(event, index, value, name) {
+                } 
                 , onChange: function onChange(event, index, value) {
                   return _this2.handleChange(event, value, index, q.name);
                 } })
@@ -750,10 +731,8 @@ Question.contextTypes = {
 
 
 Question.propTypes = {}
-// addTodo: PropTypes.func.isRequired
 
 
-//export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -762,4 +741,3 @@ Question.propTypes = {}
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Question);
-//# sourceMappingURL=question.js.map

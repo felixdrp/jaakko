@@ -18,4 +18,3 @@ function reportError() {
     uuid: uuid
   };
 }
-//# sourceMappingURL=error.js.map

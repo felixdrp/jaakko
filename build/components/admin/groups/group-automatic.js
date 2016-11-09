@@ -69,7 +69,6 @@ var GroupAutomatic = function (_Component) {
       numberGroups: 0
     };
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -77,7 +76,6 @@ var GroupAutomatic = function (_Component) {
   (0, _createClass3.default)(GroupAutomatic, [{
     key: 'createGroups',
     value: function createGroups(e) {
-      // Send a call to the server to create the groups automatically.
       if (this.state.numberGroups > 0) {
         this.props.automateGroupCreation(this.state.numberGroups);
       }
@@ -97,8 +95,6 @@ var GroupAutomatic = function (_Component) {
   }, {
     key: 'drawGroups',
     value: function drawGroups(g, a) {
-      // console.log(a/g);
-      // console.log(a%g);
 
       var baseA = Math.floor(a / g);
       var orderedGroupsAndAccounts = [];
@@ -120,7 +116,6 @@ var GroupAutomatic = function (_Component) {
 
       var style = {
         iconGroup: {
-          // color: '#565555',
           height: 33,
           width: 35,
           marginRight: 10
@@ -159,9 +154,7 @@ var GroupAutomatic = function (_Component) {
           },
           _react2.default.createElement(
             _FloatingActionButton2.default
-            // Minus button
 
-            // Plus button
             ,
             { mini: true,
               style: {},
@@ -195,7 +188,6 @@ var GroupAutomatic = function (_Component) {
           ),
           _react2.default.createElement(
             _RaisedButton2.default
-            // Group create main button
             ,
             { onClick: function onClick(e) {
                 return _this2.createGroups(e);
@@ -221,14 +213,12 @@ var GroupAutomatic = function (_Component) {
           )
         ),
 
-        // Add group and accounts icons
         groupsProto.map(function (groupAccountsLength, index) {
           return _react2.default.createElement(
             'div',
             { key: index },
             _react2.default.createElement(_group2.default, { style: style.iconGroup }),
 
-            // Add as many user icons as groupAccountsLength
             Array(groupAccountsLength).fill('').map(function (ignored, index) {
               return _react2.default.createElement(_personOutline2.default, { key: index, style: style.iconAccount });
             })
@@ -248,4 +238,3 @@ GroupAutomatic.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GroupAutomatic;
-//# sourceMappingURL=group-automatic.js.map

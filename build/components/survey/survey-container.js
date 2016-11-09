@@ -59,7 +59,6 @@ var SurveyContainer = function (_Component) {
       payload: 'some info'
     };
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -80,11 +79,7 @@ var SurveyContainer = function (_Component) {
       var _this2 = this;
 
       console.log('mooooontttttooooooooooo!!!!!!!!!');
-      // Load the study information
-      // Ask for the information to the server
       var getInfo = function getInfo() {
-        // console.log('this.context.websocket.ws.readyState')
-        // console.log(this.context.websocket.ws.readyState)
         _this2.context.websocket.send((0, _queryActions.wsSurveyStateGet)(_this2.props.account.email || 'unassigned'));
       };
 
@@ -94,9 +89,6 @@ var SurveyContainer = function (_Component) {
         getInfo();
       }
 
-      // Take the payload directly from the session-data file.
-      // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.setState({payload: 'some more info!!'});}, 4000)
-      // setTimeout(() => {console.log('didMount> ' + this.state.payload);this.submitInfo({payload: 'some more info!!'});}, 4000)
       this.setState({ start: Date.now() });
     }
   }, {
@@ -138,8 +130,6 @@ var SurveyContainer = function (_Component) {
 }(_react.Component);
 
 SurveyContainer.propTypes = {
-  // groups: PropTypes.object,
-  // accounts: PropTypes.object,
 };
 SurveyContainer.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired,
@@ -154,4 +144,3 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(SurveyContainer);
-//# sourceMappingURL=survey-container.js.map

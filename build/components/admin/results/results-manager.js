@@ -102,7 +102,6 @@ var ResultsManager = function (_Component) {
 
     _this.state = {};
 
-    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -121,7 +120,6 @@ var ResultsManager = function (_Component) {
 
       if (this.props.storeSession && 'session' in this.props.storeSession) {
         surveyxMonetaryTypeIndex = this.props.storeSession.session.surveyPath.reduce(function (prev, element, index) {
-          // The survey have a monetary value?
           if (element.type == 'RESULTS' || element.type == 'MATH_RESULTS') {
             prev.push(index);
             return prev;
@@ -186,7 +184,6 @@ var ResultsManager = function (_Component) {
                   style: {
                     marginLeft: 10
                   }
-                  // Task Round {taskNumber}
                 },
                 'Rank ',
                 rank,
@@ -204,7 +201,6 @@ var ResultsManager = function (_Component) {
                 pay = 'pay' in data ? data.pay : 0;
               }
 
-              // Math result
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -212,7 +208,6 @@ var ResultsManager = function (_Component) {
                   style: {
                     marginLeft: 10
                   }
-                  // Math Round
                 },
                 'Rank ',
                 rank,
@@ -222,7 +217,6 @@ var ResultsManager = function (_Component) {
                 pay
               ));
 
-              // Total survey result
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
                 {
@@ -334,25 +328,16 @@ var ResultsManager = function (_Component) {
   }]);
   return ResultsManager;
 }(_react.Component);
-//
-// import GeneralInfoContainer from './general-info-container';
-// import SessionTrackerContainer from './session-tracker-container';
 
 
-// Icons
-
-// import FlatButton from 'material-ui/FlatButton';
 
 
-// groups
+
 
 
 ResultsManager.propTypes = {
-  // groups: PropTypes.object,
-  // unassignedAccounts: PropTypes.object,
 };
 ResultsManager.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = ResultsManager;
-//# sourceMappingURL=results-manager.js.map

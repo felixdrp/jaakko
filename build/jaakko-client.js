@@ -52,43 +52,27 @@ var _clientReducers = require('./reducers/client-reducers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// The initial state from server-generated HTML
-// have a look to server code.
-// *** Load react and react-dom ***
 var initialState = window.__INITIAL_STATE__ || {};
 
-// // https://github.com/rackt/history/blob/master/docs/GettingStarted.md
-// const history = createHistory()
-
-// https://github.com/reactjs/react-router-redux
 
 
-// *** Load store reducers ***
+
 var middleware = (0, _reactRouterRedux.routerMiddleware)(_reactRouter.browserHistory);
 
-// // Create Redux store with initial state
 var store = (0, _redux.createStore)((0, _redux.combineReducers)({
   account: _clientReducers.account,
   routing: _reactRouterRedux.routerReducer,
   task: _clientReducers.task
 }), initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(middleware),
-// Redux devToolsExtension
 window.devToolsExtension ? window.devToolsExtension() : function (f) {
   return f;
 }));
-// Create an enhanced history that syncs navigation events with the store
 var history = (0, _reactRouterRedux.syncHistoryWithStore)(_reactRouter.browserHistory, store);
 
-// console.log(store.getState())
-// Connection example: "wss://localhost:8008"
 var ws = new WebSocket('wss://' + location.host);
-// var websocket used to send data.
 var websocket = new _websocketSimple2.default(ws);
 
-// Llegan mensajes del servidor:
 ws.onmessage = function (event) {
-  // Check the query.
-  // Process action.
   var message = void 0;
   console.log('>>>' + event.data);
   if (/^\{.*\}$/.test(event.data)) {
@@ -100,31 +84,17 @@ ws.onmessage = function (event) {
   console.log('>>>' + (0, _stringify2.default)(event.data));
 
   switch (message.type) {
-    // Process message of type MUTATE
     case 'MUTATE':
-      // mutate({
-      //   action: message.action,
-      //   payload: message.payload,
-      //   websocket,
-      //   store
-      // })
       break;
-    // Process message of type QUERY
     case 'QUERY':
       console.log(message.type + ' ' + message.payload.email || '');
       break;
-    // Process message of type ACTIONS
     default:
-      // dispatch 'ACTIONS'
       console.log(message.type + ' ' + message.payload || '');
       store.dispatch({ type: message.action, payload: message.payload });
   }
 };
 
-// Simulate a login...
-// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'me@me.me', password: 'algo'} } ), 2000)
-// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'felixdrp@gmail.com', password: '1234'} } ), 1000)
-// setTimeout( () => websocket.send( { type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: {email:'rpsoft@gmail.com', password: '1234'} } ), 1000)
 
 function login20Accounts() {
   var email = function email(i) {
@@ -134,14 +104,9 @@ function login20Accounts() {
     websocket.send({ type: 'MUTATE', action: 'LOGIN_ACCOUNT', payload: { email: email(i), password: '1234' } });
   }
 }
-// setTimeout( () => login20Accounts(), 1000)
 
 
-// {"firstName":"Jesus","surname":"RP","email":"rpsoft@gmail.com","password":"1234","reEnterPassword":"1234"}
-// Move the client to a web page...
-// setTimeout( () => store.dispatch(push('/modules/example')), 3000)
 
-// Class to pass the websocket with context to the rest of components.
 
 var HiperApp = function (_React$Component) {
   (0, _inherits3.default)(HiperApp, _React$Component);
@@ -182,4 +147,3 @@ HiperApp.childContextTypes = {
     (0, _routes2.default)(history)
   )
 ), document.getElementById('app'));
-//# sourceMappingURL=jaakko-client.js.map
