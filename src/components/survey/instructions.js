@@ -38,7 +38,7 @@ var instructionsData = {
             +'\n[b]3.Favourites Stage:[/b] You are asked to rate the ideas produced by another group. The pay each participant receives depends on the number of stars received. Most stars → highest rank → highest pay.'
             +'\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.'
             +'\n[b]Attribution:[/b] Your ideas will remain anonymous to everyone'
-            +'\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+            +'\n[b]Pay:[/b] You will be paid £8.49 from completing all tasks.'
 
     },
     1 : {
@@ -50,7 +50,7 @@ var instructionsData = {
             +'\n[b]3.Favourites Stage:[/b] You are asked to rate the ideas produced by another group. The pay each participant receives depends on the number of stars received. Most stars → highest rank → highest pay.'
             +'\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.'
             +'\n[b]Attribution:[/b] Your name will appear next to your ideas'
-            +'\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+            +'\n[b]Pay:[/b] You will be paid £8.49 from completing all tasks.'
 
     },
     2 : {
@@ -63,8 +63,8 @@ var instructionsData = {
             +'\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.'
             +'\n[b]Attribution:[/b] Your ideas will remain anonymous to everyone'
             +'\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:'
-            +'\n1. £5 – Highest ranking participant'
-            +'\n2. £2'
+            +'\n1. £5.55 – Highest ranking participant'
+            +'\n2. £2.1'
             +'\n3. £1'
             +'\n4. £0.5'
             +'\n5. £0 – Lowest ranking participant'
@@ -80,8 +80,8 @@ var instructionsData = {
             +'\n[b]Final Task:[/b] You are asked to answer a series of questions. Your pay will depend on the number of correct answers relative to others in your group.'
             +'\n[b]Attribution:[/b] Your name will appear next to your ideas'
             +'\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:'
-            +'\n1. £5 – Highest ranking participant'
-            +'\n2. £2'
+            +'\n1. £5.55 – Highest ranking participant'
+            +'\n2. £2.1'
             +'\n3. £1'
             +'\n4. £0.5'
             +'\n5. £0 – Lowest ranking participant'
@@ -94,7 +94,7 @@ var instructionsData = {
       text : 'There will be a line shown at the start. Come up with as many things the line reminds you of or could be a part of. Remember you have to use the whole line. You will be given 5 minutes to complete the task.'
               +'\n\n[b]Important note:[/b]'
               +'\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.'
-              +'\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+              +'\n\n[b]Pay:[/b] You will be paid £8.49 from completing all tasks.'
       },
     1: {
       title : 'Line Meanings',
@@ -102,7 +102,7 @@ var instructionsData = {
               +'\n\n[b]Important note:[/b]'
               +'\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.'
               +'\n\n[b]Attribution:[/b] Your ideas will be seen by your group together with your name'
-              +'\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+              +'\n\n[b]Pay:[/b] You will be paid £8.49 from completing all tasks.'
       },
     2: {
         title : 'Line Meanings',
@@ -110,8 +110,8 @@ var instructionsData = {
                 +'\n\n[b]Important note:[/b]'
                 +'\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.'
                 +'\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:'
-                +'\n1. £5 – Highest ranking participant'
-                +'\n2. £2'
+                +'\n1. £5.55 – Highest ranking participant'
+                +'\n2. £2.1'
                 +'\n3. £1'
                 +'\n4. £0.5'
                 +'\n5. £0 – Lowest ranking participant'
@@ -123,8 +123,8 @@ var instructionsData = {
                 +'\nThere are no restrictions on what the line can remind you of or can and can’t be a part of but your idea must be justified or explained using the description. I also ask to kindly refrain from figures which are explicit or inappropriate in nature.'
                 +'\n\n[b]Attribution:[/b] Your ideas will be seen by your group together with your name'
                 +'\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:'
-                +'\n1. £5 – Highest ranking participant'
-                +'\n2. £2'
+                +'\n1. £5.55 – Highest ranking participant'
+                +'\n2. £2.1'
                 +'\n3. £1'
                 +'\n4. £0.5'
                 +'\n5. £0 – Lowest ranking participant'
@@ -145,7 +145,7 @@ var instructionsData = {
              +'\nAll submitted entries can be seen by your group.'
              +'\n\nThe previous example would look like this…'
              +'\n[EXAMPLE]'
-             +'\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+             +'\n\n[b]Pay:[/b] You will be paid £8.49 from completing all tasks.'
       },
       1: {
         title : 'Objects Task',
@@ -159,7 +159,7 @@ var instructionsData = {
                +' All submitted entries can be seen by your group together with your name.'
                +'\n\nThe previous example would look like this…'
                +'\n[EXAMPLE]'
-               +'\n\n[b]Pay:[/b] You will be paid £8.10 from completing all tasks.'
+               +'\n\n[b]Pay:[/b] You will be paid £8.49 from completing all tasks.'
         },
       2: {
         title : 'Objects Task',
@@ -174,8 +174,8 @@ var instructionsData = {
                +'\n\nThe previous example would look like this…'
                +'\n[EXAMPLE]'
                +'\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:'
-               +'\n1. £5 – Highest ranking participant'
-               +'\n2. £2'
+               +'\n1. £5.55 – Highest ranking participant'
+               +'\n2. £2.1'
                +'\n3. £1'
                +'\n4. £0.5'
                +'\n5. £0 – Lowest ranking participant'
@@ -197,8 +197,8 @@ var instructionsData = {
                 //  +'\nDescription: A tool that can be used to scratch your back'
                 //  +'\n			(might be able to show using screen shot)'
                  +'\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:'
-                 +'\n1. £5 – Highest ranking participant'
-                 +'\n2. £2'
+                 +'\n1. £5.55 – Highest ranking participant'
+                 +'\n2. £2.1'
                  +'\n3. £1'
                  +'\n4. £0.5'
                  +'\n5. £0 – Lowest ranking participant'

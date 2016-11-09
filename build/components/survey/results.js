@@ -146,9 +146,9 @@ var Results = function (_Component) {
     _this.getPay = function (i) {
       switch (i) {
         case 1:
-          return 5;
+          return 5.55;
         case 2:
-          return 2;
+          return 2.1;
         case 3:
           return 1;
         case 4:
