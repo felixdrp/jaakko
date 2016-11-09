@@ -62,40 +62,6 @@ class AltObjectTask extends Component {
     websocket: React.PropTypes.object,
   };
 
-  componentWillMount() {
-
-    //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
-  }
-
-  // componentWillReceiveProps() {
-  //   console.log('componentWillReceiveProps')
-  // }
-  // shouldComponentUpdate() {
-  //   console.log('shouldComponentUpdate')
-  //   return true
-  // }
-
-//   handleSave(text) {
-//     if (text.length !== 0) {
-//       this.props.addTodo(text)
-//     }
-//   }
-//
-//   handleChange(event, index, value, name) {
-//     //debugger;
-//     this.setState({[name] : value})
-//   };
-//
-//   handleSliderChange(event, value, name) {
-// //    debugger;
-//     this.setState({[name] : value})
-//   };
-//
-//   handleRadioChange(event, value, name) {
-//
-//     this.setState({[name] : value})
-//   };
-
   /**
   * Just missing the account information.
   */
@@ -216,122 +182,119 @@ class AltObjectTask extends Component {
     return (
       <div style={{display:'flex'}}>
 
-          <Card
+        <Card
+          style={{
+            padding: 30,
+            margin: '2% 3% 0%',
+            maxWidth: 900,
+            minWidth: 750,
+          }}
+        >
+          <CardHeader
+            title={title}
+            titleStyle={{
+              fontSize: 24,
+              color: textColor,
+            }}
+          />
+          <CardText
             style={{
-              padding: 30,
-              margin: '2% 3% 0%',
-              maxWidth: 900,
-              minWidth: 750,
+              paddingTop: 0,
             }}
           >
-            <CardHeader
-              title={title}
-              titleStyle={{
-                fontSize: 24,
-                color: textColor,
-              }}
-            />
-            <CardText
-              style={{
-                paddingTop: 0,
-              }}
-              >
-              {
-                text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
-              }
+            {
+              text.split('\n').map( (item,i) => { return <div key={i} style={{marginBottom:20}}>{item}</div>})
+            }
 
-              {
-                tasktype == 'alternativeObjectFigural' ?
-                                            <img
-                                              style={{
-                                                maxWidth: 300,
-                                                minWidth: 250,
-                                              }}
-                                              src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"
-                                            />
-                                            :
-                                            <div></div>
-              }
-              <Timer
-                limitTime={20}
-                timerCallback={ () => this.gatherData() }
-              ></Timer>
+            {
+              tasktype == 'alternativeObjectFigural' ?
+                <img
+                  style={{
+                    maxWidth: 300,
+                    minWidth: 250,
+                  }}
+                  src="http://bbsimg.ngfiles.com/1/2111000/ngbbs40837c1fadb3f.jpg"
+                />
+              :
+              <div></div>
+            }
+            <Timer
+              limitTime={20}
+              timerCallback={ () => this.gatherData() }
+            ></Timer>
 
-              <div style={{marginTop:20}}>
+            <div style={{marginTop:20}}>
+              <Card>
+                <CardText>
+                  Title: <TextField id={currentEntry.id+" title"}
+                    style={{marginLeft:10,}}
+                    value={this.state.currentEntry.title}
+                    onChange={ (event, index, value) => this.handleEntryChange(event, value, index, (currentEntry.id+' title'))}
+                         /><br/>
+                  Description: <TextField
+                    multiLine={true}
+                    rows={1}
+                    rowsMax={10}
+                    id={currentEntry.id+" description"}
+                    style={{marginLeft:10, width: '80%',}}
+                    value={this.state.currentEntry.description}
+                    onChange={ (event, index, value) => this.handleEntryChange(event, value, index, (currentEntry.id+' description'))}
+                               />
+                </CardText>
+              </Card>
+            </div>
+
+            <RaisedButton
+              id="newEntry"
+              onClick={ (e) => this.addEntry(e) }
+              type="button"
+              backgroundColor='rgb(124, 210, 118)'
+              style={{marginTop:20, }}
+            >
+              New Entry
+            </RaisedButton>
+          </CardText>
+        </Card>
+
+        {/* Group Entries */}
+        <Card
+          style={{
+            margin: '2% 0% 5%',
+            minWidth: 400,
+            backgroundColor: 'rgb(234, 233, 233)',
+          }}
+        >
+          <CardHeader
+            title='Group entries'
+            titleStyle={{
+              fontSize: 24,
+              color: textColor,
+            }}
+          />
+          <CardText
+            style={{
+              paddingTop: 0,
+            }}
+          >
+            {
+              groupTasks.sort( (a, b) => b.timeSubmitted - a.timeSubmitted
+              ).map( (entry,i) => {
+                return <div key={i} style={{padding:5}}>
                   <Card>
-                  <CardText>
-                      Title: <TextField id={currentEntry.id+" title"}
-                                        style={{marginLeft:10,}}
-                                        value={this.state.currentEntry.title}
-                                        onChange={ (event, index, value) => this.handleEntryChange(event, value, index, (currentEntry.id+' title'))}
-                             /><br/>
-                      Description: <TextField
-                                    multiLine={true}
-                                    rows={1}
-                                    rowsMax={10}
-                                    id={currentEntry.id+" description"}
-                                    style={{marginLeft:10, width: '80%',}}
-                                    value={this.state.currentEntry.description}
-                                    onChange={ (event, index, value) => this.handleEntryChange(event, value, index, (currentEntry.id+' description'))}
-                             />
-                  </CardText>
-                 </Card>
-              </div>
+                    <CardHeader style={{padding:8}}>
+                      { [1, 3].includes(entry.groupType)? `Author: ${entry.firstName} ${entry.surname} > `: '' }
+                      { entry.title }
+                    </CardHeader>
+                    <CardText style={{padding:8}}>
+                      {entry.description}
+                    </CardText>
+                  </Card>
+                </div>
+              })
+            }
+          </CardText>
 
-              <RaisedButton
-                id="newEntry"
-                onClick={ (e) => this.addEntry(e) }
-                type="button"
-                backgroundColor='rgb(124, 210, 118)'
-                style={{marginTop:20, }}
-              >
-                New Entry
-              </RaisedButton>
-
-            </CardText>
-
-          </Card>
-
-          <Card  style={{
-
-              margin: '2% 0% 5%',
-              minWidth: 400,
-              backgroundColor: 'rgb(234, 233, 233)',
-            }}
-          >
-            <CardHeader
-              title='Group entries'
-              titleStyle={{
-                fontSize: 24,
-                color: textColor,
-              }}
-            />
-            <CardText
-              style={{
-                paddingTop: 0,
-              }}
-              >
-
-              {
-                groupTasks.map( (entry,i) => {
-
-                  return <div key={i} style={{padding:5}}>
-                                <Card>
-                                  <CardHeader style={{padding:8}}>
-                                    { [1, 3].includes(entry.groupType)? `Author: ${entry.firstName} ${entry.surname} > `: '' }
-                                    { entry.title }
-                                  </CardHeader>
-                                  <CardText style={{padding:8}}>
-                                    {entry.description}
-                                  </CardText>
-                                </Card>
-                        </div>
-                })
-              }
-
-              </CardText>
-
-          </Card>
+        </Card>
       </div>
     )
   }

@@ -106,54 +106,18 @@ var AltObjectTask = function (_Component) {
     return _this;
   }
 
+  /**
+  * Just missing the account information.
+  */
+
+
+  // addGroupEntry = (entry) => {
+  //   var entries  = this.state.groupEntries.slice()
+  //   entries.push({id : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
+  //   this.setState({groupEntries : entries });
+  // }
+
   (0, _createClass3.default)(AltObjectTask, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {}
-
-    //this.addGroupEntry({ title : 'Super paper clip' ,description : 'the super super paperclip that will rule them all'});
-
-
-    // componentWillReceiveProps() {
-    //   console.log('componentWillReceiveProps')
-    // }
-    // shouldComponentUpdate() {
-    //   console.log('shouldComponentUpdate')
-    //   return true
-    // }
-
-    //   handleSave(text) {
-    //     if (text.length !== 0) {
-    //       this.props.addTodo(text)
-    //     }
-    //   }
-    //
-    //   handleChange(event, index, value, name) {
-    //     //debugger;
-    //     this.setState({[name] : value})
-    //   };
-    //
-    //   handleSliderChange(event, value, name) {
-    // //    debugger;
-    //     this.setState({[name] : value})
-    //   };
-    //
-    //   handleRadioChange(event, value, name) {
-    //
-    //     this.setState({[name] : value})
-    //   };
-
-    /**
-    * Just missing the account information.
-    */
-
-
-    // addGroupEntry = (entry) => {
-    //   var entries  = this.state.groupEntries.slice()
-    //   entries.push({id : ('groupEntry'+entries.length), title : entry.title ,description : entry.description});
-    //   this.setState({groupEntries : entries });
-    // }
-
-  }, {
     key: 'handleEntryChange',
     value: function handleEntryChange(event, index, value, id) {
       //var entries  = this.state.entries.slice()
@@ -308,8 +272,8 @@ var AltObjectTask = function (_Component) {
         ),
         _react2.default.createElement(
           _Card.Card,
-          { style: {
-
+          {
+            style: {
               margin: '2% 0% 5%',
               minWidth: 400,
               backgroundColor: 'rgb(234, 233, 233)'
@@ -329,8 +293,9 @@ var AltObjectTask = function (_Component) {
                 paddingTop: 0
               }
             },
-            groupTasks.map(function (entry, i) {
-
+            groupTasks.sort(function (a, b) {
+              return b.timeSubmitted - a.timeSubmitted;
+            }).map(function (entry, i) {
               return _react2.default.createElement(
                 'div',
                 { key: i, style: { padding: 5 } },
