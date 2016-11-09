@@ -162,19 +162,22 @@ var ResultsManager = function (_Component) {
 
           moneyData.forEach(function (current, index2) {
             var data = void 0;
-            var rank = void 0,
-                score = void 0,
-                pay = void 0,
-                mathScore = void 0;
+            var rank = '_',
+                score = '_',
+                pay = 0,
+                mathScore = -1;
 
             data = current.surveyData.data.find(function (element) {
               return element.account.email == current.surveyData.currentUserEmail;
             });
 
             if (current.surveyType == 'RESULTS') {
-              rank = 'rank' in data ? data.rank : '_';
-              score = 'score' in data ? data.score : '_';
-              pay = 'pay' in data ? data.pay : 0;
+
+              if (data) {
+                rank = 'rank' in data ? data.rank : '_';
+                score = 'score' in data ? data.score : '_';
+                pay = 'pay' in data ? data.pay : 0;
+              }
 
               accountComponent.push(_react2.default.createElement(
                 _Table.TableRowColumn,
@@ -195,9 +198,11 @@ var ResultsManager = function (_Component) {
               taskNumber += 1;
               total += pay;
             } else {
-              rank = 'rank' in data ? data.rank : '_';
-              mathScore = 'mathScore' in data ? data.mathScore : '_';
-              pay = 'pay' in data ? data.pay : 0;
+              if (data) {
+                rank = 'rank' in data ? data.rank : '_';
+                mathScore = 'mathScore' in data ? data.mathScore : '_';
+                pay = 'pay' in data ? data.pay : 0;
+              }
 
               // Math result
               accountComponent.push(_react2.default.createElement(

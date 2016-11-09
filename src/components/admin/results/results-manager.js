@@ -105,14 +105,20 @@ class ResultsManager extends Component {
           moneyData.forEach(
             (current, index2) => {
               let data
-              let rank, score, pay, mathScore
+              let rank = '_',
+                  score = '_',
+                  pay = 0,
+                  mathScore = -1
 
               data = current.surveyData.data.find( (element) => element.account.email == current.surveyData.currentUserEmail )
 
               if ( current.surveyType == 'RESULTS' ) {
-                rank = 'rank' in data? data.rank: '_'
-                score = 'score' in data? data.score: '_'
-                pay = 'pay' in data? data.pay: 0
+
+                if ( data ) {
+                  rank = 'rank' in data? data.rank: '_'
+                  score = 'score' in data? data.score: '_'
+                  pay = 'pay' in data? data.pay: 0
+                }
 
                 accountComponent.push(
                   <TableRowColumn
@@ -128,9 +134,11 @@ class ResultsManager extends Component {
                 taskNumber += 1
                 total += pay
               } else {
-                rank = 'rank' in data? data.rank: '_'
-                mathScore = 'mathScore' in data? data.mathScore: '_'
-                pay = 'pay' in data? data.pay: 0
+                if ( data ) {
+                  rank = 'rank' in data? data.rank: '_'
+                  mathScore = 'mathScore' in data? data.mathScore: '_'
+                  pay = 'pay' in data? data.pay: 0
+                }
 
                 // Math result
                 accountComponent.push(
