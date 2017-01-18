@@ -346,6 +346,18 @@ var exitQuestionnaire = {
       typeVars : {}
     },
     {
+      name : 'institutionBelonging',
+      text : '1.b. What institution do you currently study at?',
+      type : TEXT_FIELD_TYPE,
+      typeVars : {}
+    },
+    {
+      name : 'currentStudiesSubjects',
+      text : '1.c. During your current studies, what are the subjects you study or have studied? E.g. Sculpture or English lit and Film Studies, etc.',
+      type : TEXT_FIELD_TYPE,
+      typeVars : {}
+    },
+    {
       name : 'creativePreviousSchool',
       text : '2. Have you been to an art school before the institution you attend now?',
       type : TEXT_FIELD_TYPE,
@@ -457,8 +469,8 @@ var exitQuestionnaire = {
     {
       name : 'wouldYouTradeplaces',
       text : '16. Would you change places with any other participant in the experiment assuming you would put in the same effort as they did for the pay they received?',
-      type : TEXT_FIELD_TYPE,
-      typeVars : {}
+      type : LIST_FIELD_TYPE,
+      typeVars : {opts:['Yes', 'No']}
     },
   ],
 };
@@ -768,9 +780,12 @@ class Question extends Component {
               >
 
               {text}
+
               <br />
 
               {qs}
+
+              <br />
 
               <RaisedButton
                 id="submitAnswers"

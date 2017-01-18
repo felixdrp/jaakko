@@ -19,53 +19,53 @@ const sessionData = {
 
   surveyPath: [
 
-    wait(),
-
-    {
-      type: QUESTION,
-      payload: 'entry',
-      time: 'inf',
-    },
-
-    wait(),
-
-    {
-      type: INSTRUCTIONS,
-      payload: 'experimentStructure',
-      time: 'inf',
-    },
-
-    wait(),
-
-    ...task(),
-
-    wait(),
-
-    ...task2(),
-
-    wait(),
-
-    {
-      type: INSTRUCTIONS,
-      payload: 'math',
-      time: 'inf',
-    },
-
-    wait(),
-
-    {
-      type: MATH_CHALLENGE,
-      payload: '',
-      time: 'inf',
-    },
-
-    wait(),
-
-    {
-      type: MATH_RESULTS,
-      payload: '',
-      time: 'inf',
-    },
+    // wait(),
+    //
+    // {
+    //   type: QUESTION,
+    //   payload: 'entry',
+    //   time: 'inf',
+    // },
+    //
+    // wait(),
+    //
+    // {
+    //   type: INSTRUCTIONS,
+    //   payload: 'experimentStructure',
+    //   time: 'inf',
+    // },
+    //
+    // wait(),
+    //
+    // ...task(),
+    //
+    // wait(),
+    //
+    // ...task2(),
+    //
+    // wait(),
+    //
+    // {
+    //   type: INSTRUCTIONS,
+    //   payload: 'math',
+    //   time: 'inf',
+    // },
+    //
+    // wait(),
+    //
+    // {
+    //   type: MATH_CHALLENGE,
+    //   payload: '',
+    //   time: 'inf',
+    // },
+    //
+    // wait(),
+    //
+    // {
+    //   type: MATH_RESULTS,
+    //   payload: '',
+    //   time: 'inf',
+    // },
 
     wait(),
 

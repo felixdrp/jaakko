@@ -65,6 +65,8 @@ var Example = function (_Component) {
 }(_react.Component);
 
 Example.propTypes = {
+  // addTodo: PropTypes.func.isRequired
 };
 
 exports.default = Example;
+//# sourceMappingURL=example.js.map

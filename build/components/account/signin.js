@@ -87,6 +87,7 @@ var AccountSignIn = function (_React$Component) {
       password: { error: '', name: 'Password' }
     };
 
+    // Used to store references.
     _this._input = {};
     return _this;
   }
@@ -94,6 +95,8 @@ var AccountSignIn = function (_React$Component) {
   (0, _createClass3.default)(AccountSignIn, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      // Check if it was an error.
+      // Then pass the error from props to state.
       if (nextProps.loginStatus) {
         for (var field in nextProps.loginStatus) {
           this.setState((0, _defineProperty3.default)({}, field, (0, _extends3.default)({}, this.state[field], {
@@ -115,6 +118,7 @@ var AccountSignIn = function (_React$Component) {
                 input = this._input;
                 email = input.email.getValue();
                 password = input.password.getValue();
+                // debugger
 
                 this.context.websocket.send((0, _serverActions.loginAccount)({
                   email: email,
@@ -180,6 +184,7 @@ var AccountSignIn = function (_React$Component) {
         },
         _react2.default.createElement(_Card.CardHeader, {
           title: 'Login:'
+          // title="Login to Your Account"
           , titleStyle: {
             fontSize: 24,
             color: textColor
@@ -199,6 +204,7 @@ var AccountSignIn = function (_React$Component) {
               style: {
                 marginLeft: 30
               }
+              // action="https://localhost"
               , method: 'POST'
             },
             _react2.default.createElement(_TextField2.default, (0, _extends3.default)({ spellCheck: "false" }, {
@@ -274,6 +280,8 @@ var AccountSignIn = function (_React$Component) {
   }]);
   return AccountSignIn;
 }(_react2.default.Component);
+// import ReactMixin from 'react-mixin';
+// import Auth from '../services/AuthService'
 
 
 AccountSignIn.propTypes = {
@@ -291,3 +299,4 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AccountSignIn);
+//# sourceMappingURL=signin.js.map

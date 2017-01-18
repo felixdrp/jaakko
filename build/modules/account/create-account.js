@@ -64,6 +64,7 @@ var createAccount = exports.createAccount = function () {
               newfieldsOptions = (0, _extends3.default)({}, _config.fieldsOptions);
             }
 
+            // Check fields
             error = _checkField2.default.checkAll(fields, newfieldsOptions);
 
             if (!(error !== null)) {
@@ -90,6 +91,7 @@ var createAccount = exports.createAccount = function () {
           case 17:
             db = _context.sent;
 
+            // Check the user/email is not taken
             colUser = db.collection('User');
             _context.next = 21;
             return colUser.findOne({ email: fields.email });
@@ -106,7 +108,10 @@ var createAccount = exports.createAccount = function () {
             return _context.abrupt('return', (0, _error.reportError)('Email already used.', 'The email is already used.', 'REGISTER_EMAIL_ALREADY_TAKEN_ERROR', '4428b93b-3934-4137-aee1-5575c3e98360'));
 
           case 25:
+            // Create an mondoDB ObjectID for the new user
             newUserID = new _mongodb.ObjectID();
+            // Pass the token provided or create a new token
+            // debugger
 
             _context.t0 = fields.token;
 
@@ -129,6 +134,7 @@ var createAccount = exports.createAccount = function () {
               firstName: fields.firstName,
               surname: fields.surname,
               email: fields.email,
+              // uploadAsPrivate: true,
               token: token
             });
 
@@ -141,6 +147,7 @@ var createAccount = exports.createAccount = function () {
               hash: fields.hash || _crypto2.default.createHash('sha512').update(fields.email + fields.password).digest('base64'),
               provider: 'local',
               identifier: '',
+              // Hardcoding for oauth2
               accessToken: '',
               refreshToken: '',
               answer: ''
@@ -168,6 +175,10 @@ var createAccount = exports.createAccount = function () {
 
           case 45:
 
+            // // console.log('>>>>>>> ' + JSON.stringify(fieldsOptions,null,2) )
+            // // console.log('>>>>>>> ' + JSON.stringify(options,null,2) )
+            // console.log('Fields >>>>>>> ' + JSON.stringify(fields) )
+            // console.log('OPTIONS >>>>>>> ' + JSON.stringify(fieldsOptions) )
             db.close();
             return _context.abrupt('return', token);
 
@@ -209,3 +220,4 @@ var _crypto = require('crypto');
 var _crypto2 = _interopRequireDefault(_crypto);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+//# sourceMappingURL=create-account.js.map

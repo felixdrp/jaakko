@@ -87,6 +87,7 @@ var Similarities = function (_Component) {
       var data = _this.state.data;
 
       if (field > -1 && selectionIndex == data.length) {
+        // this is the remove case.
 
         data = _this.removeSimilars(data, originIndex, field);
         data = _this.removeSimilars(data, field, originIndex);
@@ -160,6 +161,8 @@ var Similarities = function (_Component) {
         _this.isSubmitted = true;
       }
 
+      //  this.setState({data})
+      //console.log(JSON.stringify(this.state));
       return data;
     };
 
@@ -179,6 +182,113 @@ var Similarities = function (_Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
+      // this.setState({data : [ { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
+      //    title: 'gfdgdfs',
+      //    description: 'gfdgfds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585604805,
+      //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA0LjgwNQ==',
+      // //    title: '432432',
+      // //    description: 'gfdsgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585607161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA3LjE2MQ==',
+      // //    title: '543gfdgfds63',
+      // //    description: 'hgdfsdf4',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585610161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEwLjE2MQ==',
+      // //    title: 'erhrhgf',
+      // //    description: 'hgfhgffhdg',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585612141,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEyLjE0MQ==',
+      // //    title: '654546',
+      // //    description: 'hghgfhgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585614096,
+      // //    similarTo: [] },
+      //  { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjE0LjA5Ng==',
+      //    title: 'hgfghf',
+      //    description: 'gf  // this.setState({data : [ { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjAyLjExMw==',
+      //    title: 'gfdgdfs',
+      //    description: 'gfdgfds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585604805,
+      //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA0LjgwNQ==',
+      // //    title: '432432',
+      // //    description: 'gfdsgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585607161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjA3LjE2MQ==',
+      // //    title: '543gfdgfds63',
+      // //    description: 'hgdfsdf4',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585610161,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEwLjE2MQ==',
+      // //    title: 'erhrhgf',
+      // //    description: 'hgfhgffhdg',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585612141,
+      // //    similarTo: [] },
+      // //  { group: 1474585598573,
+      // //    groupType: 0,
+      // //    id: 'cnAxNDc0NTg1NjEyLjE0MQ==',
+      // //    title: '654546',
+      // //    description: 'hghgfhgfds',
+      // //    creator: 'rpsoft@gmail.com',
+      // //    rating: [],
+      // //    timeSubmitted: 1474585614096,
+      // //    similarTo: [] },
+      //  { group: 1474585598573,
+      //    groupType: 0,
+      //    id: 'cnAxNDc0NTg1NjE0LjA5Ng==',
+      //    title: 'hgfghf',
+      //    description: 'gfdfgds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585616712,
+      //    similarTo: [] } ]});dfgds',
+      //    creator: 'rpsoft@gmail.com',
+      //    rating: [],
+      //    timeSubmitted: 1474585616712,
+      //    similarTo: [] } ]});
     }
   }, {
     key: 'handleSave',
@@ -191,6 +301,7 @@ var Similarities = function (_Component) {
     key: 'render',
 
 
+    //'_marker'
     value: function render() {
       var _this2 = this;
 
@@ -291,6 +402,7 @@ var Similarities = function (_Component) {
                         data.map(function (entry_options, z) {
                           return _react2.default.createElement(_MenuItem2.default, { key: z, value: z, primaryText: z + '', disabled: entry.title == entry_options.title });
                         })
+                        // data.map( (entry_options,z) => {return (entry.title == entry_options.title ) ? <MenuItem key={z} value={z} primaryText={z} /> : <MenuItem key={z} /> })
                         ,
                         _react2.default.createElement(_MenuItem2.default, { value: data.length, primaryText: 'remove' })
                       )
@@ -342,8 +454,10 @@ Similarities.contextTypes = {
 
 
 Similarities.propTypes = {}
+// addTodo: PropTypes.func.isRequired
 
 
+//export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -353,3 +467,4 @@ Similarities.propTypes = {}
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Similarities);
+//# sourceMappingURL=similarities.js.map

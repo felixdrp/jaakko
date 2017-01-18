@@ -32,13 +32,17 @@ var _groupAutomatic2 = _interopRequireDefault(_groupAutomatic);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.GroupManager = _groupManager2.default;
+// Groups
 
 exports.GroupContainer = _groupContainer2.default;
 exports.GroupView = _groupView2.default;
 
+// Unassigned
 
 exports.UnassignedContainer = _unassignedContainer2.default;
 exports.UnassignedView = _unassignedView2.default;
 
+// AI group assign
 
 exports.GroupAutomatic = _groupAutomatic2.default;
+//# sourceMappingURL=index.js.map

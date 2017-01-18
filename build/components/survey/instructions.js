@@ -130,6 +130,9 @@ var instructionsData = {
     3: {
       title: 'Objects Task',
       text: 'The task is to come up with as many ideas for what a given object could be in the 5 minutes given.' + '\n[b]Completion[/b]' + '\nConsider the object given is a Coat Hanger:' + '\n • First enter the title for the object in the “title” field. For example, the alternative object could be a “back scratcher”. ' + '\n • Then fill the description field with additional information. A description is always required. A possible description could be “a tool that can be used to scratch your back”.' + '\n • Press the submit button to submit your idea' + '\nThere is no limit to how many ideas you can submit.' + ' All submitted entries can be seen by your group together with your name.' + '\n\nThe previous example would look like this…' + '\n[EXAMPLE]'
+      //  +'\nObject name: Back Scratcher'
+      //  +'\nDescription: A tool that can be used to scratch your back'
+      //  +'\n			(might be able to show using screen shot)'
       + '\n\n[b]Pay:[/b] Your pay is based on your relative performance within your group for all tasks:' + '\n1. £5.55 – Highest ranking participant' + '\n2. £2.1' + '\n3. £1' + '\n4. £0.5' + '\n5. £0 – Lowest ranking participant'
 
     }
@@ -139,22 +142,38 @@ var instructionsData = {
     0: {
       title: 'Instructions for Similarity rounds',
       text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
       + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //+'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
     },
     1: {
       title: 'Instructions for Similarity rounds',
       text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
       + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //+'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
     },
     2: {
       title: 'Instructions for Similarity rounds',
       text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
       + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //  +'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
     },
     3: {
       title: 'Instructions for Similarity rounds',
       text: 'This round is completely anonymous and will not affect your pay.' + '\nA list of ideas will be shown and you are to judge whether any two are similar. If a similarity identified more than once, the later entry will be disregarded in following stages.' + '\n[b]Similarity guidelines:[/b]' + '\n1. Ideas are exact copies of each other.' + '\n2. Idea is largely expressed in an existing entry.' + '\nIdeas should be originally expressed and not be simply rewordings of each other' + '\n[b]Example:[/b]' + '\nThe following is a similarity judging example, but the final decision is up to you.  Consider the task: “come up with alternative object for a coat hanger”:' + '\n[EXAMPLE]'
+      // +'\n1. Object: Back Scratcher, Description: Bent to scratch the back'
+      // +'\n2. Object: Leg Scratcher, Description: Bent to scratch the leg'
+      // +'\n3. Object: Reaching tool, Description: Moulded in order to reach high places.'
       + '\n • 1 and 2 express the same idea similarly and are seen as similar.' + '\n • 3 expresses a similar idea differently and so is not similar to the first two. '
+      //+'\n[Screen showing the choice of 1&2) explanation it means that they are seen to be too similar to each other.]'
     }
   },
   favourites: {
@@ -179,18 +198,22 @@ var instructionsData = {
     0: {
       title: 'Math Game Instructions',
       text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]'
+      // +'\n[Math result screen example]'
     },
     1: {
       title: 'Math Game Instructions',
       text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]'
+      // +'\n[Math result screen example]'
     },
     2: {
       title: 'Math Game Instructions',
       text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]' + '\n[b]Pay:[/b] Your pay will depend on your performance relative to others in your group.'
+      // +'\n[Math result screen example]'
     },
     3: {
       title: 'Math Game Instructions',
       text: 'Solve as many addition problems as possible during the 5 minutes given. The number of correct answers will be shown when the game is over. Example seen below.' + '\n[EXAMPLE]' + '\n[b]Pay:[/b] Your pay will depend on your performance relative to others in your group.'
+      // +'\n[Math result screen example]'
     }
   }
 };
@@ -585,6 +608,7 @@ var Instructions = function (_Component) {
     key: 'render',
 
 
+    //'_marker'
     value: function render() {
       var _this2 = this;
 
@@ -673,8 +697,10 @@ Instructions.contextTypes = {
 
 
 Instructions.propTypes = {}
+// addTodo: PropTypes.func.isRequired
 
 
+//export default Question
 
 ;var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -684,3 +710,4 @@ Instructions.propTypes = {}
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(Instructions);
+//# sourceMappingURL=instructions.js.map

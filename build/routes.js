@@ -14,7 +14,9 @@ var _components = require('./components/');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Assign the history:
 
+// ALERT!!!! if any change in survye routes... change also 'survey-types.js'
 var routes = function routes(history) {
   return _react2.default.createElement(
     _reactRouter.Router,
@@ -57,6 +59,17 @@ var routes = function routes(history) {
   );
 };
 
+/**
+ * React-router components.
+ *
+ * React router help to render component related to the path or url.
+ *
+ * Please have a look to:
+ * https://github.com/reactjs/react-router
+ *
+ */
 
+// Please add new core components to /components/index.js
 
 exports.default = routes;
+//# sourceMappingURL=routes.js.map

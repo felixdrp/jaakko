@@ -141,6 +141,7 @@ var GroupView = function (_Component) {
           })
         })
       );
+      // console.log(context)
       return _react2.default.createElement(
         _Card.Card,
         {
@@ -152,6 +153,7 @@ var GroupView = function (_Component) {
         },
         _react2.default.createElement(
           _RaisedButton2.default
+          // Group main button
           ,
           { onClick: props.assignToGroup,
             backgroundColor: '#f59999',
@@ -168,6 +170,7 @@ var GroupView = function (_Component) {
         _react2.default.createElement(
           'div',
           {
+            // Group 1 Chips
             style: {
               display: 'flex',
               flexWrap: 'wrap',
@@ -216,3 +219,4 @@ GroupView.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired
 };
 exports.default = GroupView;
+//# sourceMappingURL=group-view.js.map

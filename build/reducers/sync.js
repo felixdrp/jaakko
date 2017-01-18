@@ -20,3 +20,4 @@ function synchronize() {
       return state;
   }
 }
+//# sourceMappingURL=sync.js.map

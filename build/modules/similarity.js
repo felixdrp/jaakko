@@ -36,6 +36,7 @@ var filterSimilars = function filterSimilars(data, simStore) {
     for (var o in simStore[entryid]) {
       var option = simStore[entryid][o];
       if (option.count / 2 > 1) {
+        // add those that have been flagged as similar twice or more. Divided by two because a = b as b = a
         ids.push(option.id);
       } else {
         keyMappings.push([option.id]);
@@ -117,6 +118,7 @@ var filterSimilars = function filterSimilars(data, simStore) {
     selectedEntry = null;
   }
 
+  //console.log(JSON.stringify(keyMappings));
   return filteredData;
 };
 
@@ -131,6 +133,9 @@ var anyCommonId = function anyCommonId(ids1, ids2) {
   return false;
 };
 
+/**
+* Gets the first entry record that matches entryid. Since multiple definitions for the same entry will be present as it will come replicated from the different users.
+*/
 var getEntry = function getEntry(data, entryid) {
   for (var e in data) {
     var entry = data[e];
@@ -140,7 +145,7 @@ var getEntry = function getEntry(data, entryid) {
     }
   }
 
-  return null; 
+  return null; // this should never happen!
 };
 
 var registerSimilarity = function registerSimilarity(similaritiesStore, entry1, entry2) {
@@ -167,3 +172,4 @@ var registerSimilarity = function registerSimilarity(similaritiesStore, entry1, 
 
   return similaritiesStore;
 };
+//# sourceMappingURL=similarity.js.map

@@ -32,6 +32,7 @@ function processMathResults(data, accounts) {
   }, []);
 
   data = results;
+  //debugger;
 
   data.sort(function (a, b) {
     return b.mathScore - a.mathScore;
@@ -60,3 +61,4 @@ function getPay(i) {
       return 0;
   }
 }
+//# sourceMappingURL=mathComputations.js.map
