@@ -28,16 +28,29 @@ class AccountPage {
 
   registerAccount( account ) {
     for (let field in account) {
-      this.driver.findElement(By.id(field)).sendKeys(account[field]);
+      this.driver.findElement(
+        By.js(
+          (field) => document.querySelector(`input[placeholder=${field}]`),
+          field
+        )
+      ).sendKeys(account[field]);
     }
-    return this.driver.findElement(By.id('submitRegisterAccount')).click();
+    return this.driver.findElement(
+      By.js(
+        () => document.querySelector('button[type=submit]')
+      )
+    ).click();
   }
 
   loginAccount( account ) {
     for (let field in account) {
       this.driver.findElement(By.id(field)).sendKeys(account[field]);
     }
-    return this.driver.findElement(By.id('submitLoginAccount')).click();
+    return this.driver.findElement(
+      By.js(
+        () => document.querySelector('#loginForm input[type=submit]')
+      )
+    ).click();
   }
 }
 

@@ -9,7 +9,9 @@ const account = {
         password: '1234',
         reEnterPassword: '1234',
       }
-const urlBase = 'https://localhost:8008'
+// const urlBase = 'https://localhost:8008'
+const urlBase = 'http://local.thegither.com:3000/usersignup'
+
 let humanCheck = true,
     urlSignup = urlBase + '/account/signup',
     urlLogin = urlBase + '/account/signin';
