@@ -12,8 +12,8 @@ const account = {
         firstName: 'Lucas',
         surname: 'George',
         email: "@sky.wl",
-        password: '1234',
-        reEnterPassword: '1234',
+        password: '!aBcD1234',
+        reEnterPassword: '$!BcD1234',
         job: 'jedy',
         company: 'republic',
         hometown: 'Glasgow, United Kingdom',
@@ -162,10 +162,18 @@ describe('Account:', () => {
       await accPag.click({query: 'button[type=submit]'})
 
       // ### Connections form
-      // await accPag.sendKeys({
-      //   query: 'input[name=current_location]',
-      //   keys: account.current_location
-      // })
+      // Wait by new page
+      await accPag.waitFor({query: 'input[name=password][type=password]', time: 3000})
+      // Password
+      await accPag.sendKeys({
+        query: 'input[name=password][type=password]',
+        keys: account.password
+      })
+      // Password
+      await accPag.sendKeys({
+        query: 'input[name=confirmation][type=password]',
+        keys: account.password
+      })
       // Input continue
       // await accPag.click({query: 'button[type=submit]'})
 
