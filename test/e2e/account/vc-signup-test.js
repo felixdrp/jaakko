@@ -17,7 +17,8 @@ const account = {
         job: 'jedy',
         company: 'republic',
         hometown: 'Glasgow, United Kingdom',
-        current_location: 'Glasgow, United Kingdom'
+        current_location: 'Glasgow, United Kingdom',
+        username: 'HanSolo'
       }
 // const urlBase = 'https://localhost:8008'
 const urlBase = 'http://local.thegither.com:3000'
@@ -29,10 +30,17 @@ let humanCheck = true,
 
 require('chromedriver');
 const webdriver = require('selenium-webdriver');
+const chrome = require("selenium-webdriver/chrome");
 const { By, until, Key} = webdriver;
 
+const caps = webdriver.Capabilities.chrome().set('chromeOptions', {
+  args: 'disable-infobars'
+});
+const opions = chrome.Options.fromCapabilities(caps)
 const initWindow = () => new webdriver.Builder()
         .forBrowser('chrome')
+        // .withCapabilities(caps)
+        .setChromeOptions(opions)
         .build();
         // new selenium.Builder().
         //     withCapabilities(selenium.Capabilities.chrome()).
@@ -50,8 +58,9 @@ let domElement,
 
 describe('Account:', () => {
   // db.getCollection('user').find({firstname: 'Lucas', lastname: 'George'})
+  /// ### Delete User
   after(async () => {
-    return await dbvc.deleteUser({email})
+    // return await dbvc.deleteUser({email})
   });
 
   describe('signup:', () => {
@@ -158,6 +167,13 @@ describe('Account:', () => {
       await accPag.click({query: 'button[type=submit]'})
 
       // ### Future form
+      // Wait by new page
+      await accPag.waitFor({query: 'input[name=username]', time: 3000})
+      // Username
+      await accPag.sendKeys({
+        query: 'input[name=username]',
+        keys: account.username
+      })
       // Input continue
       await accPag.click({query: 'button[type=submit]'})
 
