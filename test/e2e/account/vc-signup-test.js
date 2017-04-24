@@ -8,18 +8,52 @@ import AccountPage from './page-object'
 import Vcdb from './dbvc'
 let dbvc = new Vcdb()
 
-const account = {
-        firstName: 'Lucas',
-        surname: 'George',
+const accountBase = {
+        firstName: 'A',
+        surname: 'A',
         email: "@sky.wl",
         password: '!aBcD1234',
         reEnterPassword: '$!BcD1234',
-        job: 'jedy',
-        company: 'republic',
+        job: 'A',
+        company: 'A',
         hometown: 'Glasgow, United Kingdom',
         current_location: 'Glasgow, United Kingdom',
-        username: 'HanSolo'
+        username: 'A'
       }
+
+// const account = {
+//         firstName: 'Lucas',
+//         surname: 'George',
+//         email: "@sky.wl",
+//         password: '!aBcD1234',
+//         reEnterPassword: '$!BcD1234',
+//         job: 'jedy',
+//         company: 'republic',
+//         hometown: 'Glasgow, United Kingdom',
+//         current_location: 'Glasgow, United Kingdom',
+//         username: 'HanSolo'
+//       }
+
+// const account = {
+//         ...accountBase,
+//         firstName: 'Morihei',
+//         surname: 'Ueshiba',
+//         email: "@aiki.do",
+//         job: 'Master',
+//         company: 'Aikido',
+//         username: 'Osensei'
+//       }
+
+const account = {
+        ...accountBase,
+        firstName: 'Tirumalai',
+        surname: 'Krishnamacharya',
+        email: "@yo.ga",
+        job: 'Guru',
+        company: 'Revival of hatha yoga',
+        username: 'Krishnamacharya'
+      }
+
 // const urlBase = 'https://localhost:8008'
 const urlBase = 'http://local.thegither.com:3000'
 const email = `${account.firstName}.${account.surname}${account.email}`
